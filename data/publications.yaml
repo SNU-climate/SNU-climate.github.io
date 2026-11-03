@@ -4,9 +4,170 @@
 #           needs_review(true면 화면에서 숨김), hidden(true면 숨김)
 meta:
   updated: '2026-11-03'
-  count_visible: 11
-  count_total: 11
+  count_visible: 317
+  count_total: 318
 publications:
+- doi: 10.1088/1748-9326/aeba9f
+  title: Victoria mode drives the strengthening of tropical Atlantic SST influence on El Niño-Southern oscillation since the mid-20th century
+  authors:
+  - Zheng, Y.
+  - Chen, S.
+  - Kug, J.-S.
+  - Wang, Z.
+  - Liu, H.
+  - Li, Y.
+  - Wang, Z.
+  - Chen, W.
+  journal: Environmental Research Letters
+  year: 2026
+  date: '2026-10-28'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41561-026-02125-8
+  title: An abrupt shift towards a hotter and drier climate regime in the Western Eurasian Steppe
+  authors:
+  - Piao, J.
+  - Kug, J.-S.
+  - Chen, W.
+  - Sung, M.-K.
+  - Chen, S.
+  - Wang, Z.
+  - Cai, Q.
+  - Lee, D.
+  journal: Nature Geoscience
+  year: 2026
+  date: '2026-10-12'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s43247-026-04018-5
+  title: North Atlantic chlorophyll blooms modulate European hydroclimate and terrestrial productivity
+  authors:
+  - Yang, Y.-M.
+  - Park, J.-H.
+  - Park, J.-Y.
+  - An, S.-I.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  - Kwon, E.-Y.
+  - Lee, J.-Y.
+  - Wang, B.
+  - Li, T.
+  journal: Communications Earth & Environment
+  year: 2026
+  date: '2026-10-02'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.5194/esd-17-1381-2026
+  title: Regional contrasts of ecosystem productivity sensitivity to atmospheric CO <sub>2</sub> growth across East Asia
+  authors:
+  - Na, Y.-S.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Yang, Y.-M.
+  journal: Earth System Dynamics
+  year: 2026
+  date: '2026-09-28'
+  volume: '17'
+  issue: '5'
+  pages: 1381-1394
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/aea34e
+  title: Incomplete recovery in compound extreme events under a CO <sub>2</sub> removal scenario
+  authors:
+  - Shin, Y.-R.
+  - Seo, K.-H.
+  - Kug, J.-S.
+  - Kosaka, Y.
+  - Yeh, S.-W.
+  - Ham, Y.-G.
+  - Son, J.-H.
+  - Myeong, H.-J.
+  journal: Environmental Research Letters
+  year: 2026
+  date: '2026-09-28'
+  volume: '21'
+  issue: '18'
+  pages: '184005'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1126/sciadv.aee9228
+  title: Enhanced carbon loss in the Southern Ocean under mitigation scenarios
+  authors:
+  - Lee, H.
+  - Kug, J.-S.
+  - Shin, Y.
+  - Lee, D.-G.
+  - Goris, N.
+  - Fröb, F.
+  - Tjiputra, J. F.
+  - Bourgeois, T.
+  - Schwinger, J.
+  journal: Science Advances
+  year: 2026
+  date: '2026-09-04'
+  volume: '12'
+  issue: '36'
+  pages: eaee9228
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/ae84ec
+  title: Asymmetry of El Niño and La Niña precipitation diversity
+  authors:
+  - Kim, S.
+  - Kug, J.-S.
+  journal: Environmental Research Letters
+  year: 2026
+  date: '2026-07-28'
+  volume: '21'
+  issue: '14'
+  pages: '144029'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-026-74381-6
+  title: Changes in El Niño–Southern Oscillation and global frequency entrainment
+  authors:
+  - Iwakiri, T.
+  - Kug, J.-S.
+  journal: Nature Communications
+  year: 2026
+  date: '2026-07-01'
+  volume: '17'
+  issue: '1'
+  pages: '8188'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
 - doi: 10.1029/2026ef008209
   title: Soil Moisture Controls on Permafrost Carbon Cycle Under Greenhouse Warming and Zero Emission Pathways
   authors:
@@ -23,6 +184,28 @@ publications:
   pages: e2026EF008209
   type: article
   sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-026-08202-3
+  title: Changes in ENSO and high-latitude SST relationship with varying CO2 concentration
+  authors:
+  - Song, S.-H.
+  - Yeh, S.-W.
+  - Song, S.-Y.
+  - An, S.-I.
+  - Kug, J.-S.
+  - Jo, H.-S.
+  journal: Climate Dynamics
+  year: 2026
+  date: 2026-06
+  volume: '64'
+  issue: '6'
+  pages: '261'
+  type: article
+  sources:
+  - openalex
   - crossref
   added: '2026-11-03'
 - doi: 10.1038/s41467-026-73838-y
@@ -42,6 +225,36 @@ publications:
   pages: '7021'
   type: article
   sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1126/sciadv.aeb2316
+  title: Distinct impacts of tropical North Atlantic warming flavors on cross-basin tropical cyclone activity
+  authors:
+  - Zhao, J.
+  - Bai, L.
+  - Zhan, R.
+  - Liu, Y.
+  - Cai, W.
+  - Wang, Y.
+  - Kug, J.-S.
+  - Moon, I.-J.
+  - Feng, X.
+  - Toumi, R.
+  - Zhou, B.
+  - Zhang, L.
+  - Chen, H.-C.
+  journal: Science Advances
+  year: 2026
+  date: '2026-05-22'
+  volume: '12'
+  issue: '21'
+  pages: eaeb2316
+  type: article
+  sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
 - doi: 10.1038/s41467-026-72898-4
@@ -60,6 +273,78 @@ publications:
   pages: '6292'
   type: article
   sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2025ef007636
+  title: Background Atmospheric CO <sub>2</sub> Regulates the Local and Non‐Local Climate Impacts of Amazon Deforestation
+  authors:
+  - Lee, D.
+  - Park, J.-H.
+  - Piao, J.
+  - Kug, J.-S.
+  journal: Earth's Future
+  year: 2026
+  date: 2026-05
+  volume: '14'
+  issue: '5'
+  pages: e2025EF007636
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s43247-026-03548-2
+  title: Hemispheric contrast in summer season duration responses to CO2 removal
+  authors:
+  - Park, B.-J.
+  - Min, S.-K.
+  - An, S.-I.
+  - Yeh, S.-W.
+  - Son, S.-W.
+  - Kug, J.-S.
+  - Jun, S.-Y.
+  - Shin, J.
+  - Ryu, Y.-H.
+  - Park, I.-H.
+  journal: Communications Earth & Environment
+  year: 2026
+  date: '2026-04-23'
+  volume: '7'
+  issue: '1'
+  pages: '557'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-026-70945-8
+  title: Negative CO2 emissions for long-term mitigation of extremes in land hydrological cycle
+  authors:
+  - Shin, J.
+  - Kug, J.-S.
+  - Park, S.-W.
+  - Kam, J.
+  - An, S.-I.
+  - Park, S.-E.
+  - Oh, H.
+  - Yeh, S.-W.
+  - Jeong, S.
+  - Park, C.-K.
+  - Kim, J.-S.
+  journal: Nature Communications
+  year: 2026
+  date: '2026-03-23'
+  volume: '17'
+  issue: '1'
+  pages: '4347'
+  type: article
+  sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
 - doi: 10.1038/s41467-026-70140-9
@@ -78,6 +363,48 @@ publications:
   pages: '4231'
   type: article
   sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-026-01355-2
+  title: Precessional modulation of ENSO strength and spatial structure in a transient CGCM simulation of the past 3 million years
+  authors:
+  - Liu, C.
+  - An, S.-I.
+  - Yun, K.-S.
+  - Mandal, G.
+  - Kim, S.-K.
+  - Kug, J.-S.
+  - Jin, F.-F.
+  journal: npj Climate and Atmospheric Science
+  year: 2026
+  date: '2026-02-26'
+  volume: '9'
+  issue: '1'
+  pages: '87'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.jenvman.2025.128446
+  title: Biophysical impacts of urbanization on climate change and vegetation in Borneo Island
+  authors:
+  - Lee, D.
+  - Oh, J.-H.
+  - Kam, J.
+  - Park, S.-W.
+  - Kug, J.-S.
+  journal: Journal of Environmental Management
+  year: 2026
+  date: 2026-01
+  volume: '398'
+  pages: '128446'
+  type: article
+  sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
 - doi: 10.1038/s41467-025-66494-1
@@ -100,6 +427,8 @@ publications:
   pages: '11515'
   type: article
   sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
 - doi: 10.1038/s41467-025-66143-7
@@ -119,6 +448,953 @@ publications:
   pages: '11262'
   type: article
   sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.5194/esd-16-2101-2025
+  title: Irreversible phytoplankton community shifts over Subpolar North Atlantic in response to CO <sub>2</sub> forcing
+  authors:
+  - Lee, D.-G.
+  - Kwon, E. Y.
+  - Kam, J.
+  - Kug, J.-S.
+  journal: Earth System Dynamics
+  year: 2025
+  date: '2025-11-20'
+  volume: '16'
+  issue: '6'
+  pages: 2101-2111
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-24-0437.1
+  title: Nonmonotonic Future Changes in the North Atlantic Warming Hole under a Fast CO2 Emission Scenario
+  authors:
+  - Geng, X.
+  - Oh, J.-H.
+  - Shin, Y.
+  - Shin, J.
+  - Noh, K.-M.
+  - Park, S.-W.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2025
+  date: '2025-11-01'
+  volume: '38'
+  issue: '21'
+  pages: 6011-6023
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-025-01220-8
+  title: Arctic stratospheric ozone as a precursor of ENSO events since 2000s
+  authors:
+  - Park, J.-H.
+  - Koo, J.-H.
+  - Kug, J.-S.
+  - Lee, S.-J.
+  - Sung, M.-K.
+  - Kim, J.
+  - Chang, E.-C.
+  - Yang, Y.-M.
+  - Park, S. S.
+  - Kwak, K.-H.
+  - Oh, J.-H.
+  - Kang, H.-J.
+  - An, S.-I.
+  journal: npj Climate and Atmospheric Science
+  year: 2025
+  date: '2025-10-06'
+  volume: '8'
+  issue: '1'
+  pages: '338'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s43247-025-02742-y
+  title: Land aridification persists in vulnerable drylands under climate mitigation scenarios
+  authors:
+  - Piao, J.
+  - Chen, W.
+  - Kug, J.-S.
+  - Chen, S.
+  - Oh, J.-H.
+  - Wang, L.
+  - Cai, Q.
+  journal: Communications Earth & Environment
+  year: 2025
+  date: '2025-09-02'
+  volume: '6'
+  issue: '1'
+  pages: '732'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1080/17538947.2025.2487058
+  title: Evaluation and prediction of the effects of planetary orbital variations to earth’s temperature changes
+  authors:
+  - Cao, M.
+  - Mao, K.
+  - Bateni, S. M.
+  - Chen, J. M.
+  - Heggy, E.
+  - Kug, J.-S.
+  - Shen, X.
+  journal: International Journal of Digital Earth
+  year: 2025
+  date: '2025-08-25'
+  volume: '18'
+  issue: '1'
+  pages: '2487058'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-24-0544.1
+  title: Contribution of Intraseasonal Variability to Uncertainty in Simulating Seasonal Activity of Northwest Pacific Tropical Cyclones as Demonstrated Using 1998
+  authors:
+  - Zhan, R.
+  - Zhao, J.
+  - Wang, Y.
+  - Kim, D.
+  - Kug, J.-S.
+  - Liu, C.
+  - Gao, Y.
+  journal: Journal of Climate
+  year: 2025
+  date: '2025-08-15'
+  volume: '38'
+  issue: '16'
+  pages: 4263-4280
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1126/sciadv.adv0282
+  title: Excess water availability in northern mid-high latitudes contiguously migrated from ocean under climate change
+  authors:
+  - Guan, Y.
+  - Gu, X.
+  - Wang, L.
+  - Zhou, T.
+  - Xia, J.
+  - Jiang, D.
+  - Slater, L. J.
+  - Gimeno, L.
+  - Pokhrel, Y.
+  - Villarini, G.
+  - Kug, J.-S.
+  - Son, S.-W.
+  - Allan, R. P.
+  - Li, J.
+  - Gan, T. Y.
+  - Liu, Y.
+  - Kong, D.
+  - Zhang, X.
+  - Cui, X.
+  journal: Science Advances
+  year: 2025
+  date: '2025-08-15'
+  volume: '11'
+  issue: '33'
+  pages: eadv0282
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.63737/jhl.25.0024
+  title: 'Improving El Niño-Southern Oscillation (ENSO) representations: an analysis of earth science I textbooks aligned with the 2015 revised curriculum'
+  authors:
+  - Lee, J.
+  - Kim, H.
+  - Kug, J.-S.
+  journal: Journal of Hazard Literacy
+  year: 2025
+  date: 2025-08
+  volume: '1'
+  issue: '2'
+  pages: e12
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-24-0604.1
+  title: Mechanisms behind Seasonal Differences in the Recent Interdecadal Change in Tropical Cyclone Genesis Frequency over the Western North Pacific
+  authors:
+  - Ju, J.
+  - Park, D.-S. R.
+  - Kim, D.
+  - Chang, M.
+  - Park, C.-K.
+  - Kug, J.-S.
+  - Youn, D.
+  journal: Journal of Climate
+  year: 2025
+  date: 2025-08
+  volume: '38'
+  issue: '15'
+  pages: 3787-3800
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.5194/bg-22-3165-2025
+  title: Phytoplankton blooming mechanisms over the East China Sea during post-El Niño summers
+  authors:
+  - Lee, D.-G.
+  - Oh, J.-H.
+  - Kam, J.
+  - Kug, J.-S.
+  journal: Biogeosciences
+  year: 2025
+  date: '2025-07-03'
+  volume: '22'
+  issue: '13'
+  pages: 3165-3180
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1073/pnas.2426048122
+  title: Abrupt shift of El Niño periodicity under CO <sub>2</sub> mitigation
+  authors:
+  - Iwakiri, T.
+  - Kug, J.-S.
+  - Jin, F.-F.
+  - Zhao, S.
+  - An, S.-I.
+  - Kim, G.-I.
+  - Park, D.
+  journal: Proceedings of the National Academy of Sciences
+  year: 2025
+  date: '2025-06-24'
+  volume: '122'
+  issue: '25'
+  pages: e2426048122
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-025-01087-9
+  title: Asymmetric response of the Western North Pacific tropical cyclone genesis to symmetric CO2 pathway
+  authors:
+  - Yoon, H.
+  - Son, S.-W.
+  - Lee, J.
+  - Kim, H.-S.
+  - Liu, C.
+  - An, S.-I.
+  - Kug, J.-S.
+  - Min, S.-K.
+  - Yeh, S.-W.
+  journal: npj Climate and Atmospheric Science
+  year: 2025
+  date: '2025-06-04'
+  volume: '8'
+  issue: '1'
+  pages: '208'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2024ef005787
+  title: Irreversible Land Water Availability Changes From a Potential ITCZ Shift During Temperature Overshoot
+  authors:
+  - Steinert, N. J.
+  - Schwinger, J.
+  - Chadwick, R.
+  - Kug, J.-S.
+  - Lee, H.
+  journal: Earth's Future
+  year: 2025
+  date: 2025-05
+  volume: '13'
+  issue: '5'
+  pages: e2024EF005787
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-025-01053-5
+  title: A low-dimensional recursive deep learning model for El Niño-Southern Oscillation simulation
+  authors:
+  - Ko, J.
+  - Shin, N.-Y.
+  - Kam, J.
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2025
+  date: '2025-04-27'
+  volume: '8'
+  issue: '1'
+  pages: '159'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-025-57724-7
+  title: Emergence of an oceanic CO2 uptake hole under global warming
+  authors:
+  - Lee, H.
+  - Noh, K.-M.
+  - Oh, J.-H.
+  - Park, S.-W.
+  - Shin, Y.
+  - Kug, J.-S.
+  journal: Nature Communications
+  year: 2025
+  date: '2025-04-03'
+  volume: '16'
+  issue: '1'
+  pages: '3199'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/adc28e
+  title: Variability of upper troposphere–lower stratosphere ozone over East Asia from a perspective of atmospheric stationary waves
+  authors:
+  - Park, J.-H.
+  - Lee, S.-J.
+  - Lee, T.
+  - Park, S. S.
+  - Kwak, K.-H.
+  - Kim, J.
+  - Shin, U.
+  - Son, J.-H.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Koo, J.-H.
+  journal: Environmental Research Letters
+  year: 2025
+  date: '2025-04-01'
+  volume: '20'
+  issue: '4'
+  pages: '044051'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.jenvman.2025.125097
+  title: Land use change-induced abrupt changes in vegetation and the role of climate factors
+  authors:
+  - Lee, D.
+  - Park, S.-W.
+  - Shin, Y.
+  - Kim, J.-S.
+  - Kam, J.
+  - Kug, J.-S.
+  journal: Journal of Environmental Management
+  year: 2025
+  date: 2025-04
+  volume: '380'
+  pages: '125097'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2024rg000843
+  title: 'The El Niño Southern Oscillation (ENSO) Recharge Oscillator Conceptual Model: Achievements and Future Prospects'
+  authors:
+  - Vialard, J.
+  - Jin, F.-F.
+  - McPhaden, M. J.
+  - Fedorov, A.
+  - Cai, W.
+  - An, S.-I.
+  - Dommenget, D.
+  - Fang, X.
+  - Stuecker, M. F.
+  - Wang, C.
+  - Wittenberg, A.
+  - Zhao, S.
+  - Liu, F.
+  - Kim, S.-K.
+  - Planton, Y.
+  - Geng, T.
+  - Lengaigne, M.
+  - Capotondi, A.
+  - Chen, N.
+  - Geng, L.
+  - Hu, S.
+  - Izumo, T.
+  - Kug, J.-S.
+  - Luo, J.-J.
+  - McGregor, S.
+  - Pagli, B.
+  - Priya, P.
+  - Stevenson, S.
+  - Thual, S.
+  journal: Reviews of Geophysics
+  year: 2025
+  date: 2025-03
+  volume: '63'
+  issue: '1'
+  pages: e2024RG000843
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1126/sciadv.adn8819
+  title: Continued permafrost ecosystem carbon loss under net-zero and negative emissions
+  authors:
+  - Park, S.-W.
+  - Mun, J.-H.
+  - Lee, H.
+  - Steinert, N. J.
+  - An, S.-I.
+  - Shin, J.
+  - Kug, J.-S.
+  journal: Science Advances
+  year: 2025
+  date: '2025-02-14'
+  volume: '11'
+  issue: '7'
+  pages: eadn8819
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/ad7b5c
+  title: Asymmetric ENSO teleconnections in a symmetric CO <sub>2</sub> concentration pathway
+  authors:
+  - An, S.-I.
+  - Shin, S.-H.
+  - Liu, C.
+  - Yeh, S.-W.
+  - Min, S.-K.
+  - Son, S.-W.
+  - Kug, J.-S.
+  - Park, J.-H.
+  journal: Environmental Research Letters
+  year: 2024
+  date: '2024-12-01'
+  volume: '19'
+  issue: '12'
+  pages: '124028'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-024-54339-2
+  title: Pervasive fire danger continued under a negative emission scenario
+  authors:
+  - Kim, H.-J.
+  - Kim, J.-S.
+  - An, S.-I.
+  - Shin, J.
+  - Oh, J.-H.
+  - Kug, J.-S.
+  journal: Nature Communications
+  year: 2024
+  date: '2024-11-19'
+  volume: '15'
+  issue: '1'
+  pages: '10010'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s43247-024-01870-1
+  title: On the spatial double peak of the 2023–2024 El Niño event
+  authors:
+  - Geng, X.
+  - Kug, J.-S.
+  - Shin, N.-Y.
+  - Zhang, W.
+  - Chen, H.-C.
+  journal: Communications Earth & Environment
+  year: 2024
+  date: '2024-11-11'
+  volume: '5'
+  issue: '1'
+  pages: '691'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s43247-024-01835-4
+  title: Fast recovery of North Atlantic sea level in response to atmospheric carbon dioxide removal
+  authors:
+  - Wang, S.
+  - Shin, Y.
+  - Oh, J.-H.
+  - Kug, J.-S.
+  journal: Communications Earth & Environment
+  year: 2024
+  date: '2024-11-03'
+  volume: '5'
+  issue: '1'
+  pages: '652'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-024-00806-y
+  title: Synchronous decadal climate variability in the tropical Central Pacific and tropical South Atlantic
+  authors:
+  - Liu, C.
+  - An, S.-I.
+  - Kim, S.-K.
+  - Stuecker, M. F.
+  - Zhang, W.
+  - Jin, F.-F.
+  - Park, J.-H.
+  - Jiang, L.
+  - Xue, A.
+  - Geng, X.
+  - Park, H.-J.
+  - Yang, Y.-M.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2024
+  date: '2024-10-21'
+  volume: '7'
+  issue: '1'
+  pages: '253'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-024-00799-8
+  title: Data-driven investigation on the boreal summer MJO predictability
+  authors:
+  - Shin, N.-Y.
+  - Kang, D.
+  - Kim, D.
+  - Lee, J.-Y.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2024
+  date: '2024-10-16'
+  volume: '7'
+  issue: '1'
+  pages: '248'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-024-00790-3
+  title: Significant winter Atlantic Niño effect on ENSO and its future projection
+  authors:
+  - Park, J.-H.
+  - Yang, Y.-M.
+  - Ham, Y.-G.
+  - Jo, H.-S.
+  - Park, H.-J.
+  - Park, S.-E.
+  - Liu, C.
+  - Mandal, G.
+  - An, S.-I.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2024
+  date: '2024-10-07'
+  volume: '7'
+  issue: '1'
+  pages: '238'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/2515-7620/ad8058
+  title: Delayed ENSO impact on phytoplankton variability over the Western-North Pacific Ocean
+  authors:
+  - Lee, D.-G.
+  - Oh, J.-H.
+  - Kug, J.-S.
+  journal: Environmental Research Communications
+  year: 2024
+  date: '2024-10-01'
+  volume: '6'
+  issue: '10'
+  pages: '101006'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-024-50663-9
+  title: Deep ocean warming-induced El Niño changes
+  authors:
+  - Kim, G.-I.
+  - Oh, J.-H.
+  - Shin, N.-Y.
+  - An, S.-I.
+  - Yeh, S.-W.
+  - Shin, J.
+  - Kug, J.-S.
+  journal: Nature Communications
+  year: 2024
+  date: '2024-07-23'
+  volume: '15'
+  issue: '1'
+  pages: '6225'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/ad5573
+  title: Precipitation-induced abrupt decrease of Siberian wildfire in summer 2022 under continued warming
+  authors:
+  - Cho, Y.
+  - Yoon, J.-H.
+  - Jeong, J.-H.
+  - Kug, J.-S.
+  - Kim, B.-M.
+  - Kim, H.
+  - Park, R. J.
+  - Kim, S.-W.
+  journal: Environmental Research Letters
+  year: 2024
+  date: '2024-07-01'
+  volume: '19'
+  issue: '7'
+  pages: '074037'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/ad52ad
+  title: Hysteresis of European summer precipitation under a symmetric CO<sub>2</sub> ramp-up and ramp-down pathway
+  authors:
+  - Im, N.
+  - Kim, D.
+  - An, S.-I.
+  - Paik, S.
+  - Kim, S.-K.
+  - Shin, J.
+  - Min, S.-K.
+  - Kug, J.-S.
+  - Oh, H.
+  journal: Environmental Research Letters
+  year: 2024
+  date: '2024-07-01'
+  volume: '19'
+  issue: '7'
+  pages: '074030'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2023gl107749
+  title: Distinct Modulations of Northwest Pacific Tropical Cyclone Precipitation by Atlantic Multidecadal Oscillation and Interdecadal Pacific Oscillation
+  authors:
+  - Zhao, J.
+  - Zhan, R.
+  - Kim, D.
+  - Kug, J.-S.
+  - Long, J.
+  - Zhang, L.
+  - Ma, X.
+  journal: Geophysical Research Letters
+  year: 2024
+  date: '2024-06-28'
+  volume: '51'
+  issue: '12'
+  pages: e2023GL107749
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41586-024-07534-6
+  title: Explainable El Niño predictability from climate mode interactions
+  authors:
+  - Zhao, S.
+  - Jin, F.-F.
+  - Stuecker, M. F.
+  - Thompson, P. R.
+  - Kug, J.-S.
+  - McPhaden, M. J.
+  - Cane, M. A.
+  - Wittenberg, A. T.
+  - Cai, W.
+  journal: Nature
+  year: 2024
+  date: '2024-06-27'
+  volume: '630'
+  issue: '8018'
+  pages: 891-898
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/ad4db8
+  title: Intensified surface chlorophyll responses to the Indian Ocean Dipole under greenhouse warming
+  authors:
+  - Pathirana, G.
+  - Min Noh, K.
+  - Lee, D.-G.
+  - Park, H.-J.
+  - Wang, D.
+  - Kug, J.-S.
+  journal: Environmental Research Letters
+  year: 2024
+  date: '2024-06-01'
+  volume: '19'
+  issue: '6'
+  pages: '064072'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-024-00674-6
+  title: Fast reduction of Atlantic SST threatens Europe-wide gross primary productivity under positive and negative CO2 emissions
+  authors:
+  - Yang, Y.-M.
+  - Shin, J.
+  - Park, S.-W.
+  - Park, J.-H.
+  - An, S.-I.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  - Lee, J.-Y.
+  - Wang, B.
+  - Li, T.
+  - Im, N.
+  journal: npj Climate and Atmospheric Science
+  year: 2024
+  date: '2024-06-01'
+  volume: '7'
+  issue: '1'
+  pages: '117'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2023ef004223
+  title: How Does Plant CO<sub>2</sub> Physiological Forcing Amplify Amazon Warming in CMIP6 Earth System Models?
+  authors:
+  - Kimm, H.
+  - Park, S.-W.
+  - Jun, S.-Y.
+  - Kug, J.-S.
+  journal: Earth's Future
+  year: 2024
+  date: 2024-06
+  volume: '12'
+  issue: '6'
+  pages: e2023EF004223
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-024-00660-y
+  title: Basin-dependent response of Northern Hemisphere winter blocking frequency to CO2 removal
+  authors:
+  - Hwang, J.
+  - Son, S.-W.
+  - Martineau, P.
+  - Sung, M.-K.
+  - Barriopedro, D.
+  - An, S.-I.
+  - Yeh, S.-W.
+  - Min, S.-K.
+  - Kug, J.-S.
+  - Shin, J.
+  journal: npj Climate and Atmospheric Science
+  year: 2024
+  date: '2024-05-23'
+  volume: '7'
+  issue: '1'
+  pages: '111'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2024gl108272
+  title: Fast and Slow Responses of Atlantic Meridional Overturning Circulation to Antarctic Meltwater Forcing
+  authors:
+  - Shin, Y.
+  - Geng, X.
+  - Oh, J.-H.
+  - Noh, K.-M.
+  - Jin, E. K.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2024
+  date: '2024-05-16'
+  volume: '51'
+  issue: '9'
+  pages: e2024GL108272
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/bams-d-23-0241.1
+  title: Climate Models Indicate Compensating Effects between Anthropogenic Greenhouse Gases and Aerosols on the 2022 Central Andes Spring Drought
+  authors:
+  - Kam, J.
+  - Min, S.-K.
+  - Kim, B.-H.
+  - Kim, Y.-H.
+  - Diaz, L. B.
+  - Kug, J.-S.
+  - Park, R.
+  journal: Bulletin of the American Meteorological Society
+  year: 2024
+  date: 2024-05
+  volume: '105'
+  issue: '5'
+  pages: E825-E831
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41558-024-01976-6
+  title: Western North Pacific tropical cyclone activity modulated by phytoplankton feedback under global warming
+  authors:
+  - Kim, H.-K.
+  - Park, J.-Y.
+  - Park, D.-S. R.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  - Son, J.-H.
+  journal: Nature Climate Change
+  year: 2024
+  date: 2024-05
+  volume: '14'
+  issue: '5'
+  pages: 504-510
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41558-024-01971-x
+  title: Asymmetric hysteresis response of mid-latitude storm tracks to CO2 removal
+  authors:
+  - Hwang, J.
+  - Son, S.-W.
+  - Garfinkel, C. I.
+  - Woollings, T.
+  - Yoon, H.
+  - An, S.-I.
+  - Yeh, S.-W.
+  - Min, S.-K.
+  - Kug, J.-S.
+  - Shin, J.
+  journal: Nature Climate Change
+  year: 2024
+  date: 2024-05
+  volume: '14'
+  issue: '5'
+  pages: 496-503
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-024-47276-7
+  title: Decreased Indian Ocean Dipole variability under prolonged greenhouse warming
+  authors:
+  - Kim, S.-K.
+  - Park, H.-J.
+  - An, S.-I.
+  - Liu, C.
+  - Cai, W.
+  - Santoso, A.
+  - Kug, J.-S.
+  journal: Nature Communications
+  year: 2024
+  date: '2024-04-01'
+  volume: '15'
+  issue: '1'
+  pages: '2811'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-024-00627-z
+  title: Future changes in the wintertime ENSO-NAO teleconnection under greenhouse warming
+  authors:
+  - Geng, X.
+  - Kug, J.-S.
+  - Kosaka, Y.
+  journal: npj Climate and Atmospheric Science
+  year: 2024
+  date: '2024-03-28'
+  volume: '7'
+  issue: '1'
+  pages: '81'
+  type: article
+  sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
 - doi: 10.1038/s41558-024-01928-0
@@ -138,10 +1414,1078 @@ publications:
   pages: 260-266
   type: article
   sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
   corresponding: true
   featured: true
+- doi: 10.1029/2023gl105864
+  title: Mutating ENSO Impact on Northwest Pacific Tropical Cyclones Under Global Warming
+  authors:
+  - Shi, L.
+  - Zhan, R.
+  - Zhao, J.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2024
+  date: '2024-01-16'
+  volume: '51'
+  issue: '1'
+  pages: e2023GL105864
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-023-00561-6
+  title: Deep learning reveals moisture as the primary predictability source of MJO
+  authors:
+  - Shin, N.-Y.
+  - Kim, D.
+  - Kang, D.
+  - Kim, H.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2024
+  date: '2024-01-08'
+  volume: '7'
+  issue: '1'
+  pages: '11'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/ad1641
+  title: A biological dipole variability in the Indian Ocean
+  authors:
+  - Pathirana, G.
+  - Noh, K. M.
+  - Lee, D.-G.
+  - Lee, H.
+  - Kug, J.-S.
+  journal: Environmental Research Letters
+  year: 2024
+  date: '2024-01-01'
+  volume: '19'
+  issue: '1'
+  pages: '014070'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2023ef003709
+  title: Role of Atlantification in Enhanced Primary Productivity in the Barents Sea
+  authors:
+  - Noh, K.-M.
+  - Oh, J.-H.
+  - Lim, H.-G.
+  - Song, H.
+  - Kug, J.-S.
+  journal: Earth's Future
+  year: 2024
+  date: 2024-01
+  volume: '12'
+  issue: '1'
+  pages: e2023EF003709
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-023-06918-0
+  title: Intermodel relation between present-day warm pool intensity and future precipitation changes
+  authors:
+  - Pathirana, G.
+  - Shin, N.-Y.
+  - Wu, Y.-K.
+  - Kwon, M.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2024
+  date: 2024-01
+  volume: '62'
+  issue: '1'
+  pages: 345-355
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41598-023-49763-1
+  title: An abrupt shift in gross primary productivity over Eastern China-Mongolia and its inter-model diversity in land surface models
+  authors:
+  - Lee, D.
+  - Kim, J.-S.
+  - Park, S.-W.
+  - Kug, J.-S.
+  journal: Scientific Reports
+  year: 2023
+  date: '2023-12-27'
+  volume: '13'
+  issue: '1'
+  pages: '22971'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.scitotenv.2023.166098
+  title: Understanding elevated CO2 concentrations in East Asia relative to the global mean during boreal spring on the slow and interannual timescales
+  authors:
+  - Yeh, S.-W.
+  - Shin, M.-S.
+  - Ma, S.-J.
+  - Kug, J.-S.
+  - Moon, B.-K.
+  journal: Science of The Total Environment
+  year: 2023
+  date: 2023-11
+  volume: '901'
+  pages: '166098'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-023-06744-4
+  title: Parameterizing the nonlinear feedback on ENSO from tropical instability waves (TIWs) by nonlinear eddy thermal diffusivity
+  authors:
+  - Xue, A.
+  - Jin, F.-F.
+  - Zhang, W.
+  - Boucharel, J.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2023
+  date: 2023-10
+  volume: '61'
+  issue: 7-8
+  pages: 3525-3540
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-023-00474-4
+  title: Midwinter breakdown of ENSO climate impacts in East Asia
+  authors:
+  - Geng, X.
+  - Noh, K.-M.
+  - Kim, K.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2023
+  date: '2023-09-29'
+  volume: '6'
+  issue: '1'
+  pages: '155'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-023-00448-6
+  title: ENSO skewness hysteresis and associated changes in strong El Niño under a CO2 removal scenario
+  authors:
+  - Liu, C.
+  - An, S.-I.
+  - Jin, F.-F.
+  - Stuecker, M. F.
+  - Zhang, W.
+  - Kug, J.-S.
+  - Yuan, X.
+  - Shin, J.
+  - Xue, A.
+  - Geng, X.
+  - Kim, S.-K.
+  journal: npj Climate and Atmospheric Science
+  year: 2023
+  date: '2023-08-15'
+  volume: '6'
+  issue: '1'
+  pages: '117'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1126/sciadv.adh8442
+  title: Hysteresis of the El Niño–Southern Oscillation to CO <sub>2</sub> forcing
+  authors:
+  - Liu, C.
+  - An, S.-I.
+  - Jin, F.-F.
+  - Shin, J.
+  - Kug, J.-S.
+  - Zhang, W.
+  - Stuecker, M. F.
+  - Yuan, X.
+  - Xue, A.
+  - Geng, X.
+  - Kim, S.-K.
+  journal: Science Advances
+  year: 2023
+  date: '2023-08-04'
+  volume: '9'
+  issue: '31'
+  pages: eadh8442
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-023-00429-9
+  title: Distinct decadal modulation of Atlantic-Niño influence on ENSO
+  authors:
+  - Park, J.-H.
+  - Kug, J.-S.
+  - Yang, Y.-M.
+  - Sung, M.-K.
+  - Kim, S.
+  - Kim, H.-J.
+  - Park, H.-J.
+  - An, S.-I.
+  journal: npj Climate and Atmospheric Science
+  year: 2023
+  date: '2023-07-29'
+  volume: '6'
+  issue: '1'
+  pages: '105'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1126/sciadv.adg1801
+  title: Hemispherically asymmetric Hadley cell response to CO <sub>2</sub> removal
+  authors:
+  - Kim, S.-Y.
+  - Choi, Y.-J.
+  - Son, S.-W.
+  - Grise, K. M.
+  - Staten, P. W.
+  - An, S.-I.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Min, S.-K.
+  - Shin, J.
+  journal: Science Advances
+  year: 2023
+  date: '2023-07-28'
+  volume: '9'
+  issue: '30'
+  pages: eadg1801
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-22-0699.1
+  title: Diurnal Cycle Dependence of ENSO Influence on the Winter Surface Air Temperature in Southeastern China
+  authors:
+  - Geng, X.
+  - Noh, K.-M.
+  - Kug, J.-S.
+  - Zhang, W.
+  journal: Journal of Climate
+  year: 2023
+  date: '2023-07-15'
+  volume: '36'
+  issue: '14'
+  pages: 4677-4690
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-023-00422-2
+  title: Main drivers of Indian Ocean Dipole asymmetry revealed by a simple IOD model
+  authors:
+  - An, S.-I.
+  - Park, H.-J.
+  - Kim, S.-K.
+  - Cai, W.
+  - Santoso, A.
+  - Kim, D.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2023
+  date: '2023-07-15'
+  volume: '6'
+  issue: '1'
+  pages: '93'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-023-00414-2
+  title: ENSO-driven abrupt phase shift in North Atlantic oscillation in early January
+  authors:
+  - Geng, X.
+  - Zhao, J.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2023
+  date: '2023-07-07'
+  volume: '6'
+  issue: '1'
+  pages: '80'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s10584-023-03551-y
+  title: Projected change of East-Asian winter precipitation related to strong El Niño under the future emission scenarios
+  authors:
+  - Huang, Y.
+  - Ren, H.-L.
+  - Kug, J.-S.
+  - Wang, R.
+  - Li, J.
+  journal: Climatic Change
+  year: 2023
+  date: 2023-07
+  volume: '176'
+  issue: '7'
+  pages: '81'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1126/sciadv.adh2412
+  title: Increase in convective extreme El Niño events in a CO <sub>2</sub> removal scenario
+  authors:
+  - Pathirana, G.
+  - Oh, J.-H.
+  - Cai, W.
+  - An, S.-I.
+  - Min, S.-K.
+  - Jo, S.-Y.
+  - Shin, J.
+  - Kug, J.-S.
+  journal: Science Advances
+  year: 2023
+  date: '2023-06-23'
+  volume: '9'
+  issue: '25'
+  pages: eadh2412
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/acd5e6
+  title: 'Impact of volcanic eruptions on extratropical atmospheric circulations: review, revisit and future directions'
+  authors:
+  - Paik, S.
+  - Min, S.-K.
+  - Son, S.-W.
+  - Lim, E.-P.
+  - McGregor, S.
+  - An, S.-I.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  journal: Environmental Research Letters
+  year: 2023
+  date: '2023-06-01'
+  volume: '18'
+  issue: '6'
+  pages: '063003'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/acd568
+  title: Phytoplankton responses to increasing Arctic river discharge under the present and future climate simulations
+  authors:
+  - Park, J. H.
+  - Kim, S.-J.
+  - Lim, H.-G.
+  - Kug, J.-S.
+  - Yang, E. J.
+  - Kim, B.-M.
+  journal: Environmental Research Letters
+  year: 2023
+  date: '2023-06-01'
+  volume: '18'
+  issue: '6'
+  pages: '064037'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.scitotenv.2023.162377
+  title: Low frequency changes in CO2 concentration in East Asia related to Pacific decadal oscillation and Atlantic multi-decadal oscillation for mid-summer and early fall
+  authors:
+  - Yeh, S.-W.
+  - Ma, S.-J.
+  - Park, I.-H.
+  - Park, H.-J.
+  - Kug, J.-S.
+  journal: Science of The Total Environment
+  year: 2023
+  date: 2023-06
+  volume: '876'
+  pages: '162377'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2022jd038313
+  title: Remote Influences of ENSO and IOD on the Interannual Variability of the West Antarctic Sea Ice
+  authors:
+  - Kim, J.
+  - Kang, D.
+  - Lee, M.-I.
+  - Jin, E. K.
+  - Kug, J.-S.
+  - Lee, W. S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2023
+  date: '2023-05-27'
+  volume: '128'
+  issue: '10'
+  pages: e2022JD038313
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2022ef003427
+  title: Emergent Constraint for Future Decline in Arctic Phytoplankton Concentration
+  authors:
+  - Noh, K. M.
+  - Lim, H.-G.
+  - Yang, E. J.
+  - Kug, J.-S.
+  journal: Earth's Future
+  year: 2023
+  date: 2023-04
+  volume: '11'
+  issue: '4'
+  pages: e2022EF003427
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2022jd037985
+  title: Sub‐Seasonal Variability of ENSO Teleconnections in Western North America and Its Prediction Skill
+  authors:
+  - Park, C.-H.
+  - Choi, J.
+  - Son, S.-W.
+  - Kim, D.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2023
+  date: '2023-03-27'
+  volume: '128'
+  issue: '6'
+  pages: e2022JD037985
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-023-00337-y
+  title: Part II model support on a new mechanism for North Pacific Oscillation influence on ENSO
+  authors:
+  - Zhao, J.
+  - Sung, M.-K.
+  - Park, J.-H.
+  - Luo, J.-J.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2023
+  date: '2023-02-27'
+  volume: '6'
+  issue: '1'
+  pages: '16'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-023-00336-z
+  title: Part I observational study on a new mechanism for North Pacific Oscillation influencing the tropics
+  authors:
+  - Zhao, J.
+  - Sung, M.-K.
+  - Park, J.-H.
+  - Luo, J.-J.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2023
+  date: '2023-02-27'
+  volume: '6'
+  issue: '1'
+  pages: '15'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-023-00332-3
+  title: Two regimes of inter-basin interactions between the Atlantic and Pacific Oceans on interannual timescales
+  authors:
+  - Park, J.-H.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Yang, Y.-M.
+  - Jo, H.-S.
+  - Kim, H.-J.
+  - An, S.-I.
+  journal: npj Climate and Atmospheric Science
+  year: 2023
+  date: '2023-02-22'
+  volume: '6'
+  issue: '1'
+  pages: '13'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.3389/fmars.2023.1010341
+  title: What controls the future phytoplankton change over the Yellow and East China Seas under global warming?
+  authors:
+  - Lee, D.-G.
+  - Oh, J.-H.
+  - Noh, K. M.
+  - Kwon, E. Y.
+  - Kim, Y. H.
+  - Kug, J.-S.
+  journal: Frontiers in Marine Science
+  year: 2023
+  date: '2023-01-26'
+  volume: '10'
+  pages: '1010341'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/joc.7844
+  title: Significant relationship between Arctic warming and East Asia hot summers
+  authors:
+  - Kim, D.-S.
+  - Jun, S.-Y.
+  - Lee, M.-I.
+  - Kug, J.-S.
+  journal: International Journal of Climatology
+  year: 2022
+  date: '2022-12-30'
+  volume: '42'
+  issue: '16'
+  pages: 9530-9538
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-022-00324-9
+  title: More frequent central Pacific El Niño and stronger eastern pacific El Niño in a warmer climate
+  authors:
+  - Shin, N.-Y.
+  - Kug, J.-S.
+  - Stuecker, M. F.
+  - Jin, F.-F.
+  - Timmermann, A.
+  - Kim, G.-I.
+  journal: npj Climate and Atmospheric Science
+  year: 2022
+  date: '2022-12-16'
+  volume: '5'
+  issue: '1'
+  pages: '101'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/bams-d-22-0149.1
+  title: Human Contribution to 2020/21-like Persistent Iran Meteorological Droughts
+  authors:
+  - Kam, J.
+  - Min, S.-K.
+  - Park, C.-K.
+  - Kim, B.-H.
+  - Kug, J.-S.
+  journal: Bulletin of the American Meteorological Society
+  year: 2022
+  date: 2022-12
+  volume: '103'
+  issue: '12'
+  pages: E2930-E2936
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-022-06278-1
+  title: Three distinct convective footprints over the Indo-western Pacific that affect high temperature extreme events in Korea during boreal autumn
+  authors:
+  - Yeo, S.-R.
+  - Lee, Y.-Y.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2022
+  date: 2022-12
+  volume: '59'
+  issue: 11-12
+  pages: 3469-3484
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s43247-022-00621-4
+  title: A decline in atmospheric CO2 levels under negative emissions may enhance carbon retention in the terrestrial biosphere
+  authors:
+  - Park, S.-W.
+  - Kug, J.-S.
+  journal: Communications Earth & Environment
+  year: 2022
+  date: '2022-11-19'
+  volume: '3'
+  issue: '1'
+  pages: '289'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-022-34721-8
+  title: Southern Indian Ocean Dipole as a trigger for Central Pacific El Niño since the 2000s
+  authors:
+  - Jo, H.-S.
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Li, T.
+  - Kim, J.-H.
+  - Kim, J.-G.
+  - Kim, H.
+  journal: Nature Communications
+  year: 2022
+  date: '2022-11-15'
+  volume: '13'
+  issue: '1'
+  pages: '6965'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-21-0933.1
+  title: Role of the Climatological North Pacific High in the North Tropical Atlantic–ENSO Connection
+  authors:
+  - Park, J.-H.
+  - Kug, J.-S.
+  - Yang, Y.-M.
+  - Oh, H.
+  - Zhao, J.
+  - Wu, Y.
+  journal: Journal of Climate
+  year: 2022
+  date: '2022-10-15'
+  volume: '35'
+  issue: '20'
+  pages: 3215-3226
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/aies-d-21-0011.1
+  title: Application of Deep Learning to Understanding ENSO Dynamics
+  authors:
+  - Shin, N.-Y.
+  - Ham, Y.-G.
+  - Kim, J.-H.
+  - Cho, M.
+  - Kug, J.-S.
+  journal: Artificial Intelligence for the Earth Systems
+  year: 2022
+  date: 2022-10
+  volume: '1'
+  issue: '4'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.accre.2022.07.001
+  title: Distinctive impacts of atmospheric intraseasonal oscillations on the net ecosystem exchange of the southeastern China forest between spring and summer
+  authors:
+  - LI, J.-Y.
+  - Mao, J.-Y.
+  - Kug, J.-S.
+  - ZHAi, P.-M.
+  journal: Advances in Climate Change Research
+  year: 2022
+  date: 2022-10
+  volume: '13'
+  issue: '5'
+  pages: 700-709
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2022gl099814
+  title: Hysteresis Behaviors in East Asian Extreme Precipitation Frequency to CO<sub>2</sub> Pathway
+  authors:
+  - Jo, S.-Y.
+  - Seong, M.-G.
+  - Min, S.-K.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  - An, S.-I.
+  - Son, S.-W.
+  - Shin, J.
+  journal: Geophysical Research Letters
+  year: 2022
+  date: '2022-09-28'
+  volume: '49'
+  issue: '18'
+  pages: e2022GL099814
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41558-022-01452-z
+  title: Widespread irreversible changes in surface temperature and precipitation in response to CO2 forcing
+  authors:
+  - Kim, S.-K.
+  - Shin, J.
+  - An, S.-I.
+  - Kim, H.-J.
+  - Im, N.
+  - Xie, S.-P.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  journal: Nature Climate Change
+  year: 2022
+  date: 2022-09
+  volume: '12'
+  issue: '9'
+  pages: 834-840
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2022ef002804
+  title: Centennial Memory of the Arctic Ocean for Future Arctic Climate Recovery in Response to a Carbon Dioxide Removal
+  authors:
+  - Oh, J.-H.
+  - An, S.-I.
+  - Shin, J.
+  - Kug, J.-S.
+  journal: Earth's Future
+  year: 2022
+  date: 2022-08
+  volume: '10'
+  issue: '8'
+  pages: e2022EF002804
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-022-06158-8
+  title: Distinct magnitude asymmetries of daily extreme anomalies in gross primary productivity between forests and non-forests
+  authors:
+  - Li, J.
+  - Kug, J.-S.
+  - Park, S.-W.
+  - Zhai, P.
+  - Huang, M.
+  - Kim, J.-S.
+  journal: Climate Dynamics
+  year: 2022
+  date: 2022-08
+  volume: '59'
+  issue: 3-4
+  pages: 767-784
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-21-0181.1
+  title: Process-Based Analysis of El Niño–Southern Oscillation Decadal Modulation
+  authors:
+  - Kim, G.-I.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2022
+  date: '2022-07-15'
+  volume: '35'
+  issue: '14'
+  pages: 4753-4769
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41598-022-15905-0
+  title: General circulation and global heat transport in a quadrupling CO2 pulse experiment
+  authors:
+  - An, S.-I.
+  - Park, S.-E.
+  - Shin, J.
+  - Yang, Y.-M.
+  - Yeh, S.-W.
+  - Son, S.-W.
+  - Kug, J.-S.
+  journal: Scientific Reports
+  year: 2022
+  date: '2022-07-07'
+  volume: '12'
+  issue: '1'
+  pages: '11569'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/ac70ec
+  title: Global chlorophyll responses to marine heatwaves in satellite ocean color
+  authors:
+  - Noh, K. M.
+  - Lim, H.-G.
+  - Kug, J.-S.
+  journal: Environmental Research Letters
+  year: 2022
+  date: '2022-06-01'
+  volume: '17'
+  issue: '6'
+  pages: '064034'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2021ef002623
+  title: Contrasting Hysteresis Behaviors of Northern Hemisphere Land Monsoon Precipitation to CO<sub>2</sub> Pathways
+  authors:
+  - Oh, H.
+  - An, S.-I.
+  - Shin, J.
+  - Yeh, S.-W.
+  - Min, S.-K.
+  - Son, S.-W.
+  - Kug, J.-S.
+  journal: Earth's Future
+  year: 2022
+  date: 2022-06
+  volume: '10'
+  issue: '6'
+  pages: e2021EF002623
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41598-022-12783-4
+  title: Influence of the recent winter Arctic sea ice loss in short-term simulations of a regional atmospheric model
+  authors:
+  - Cho, H.
+  - Kug, J.-S.
+  - Jun, S.-Y.
+  journal: Scientific Reports
+  year: 2022
+  date: '2022-05-26'
+  volume: '12'
+  issue: '1'
+  pages: '8901'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41598-022-10839-z
+  title: Spatiotemporal neural network with attention mechanism for El Niño forecasts
+  authors:
+  - Kim, J.
+  - Kwon, M.
+  - Kim, S.-D.
+  - Kug, J.-S.
+  - Ryu, J.-G.
+  - Kim, J.
+  journal: Scientific Reports
+  year: 2022
+  date: '2022-05-03'
+  volume: '12'
+  issue: '1'
+  pages: '7204'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-021-06019-w
+  title: Impacts of ENSO on the seasonal transition from summer to winter in East Asia
+  authors:
+  - Kim, S.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2022
+  date: 2022-05
+  volume: '58'
+  issue: 9-10
+  pages: 2593-2608
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41598-022-09297-4
+  title: Tropical origins of the record-breaking 2020 summer rainfall extremes in East Asia
+  authors:
+  - Kim, S.
+  - Park, J.-H.
+  - Kug, J.-S.
+  journal: Scientific Reports
+  year: 2022
+  date: '2022-03-30'
+  volume: '12'
+  issue: '1'
+  pages: '5366'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41612-022-00246-6
+  title: Intensity changes of Indian Ocean dipole mode in a carbon dioxide removal scenario
+  authors:
+  - An, S.-I.
+  - Park, H.-J.
+  - Kim, S.-K.
+  - Shin, J.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  journal: npj Climate and Atmospheric Science
+  year: 2022
+  date: '2022-03-21'
+  volume: '5'
+  issue: '1'
+  pages: '20'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/bams-d-21-0148.1
+  title: Anthropogenic Contribution to the Record-Breaking Warm and Wet Winter 2019/20 over Northwest Russia
+  authors:
+  - Kam, J.
+  - Min, S.-K.
+  - Kim, Y.-H.
+  - Kim, B.-H.
+  - Kug, J.-S.
+  journal: Bulletin of the American Meteorological Society
+  year: 2022
+  date: 2022-03
+  volume: '103'
+  issue: '3'
+  pages: S38-S43
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/ac444e
+  title: Antarctic meltwater-induced dynamical changes in phytoplankton in the Southern Ocean
+  authors:
+  - Oh, J.-H.
+  - Noh, K. M.
+  - Lim, H.-G.
+  - Jin, E. K.
+  - Jun, S.-Y.
+  - Kug, J.-S.
+  journal: Environmental Research Letters
+  year: 2022
+  date: '2022-02-01'
+  volume: '17'
+  issue: '2'
+  pages: '024022'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s43247-022-00343-7
+  title: Arctic warming-induced cold damage to East Asian terrestrial ecosystems
+  authors:
+  - Kim, J.-S.
+  - Kug, J.-S.
+  - Jeong, S.
+  - Yoon, J.-H.
+  - Zeng, N.
+  - Hong, J.
+  - Jeong, J.-H.
+  - Zhao, Y.
+  - Chen, X.
+  - Williams, M.
+  - Ichii, K.
+  - Schaepman-Strub, G.
+  journal: Communications Earth & Environment
+  year: 2022
+  date: '2022-02-01'
+  volume: '3'
+  issue: '1'
+  pages: '16'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
 - doi: 10.1038/s41558-021-01211-6
   title: Hysteresis of the intertropical convergence zone to CO2 forcing
   authors:
@@ -162,10 +2506,553 @@ publications:
   pages: 47-53
   type: article
   sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
   corresponding: true
   featured: true
+- doi: 10.1016/j.scib.2021.08.013
+  title: Asymmetrical response of summer rainfall in East Asia to CO2 forcing
+  authors:
+  - Song, S.-Y.
+  - Yeh, S.-W.
+  - An, S.-I.
+  - Kug, J.-S.
+  - Min, S.-K.
+  - Son, S.-W.
+  - Shin, J.
+  journal: Science Bulletin
+  year: 2022
+  date: 2022-01
+  volume: '67'
+  issue: '2'
+  pages: 213-222
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2021jd035286
+  title: Delayed Impacts of Arctic Sea‐Ice Loss on Eurasian Severe Cold Winters
+  authors:
+  - Jang, Y.-S.
+  - Jun, S.-Y.
+  - Son, S.-W.
+  - Min, S.-K.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2021
+  date: '2021-12-16'
+  volume: '126'
+  issue: '23'
+  pages: e2021JD035286
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2021gl095516
+  title: Pacific Warming Pattern Diversity Modulated by Indo‐Pacific Sea Surface Temperature Gradient
+  authors:
+  - Zhang, L.
+  - Zhao, J.
+  - Kug, J.-S.
+  - Geng, X.
+  - Xu, H.
+  - Luo, J.
+  - Park, J.-H.
+  - Zhan, R.
+  journal: Geophysical Research Letters
+  year: 2021
+  date: '2021-12-16'
+  volume: '48'
+  issue: '23'
+  pages: e2021GL095516
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.scitotenv.2021.148718
+  title: Climate influence on the 2019 fires in Amazonia
+  authors:
+  - Dong, X.
+  - Li, F.
+  - Lin, Z.
+  - Harrison, S. P.
+  - Chen, Y.
+  - Kug, J.-S.
+  journal: Science of The Total Environment
+  year: 2021
+  date: 2021-11
+  volume: '794'
+  pages: '148718'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1126/science.aay9165
+  title: 'Decadal climate variability in the tropical Pacific: Characteristics, causes, predictability, and prospects'
+  authors:
+  - Power, S.
+  - Lengaigne, M.
+  - Capotondi, A.
+  - Khodri, M.
+  - Vialard, J.
+  - Jebri, B.
+  - Guilyardi, E.
+  - McGregor, S.
+  - Kug, J.-S.
+  - Newman, M.
+  - McPhaden, M. J.
+  - Meehl, G.
+  - Smith, D.
+  - Cole, J.
+  - Emile-Geay, J.
+  - Vimont, D.
+  - Wittenberg, A. T.
+  - Collins, M.
+  - Kim, G.-I.
+  - Cai, W.
+  - Okumura, Y.
+  - Chung, C.
+  - Cobb, K. M.
+  - Delage, F.
+  - Planton, Y. Y.
+  - Levine, A.
+  - Zhu, F.
+  - Sprintall, J.
+  - Di Lorenzo, E.
+  - Zhang, X.
+  - Luo, J.-J.
+  - Lin, X.
+  - Balmaseda, M.
+  - Wang, G.
+  - Henley, B. J.
+  journal: Science
+  year: 2021
+  date: 2021-10
+  volume: '374'
+  issue: '6563'
+  pages: eaay9165
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-21-0025.1
+  title: Role of cloud feedback in continental warming response to CO2 physiological forcing
+  authors:
+  - Park, S.-W.
+  - Kug, J.-S.
+  - Jun, S.-Y.
+  - Jeong, S.-J.
+  - Kim, J.-S.
+  journal: Journal of Climate
+  year: 2021
+  date: '2021-08-25'
+  pages: 1-49
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s43017-021-00199-z
+  title: Changing El Niño–Southern Oscillation in a warming climate
+  authors:
+  - Cai, W.
+  - Santoso, A.
+  - Collins, M.
+  - Dewitte, B.
+  - Karamperidou, C.
+  - Kug, J.-S.
+  - Lengaigne, M.
+  - McPhaden, M. J.
+  - Stuecker, M. F.
+  - Taschetto, A. S.
+  - Timmermann, A.
+  - Wu, L.
+  - Yeh, S.-W.
+  - Wang, G.
+  - Ng, B.
+  - Jia, F.
+  - Yang, Y.
+  - Ying, J.
+  - Zheng, X.-T.
+  - Bayr, T.
+  - Brown, J. R.
+  - Capotondi, A.
+  - Cobb, K. M.
+  - Gan, B.
+  - Geng, T.
+  - Ham, Y.-G.
+  - Jin, F.-F.
+  - Jo, H.-S.
+  - Li, X.
+  - Lin, X.
+  - McGregor, S.
+  - Park, J.-H.
+  - Stein, K.
+  - Yang, K.
+  - Zhang, L.
+  - Zhong, W.
+  journal: Nature Reviews Earth & Environment
+  year: 2021
+  date: '2021-08-17'
+  volume: '2'
+  issue: '9'
+  pages: 628-644
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/mwr-d-21-0051.1
+  title: 'Record-breaking summer rainfall in South Korea in 2020: Synoptic characteristics and the role of large-scale circulations'
+  authors:
+  - Park, C.
+  - Son, S.-W.
+  - Kim, H.
+  - Ham, Y.-G.
+  - Kim, J.
+  - Cha, D.-H.
+  - Chang, E.-C.
+  - Lee, G.
+  - Kug, J.-S.
+  - Lee, W.-S.
+  - Lee, Y.-Y.
+  - Lee, H. C.
+  - Lim, B.
+  journal: Monthly Weather Review
+  year: 2021
+  date: '2021-07-01'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2021ef002165
+  title: Global Cooling Hiatus Driven by an AMOC Overshoot in a Carbon Dioxide Removal Scenario
+  authors:
+  - An, S.-I.
+  - Shin, J.
+  - Yeh, S.-W.
+  - Son, S.-W.
+  - Kug, J.-S.
+  - Min, S.-K.
+  - Kim, H.-J.
+  journal: Earth's Future
+  year: 2021
+  date: 2021-07
+  volume: '9'
+  issue: '7'
+  pages: e2021EF002165
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-021-05702-2
+  title: The influence of atmospheric intraseasonal oscillations on terrestrial biospheric CO2 fluxes in Southeast China Forest
+  authors:
+  - Li, J.
+  - Kug, J.-S.
+  - Mao, J.
+  journal: Climate Dynamics
+  year: 2021
+  date: 2021-07
+  volume: '57'
+  issue: 1-2
+  pages: 195-208
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41598-021-89824-x
+  title: Tropical Indo-Pacific SST influences on vegetation variability in eastern Africa
+  authors:
+  - Kim, I.-W.
+  - Stuecker, M. F.
+  - Timmermann, A.
+  - Zeller, E.
+  - Kug, J.-S.
+  - Park, S.-W.
+  - Kim, J.-S.
+  journal: Scientific Reports
+  year: 2021
+  date: '2021-05-17'
+  volume: '11'
+  issue: '1'
+  pages: '10462'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41598-021-89720-4
+  title: Zonally asymmetric phytoplankton response to the Southern annular mode in the marginal sea of the Southern ocean
+  authors:
+  - Noh, K. M.
+  - Lim, H.-G.
+  - Kug, J.-S.
+  journal: Scientific Reports
+  year: 2021
+  date: '2021-05-13'
+  volume: '11'
+  issue: '1'
+  pages: '10266'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-20-0180.1
+  title: Importance of Human-Induced Nitrogen Flux Increases for Simulated Arctic Warming
+  authors:
+  - Lim, H.-G.
+  - Park, J.-Y.
+  - Dunne, J. P.
+  - Stock, C. A.
+  - Kang, S.-H.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2021
+  date: 2021-05
+  volume: '34'
+  issue: '10'
+  pages: 3799-3819
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-20-0691.1
+  title: Delayed Impact of Indian Ocean Warming on the East Asian Surface Temperature Variation in Boreal Summer
+  authors:
+  - Kim, S.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2021
+  date: 2021-04
+  volume: '34'
+  issue: '8'
+  pages: 3255-3270
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-20-0809.1
+  title: Role of the climatological intertropical convergence zone in the seasonal footprinting mechanism of the El Niño-Southern Oscillation
+  authors:
+  - Park, J.-H.
+  - Sung, M.-K.
+  - Yang, Y.-M.
+  - Zhao, J.
+  - An, S.-I.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2021
+  date: '2021-03-30'
+  pages: 1-43
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41598-021-83486-5
+  title: Subseasonal relationship between Arctic and Eurasian surface air temperature
+  authors:
+  - Kim, H.-J.
+  - Son, S.-W.
+  - Moon, W.
+  - Kug, J.-S.
+  - Hwang, J.
+  journal: Scientific Reports
+  year: 2021
+  date: '2021-02-18'
+  volume: '11'
+  issue: '1'
+  pages: '4081'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-20-0402.1
+  title: The Double-Peaked El Niño and Its Physical Processes
+  authors:
+  - Shin, N.-Y.
+  - Kug, J.-S.
+  - McCormack, F. S.
+  - Holbrook, N. J.
+  journal: Journal of Climate
+  year: 2021
+  date: 2021-02
+  volume: '34'
+  issue: '4'
+  pages: 1291-1303
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2020jc016753
+  title: The Route to Spring Phytoplankton Blooms Simulated by a Lagrangian Plankton Model
+  authors:
+  - Noh, K. M.
+  - Noh, Y.
+  - Brereton, A.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Oceans'
+  year: 2021
+  date: 2021-02
+  volume: '126'
+  issue: '2'
+  pages: e2020JC016753
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/bams-d-20-0159.1
+  title: CMIP6 Model-Based Assessment of Anthropogenic Influence on the Long Sustained Western Cape Drought over 2015–19
+  authors:
+  - Kam, J.
+  - Min, S.-K.
+  - Wolski, P.
+  - Kug, J.-S.
+  journal: Bulletin of the American Meteorological Society
+  year: 2021
+  date: 2021-01
+  volume: '102'
+  issue: '1'
+  pages: S45-S50
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/joc.6772
+  title: Mid‐latitude leading double‐dip La Niña
+  authors:
+  - Park, J.-H.
+  - An, S.-I.
+  - Kug, J.-S.
+  - Yang, Y.-M.
+  - Li, T.
+  - Jo, H.-S.
+  journal: International Journal of Climatology
+  year: 2021
+  date: 2021-01
+  volume: '41'
+  issue: S1
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2020gl089951
+  title: Impact of Antarctic Meltwater Forcing on East Asian Climate Under Greenhouse Warming
+  authors:
+  - Oh, J.-H.
+  - Park, W.
+  - Lim, H.-G.
+  - Noh, K. M.
+  - Jin, E. K.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2020
+  date: '2020-11-16'
+  volume: '47'
+  issue: '21'
+  pages: e2020GL089951
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2020gl088993
+  title: Diversity of North Pacific Meridional Mode and Its Distinct Impacts on El Niño‐Southern Oscillation
+  authors:
+  - Zhao, J.
+  - Kug, J.-S.
+  - Park, J.-H.
+  - An, S.-I.
+  journal: Geophysical Research Letters
+  year: 2020
+  date: '2020-10-16'
+  volume: '47'
+  issue: '19'
+  pages: e2020GL088993
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-20-0302.1
+  title: Impacts of MJO on the Intraseasonal Temperature Variation in East Asia
+  authors:
+  - Kim, S.
+  - Kug, J.-S.
+  - Seo, K.-H.
+  journal: Journal of Climate
+  year: 2020
+  date: '2020-10-15'
+  volume: '33'
+  issue: '20'
+  pages: 8903-8916
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-19-0123.1
+  title: Tropical Pacific Decadal Variability Induced by Nonlinear Rectification of El Niño–Southern Oscillation
+  authors:
+  - Kim, G.-I.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2020
+  date: '2020-09-01'
+  volume: '33'
+  issue: '17'
+  pages: 7289-7302
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-019-00146-5
+  title: Impacts of SST Pattern Represented by Ocean Temperature near Ieodo Ocean Research Station on Winter Climate Variation over the Korean Peninsula
+  authors:
+  - Kim, G.-I.
+  - Kug, J.-S.
+  - Byun, D.-S.
+  - Lee, J.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2020
+  date: 2020-08
+  volume: '56'
+  issue: '3'
+  pages: 429-438
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
 - doi: 10.1038/s41467-020-15924-3
   title: The intensification of Arctic warming as a result of CO2 physiological forcing
   authors:
@@ -180,10 +3067,68 @@ publications:
   pages: '2098'
   type: article
   sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
   corresponding: true
   featured: true
+- doi: 10.1029/2019gl086390
+  title: Two Aspects of Decadal ENSO Variability Modulating the Long‐Term Global Carbon Cycle
+  authors:
+  - Park, S.-W.
+  - Kim, J.-S.
+  - Kug, J.-S.
+  - Stuecker, M. F.
+  - Kim, I.-W.
+  - Williams, M.
+  journal: Geophysical Research Letters
+  year: 2020
+  date: '2020-04-28'
+  volume: '47'
+  issue: '8'
+  pages: e2019GL086390
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-19-0575.1
+  title: The Impact of the 20–50-Day Atmospheric Intraseasonal Oscillation on the Gross Primary Productivity between the Yangtze and Yellow Rivers
+  authors:
+  - Li, J.
+  - Kim, J.-S.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2020
+  date: '2020-04-15'
+  volume: '33'
+  issue: '8'
+  pages: 2967-2984
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-19-0364.1
+  title: 'The Role of Oscillating Southern Hemisphere Westerly Winds: Global Ocean Circulation'
+  authors:
+  - Cheon, W. G.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2020
+  date: '2020-03-15'
+  volume: '33'
+  issue: '6'
+  pages: 2111-2130
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
 - doi: 10.1126/sciadv.aax3308
   title: Extensive fires in southeastern Siberian permafrost linked to preceding Arctic Oscillation
   authors:
@@ -200,10 +3145,479 @@ publications:
   pages: eaax3308
   type: article
   sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
   corresponding: true
   featured: true
+- doi: 10.1029/2019gl085943
+  title: Role of Local Air‐Sea Interaction in Fire Activity Over Equatorial Asia
+  authors:
+  - Kim, J.-S.
+  - Jeong, S.-J.
+  - Kug, J.-S.
+  - Williams, M.
+  journal: Geophysical Research Letters
+  year: 2019
+  date: '2019-12-28'
+  volume: '46'
+  issue: '24'
+  pages: 14789-14797
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-019-04901-2
+  title: How does ENSO diversity limit the skill of tropical Pacific precipitation forecasts in dynamical seasonal predictions?
+  authors:
+  - Sohn, S.-J.
+  - Tam, C.-Y.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2019
+  date: 2019-11
+  volume: '53'
+  issue: 9-10
+  pages: 5815-5831
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-019-04765-6
+  title: How well do current climate models simulate the linkage between Arctic warming and extratropical cold winters?
+  authors:
+  - Jang, Y.-S.
+  - Kug, J.-S.
+  - Kim, B.-M.
+  journal: Climate Dynamics
+  year: 2019
+  date: 2019-10
+  volume: '53'
+  issue: 7-8
+  pages: 4005-4018
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-019-04693-5
+  title: 'Biogeophysical feedback of phytoplankton on Arctic climate. Part II: Arctic warming amplified by interactive chlorophyll under greenhouse warming'
+  authors:
+  - Lim, H.-G.
+  - Kug, J.-S.
+  - Park, J.-Y.
+  journal: Climate Dynamics
+  year: 2019
+  date: 2019-09
+  volume: '53'
+  issue: 5-6
+  pages: 3167-3180
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-019-04652-0
+  title: Role of the western hemisphere warm pool in climate variability over the western North Pacific
+  authors:
+  - Park, J.-H.
+  - Kug, J.-S.
+  - An, S.-I.
+  - Li, T.
+  journal: Climate Dynamics
+  year: 2019
+  date: 2019-09
+  volume: '53'
+  issue: 5-6
+  pages: 2743-2755
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-016-3473-0
+  title: Role of off-equatorial SST in El Niño teleconnection to East Asia during El Niño decaying spring
+  authors:
+  - Kim, J.-S.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2019
+  date: 2019-06
+  volume: '52'
+  issue: '12'
+  pages: 7293-7308
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-018-4450-6
+  title: 'Biogeophysical feedback of phytoplankton on the Arctic climate. Part I: Impact of nonlinear rectification of interactive chlorophyll variability in the present-day climate'
+  authors:
+  - Lim, H.-G.
+  - Kug, J.-S.
+  - Park, J.-Y.
+  journal: Climate Dynamics
+  year: 2019
+  date: 2019-05
+  volume: '52'
+  issue: 9-10
+  pages: 5383-5396
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1126/science.aav4236
+  title: Pantropical climate interactions
+  authors:
+  - Cai, W.
+  - Wu, L.
+  - Lengaigne, M.
+  - Li, T.
+  - McGregor, S.
+  - Kug, J.-S.
+  - Yu, J.-Y.
+  - Stuecker, M. F.
+  - Santoso, A.
+  - Li, X.
+  - Ham, Y.-G.
+  - Chikamoto, Y.
+  - Ng, B.
+  - McPhaden, M. J.
+  - Du, Y.
+  - Dommenget, D.
+  - Jia, F.
+  - Kajtar, J. B.
+  - Keenlyside, N.
+  - Lin, X.
+  - Luo, J.-J.
+  - Martín-Rey, M.
+  - Ruprich-Robert, Y.
+  - Wang, G.
+  - Xie, S.-P.
+  - Yang, Y.
+  - Kang, S. M.
+  - Choi, J.-Y.
+  - Gan, B.
+  - Kim, G.-I.
+  - Kim, C.-E.
+  - Kim, S.
+  - Kim, J.-H.
+  - Chang, P.
+  journal: Science
+  year: 2019
+  date: 2019-03
+  volume: '363'
+  issue: '6430'
+  pages: eaav4236
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-017-3779-6
+  title: Relative roles of equatorial central Pacific and western North Pacific precipitation anomalies in ENSO teleconnection over the North Pacific
+  authors:
+  - Kim, S.
+  - Son, H.-Y.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2018
+  date: 2018-12
+  volume: '51'
+  issue: 11-12
+  pages: 4345-4355
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41598-018-33191-7
+  title: 'Predicting El Niño Beyond 1-year Lead: Effect of the Western Hemisphere Warm Pool'
+  authors:
+  - Park, J.-H.
+  - Kug, J.-S.
+  - Li, T.
+  - Behera, S. K.
+  journal: Scientific Reports
+  year: 2018
+  date: '2018-10-08'
+  volume: '8'
+  issue: '1'
+  pages: '14957'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-017-4036-8
+  title: Impact of chlorophyll bias on the tropical Pacific mean climate in an earth system model
+  authors:
+  - Lim, H.-G.
+  - Park, J.-Y.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2018
+  date: 2018-10
+  volume: '51'
+  issue: 7-8
+  pages: 2681-2694
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2018jd028935
+  title: What Controls ENSO Teleconnection to East Asia? Role of Western North Pacific Precipitation in ENSO Teleconnection to East Asia
+  authors:
+  - Kim, S.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2018
+  date: '2018-09-27'
+  volume: '123'
+  issue: '18'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2018gl078085
+  title: Future Changes in Extreme El Niño Events Modulated by North Tropical Atlantic Variability
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Yang, W.-H.
+  - Cai, W.
+  journal: Geophysical Research Letters
+  year: 2018
+  date: '2018-07-16'
+  volume: '45'
+  issue: '13'
+  pages: 6646-6653
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41586-018-0252-6
+  title: El Niño–Southern Oscillation complexity
+  authors:
+  - Timmermann, A.
+  - An, S.-I.
+  - Kug, J.-S.
+  - Jin, F.-F.
+  - Cai, W.
+  - Capotondi, A.
+  - Cobb, K. M.
+  - Lengaigne, M.
+  - McPhaden, M. J.
+  - Stuecker, M. F.
+  - Stein, K.
+  - Wittenberg, A. T.
+  - Yun, K.-S.
+  - Bayr, T.
+  - Chen, H.-C.
+  - Chikamoto, Y.
+  - Dewitte, B.
+  - Dommenget, D.
+  - Grothe, P.
+  - Guilyardi, E.
+  - Ham, Y.-G.
+  - Hayashi, M.
+  - Ineson, S.
+  - Kang, D.
+  - Kim, S.
+  - Kim, W.
+  - Lee, J.-Y.
+  - Li, T.
+  - Luo, J.-J.
+  - McGregor, S.
+  - Planton, Y.
+  - Power, S.
+  - Rashid, H.
+  - Ren, H.-L.
+  - Santoso, A.
+  - Takahashi, K.
+  - Todd, A.
+  - Wang, G.
+  - Wang, G.
+  - Xie, R.
+  - Yang, W.-H.
+  - Yeh, S.-W.
+  - Yoon, J.
+  - Zeller, E.
+  - Zhang, X.
+  journal: Nature
+  year: 2018
+  date: 2018-07
+  volume: '559'
+  issue: '7715'
+  pages: 535-545
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/2017jd027415
+  title: Characterization of Wildfire‐Induced Aerosol Emissions From the Maritime Continent Peatland and Central African Dry Savannah with MISR and CALIPSO Aerosol Products
+  authors:
+  - Lee, H.
+  - Jeong, S.-J.
+  - Kalashnikova, O.
+  - Tosca, M.
+  - Kim, S.-W.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2018
+  date: '2018-03-27'
+  volume: '123'
+  issue: '6'
+  pages: 3116-3125
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/2017rg000568
+  title: ENSO Atmospheric Teleconnections and Their Response to Greenhouse Gas Forcing
+  authors:
+  - Yeh, S.-W.
+  - Cai, W.
+  - Min, S.-K.
+  - McPhaden, M. J.
+  - Dommenget, D.
+  - Dewitte, B.
+  - Collins, M.
+  - Ashok, K.
+  - An, S.-I.
+  - Yim, B.-Y.
+  - Kug, J.-S.
+  journal: Reviews of Geophysics
+  year: 2018
+  date: 2018-03
+  volume: '56'
+  issue: '1'
+  pages: 185-206
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41558-017-0033-5
+  title: Inverse relationship between present-day tropical precipitation and its sensitivity to greenhouse warming
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Choi, J.-Y.
+  - Jin, F.-F.
+  - Watanabe, M.
+  journal: Nature Climate Change
+  year: 2018
+  date: 2018-01
+  volume: '8'
+  issue: '1'
+  pages: 64-69
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-017-3538-8
+  title: Interannual variability of western North Pacific SST anomalies and its impact on North Pacific and North America
+  authors:
+  - Park, J.-H.
+  - An, S.-I.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2017
+  date: 2017-12
+  volume: '49'
+  issue: 11-12
+  pages: 3787-3798
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-017-01831-7
+  title: Intensification of terrestrial carbon cycle related to El Niño–Southern Oscillation under greenhouse warming
+  authors:
+  - Kim, J.-S.
+  - Kug, J.-S.
+  - Jeong, S.-J.
+  journal: Nature Communications
+  year: 2017
+  date: '2017-11-22'
+  volume: '8'
+  issue: '1'
+  pages: '1674'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-016-3474-z
+  title: Tropical Atlantic-Korea teleconnection pattern during boreal summer season
+  authors:
+  - Ham, Y.-G.
+  - Chikamoto, Y.
+  - Kug, J.-S.
+  - Kimoto, M.
+  - Mochizuki, T.
+  journal: Climate Dynamics
+  year: 2017
+  date: 2017-10
+  volume: '49'
+  issue: 7-8
+  pages: 2649-2664
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-016-3402-2
+  title: 'Winter temperatures over the Korean Peninsula and East Asia: development of a new index and its application to seasonal forecast'
+  authors:
+  - Kim, S. T.
+  - Sohn, S.-J.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2017
+  date: 2017-09
+  volume: '49'
+  issue: 5-6
+  pages: 1567-1581
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
 - doi: 10.1038/ngeo2986
   title: Reduced North American terrestrial primary productivity linked to anomalous Arctic warming
   authors:
@@ -223,7 +3637,2945 @@ publications:
   pages: 572-576
   type: article
   sources:
+  - orcid
+  - openalex
   - crossref
   added: '2026-11-03'
   corresponding: true
   featured: true
+- doi: 10.1007/s00382-016-3339-5
+  title: The weakening of the ENSO–Indian Ocean Dipole (IOD) coupling strength in recent decades
+  authors:
+  - Ham, Y.-G.
+  - Choi, J.-Y.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2017
+  date: 2017-07
+  volume: '49'
+  issue: 1-2
+  pages: 249-261
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-016-3303-4
+  title: Inter-model diversity of Arctic amplification caused by global warming and its relationship with the Inter-tropical Convergence Zone in CMIP5 climate models
+  authors:
+  - Yim, B. Y.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2017
+  date: 2017-06
+  volume: '48'
+  issue: 11-12
+  pages: 3799-3811
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-017-0008-5
+  title: 'The status and prospect of seasonal climate prediction of climate over Korea and East Asia: A review'
+  authors:
+  - Jeong, J.-H.
+  - Lee, H.
+  - Yoo, J. H.
+  - Kwon, M.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Lee, J.-Y.
+  - Kim, B.-M.
+  - Son, S.-W.
+  - Min, S.-K.
+  - Lee, H.
+  - Lee, W.-S.
+  - Yoon, J.-H.
+  - Kim, H.-K.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2017
+  date: 2017-02
+  volume: '53'
+  issue: '1'
+  pages: 149-173
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-016-3121-8
+  title: How well do climate models simulate atmospheric teleconnctions over the North Pacific and East Asia associated with ENSO?
+  authors:
+  - Kim, S.
+  - Son, H.-Y.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2017
+  date: 2017-02
+  volume: '48'
+  issue: 3-4
+  pages: 971-985
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-14-00672.1
+  title: Increased Atmospheric CO2 Growth Rate during El Niño Driven by Reduced Terrestrial Productivity in the CMIP5 ESMs
+  authors:
+  - Kim, J.-S.
+  - Kug, J.-S.
+  - Yoon, J.-H.
+  - Jeong, S.-J.
+  journal: Journal of Climate
+  year: 2016
+  date: '2016-12-15'
+  volume: '29'
+  issue: '24'
+  pages: 8783-8805
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/2016gl071190
+  title: Unraveling El Niño's impact on the East Asian Monsoon and Yangtze River summer flooding
+  authors:
+  - Zhang, W.
+  - Jin, F.-F.
+  - Stuecker, M. F.
+  - Wittenberg, A. T.
+  - Timmermann, A.
+  - Ren, H.-L.
+  - Kug, J.-S.
+  - Cai, W.
+  - Cane, M.
+  journal: Geophysical Research Letters
+  year: 2016
+  date: '2016-11-16'
+  volume: '43'
+  issue: '21'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-016-0030-z
+  title: Present-day constraint for tropical Pacific precipitation changes due to global warming in CMIP5 models
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2016
+  date: 2016-11
+  volume: '52'
+  issue: '5'
+  pages: 459-466
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-015-2833-5
+  title: Inter-model diversity in jet stream changes and its relation to Arctic climate in CMIP5
+  authors:
+  - Yim, B. Y.
+  - Min, H. S.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2016
+  date: 2016-07
+  volume: '47'
+  issue: 1-2
+  pages: 235-248
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.14191/atmos.2016.26.2.337
+  title: Assessment of Climate Variability over East Asia-Korea for 2015/16 Winter
+  authors:
+  - Jeong, J.-H.
+  - Park, T.-W.
+  - Choi, J.-H.
+  - Son, S.-W.
+  - Song, K.
+  - Kug, J.-S.
+  - Kim, B.-M.
+  - Kim, H.-K.
+  - Yim, S.-Y.
+  journal: Atmosphere
+  year: 2016
+  date: '2016-06-30'
+  volume: '26'
+  issue: '2'
+  pages: 337-345
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/2015jd023953
+  title: Sensitivity of Arctic warming to sea ice concentration
+  authors:
+  - Yim, B. Y.
+  - Min, H. S.
+  - Kim, B.-M.
+  - Jeong, J.-H.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2016
+  date: '2016-06-27'
+  volume: '121'
+  issue: '12'
+  pages: 6927-6942
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-15-0862.1
+  title: MJO Propagation across the Maritime Continent in the ECMWF Ensemble Prediction System
+  authors:
+  - Kim, H.-M.
+  - Kim, D.
+  - Vitart, F.
+  - Toma, V. E.
+  - Kug, J.-S.
+  - Webster, P. J.
+  journal: Journal of Climate
+  year: 2016
+  date: '2016-06-01'
+  volume: '29'
+  issue: '11'
+  pages: 3973-3988
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-015-2799-3
+  title: 'Threshold of the volcanic forcing that leads the El Niño-like warming in the last millennium: results from the ERIK simulation'
+  authors:
+  - Lim, H.-G.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Park, Y.-G.
+  - Park, J.-H.
+  - Park, R.
+  - Song, C.-K.
+  journal: Climate Dynamics
+  year: 2016
+  date: 2016-06
+  volume: '46'
+  issue: 11-12
+  pages: 3725-3736
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-015-2776-x
+  title: Precipitation variability in September over the Korean Peninsula during ENSO developing phase
+  authors:
+  - Son, H.-Y.
+  - Park, J.-Y.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2016
+  date: 2016-06
+  volume: '46'
+  issue: 11-12
+  pages: 3419-3430
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/2015gl066864
+  title: 'ENSO amplitude changes due to greenhouse warming in CMIP5: Role of mean tropical precipitation in the twentieth century'
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2016
+  date: '2016-01-16'
+  volume: '43'
+  issue: '1'
+  pages: 422-430
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-15-0406.1
+  title: Impact of Two Distinct Teleconnection Patterns Induced by Western Central Pacific SST Anomalies on Korean Temperature Variability during the Early Boreal Summer
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  - Kwon, M.
+  journal: Journal of Climate
+  year: 2016
+  date: '2016-01-15'
+  volume: '29'
+  issue: '2'
+  pages: 743-759
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.15531/ksccr.2015.6.4.389
+  title: Future Changes in Atmosphere Teleconnection over East Asia and North Pacific associated with ENSO in CMIP5 Models
+  authors:
+  - Kim, S.
+  - Kug, J.-S.
+  journal: Journal of Climate Change Research
+  year: 2015
+  date: '2015-12-31'
+  volume: '6'
+  issue: '4'
+  pages: '389'
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.3402/tellusa.v67.27476
+  title: Midtropospheric frontogenesis associated with antecedent indirect precipitation ahead of tropical cyclones over the Korean Peninsula
+  authors:
+  - Baek, E.-H.
+  - Kim, J.-H.
+  - Kug, J.-S.
+  - Lim, G.-H.
+  journal: 'Tellus A: Dynamic Meteorology and Oceanography'
+  year: 2015
+  date: '2015-12-01'
+  volume: '67'
+  issue: '1'
+  pages: '27476'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/bams-eee_2014_ch20.1
+  title: Human Contribution to the 2014 Record High Sea Surface Temperatures Over the Western Tropical And Northeast Pacific Ocean
+  authors:
+  - Weller, E.
+  - Min, S.-K.
+  - Lee, D.
+  - Kug, J.-S.
+  - Cai, W.
+  - Yeh, S.-W.
+  journal: Bulletin of the American Meteorological Society
+  year: 2015
+  date: 2015-12
+  volume: '96'
+  issue: '12'
+  pages: S100-S104
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+  needs_review: true
+  review_reason: 같은 제목의 다른 DOI 존재(10.1175/bams-d-15-00055.1)
+- doi: 10.1175/bams-d-15-00055.1
+  title: Human Contribution to the 2014 Record High Sea Surface Temperatures Over the Western Tropical And Northeast Pacific Ocean
+  authors:
+  - Weller, E.
+  - Min, S.-K.
+  - Lee, D.
+  - Kug, J.-S.
+  - Cai, W.
+  - Yeh, S.-W.
+  journal: Bulletin of the American Meteorological Society
+  year: 2015
+  date: '2015-12-01'
+  volume: '96'
+  issue: '12'
+  pages: S100-S104
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-015-2551-z
+  title: Connection between weak stratospheric vortex events and the Pacific Decadal Oscillation
+  authors:
+  - Woo, S.-H.
+  - Sung, M.-K.
+  - Son, S.-W.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2015
+  date: 2015-12
+  volume: '45'
+  issue: 11-12
+  pages: 3481-3492
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-015-2527-z
+  title: Role of north tropical atlantic SST on the ENSO simulated using CMIP3 and CMIP5 models
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2015
+  date: 2015-12
+  volume: '45'
+  issue: 11-12
+  pages: 3103-3117
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-14-00721.1
+  title: Changes in Independency between Two Types of El Niño Events under a Greenhouse Warming Scenario in CMIP5 Models
+  authors:
+  - Ham, Y.-G.
+  - Jeong, Y.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2015
+  date: '2015-10-01'
+  volume: '28'
+  issue: '19'
+  pages: 7561-7575
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/ngeo2517
+  title: Two distinct influences of Arctic warming on cold winters over North America and East Asia
+  authors:
+  - Kug, J.-S.
+  - Jeong, J.-H.
+  - Jang, Y.-S.
+  - Kim, B.-M.
+  - Folland, C. K.
+  - Min, S.-K.
+  - Son, S.-W.
+  journal: Nature Geoscience
+  year: 2015
+  date: 2015-10
+  volume: '8'
+  issue: '10'
+  pages: 759-762
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/nclimate2743
+  title: ENSO and greenhouse warming
+  authors:
+  - Cai, W.
+  - Santoso, A.
+  - Wang, G.
+  - Yeh, S.-W.
+  - An, S.-I.
+  - Cobb, K. M.
+  - Collins, M.
+  - Guilyardi, E.
+  - Jin, F.-F.
+  - Kug, J.-S.
+  - Lengaigne, M.
+  - McPhaden, M. J.
+  - Takahashi, K.
+  - Timmermann, A.
+  - Vecchi, G.
+  - Watanabe, M.
+  - Wu, L.
+  journal: Nature Climate Change
+  year: 2015
+  date: 2015-09
+  volume: '5'
+  issue: '9'
+  pages: 849-859
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-14-00790.1
+  title: Temperature Variation over East Asia during the Lifecycle of Weak Stratospheric Polar Vortex
+  authors:
+  - Woo, S.-H.
+  - Kim, B.-M.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2015
+  date: '2015-07-15'
+  volume: '28'
+  issue: '14'
+  pages: 5857-5872
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/2015gl064381
+  title: Asymmetric impact of Atlantic Multidecadal Oscillation on El Niño and La Niña characteristics
+  authors:
+  - Sung, M.-K.
+  - An, S.-I.
+  - Kim, B.-M.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2015
+  date: '2015-06-28'
+  volume: '42'
+  issue: '12'
+  pages: 4998-5004
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/2015gl063886
+  title: Migration of atmospheric convection coupled with ocean currents pushes El Niño to extremes
+  authors:
+  - Kim, W.
+  - Cai, W.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2015
+  date: '2015-05-16'
+  volume: '42'
+  issue: '9'
+  pages: 3583-3590
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1073/pnas.1416884112
+  title: Amplified Arctic warming by phytoplankton under greenhouse warming
+  authors:
+  - Park, J.-Y.
+  - Kug, J.-S.
+  - Bader, J.
+  - Rolph, R.
+  - Kwon, M.
+  journal: Proceedings of the National Academy of Sciences
+  year: 2015
+  date: '2015-05-12'
+  volume: '112'
+  issue: '19'
+  pages: 5921-5926
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-015-0066-5
+  title: 'Changes in weather and climate extremes over Korea and possible causes: A review'
+  authors:
+  - Min, S.-K.
+  - Son, S.-W.
+  - Seo, K.-H.
+  - Kug, J.-S.
+  - An, S.-I.
+  - Choi, Y.-S.
+  - Jeong, J.-H.
+  - Kim, B.-M.
+  - Kim, J.-W.
+  - Kim, Y.-H.
+  - Lee, J.-Y.
+  - Lee, M.-I.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2015
+  date: 2015-05
+  volume: '51'
+  issue: '2'
+  pages: 103-121
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-014-2349-4
+  title: Pacific Decadal Oscillation and its relation to the extratropical atmospheric variation in CMIP5
+  authors:
+  - Yim, B. Y.
+  - Kwon, M.
+  - Min, H. S.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2015
+  date: 2015-03
+  volume: '44'
+  issue: 5-6
+  pages: 1521-1540
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-14-00376.1
+  title: Improvement of ENSO Simulation Based on Intermodel Diversity
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2015
+  date: '2015-02-01'
+  volume: '28'
+  issue: '3'
+  pages: 998-1015
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-014-0059-9
+  title: Intra-winter atmospheric circulation changes over East Asia and North Pacific associated with ENSO in a seasonal prediction model
+  authors:
+  - Kim, S.
+  - Kim, H.-S.
+  - Min, S.-K.
+  - Son, H.-Y.
+  - Won, D.-J.
+  - Jung, H.-S.
+  - Kug, J.-S.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2015
+  date: 2015-02
+  volume: '51'
+  issue: '1'
+  pages: 49-60
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00704-013-1045-3
+  title: 'Antecedent mid-tropospheric frontogenesis caused by the interaction between a tropical cyclone and midlatitude trough: a case study of Typhoon Rusa (2002)'
+  authors:
+  - Baek, E.-H.
+  - Lim, G.-H.
+  - Kim, J.-H.
+  - Kug, J.-S.
+  journal: Theoretical and Applied Climatology
+  year: 2014
+  date: 2014-10
+  volume: '118'
+  issue: 1-2
+  pages: 9-24
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-013-2009-0
+  title: Impact of bio-physical feedbacks on the tropical climate in coupled and uncoupled GCMs
+  authors:
+  - Park, J.-Y.
+  - Kug, J.-S.
+  - Seo, H.
+  - Bader, J.
+  journal: Climate Dynamics
+  year: 2014
+  date: 2014-10
+  volume: '43'
+  issue: 7-8
+  pages: 1811-1827
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/9/9/094007
+  title: Intensified Arctic warming under greenhouse warming by vegetation–atmosphere–sea ice interaction
+  authors:
+  - Jeong, J.-H.
+  - Kug, J.-S.
+  - Linderholm, H. W.
+  - Chen, D.
+  - Kim, B.-M.
+  - Jun, S.-Y.
+  journal: Environmental Research Letters
+  year: 2014
+  date: '2014-09-01'
+  volume: '9'
+  issue: '9'
+  pages: 094007
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jas-d-13-0221.1
+  title: Eddy-Induced Growth Rate of Low-Frequency Variability and Its Mid- to Late Winter Suppression in the Northern Hemisphere
+  authors:
+  - Ren, H.-L.
+  - Jin, F.-F.
+  - Kug, J.-S.
+  journal: Journal of the Atmospheric Sciences
+  year: 2014
+  date: '2014-07-01'
+  volume: '71'
+  issue: '7'
+  pages: 2281-2298
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-014-2064-1
+  title: ENSO phase-locking to the boreal winter in CMIP3 and CMIP5 models
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2014
+  date: 2014-07
+  volume: '43'
+  issue: 1-2
+  pages: 305-318
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-013-2008-1
+  title: Winter precipitation variability over Korean Peninsula associated with ENSO
+  authors:
+  - Son, H.-Y.
+  - Park, J.-Y.
+  - Kug, J.-S.
+  - Yoo, J.
+  - Kim, C.-H.
+  journal: Climate Dynamics
+  year: 2014
+  date: 2014-06
+  volume: '42'
+  issue: 11-12
+  pages: 3171-3186
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-13-00261.1
+  title: Future Change of Northern Hemisphere Summer Tropical–Extratropical Teleconnection in CMIP5 Models*
+  authors:
+  - Lee, J.-Y.
+  - Wang, B.
+  - Seo, K.-H.
+  - Kug, J.-S.
+  - Choi, Y.-S.
+  - Kosaka, Y.
+  - Ha, K.-J.
+  journal: Journal of Climate
+  year: 2014
+  date: '2014-05-15'
+  volume: '27'
+  issue: '10'
+  pages: 3643-3664
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/9/6/064008
+  title: Effects of Pacific Intertropical Convergence Zone precipitation bias on ENSO phase transition
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  journal: Environmental Research Letters
+  year: 2014
+  date: '2014-05-01'
+  volume: '9'
+  issue: '6'
+  pages: 064008
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.pocean.2014.03.013
+  title: An exploratory modeling study on bio-physical processes associated with ENSO
+  authors:
+  - Park, J.-Y.
+  - Kug, J.-S.
+  - Park, Y.-G.
+  journal: Progress in Oceanography
+  year: 2014
+  date: 2014-05
+  volume: '124'
+  pages: 28-41
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-014-0013-x
+  title: Role of tropical atlantic SST variability as a modulator of El Niño teleconnections
+  authors:
+  - Ham, Y.-G.
+  - Sung, M.-K.
+  - An, S.-I.
+  - Schubert, S. D.
+  - Kug, J.-S.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2014
+  date: 2014-05
+  volume: '50'
+  issue: '3'
+  pages: 247-261
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.14191/atmos.2014.24.1.089
+  title: Relation between Climate Variability in Korea and Two Types of El Niño, and Their Sensitivity to Definition of Two Types of El Niño
+  authors:
+  - Kim, J.-S.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  - Kim, H.-K.
+  - Park, E.-H.
+  journal: Atmosphere
+  year: 2014
+  date: '2014-03-31'
+  volume: '24'
+  issue: '1'
+  pages: 89-99
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/2013jc009050
+  title: Ocean chlorophyll response to two types of El Niño events in an ocean‐biogeochemical coupled model
+  authors:
+  - Lee, K.-W.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Park, J.-Y.
+  journal: 'Journal of Geophysical Research: Oceans'
+  year: 2014
+  date: 2014-02
+  volume: '119'
+  issue: '2'
+  pages: 933-952
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-13-00084.1
+  title: Propagating versus Nonpropagating Madden–Julian Oscillation Events
+  authors:
+  - Kim, D.
+  - Kug, J.-S.
+  - Sobel, A. H.
+  journal: Journal of Climate
+  year: 2014
+  date: '2014-01-01'
+  volume: '27'
+  issue: '1'
+  pages: 111-125
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-014-0028-3
+  title: 'Recent progress on two types of El Niño: Observations, dynamics, and future changes'
+  authors:
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - An, S.-I.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2014
+  date: 2014-01
+  volume: '50'
+  issue: '1'
+  pages: 69-81
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-012-1640-5
+  title: Marine biological feedback associated with Indian Ocean Dipole in a coupled ocean/biogeochemical model
+  authors:
+  - Park, J.-Y.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2014
+  date: 2014-01
+  volume: '42'
+  issue: 1-2
+  pages: 329-343
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.3402/tellusa.v65i0.19863
+  title: An alterative effect by the tropical North Atlantic SST in intraseasonally varying El Niño teleconnection over the North Atlantic
+  authors:
+  - Sung, M.-K.
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - An, S.-I.
+  journal: 'Tellus A: Dynamic Meteorology and Oceanography'
+  year: 2013
+  date: '2013-12-01'
+  volume: '65'
+  issue: '1'
+  pages: '19863'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.4217/opr.2013.35.3.259
+  title: TIPEX (Tropical Indo-Pacific water transport and ecosystem monitoring EXperiment) Program
+  authors:
+  - Jeon, D.
+  - Kim, E.
+  - Shin, C. W.
+  - Kim, C.-H.
+  - Kug, J. S.
+  - Lee, J. H.
+  - Lee, Y.-H.
+  - Kim, S. H.
+  journal: Ocean and Polar Research
+  year: 2013
+  date: '2013-09-30'
+  volume: '35'
+  issue: '3'
+  pages: 259-272
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.4217/opr.2013.35.3.249
+  title: A Comparison of Two Vertical-Mixing Schemes on the Simulation of the Mixed Layer Depth and Upper Ocean Temperature in an Ocean General Circulation Model
+  authors:
+  - Yi, D.-W.
+  - Jang, C. J.
+  - Yeh, S.-W.
+  - Park, T.
+  - Shin, H.-J.
+  - Kim, D.
+  - Kug, J.-S.
+  journal: Ocean and Polar Research
+  year: 2013
+  date: '2013-09-30'
+  volume: '35'
+  issue: '3'
+  pages: 249-258
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.pocean.2013.07.005
+  title: Importance of mean state in simulating different types of El Niño revealed by SNU coupled GCMs
+  authors:
+  - Ham, Y.-G.
+  - Lim, M.
+  - Kug, J.-S.
+  journal: Progress in Oceanography
+  year: 2013
+  date: 2013-09
+  volume: '116'
+  pages: 130-141
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-012-1630-7
+  title: Ocean mixed layer processes in the Pacific Decadal Oscillation in coupled general circulation models
+  authors:
+  - Yim, B. Y.
+  - Noh, Y.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Min, H. S.
+  - Qiu, B.
+  journal: Climate Dynamics
+  year: 2013
+  date: 2013-09
+  volume: '41'
+  issue: 5-6
+  pages: 1407-1417
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/grl.50729
+  title: 'Two distinct roles of Atlantic SSTs in ENSO variability: North Tropical Atlantic SST and Atlantic Niño'
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Park, J.-Y.
+  journal: Geophysical Research Letters
+  year: 2013
+  date: '2013-08-16'
+  volume: '40'
+  issue: '15'
+  pages: 4012-4017
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/nclimate1785
+  title: The role of mineral-dust aerosols in polar temperature amplification
+  authors:
+  - Lambert, F.
+  - Kug, J.-S.
+  - Park, R. J.
+  - Mahowald, N.
+  - Winckler, G.
+  - Abe-Ouchi, A.
+  - O’ishi, R.
+  - Takemura, T.
+  - Lee, J.-H.
+  journal: Nature Climate Change
+  year: 2013
+  date: 2013-05
+  volume: '3'
+  issue: '5'
+  pages: 487-491
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-013-0032-z
+  title: 'Favorable versus unfavorable synoptic backgrounds for indirect precipitation events ahead of tropical cyclones approaching the Korean Peninsula: A comparison of two cases'
+  authors:
+  - Baek, E.-H.
+  - Kim, J.-H.
+  - Kug, J.-S.
+  - Lim, G.-H.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2013
+  date: 2013-05
+  volume: '49'
+  issue: '3'
+  pages: 333-346
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.14191/atmos.2013.23.1.063
+  title: A Suggestion for Definition of El Niño/La Niña
+  authors:
+  - Son, H.-Y.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  - Kim, H.-K.
+  - Park, E.-H.
+  journal: Atmosphere
+  year: 2013
+  date: '2013-03-31'
+  volume: '23'
+  issue: '1'
+  pages: 63-71
+  type: article
+  sources:
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-012-1477-y
+  title: Favorable connections between seasonal footprinting mechanism and El Niño
+  authors:
+  - Park, J.-Y.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Yoon, J.
+  journal: Climate Dynamics
+  year: 2013
+  date: 2013-03
+  volume: '40'
+  issue: 5-6
+  pages: 1169-1181
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-012-1420-2
+  title: What controls phase-locking of ENSO to boreal winter in coupled GCMs?
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Kim, D.
+  - Kim, Y.-H.
+  - Kim, D.-H.
+  journal: Climate Dynamics
+  year: 2013
+  date: 2013-03
+  volume: '40'
+  issue: 5-6
+  pages: 1551-1568
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/ngeo1686
+  title: Sea surface temperature in the north tropical Atlantic as a trigger for El Niño/Southern Oscillation events
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Park, J.-Y.
+  - Jin, F.-F.
+  journal: Nature Geoscience
+  year: 2013
+  date: 2013-02
+  volume: '6'
+  issue: '2'
+  pages: 112-116
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-013-0020-3
+  title: Simulation of two types of El Niño from different convective parameters
+  authors:
+  - Jang, Y.-S.
+  - Kim, D.
+  - Kim, Y.-H.
+  - Kim, D.-H.
+  - Watanabe, M.
+  - Jin, F.-F.
+  - Kug, J.-S.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2013
+  date: 2013-02
+  volume: '49'
+  issue: '2'
+  pages: 193-199
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-013-0016-z
+  title: Impact of urbanization on recent temperature and precipitation trends in the Korean peninsula
+  authors:
+  - Kug, J.-S.
+  - Ahn, M.-S.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2013
+  date: 2013-02
+  volume: '49'
+  issue: '2'
+  pages: 151-159
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/7/4/044041
+  title: Improvement in simulation of Eurasian winter climate variability with a realistic Arctic sea ice condition in an atmospheric GCM
+  authors:
+  - Lim, Y.-K.
+  - Ham, Y.-G.
+  - Jeong, J.-H.
+  - Kug, J.-S.
+  journal: Environmental Research Letters
+  year: 2012
+  date: '2012-12-01'
+  volume: '7'
+  issue: '4'
+  pages: '044041'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2012gl053305
+  title: Uncertainty in the ENSO amplitude change from the past to the future
+  authors:
+  - Watanabe, M.
+  - Kug, J.-S.
+  - Jin, F.-F.
+  - Collins, M.
+  - Ohba, M.
+  - Wittenberg, A. T.
+  journal: Geophysical Research Letters
+  year: 2012
+  date: '2012-10-28'
+  volume: '39'
+  issue: '20'
+  pages: 2012GL053305
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2012jd018090
+  title: Nonlinear impact of the Arctic Oscillation on extratropical surface air temperature
+  authors:
+  - Son, H.-Y.
+  - Park, W.
+  - Jeong, J.-H.
+  - Yeh, S.-W.
+  - Kim, B.-M.
+  - Kwon, M.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2012
+  date: '2012-10-16'
+  volume: '117'
+  issue: D19
+  pages: 2012JD018090
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-12-00078.1
+  title: Indian Ocean Feedback to the ENSO Transition in a Multimodel Ensemble
+  authors:
+  - Kug, J.-S.
+  - Ham, Y.-G.
+  journal: Journal of Climate
+  year: 2012
+  date: '2012-10-15'
+  volume: '25'
+  issue: '20'
+  pages: 6942-6957
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.pocean.2012.04.007
+  title: Understanding the responses of sea surface temperature to the two different types of El Niño in the western North Pacific
+  authors:
+  - Yoon, J.
+  - Yeh, S.-W.
+  - Kim, Y.-H.
+  - Kug, J.-S.
+  - Min, H. S.
+  journal: Progress in Oceanography
+  year: 2012
+  date: 2012-10
+  volume: '105'
+  pages: 81-89
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.pocean.2012.04.005
+  title: Coupled bred vectors in the tropical Pacific and their application to ENSO prediction
+  authors:
+  - Ham, Y.-G.
+  - Kang, I.-S.
+  - Kug, J.-S.
+  journal: Progress in Oceanography
+  year: 2012
+  date: 2012-10
+  volume: '105'
+  pages: 90-101
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1088/1748-9326/7/3/034002
+  title: Improved simulation of two types of El Niño in CMIP5 models
+  authors:
+  - Kug, J.-S.
+  - Ham, Y.-G.
+  - Lee, J.-Y.
+  - Jin, F.-F.
+  journal: Environmental Research Letters
+  year: 2012
+  date: '2012-09-01'
+  volume: '7'
+  issue: '3'
+  pages: '034002'
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.dsr.2012.05.008
+  title: Impact of strong El Niño events (1997/98 and 2009/10) on sinking particle fluxes in the 10°N thermocline ridge area of the northeastern equatorial Pacific
+  authors:
+  - Kim, H. J.
+  - Hyeong, K.
+  - Yoo, C. M.
+  - Khim, B. K.
+  - Kim, K. H.
+  - Son, J. W.
+  - Kug, J. S.
+  - Park, J. Y.
+  - Kim, D.
+  journal: 'Deep Sea Research Part I: Oceanographic Research Papers'
+  year: 2012
+  date: 2012-09
+  volume: '67'
+  pages: 111-120
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00704-012-0588-z
+  title: Dependency of typhoon intensity and genesis locations on El Niño phase and SST shift over the western North Pacific
+  authors:
+  - Ha, K.-J.
+  - Yoon, S.-J.
+  - Yun, K.-S.
+  - Kug, J.-S.
+  - Jang, Y.-S.
+  - Chan, J. C. L.
+  journal: Theoretical and Applied Climatology
+  year: 2012
+  date: 2012-08
+  volume: '109'
+  issue: 3-4
+  pages: 383-395
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli-d-11-00303.1
+  title: Rectification Feedback of High-Frequency Atmospheric Variability into Low-Frequency Zonal Flows in the Tropical Pacific
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Lim, M.-J.
+  journal: Journal of Climate
+  year: 2012
+  date: '2012-07-15'
+  volume: '25'
+  issue: '14'
+  pages: 5088-5101
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-011-1157-3
+  title: How well do current climate models simulate two types of El Nino?
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2012
+  date: 2012-07
+  volume: '39'
+  issue: 1-2
+  pages: 383-398
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/joc.2329
+  title: Eastward shift of the Pacific/North American pattern on an interdecadal time scale and an associated synoptic eddy feedback
+  authors:
+  - Lee, Y.-Y.
+  - Kug, J.-S.
+  - Lim, G.-H.
+  - Watanabe, M.
+  journal: International Journal of Climatology
+  year: 2012
+  date: '2012-06-15'
+  volume: '32'
+  issue: '7'
+  pages: 1128-1134
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-011-1171-5
+  title: El-Nino Southern Oscillation simulated and predicted in SNU coupled GCMs
+  authors:
+  - Ham, Y.-G.
+  - Kang, I.-S.
+  - Kim, D.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2012
+  date: 2012-06
+  volume: '38'
+  issue: 11-12
+  pages: 2227-2242
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-011-1142-x
+  title: Greening in the circumpolar high-latitude may amplify warming in the growing season
+  authors:
+  - Jeong, J.-H.
+  - Kug, J.-S.
+  - Kim, B.-M.
+  - Min, S.-K.
+  - Linderholm, H. W.
+  - Ho, C.-H.
+  - Rayner, D.
+  - Chen, D.
+  - Jun, S.-Y.
+  journal: Climate Dynamics
+  year: 2012
+  date: 2012-04
+  volume: '38'
+  issue: 7-8
+  pages: 1421-1431
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.4217/opr.2012.34.1.029
+  title: Relationship between Interannual Variability of Phytoplankton and Tropical Cyclones in the Western North Pacific
+  authors:
+  - Park, J.-Y.
+  - Kug, J.-S.
+  - Park, J.-S.
+  - Chang, C.-J.
+  journal: Ocean and Polar Research
+  year: 2012
+  date: '2012-03-30'
+  volume: '34'
+  issue: '1'
+  pages: 29-35
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2011gl050005
+  title: Revisited relationship between tropical and North Pacific sea surface temperature variations
+  authors:
+  - Park, J.-Y.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2012
+  date: 2012-01
+  volume: '39'
+  issue: '2'
+  pages: 2011GL050005
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2011jd015904
+  title: Recent recovery of the Siberian High intensity
+  authors:
+  - Jeong, J.-H.
+  - Ou, T.
+  - Linderholm, H. W.
+  - Kim, B.-M.
+  - Kim, S.-J.
+  - Kug, J.-S.
+  - Chen, D.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2011
+  date: '2011-12-16'
+  volume: '116'
+  issue: D23
+  pages: n/a-n/a
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2011jd016526
+  title: El Niño-Southern Oscillation sensitivity to cumulus entrainment in a coupled general circulation model
+  authors:
+  - Kim, D.
+  - Jang, Y.-S.
+  - Kim, D.-H.
+  - Kim, Y.-H.
+  - Watanabe, M.
+  - Jin, F.-F.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2011
+  date: '2011-11-27'
+  volume: '116'
+  issue: D22
+  pages: n/a-n/a
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2011jd015645
+  title: The central Pacific as the export region of the El Niño-Southern Oscillation sea surface temperature anomaly to Antarctic sea ice
+  authors:
+  - Song, H.-J.
+  - Choi, E.
+  - Lim, G.-H.
+  - Kim, Y. H.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2011
+  date: '2011-11-16'
+  volume: '116'
+  issue: D21
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-011-1119-9
+  title: ENSO nonlinearity in a warming climate
+  authors:
+  - Boucharel, J.
+  - Dewitte, B.
+  - du Penhoat, Y.
+  - Garel, B.
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  journal: Climate Dynamics
+  year: 2011
+  date: 2011-11
+  volume: '37'
+  issue: 9-10
+  pages: 2045-2065
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2011jc007056
+  title: Variability of chlorophyll associated with El Niño–Southern Oscillation and its possible biological feedback in the equatorial Pacific
+  authors:
+  - Park, J.-Y.
+  - Kug, J.-S.
+  - Park, J.
+  - Yeh, S.-W.
+  - Jang, C. J.
+  journal: Journal of Geophysical Research
+  year: 2011
+  date: '2011-10-01'
+  volume: '116'
+  issue: C10
+  pages: C10001
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-010-0912-1
+  title: The role of mean state on changes in El Niño’s flavor
+  authors:
+  - Choi, J.
+  - An, S.-I.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  journal: Climate Dynamics
+  year: 2011
+  date: 2011-09
+  volume: '37'
+  issue: 5-6
+  pages: 1205-1215
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2010jc006851
+  title: Empirical singular vector method for ensemble El Niño–Southern Oscillation prediction with a coupled general circulation model
+  authors:
+  - Kug, J.-S.
+  - Ham, Y.-G.
+  - Lee, E.-J.
+  - Kang, I.-S.
+  journal: Journal of Geophysical Research
+  year: 2011
+  date: '2011-08-25'
+  volume: '116'
+  issue: C8
+  pages: C08029
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2011gl048521
+  title: 'The unique 2009–2010 El Niño event: A fast phase transition of warm pool El Niño to La Niña'
+  authors:
+  - Kim, W.
+  - Yeh, S.-W.
+  - Kim, J.-H.
+  - Kug, J.-S.
+  - Kwon, M.
+  journal: Geophysical Research Letters
+  year: 2011
+  date: 2011-08
+  volume: '38'
+  issue: '15'
+  pages: 2011GL048521
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2011gl048237
+  title: Are there two types of La Nina?
+  authors:
+  - Kug, J.-S.
+  - Ham, Y.-G.
+  journal: Geophysical Research Letters
+  year: 2011
+  date: 2011-08
+  volume: '38'
+  issue: '16'
+  pages: n/a-n/a
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-010-0873-4
+  title: Impact of transient eddies on extratropical seasonal-mean predictability in DEMETER models
+  authors:
+  - Kang, I.-S.
+  - Kug, J.-S.
+  - Lim, M.-J.
+  - Choi, D.-H.
+  journal: Climate Dynamics
+  year: 2011
+  date: 2011-08
+  volume: '37'
+  issue: 3-4
+  pages: 509-519
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/joc.2163
+  title: A possible mechanism for El Niño‐like warming in response to the future greenhouse warming
+  authors:
+  - Kug, J.-S.
+  - Sooraj, K. P.
+  - Jin, F.-F.
+  - Ham, Y.-G.
+  - Kim, D.
+  journal: International Journal of Climatology
+  year: 2011
+  date: 2011-08
+  volume: '31'
+  issue: '10'
+  pages: 1567-1572
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2010jd015006
+  title: A linkage between the North Atlantic Oscillation and its downstream development due to the existence of a blocking ridge
+  authors:
+  - Sung, M.-K.
+  - Lim, G.-H.
+  - Kug, J.-S.
+  - An, S.-I.
+  journal: Journal of Geophysical Research
+  year: 2011
+  date: '2011-06-04'
+  volume: '116'
+  issue: D11
+  pages: D11107
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-010-0913-0
+  title: Transformed eddy-PV flux and positive synoptic eddy feedback onto low-frequency flow
+  authors:
+  - Ren, H.-L.
+  - Jin, F.-F.
+  - Kug, J.-S.
+  - Gao, L.
+  journal: Climate Dynamics
+  year: 2011
+  date: 2011-06
+  volume: '36'
+  issue: 11-12
+  pages: 2357-2370
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2010jd014633
+  title: Browning in desert boundaries in Asia in recent decades
+  authors:
+  - Jeong, S.-J.
+  - Ho, C.-H.
+  - Brown, M. E.
+  - Kug, J.-S.
+  - Piao, S.
+  journal: Journal of Geophysical Research
+  year: 2011
+  date: '2011-01-20'
+  volume: '116'
+  issue: D2
+  pages: D02103
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2010gl045886
+  title: Natural variability of the central Pacific El Niño event on multi-centennial timescales
+  authors:
+  - Yeh, S.-W.
+  - Kirtman, B. P.
+  - Kug, J.-S.
+  - Park, W.
+  - Latif, M.
+  journal: Geophysical Research Letters
+  year: 2011
+  date: 2011-01
+  volume: '38'
+  issue: '2'
+  pages: n/a-n/a
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2010gl045072
+  title: 'Mechanism for northward propagation of boreal summer intraseasonal oscillation: Convective momentum transport'
+  authors:
+  - Kang, I.-S.
+  - Kim, D.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2010
+  date: 2010-12
+  volume: '37'
+  issue: '24'
+  pages: 2010GL045072
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2010gl045124
+  title: Global warming shifts Pacific tropical cyclone location
+  authors:
+  - Li, T.
+  - Kwon, M.
+  - Zhao, M.
+  - Kug, J.-S.
+  - Luo, J.-J.
+  - Yu, W.
+  journal: Geophysical Research Letters
+  year: 2010
+  date: 2010-11
+  volume: '37'
+  issue: '21'
+  pages: 2010GL045124
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s13143-010-0027-y
+  title: Statistical relationship between two types of El Niño events and climate variation over the Korean Peninsula
+  authors:
+  - Kug, J.-S.
+  - Ahn, M.-S.
+  - Sung, M.-K.
+  - Yeh, S.-W.
+  - Min, H.-S.
+  - Kim, Y.-H.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2010
+  date: 2010-11
+  volume: '46'
+  issue: '4'
+  pages: 467-474
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-009-0606-8
+  title: A general rule for synoptic-eddy feedback onto low-frequency flow
+  authors:
+  - Kug, J.-S.
+  - Jin, F.-F.
+  - Park, J.
+  - Ren, H.-L.
+  - Kang, I.-S.
+  journal: Climate Dynamics
+  year: 2010
+  date: 2010-11
+  volume: '35'
+  issue: '6'
+  pages: 1011-1026
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2009jd013675
+  title: Role of synoptic eddies on low‐frequency precipitation variation
+  authors:
+  - Kug, J.-S.
+  - Jin, F.-F.
+  - Ren, H.-L.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2010
+  date: '2010-10-16'
+  volume: '115'
+  issue: D19
+  pages: 2009JD013675
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2010jd014160
+  title: Arctic Oscillation responses to greenhouse warming and role of synoptic eddy feedback
+  authors:
+  - Choi, D.-H.
+  - Kug, J.-S.
+  - Kwon, W.-T.
+  - Jin, F.-F.
+  - Baek, H.-J.
+  - Min, S.-K.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2010
+  date: '2010-09-16'
+  volume: '115'
+  issue: D17
+  pages: 2010JD014160
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-010-0857-4
+  title: How are seasonal prediction skills related to models’ performance on mean state and annual cycle?
+  authors:
+  - Lee, J.-Y.
+  - Wang, B.
+  - Kang, I.-S.
+  - Shukla, J.
+  - Kumar, A.
+  - Kug, J.-S.
+  - Schemm, J. K. E.
+  - Luo, J.-J.
+  - Yamagata, T.
+  - Fu, X.
+  - Alves, O.
+  - Stern, B.
+  - Rosati, T.
+  - Park, C.-K.
+  journal: Climate Dynamics
+  year: 2010
+  date: 2010-08
+  volume: '35'
+  issue: 2-3
+  pages: 267-283
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-009-0664-y
+  title: New approach for optimal perturbation method in ensemble climate prediction with empirical singular vector
+  authors:
+  - Kug, J.-S.
+  - Ham, Y.-G.
+  - Kimoto, M.
+  - Jin, F.-F.
+  - Kang, I.-S.
+  journal: Climate Dynamics
+  year: 2010
+  date: 2010-08
+  volume: '35'
+  issue: 2-3
+  pages: 331-340
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2010gl043673
+  title: Role of synoptic eddy feedback on polar climate responses to the anthropogenic forcing
+  authors:
+  - Kug, J.-S.
+  - Choi, D.-H.
+  - Jin, F.-F.
+  - Kwon, W.-T.
+  - Ren, H.-L.
+  journal: Geophysical Research Letters
+  year: 2010
+  date: 2010-07
+  volume: '37'
+  issue: '14'
+  pages: 2010GL043673
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2009jd013153
+  title: Phase asymmetric downstream development of the North Atlantic Oscillation and its impact on the East Asian winter monsoon
+  authors:
+  - Sung, M.-K.
+  - Lim, G.-H.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2010
+  date: '2010-05-16'
+  volume: '115'
+  issue: D9
+  pages: 2009JD013153
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2009jd012813
+  title: Influence of the East Asian winter monsoon on the storm track activity over the North Pacific
+  authors:
+  - Lee, Y.-Y.
+  - Lim, G.-H.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2010
+  date: '2010-05-16'
+  volume: '115'
+  issue: D9
+  pages: 2009JD012813
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00704-009-0183-0
+  title: Changes in El Niño and La Niña teleconnections over North Pacific–America in the global warming simulations
+  authors:
+  - Kug, J.-S.
+  - An, S.-I.
+  - Ham, Y.-G.
+  - Kang, I.-S.
+  journal: Theoretical and Applied Climatology
+  year: 2010
+  date: 2010-05
+  volume: '100'
+  issue: 3-4
+  pages: 275-282
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-009-0586-8
+  title: Impact of diurnal atmosphere–ocean coupling on tropical climate simulations using a coupled GCM
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Kang, I.-S.
+  - Jin, F.-F.
+  - Timmermann, A.
+  journal: Climate Dynamics
+  year: 2010
+  date: 2010-05
+  volume: '34'
+  issue: '6'
+  pages: 905-917
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2009jd012861
+  title: Precursors of the El Niño/La Niña onset and their interrelationship
+  authors:
+  - Kug, J.-S.
+  - Sooraj, K.-P.
+  - Li, T.
+  - Jin, F.-F.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2010
+  date: '2010-03-16'
+  volume: '115'
+  issue: D5
+  pages: 2009JD012861
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/2009jcli3293.1
+  title: Warm Pool and Cold Tongue El Niño Events as Simulated by the GFDL 2.1 Coupled GCM
+  authors:
+  - Kug, J.-S.
+  - Choi, J.
+  - An, S.-I.
+  - Jin, F.-F.
+  - Wittenberg, A. T.
+  journal: Journal of Climate
+  year: 2010
+  date: '2010-03-01'
+  volume: '23'
+  issue: '5'
+  pages: 1226-1239
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/2009jcli2895.1
+  title: The Inverse Effect of Annual-Mean State and Annual-Cycle Changes on ENSO
+  authors:
+  - An, S.-I.
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Timmermann, A.
+  - Choi, J.
+  - Kang, I.-S.
+  journal: Journal of Climate
+  year: 2010
+  date: '2010-03-01'
+  volume: '23'
+  issue: '5'
+  pages: 1095-1110
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/2009jcli2894.1
+  title: Causes of the El Niño and La Niña Amplitude Asymmetry in the Equatorial Eastern Pacific
+  authors:
+  - Su, J.
+  - Zhang, R.
+  - Li, T.
+  - Rong, X.
+  - Kug, J.-S.
+  - Hong, C.-C.
+  journal: Journal of Climate
+  year: 2010
+  date: '2010-02-01'
+  volume: '23'
+  issue: '3'
+  pages: 605-617
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2009gl041020
+  title: Scale interaction between tropical instability waves and low‐frequency oceanic flows
+  authors:
+  - Kug, J.-S.
+  - Ham, Y.-G.
+  - Jin, F.-F.
+  - Kang, I.-S.
+  journal: Geophysical Research Letters
+  year: 2010
+  date: 2010-01
+  volume: '37'
+  issue: '2'
+  pages: 2009GL041020
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-009-0582-z
+  title: Optimal initial perturbations for El Nino ensemble prediction with ensemble Kalman filter
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Kang, I.-S.
+  journal: Climate Dynamics
+  year: 2009
+  date: 2009-12
+  volume: '33'
+  issue: 7-8
+  pages: 959-973
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/nature08316
+  title: El Niño in a changing climate
+  authors:
+  - Yeh, S.-W.
+  - Kug, J.-S.
+  - Dewitte, B.
+  - Kwon, M.-H.
+  - Kirtman, B. P.
+  - Jin, F.-F.
+  journal: Nature
+  year: 2009
+  date: '2009-09-24'
+  volume: '461'
+  issue: '7263'
+  pages: 511-514
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1016/j.atmosres.2008.10.022
+  title: Impact of Indian Ocean Dipole on high-frequency atmospheric variability over the Indian Ocean
+  authors:
+  - Kug, J.-S.
+  - Sooraj, K.
+  - Jin, F.-F.
+  - Luo, J.-J.
+  - Kwon, M.
+  journal: Atmospheric Research
+  year: 2009
+  date: 2009-09
+  volume: '94'
+  issue: '1'
+  pages: 134-139
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-008-0483-6
+  title: Effects of the low-frequency zonal wind variation on the high frequency atmospheric variability over the tropics
+  authors:
+  - Sooraj, K. P.
+  - Kim, D.
+  - Kug, J.-S.
+  - Yeh, S.-W.
+  - Jin, F.-F.
+  - Kang, I.-S.
+  journal: Climate Dynamics
+  year: 2009
+  date: 2009-09
+  volume: '33'
+  issue: '4'
+  pages: 495-507
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-008-0460-0
+  title: 'Advance and prospectus of seasonal prediction: assessment of the APCC/CliPAS 14-model ensemble retrospective seasonal prediction (1980–2004)'
+  authors:
+  - Wang, B.
+  - Lee, J.-Y.
+  - Kang, I.-S.
+  - Shukla, J.
+  - Park, C.-K.
+  - Kumar, A.
+  - Schemm, J.
+  - Cocke, S.
+  - Kug, J.-S.
+  - Luo, J.-J.
+  - Zhou, T.
+  - Wang, B.
+  - Fu, X.
+  - Yun, W.-T.
+  - Alves, O.
+  - Jin, E. K.
+  - Kinter, J.
+  - Kirtman, B.
+  - Krishnamurti, T.
+  - Lau, N. C.
+  - Lau, W.
+  - Liu, P.
+  - Pegion, P.
+  - Rosati, T.
+  - Schubert, S.
+  - Stern, W.
+  - Suarez, M.
+  - Yamagata, T.
+  journal: Climate Dynamics
+  year: 2009
+  date: 2009-07
+  volume: '33'
+  issue: '1'
+  pages: 93-117
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2009gl037294
+  title: A kinematic mechanism for positive feedback between synoptic eddies and NAO
+  authors:
+  - Ren, H.-L.
+  - Jin, F.-F.
+  - Kug, J.-S.
+  - Zhao, J.-X.
+  - Park, J.
+  journal: Geophysical Research Letters
+  year: 2009
+  date: 2009-06
+  volume: '36'
+  issue: '11'
+  pages: 2009GL037294
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00704-008-0067-8
+  title: 'Impact of El Niño onset timing on the Indian Ocean: Pacific coupling and subsequent El Niño evolution'
+  authors:
+  - Sooraj, K. P.
+  - Kug, J.-S.
+  - Li, T.
+  - Kang, I.-S.
+  journal: Theoretical and Applied Climatology
+  year: 2009
+  date: 2009-06
+  volume: '97'
+  issue: 1-2
+  pages: 17-27
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-008-0434-2
+  title: Simulation of state-dependent high-frequency atmospheric variability associated with ENSO
+  authors:
+  - Kug, J.-S.
+  - Sooraj, K. P.
+  - Kim, D.
+  - Kang, I.-S.
+  - Jin, F.-F.
+  - Takayabu, Y. N.
+  - Kimoto, M.
+  journal: Climate Dynamics
+  year: 2009
+  date: 2009-04
+  volume: '32'
+  issue: '5'
+  pages: 635-648
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1002/joc.1774
+  title: Short‐term variation of Eurasian pattern and its relation to winter weather over East Asia
+  authors:
+  - Sung, M.-K.
+  - Lim, G.-H.
+  - Kwon, W.-T.
+  - Boo, K.-O.
+  - Kug, J.-S.
+  journal: International Journal of Climatology
+  year: 2009
+  date: 2009-04
+  volume: '29'
+  issue: '5'
+  pages: 771-775
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/2008jcli2624.1
+  title: 'Two Types of El Niño Events: Cold Tongue El Niño and Warm Pool El Niño'
+  authors:
+  - Kug, J.-S.
+  - Jin, F.-F.
+  - An, S.-I.
+  journal: Journal of Climate
+  year: 2009
+  date: '2009-03-15'
+  volume: '22'
+  issue: '6'
+  pages: 1499-1515
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2008gl036435
+  title: Left‐hand rule for synoptic eddy feedback on low‐frequency flow
+  authors:
+  - Kug, J.-S.
+  - Jin, F.-F.
+  journal: Geophysical Research Letters
+  year: 2009
+  date: 2009-03
+  volume: '36'
+  issue: '5'
+  pages: 2008GL036435
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-008-0397-3
+  title: Current status of ENSO prediction skill in coupled ocean–atmosphere models
+  authors:
+  - Jin, E. K.
+  - Kinter, J. L.
+  - Wang, B.
+  - Park, C.-K.
+  - Kang, I.-S.
+  - Kirtman, B. P.
+  - Kug, J.-S.
+  - Kumar, A.
+  - Luo, J.-J.
+  - Schemm, J.
+  - Shukla, J.
+  - Yamagata, T.
+  journal: Climate Dynamics
+  year: 2008
+  date: 2008-11
+  volume: '31'
+  issue: '6'
+  pages: 647-664
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/2008mwr2272.1
+  title: Systematic Error Correction of Dynamical Seasonal Prediction of Sea Surface Temperature Using a Stepwise Pattern Project Method
+  authors:
+  - Kug, J.-S.
+  - Lee, J.-Y.
+  - Kang, I.-S.
+  journal: Monthly Weather Review
+  year: 2008
+  date: '2008-09-01'
+  volume: '136'
+  issue: '9'
+  pages: 3501-3512
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/2008jcli2222.1
+  title: 'Asymmetry of the Indian Ocean Dipole. Part I: Observational Analysis'
+  authors:
+  - Hong, C.-C.
+  - Li, T.
+  - LinHo
+  - Kug, J.-S.
+  journal: Journal of Climate
+  year: 2008
+  date: 2008-09
+  volume: '21'
+  issue: '18'
+  pages: 4834-4848
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-007-0264-7
+  title: Seasonal climate predictability with Tier-one and Tier-two prediction systems
+  authors:
+  - Kug, J.-S.
+  - Kang, I.-S.
+  - Choi, D.-H.
+  journal: Climate Dynamics
+  year: 2008
+  date: 2008-09
+  volume: '31'
+  issue: '4'
+  pages: 403-416
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-007-0348-4
+  title: Tropical Pacific impacts of convective momentum transport in the SNU coupled GCM
+  authors:
+  - Kim, D.
+  - Kug, J.-S.
+  - Kang, I.-S.
+  - Jin, F.-F.
+  - Wittenberg, A. T.
+  journal: Climate Dynamics
+  year: 2008
+  date: 2008-08
+  volume: '31'
+  issue: 2-3
+  pages: 213-226
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1007/s00382-007-0310-5
+  title: How accurately do coupled climate models predict the leading modes of Asian-Australian monsoon interannual variability?
+  authors:
+  - Wang, B.
+  - Lee, J.-Y.
+  - Kang, I.-S.
+  - Shukla, J.
+  - Kug, J.-S.
+  - Kumar, A.
+  - Schemm, J.
+  - Luo, J.-J.
+  - Yamagata, T.
+  - Park, C.-K.
+  journal: Climate Dynamics
+  year: 2008
+  date: 2008-05
+  volume: '30'
+  issue: '6'
+  pages: 605-619
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2007gl032017
+  title: State‐dependent atmospheric noise associated with ENSO
+  authors:
+  - Kug, J.-S.
+  - Jin, F.-F.
+  - Sooraj, K. P.
+  - Kang, I.-S.
+  journal: Geophysical Research Letters
+  year: 2008
+  date: 2008-03
+  volume: '35'
+  issue: '5'
+  pages: 2007GL032017
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/2007jcli1500.1
+  title: Successive Modulation of ENSO to the Future Greenhouse Warming
+  authors:
+  - An, S.-I.
+  - Kug, J.-S.
+  - Ham, Y.-G.
+  - Kang, I.-S.
+  journal: Journal of Climate
+  year: 2008
+  date: '2008-01-01'
+  volume: '21'
+  issue: '1'
+  pages: 3-21
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- title: Optimal multi-model ensemble method in seasonal climate prediction
+  authors:
+  - Kug, J.-S.
+  - Lee, J.-Y.
+  - Kang, I.-K.
+  - Wang, B.
+  - Park, C.-K.
+  journal: Asia-Pacific Journal of Atmospheric Sciences
+  year: 2008
+  date: '2008'
+  volume: '44'
+  issue: '3'
+  pages: 259-267
+  type: article
+  sources:
+  - orcid
+  - openalex
+  added: '2026-11-03'
+- doi: 10.1029/2007jd008744
+  title: Role of moist energy advection in formulating anomalous Walker Circulation associated with El Niño
+  authors:
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Kang, I.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2007
+  date: '2007-12-27'
+  volume: '112'
+  issue: D24
+  pages: 2007JD008744
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/mwr3458.1
+  title: Global Sea Surface Temperature Prediction Using a Multimodel Ensemble
+  authors:
+  - Kug, J.-S.
+  - Lee, J.-Y.
+  - Kang, I.-S.
+  journal: Monthly Weather Review
+  year: 2007
+  date: '2007-09-01'
+  volume: '135'
+  issue: '9'
+  pages: 3239-3247
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli4017.1
+  title: The Influence of ENSO on the Generation of Decadal Variability in the North Pacific*
+  authors:
+  - An, S.-I.
+  - Kug, J.-S.
+  - Timmermann, A.
+  - Kang, I.-S.
+  - Timm, O.
+  journal: Journal of Climate
+  year: 2007
+  date: '2007-02-15'
+  volume: '20'
+  issue: '4'
+  pages: 667-680
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli3980.1
+  title: Interactive Feedback between ENSO and the Indian Ocean in an Interactive Ensemble Coupled Model
+  authors:
+  - Kug, J.-S.
+  - Kirtman, B. P.
+  - Kang, I.-S.
+  journal: Journal of Climate
+  year: 2006
+  date: '2006-12-15'
+  volume: '19'
+  issue: '24'
+  pages: 6371-6381
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2006gl027253
+  title: A possible impact of the North Atlantic Oscillation on the east Asian summer monsoon precipitation
+  authors:
+  - Sung, M.-K.
+  - Kwon, W.-T.
+  - Baek, H.-J.
+  - Boo, K.-O.
+  - Lim, G.-H.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2006
+  date: 2006-11
+  volume: '33'
+  issue: '21'
+  pages: 2006GL027253
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli3660.1
+  title: Interactive Feedback between ENSO and the Indian Ocean
+  authors:
+  - Kug, J.-S.
+  - Kang, I.-S.
+  journal: Journal of Climate
+  year: 2006
+  date: '2006-05-01'
+  volume: '19'
+  issue: '9'
+  pages: 1784-1801
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2005gl024916
+  title: Role of the ENSO–Indian Ocean coupling on ENSO variability in a coupled GCM
+  authors:
+  - Kug, J.-S.
+  - Li, T.
+  - An, S.-I.
+  - Kang, I.-S.
+  - Luo, J.-J.
+  - Masson, S.
+  - Yamagata, T.
+  journal: Geophysical Research Letters
+  year: 2006
+  date: 2006-05
+  volume: '33'
+  issue: '9'
+  pages: 2005GL024916
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2005gl023026
+  title: Decadal change in relationship between east Asian and WNP summer monsoons
+  authors:
+  - Kwon, M.
+  - Jhun, J.-G.
+  - Wang, B.
+  - An, S.-I.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2005
+  date: 2005-08
+  volume: '32'
+  issue: '16'
+  pages: 2005GL023026
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/jcli3433.1
+  title: El Niño–La Niña Asymmetry in the Coupled Model Intercomparison Project Simulations*
+  authors:
+  - An, S.-I.
+  - Ham, Y.-G.
+  - Kug, J.-S.
+  - Jin, F.-F.
+  - Kang, I.-S.
+  journal: Journal of Climate
+  year: 2005
+  date: '2005-07-15'
+  volume: '18'
+  issue: '14'
+  pages: 2617-2627
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/mwr2921.1
+  title: Western Pacific SST Prediction with an Intermediate El Niño Prediction Model
+  authors:
+  - Kug, J.-S.
+  - Kang, I.-S.
+  - Jhun, J.-G.
+  journal: Monthly Weather Review
+  year: 2005
+  date: '2005-05-01'
+  volume: '133'
+  issue: '5'
+  pages: 1343-1352
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2004gl021674
+  title: Preconditions for El Niño and La Niña onsets and their relation to the Indian Ocean
+  authors:
+  - Kug, J.-S.
+  - An, S.-I.
+  - Jin, F.-F.
+  - Kang, I.-S.
+  journal: Geophysical Research Letters
+  year: 2005
+  date: 2005-03
+  volume: '32'
+  issue: '5'
+  pages: 2004GL021674
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1175/1520-0442(2004)017<2478:anpobm>2.0.co;2
+  title: A Near-Annual Pacific Ocean Basin Mode
+  authors:
+  - Kang, I.-S.
+  - Kug, J.-S.
+  - An, S.-I.
+  - Jin, F.-F.
+  journal: Journal of Climate
+  year: 2004
+  date: 2004-06
+  volume: '17'
+  issue: '12'
+  pages: 2478-2488
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2003gl019209
+  title: A statistical approach to Indian Ocean sea surface temperature prediction using a dynamical ENSO prediction
+  authors:
+  - Kug, J.-S.
+  - Kang, I.-S.
+  - Lee, J.-Y.
+  - Jhun, J.-G.
+  journal: Geophysical Research Letters
+  year: 2004
+  date: '2004-05-16'
+  volume: '31'
+  issue: '9'
+  pages: 2003GL019209
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2002jc001671
+  title: Symmetric and antisymmetric mass exchanges between the equatorial and off‐equatorial Pacific associated with ENSO
+  authors:
+  - Kug, J.-S.
+  - Kang, I.-S.
+  - An, S.-I.
+  journal: 'Journal of Geophysical Research: Oceans'
+  year: 2003
+  date: 2003-08
+  volume: '108'
+  issue: C8
+  pages: 2002JC001671
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2002gl015983
+  title: A near‐annual coupled ocean‐atmosphere mode in the equatorial Pacific ocean
+  authors:
+  - Jin, F.-F.
+  - Kug, J.-S.
+  - An, S.-I.
+  - Kang, I.-S.
+  journal: Geophysical Research Letters
+  year: 2003
+  date: 2003-01
+  volume: '30'
+  issue: '2'
+  pages: 2002GL015983
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2001jd000393
+  title: 'El Niño and La Niña sea surface temperature anomalies: Asymmetry characteristics associated with their wind stress anomalies'
+  authors:
+  - Kang, I.-S.
+  - Kug, J.-S.
+  journal: 'Journal of Geophysical Research: Atmospheres'
+  year: 2002
+  date: '2002-10-16'
+  volume: '107'
+  issue: D19
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/2000gl012793
+  title: The impacts of the model assimilated wind stress data in the initialization of an intermediate ocean and the ENSO predictability
+  authors:
+  - Kug, J.-S.
+  - Kang, I.-S.
+  - Zebiak, S. E.
+  journal: Geophysical Research Letters
+  year: 2001
+  date: 2001-10
+  volume: '28'
+  issue: '19'
+  pages: 3713-3716
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1029/1999gl011023
+  title: An El‐Nino Prediction System using an intermediate ocean and a statistical atmosphere
+  authors:
+  - Kang, I.-S.
+  - Kug, J.-S.
+  journal: Geophysical Research Letters
+  year: 2000
+  date: '2000-04-15'
+  volume: '27'
+  issue: '8'
+  pages: 1167-1170
+  type: article
+  sources:
+  - orcid
+  - openalex
+  - crossref
+  added: '2026-11-03'

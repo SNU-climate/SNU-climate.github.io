@@ -212,8 +212,9 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None):
         """저자 목록. 연구실 구성원은 <strong class="au-me">, 너무 길면 앞부분 + … + 구성원 이름."""
         names = list(p.get('authors') or [])
 
-        def one(n):
-            return f'<strong class="au-me">{escape(n)}</strong>' if is_me(n) else str(escape(n))
+        def one(n):   # 이름 중간(하이픈)에서 줄바꿈되지 않도록 이름마다 감싼다
+            return (f'<strong class="au au-me">{escape(n)}</strong>' if is_me(n)
+                    else f'<span class="au">{escape(n)}</span>')
         if len(names) <= limit:
             return Markup(', '.join(one(n) for n in names))
         s = ', '.join(one(n) for n in names[:limit - 2]) + ', …'
