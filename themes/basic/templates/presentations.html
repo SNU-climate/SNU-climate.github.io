@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ t('pres.title') }}</h1>
+<p class="lead">{{ t('pres.intro') }}</p>
+{{ m.pres_list(pres_by_year) }}
+{% endblock %}

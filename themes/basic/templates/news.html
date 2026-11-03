@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ t('news.title') }}</h1>
+<p class="lead">{{ t('news.intro') }}</p>
+<div class="grid grid-3">{% for p in news %}{{ m.news_card(p) }}{% else %}<p>{{ t('common.empty') }}</p>{% endfor %}</div>
+{% endblock %}

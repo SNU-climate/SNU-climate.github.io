@@ -1,0 +1,8 @@
+# 빌드 결과는 언제든 scripts/build.py로 다시 만들 수 있다
+site/
+__pycache__/
+*.pyc
+.DS_Store
+# 원본 백업(용량·민감정보) — 필요하면 별도 보관
+backup/
+.cache/

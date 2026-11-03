@@ -1,0 +1,154 @@
+{# 공통 매크로. 테마에서 {% import 'macros.html' as m with context %} 로 불러 쓴다.
+   테마가 모양을 바꾸고 싶으면 이 매크로를 쓰지 않고 직접 마크업해도 되지만,
+   논문 번호(p.num)·연도 섹션·data-* 속성(검색용)은 그대로 지킨다. #}
+
+{# <head> 공통: 메타, 언어 대체 링크, 파비콘, 공통 CSS #}
+{% macro head_common() %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page_title }}</title>
+<meta name="description" content="{{ tr(site.lab.tagline) }}">
+<link rel="alternate" hreflang="{{ other_lang }}" href="{{ alt_url }}">
+<link rel="icon" href="{{ asset('shared/favicon.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ asset('shared/shared.css') }}">
+{% endmacro %}
+
+{# </body> 직전 공통 스크립트 #}
+{% macro scripts_common() %}
+<script src="{{ asset('shared/shared.js') }}" defer></script>
+{% endmacro %}
+
+{% macro lang_switch(cls='lang-switch') %}
+<a class="{{ cls }}" href="{{ alt_url }}" hreflang="{{ other_lang }}" lang="{{ other_lang }}">{{ t('lang.switch') }}</a>
+{% endmacro %}
+
+{% macro sample_badge(x) %}{% if x.placeholder %}<span class="sample-badge" title="{{ t('common.sample_note') }}">{{ t('common.sample') }}</span>{% endif %}{% endmacro %}
+
+{# ---------------- 논문 ---------------- #}
+{% macro pub_item(p, show_num=True, tag='li') %}
+<{{ tag }} class="pub" id="pub-{{ p.num }}" data-pub-item data-search="{{ search_text(p) }}">
+  {% if show_num %}<span class="pub-num">{{ p.num }}.</span>{% endif %}
+  <div class="pub-body">
+    <div class="pub-authors">{{ authors(p) }} ({{ p.year }})</div>
+    <div class="pub-title">{% if p.doi %}<a href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ rich(p.title) }}</a>{% else %}{{ rich(p.title) }}{% endif %}</div>
+    <div class="pub-cite">{{ cite(p) }}
+      {% if p.corresponding %}<span class="pub-badge pub-ca" title="{{ t('pubs.corresponding') }}">{{ t('pubs.ca') }}</span>{% endif %}
+      {% if p.featured %}<span class="pub-badge pub-featured">{{ t('pubs.featured') }}</span>{% endif %}
+      {% for k, v in (p.links or {}).items() %}<a class="pub-link" href="{{ static(v) if not v.startswith('http') else v }}" target="_blank" rel="noopener">{{ k }}</a>{% endfor %}
+    </div>
+  </div>
+</{{ tag }}>
+{% endmacro %}
+
+{# 연도별 섹션 + 검색창. groups = pubs_by_year #}
+{% macro pub_list(groups, search=True) %}
+{% if search %}
+<div class="pub-tools">
+  <input type="search" class="pub-search" data-pub-search placeholder="{{ t('pubs.search') }}" aria-label="{{ t('pubs.search') }}">
+  <span class="pub-count"><span data-pub-count>{{ pubs|length }}</span> {{ t('pubs.total') }}</span>
+</div>
+<p class="pub-empty" data-pub-empty hidden>{{ t('pubs.no_results') }}</p>
+{% endif %}
+{% for year, items in groups %}
+<section class="pub-year" data-pub-year id="y{{ year }}">
+  <h3 class="pub-year-title">{{ year }} <span class="pub-year-n">({{ items|length }})</span></h3>
+  <ol class="pub-ol">
+    {% for p in items %}{{ pub_item(p) }}{% endfor %}
+  </ol>
+</section>
+{% endfor %}
+{% endmacro %}
+
+{# 연도 바로가기 #}
+{% macro year_index(groups) %}
+<nav class="pub-years" aria-label="Years">{% for year, items in groups %}<a href="#y{{ year }}">{{ year }}</a>{% endfor %}</nav>
+{% endmacro %}
+
+{# ---------------- 뉴스 ---------------- #}
+{% macro news_card(p, cls='news-card') %}
+<article class="{{ cls }}">
+  <a class="news-card-link" href="{{ news_url(p) }}">
+    {% set c = cover_url(p) %}
+    <div class="news-card-img{% if not c %} news-card-img--empty{% endif %}">{% if c %}<img src="{{ c }}" alt="" loading="lazy">{% endif %}</div>
+    <div class="news-card-text">
+      <div class="news-card-meta"><span class="news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span> <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></div>
+      <h3 class="news-card-title">{{ tr(p.title) }}</h3>
+      {% if p.summary %}<p class="news-card-summary">{{ tr(p.summary) }}</p>{% endif %}
+    </div>
+  </a>
+</article>
+{% endmacro %}
+
+{# 뉴스 상세 본문(제목은 테마가 그린다) #}
+{% macro news_body(p) %}
+{% if body_fallback %}<p class="lang-note">※ 한국어 본문이 아직 없어 영문으로 표시합니다.</p>{% endif %}
+<div class="prose">{{ body_html }}</div>
+{% if p.youtube %}<div class="news-video">{{ yt_html(p.youtube, tr(p.title)) }}</div>{% endif %}
+{% if p.gallery %}
+<div class="news-gallery">{% for g in p.gallery %}<figure><img src="{{ static('news/' ~ p.slug ~ '/' ~ (g.file if g is mapping else g)) }}" alt="" loading="lazy">{% if g is mapping and g.caption %}<figcaption>{{ tr(g.caption) }}</figcaption>{% endif %}</figure>{% endfor %}</div>
+{% endif %}
+{% if p.pub %}
+<aside class="news-paper">
+  <div class="news-paper-label">{{ t('news.paper') }}</div>
+  <ul class="pub-ul">{{ pub_item(p.pub, show_num=False) }}</ul>
+</aside>
+{% elif p.doi %}
+<aside class="news-paper"><div class="news-paper-label">{{ t('news.paper') }}</div><a href="https://doi.org/{{ p.doi }}" target="_blank" rel="noopener">https://doi.org/{{ p.doi }}</a></aside>
+{% endif %}
+{% endmacro %}
+
+{# ---------------- 영상 ---------------- #}
+{% macro youtube(vid, title='') %}{{ yt_html(vid, title) }}{% endmacro %}
+
+{% macro video_card(v, cls='video-card') %}
+<article class="{{ cls }}">
+  {{ yt_html(v.id, v.title) }}
+  <div class="video-card-text">
+    <h3 class="video-card-title"><a href="{{ youtube_url(v.id) }}" target="_blank" rel="noopener">{{ v.title }}</a></h3>
+    <time class="video-card-date" datetime="{{ v.published }}">{{ fmt_date(v.published) }}</time>
+    {% if v.pub %}<a class="video-card-pub" href="{{ pub_url(v.pub) }}">{{ t('news.paper') }}: {{ v.pub.journal }} ({{ v.pub.year }})</a>{% endif %}
+  </div>
+</article>
+{% endmacro %}
+
+{# ---------------- 발표 ---------------- #}
+{% macro pres_item(p, tag='li') %}
+<{{ tag }} class="pres">
+  <time class="pres-date" datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time>
+  <div class="pres-body">
+    <div class="pres-title">{% if p.link %}<a href="{{ p.link }}" target="_blank" rel="noopener">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %} {{ sample_badge(p) }}</div>
+    <div class="pres-meta"><span class="pres-type pres-type--{{ p.type }}">{{ t('pres.type.' ~ p.type) }}</span> {{ p.event }}{% if p.location %}, {{ p.location }}{% endif %}</div>
+    {% if p.presenters %}<div class="pres-who">{% for n in p.presenters %}{% if is_me(n) %}<strong class="au-me">{{ n }}</strong>{% else %}{{ n }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+  </div>
+</{{ tag }}>
+{% endmacro %}
+
+{% macro pres_list(groups) %}
+{% for year, items in groups %}
+<section class="pres-year" id="p{{ year }}">
+  <h3 class="pres-year-title">{{ year }}</h3>
+  <ul class="pres-ul">{% for p in items %}{{ pres_item(p) }}{% endfor %}</ul>
+</section>
+{% else %}<p class="empty">{{ t('common.empty') }}</p>
+{% endfor %}
+{% endmacro %}
+
+{# ---------------- 구성원 ---------------- #}
+{% macro initials_of(name) %}{{ (name.split(' ')|map('first')|join)[:2]|upper }}{% endmacro %}
+
+{% macro member_card(mm, cls='member-card') %}
+<article class="{{ cls }}">
+  <div class="member-photo">{% if mm.photo %}<img src="{{ static(mm.photo) }}" alt="{{ tr(mm.name) }}" loading="lazy">{% else %}<span class="member-initials" aria-hidden="true">{{ initials_of(tr(mm.name)) }}</span>{% endif %}</div>
+  <div class="member-text">
+    <h4 class="member-name">{{ tr(mm.name) }} {{ sample_badge(mm) }}</h4>
+    {% if mm.interests %}<p class="member-interests">{{ tr(mm.interests) }}</p>{% endif %}
+    {% if mm.email %}<a class="member-email" href="mailto:{{ mm.email }}">{{ mm.email }}</a>{% endif %}
+  </div>
+</article>
+{% endmacro %}
+
+{% macro alumni_list(items) %}
+<ul class="alumni-ul">
+{% for a in items %}<li><span class="alumni-name">{{ tr(a.name) }}</span> <span class="alumni-degree">{{ a.degree }}, {{ a.year }}</span>{% if a.current %} — <span class="alumni-current">{{ tr(a.current) }}</span>{% endif %} {{ sample_badge(a) }}</li>{% endfor %}
+</ul>
+{% endmacro %}

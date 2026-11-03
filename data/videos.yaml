@@ -1,0 +1,197 @@
+# 유튜브 영상. videos 목록은 scripts/fetch_youtube.py가 자동 갱신한다.
+# featured: 홈 화면에 먼저 보일 영상 ID / hidden: 사이트에서 숨길 영상 ID (둘 다 수동 관리)
+channel:
+  handle: '@climatesystemlaboratory5423'
+  id: UC7gcaZ9FsIEy-KgYDWvkq_A
+  url: https://www.youtube.com/@climatesystemlaboratory5423
+  title: 기후시스템연구실 (Climate System Laboratory)
+featured: []
+hidden: []
+videos:
+- id: ULbrjMLw9GE
+  title: 얼어있던 북쪽 땅이 녹자, 물이 탄소를 깨웠다.
+  published: '2026-10-23'
+  description: "\U0001F4D8논문\nMun, J. H., Lee, H., Lee, D., Shin, Y., & Kug, J. S. (2026). Soil moisture controls on permafrost carbon cycle under greenhouse warming and zero emission pathways. Earth's Future. https://doi.org/10.1029/2026EF008209\n\n\n✅타임라인\n00:00 오프닝 \n00:04 영구동토층이 도대체 뭐에요?\n01:23 그럼 영구동토층이 녹으면 실제로 무슨 일이 생겨요?\n01:59 탄소 장부가 배출 쪽으로 넘어간다?\n02:41 그럼 범인은 온도 아닌가요?\n03:23 얼음이 녹으면 액체 상태의 물이 생긴다\n04:15 물은 입금도 늘리고, 출금도 늘린다\n0"
+  thumb: videos/ULbrjMLw9GE.jpg
+- id: DaqKSaZQapQ
+  title: 역대 최강 엘니뇨 온다…“다음 달부터 많은 비”
+  published: '2026-10-06'
+  description: '[재업로드 안내]
+
+    모든 저작권은 원 저작자에게 있습니다.
+
+
+    [원본영상]
+
+    https://www.youtube.com/watch?v=t7KQ9JlmKt4
+
+
+    [기사원문]
+
+    https://n.news.naver.com/article/056/0012268800?cds=news_edit
+
+
+    최근 열대 태평양에서 엘니뇨가 이례적으로 강하게 발달하고 있습니다. 이 때문에 미국 서부 해안에 비상사태가 선포됐습니다. 우리나라에도 영향이 있어서, 늦가을과 초겨울 사이 비가 많이 내릴 거라고 합니다.
+
+
+    #슈퍼엘니뇨 #엘니뇨 #태평양 #폭우 #한반도 #지구온난화 #기우변화 #기후 #기후시스템연구실 #csl'
+  thumb: videos/DaqKSaZQapQ.jpg
+- id: br6dk9cHB8w
+  title: Critical Threshold of Ross Ice Shelf Stability under Climate Mitigation Scenarios
+  published: '2026-08-28'
+  description: '2026.07.20 Korea Geoscience Union Annual Meeting
+
+
+    Title: Critical Threshold of Ross Ice Shelf Stability under Climate Mitigation Scenarios
+
+
+    Presenter: Sunhee Wang'
+  thumb: videos/br6dk9cHB8w.jpg
+- id: N01J5-uLhKg
+  title: Building a climate- econometric model based on extreme thermal and hydro- climatic indicators
+  published: '2026-08-28'
+  description: '2026.07.20 Korea Geoscience Union Annual Meeting
+
+
+    Title: Building a climate- econometric model based on extreme thermal and hydro- climatic indicators: Linking ENSO, Regional climate, and Economic impacts
+
+
+    Presenter: Seongho Park'
+  thumb: videos/N01J5-uLhKg.jpg
+- id: B0oD8gfmKDI
+  title: Deforestation-induced climate stress weakens remaining Amazon forests
+  published: '2026-08-28'
+  description: '2026.07.20 Korea Geoscience Union Annual Meeting
+
+
+    Title: Deforestation-induced climate stress weakens remaining Amazon forests
+
+
+    Presenter: Jun-Seong Moon'
+  thumb: videos/B0oD8gfmKDI.jpg
+- id: WlgWxzR8o6Y
+  title: 해양의 새로운 현상 출현 AMOC 약화가 북대서양 염분 변동을 키운다
+  published: '2026-08-07'
+  description: '📘논문
+
+    Iwakiri, T., Kug, JS., An, SI. et al. AMOC slowdown amplifies North Atlantic salinity variability to unprecedented levels. Nat Commun 17, 7021 (2026). https://doi.org/10.1038/s41467-026-73838-y
+
+
+    ✔ 기후시스템 연구실 홈페이지
+
+    https://climate.snu.ac.kr/
+
+
+    #AMOC #지구온난화 #기후변화 #해류 #북대서양 #기후위기 #날씨 #환경 #논문리뷰'
+  thumb: videos/WlgWxzR8o6Y.jpg
+- id: rLo8Va_ZyGA
+  title: 전쟁을 부르는 날씨, 슈퍼 엘니뇨가 온다 - 국종성 교수 (서울대 지구환경과학부)
+  published: '2026-06-21'
+  description: '[재업로드 안내]
+
+    본 영상의 원저작권은 유튜브 채널 "손에 잡히는 경제" 에 있습니다.
+
+
+    🔹원본 영상:  https://www.youtube.com/watch?v=l9g-BJfStag&t=1s
+
+    🔹원본 제목: 전쟁을 부르는 날씨, 슈퍼 엘니뇨가 온다 - 국종성 교수 (서울대 지구환경과학부)
+
+
+
+    ✅타임라인
+
+    00:00 | 엘니뇨의 정체와 기본 원리
+
+    04:14 | 슈퍼 엘니뇨란 무엇인가
+
+    10:18 | 엘니뇨가 경제·사회에 미치는 영향
+
+    16:35 | 기후 조작 기술과 인공강우 논쟁
+
+    20:24 | 한국에 미치는 영향과 기후 체제 변화
+
+    24:15 | 티핑포인트와 아마존 붕괴 위험
+
+    35:47 | 기후공학과 미래 대응 기술
+
+    41:37 | 인류가 직면한 기후위기와 경고
+
+
+    #기후위기 #엘니뇨 #지구온난화 #기후변화 #태풍 #장'
+  thumb: videos/rLo8Va_ZyGA.jpg
+- id: X-Uq1stg17g
+  title: 탄소 배출 줄여도 해수면은 계속 오른다?! 숨겨진 원인 찾았다.
+  published: '2026-05-15'
+  description: "\U0001F4D8논문\nWang, S., Shin, Y., Oh, JH. et al. Critical role of low cloud feedback in irreversible sea level rise. Nat Commun (2026). https://doi.org/10.1038/s41467-026-72898-4\n\n\n✅타임라인\n00:00 오프닝 \n00:21 연구 내용 소개\n00:53 구름 변화와 해수면 상승 연관성\n01:14 하층 구름이 줄어드는 이유\n02:06 대기 단독 모델(AMIP)을 통한 메커니즘 검증\n02:47 탄소 배출을 줄여도 해수면 상승이 회복되지 않는 이유\n03:23 이번 연구의 의의\n04:11 추후 연구 방향\n\n\n✔ 기후시스템 연구실 홈페이지: https://climate.snu.ac.kr/\n\n\n#기후"
+  thumb: videos/X-Uq1stg17g.jpg
+- id: XKp5Iix2eUY
+  title: “슈퍼 엘니뇨” 10년 만에 귀환… 역대급 고온이 몰려온다
+  published: '2026-04-16'
+  description: '[재업로드 안내]
+
+
+    모든저작권은 원저작자에게 있습니다
+
+
+    원본영상: https://youtu.be/AWBUlkpkSDo?si=1jDhjwPN09rpk2nf
+
+
+    기사원문: https://news.kbs.co.kr/news/pc/view/view.do?ncd=8534897&ref=A
+
+
+    기후변화가 심상치 않은 가운데 올해는 ''슈퍼 엘니 뇨''까지 예고됐습니다. 슈퍼 엘니뇨가 발생하면 기후위 기 마지노선으로 알려진 1.5도를 뛰어넘어 1.7도까지 상승할 수 있고, 한반도 부근에선 폭우나 폭염도 잦아질 거란 분석입니다.
+
+
+    #슈퍼엘니뇨 #엘니뇨 #동태평양 #수온 #기후변화 #기후 #지구온난화 #폭우 #폭염 #한반도 #여름 #날씨 #무더위'
+  thumb: videos/XKp5Iix2eUY.jpg
+- id: n8xFW4A_Oc8
+  title: '엘니뇨가 더 위험해진다: 지구온난화의 숨은 효과'
+  published: '2026-04-05'
+  description: 'Hong, S.-J., Kim, G.-I., Shin, Y. et al. Stronger ENSO-induced global SST variability in a warming climate. Nat Commun (2026). https://doi.org/10.1038/s41467-026-70140-9
+
+
+    #기후변화 #지구온난화 #엘니뇨 #기후시스템연구실'
+  thumb: videos/n8xFW4A_Oc8.jpg
+- id: Hue-7jhfw5E
+  title: 서울대 연구팀, Nature 자매지 논문 출판! 탄소중립 늦으면, 기후 티핑포인트 넘는다.
+  published: '2026-02-05'
+  description: Oh, JH., Kug, JS., Shin, Y. et al. Noise-induced tipping of Atlantic Meridional Overturning Circulation under climate mitigation scenarios. Nat Commun 16, 11515 (2025). https://doi.org/10.1038/s41467-025-66494-1
+  thumb: videos/Hue-7jhfw5E.jpg
+- id: cbtNgPMPOgY
+  title: 슈퍼 엘니뇨, 지구온난화 시대 ‘위험한 기후 대전환!’
+  published: '2026-01-07'
+  description: Xue, A., X. Geng, F.-F. Jin, Y. Shin, M.-K. Sung & J.-S. Kug (2025) Super El Niño events drive climate regime shifts with enhanced risks under global warming. Nat Commun 16, 11262. https://doi.org/10.1038/s41467-025-66143-7
+  thumb: videos/cbtNgPMPOgY.jpg
+- id: ZqjNYzD9K6A
+  title: 1.5도는 이미 늦었다... 기후공학은 해답이 될 수 있을까? (서울대학교 지구환경과학부 국종성 교수)
+  published: '2025-12-17'
+  description: '출처: 안될과학 Unrealscience – https://youtu.be/xWmoh0HQx_A?si=EqgMOYxfdgdzxRBJ
+
+
+    1.5도는 이미 물 건너갔다?
+
+    2도를 넘어가면 기후 변화의 임계점이 넘어간다?
+
+    서울대 국종성 교수님께 기후 위기의 본질, 기후공학에 대해 깊이 있게 들어봤습니다!'
+  thumb: videos/ZqjNYzD9K6A.jpg
+- id: ku3edEN1-d8
+  title: 슈퍼 엘니뇨, 지구온난화 시대 ‘위험한 기후 대전환’
+  published: '2025-11-27'
+  description: ''
+  thumb: videos/ku3edEN1-d8.jpg
+- id: AXPiQ_Jn2ds
+  title: 한반도 바다 '붉은 경고'... 겨울은 어떻게 바뀔까?
+  published: '2025-10-29'
+  description: '[재업로드 안내]
+
+    본 영상은 유튜브 채널 ‘지식인미나니’의 원저작물로, 채널 운영자(✉ skddl0514@gmail.com / 네이버: skddlol54@naver.com)로부터 ‘본인 채널에서의 게시’에 관한 비독점적 사용 허가를 받았습니다.
+
+
+    🔹원본 영상: https://youtu.be/HrzyP7EOX-E?si=5TPSR6sUdrT9Ic4p
+
+    🔹원본 제목: “심각한 겨울 기후가 될 수 있는 사건이 일어났다.. [with 서울대]”
+
+    🔹허가 범위: 전 세계 / 기간 제한 없음 / (편집 여부: 무편집 재게시)
+
+    🔹모든 저작권은 원저작자에게 있습니다.'
+  thumb: videos/AXPiQ_Jn2ds.jpg

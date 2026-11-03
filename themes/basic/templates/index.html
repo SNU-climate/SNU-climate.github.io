@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <h1>{{ lab_name }}</h1>
+  <p class="lead">{{ tr(site.lab.tagline) }}</p>
+  <p>{{ tr(site.lab.intro) }}</p>
+</section>
+
+<section class="sec">
+  <h2>{{ t('home.research') }}</h2>
+  <div class="grid grid-3">
+    {% for r in research %}
+    <a class="card" href="{{ page_url('research') }}#{{ r.key }}"><h3>{{ tr(r.title) }}</h3><p>{{ tr(r.summary)|truncate(140) }}</p></a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="sec">
+  <h2>{{ t('home.latest') }}</h2>
+  <ul class="feed">
+    {% for it in latest() %}
+    <li><span class="feed-kind feed-kind--{{ it.kind }}">{{ t('feed.' ~ it.kind) }}</span>
+      <time>{{ fmt_date(it.date) }}</time>
+      <a href="{{ it.url }}">{{ rich(it.title) }}</a> <span class="muted">{{ it.meta }}</span> {{ m.sample_badge(it.obj) }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><h2>{{ t('home.news') }}</h2><a href="{{ page_url('news') }}">{{ t('home.view_all') }} →</a></div>
+  <div class="grid grid-3">{% for p in news[:site.home.news] %}{{ m.news_card(p) }}{% endfor %}</div>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><h2>{{ t('home.publications') }}</h2><a href="{{ page_url('publications') }}">{{ t('home.view_all') }} →</a></div>
+  <ol class="pub-ol">{% for p in pubs[:site.home.publications] %}{{ m.pub_item(p) }}{% endfor %}</ol>
+</section>
+
+<section class="sec">
+  <div class="sec-head"><h2>{{ t('home.videos') }}</h2><a href="{{ page_url('videos') }}">{{ t('home.view_all') }} →</a></div>
+  <div class="grid grid-3">{% for v in videos[:site.home.videos] %}{{ m.video_card(v) }}{% endfor %}</div>
+</section>
+{% endblock %}

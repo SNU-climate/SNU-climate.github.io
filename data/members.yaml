@@ -1,0 +1,42 @@
+# 구성원. 백업 자료를 받으면 실제 명단으로 교체한다.
+# placeholder: true 항목은 템플릿 미리보기용 예시이며 화면에 SAMPLE 표시가 붙고 validate.py가 경고한다.
+# role 키: postdoc / researcher / phd / integrated / ms / undergrad / staff (표시 순서 = roles)
+# pub_name: 논문 저자 표기(예: "Shin, J.-S.") — 넣으면 논문 목록에서 굵게 표시된다.
+roles: [postdoc, researcher, integrated, phd, ms, undergrad, staff]
+
+members:
+  - name: {en: "Sample Member A", ko: "예시 구성원 A"}
+    role: postdoc
+    photo: null
+    email: null
+    interests: {en: "ENSO dynamics", ko: "엘니뇨 역학"}
+    since: 2024
+    placeholder: true
+  - name: {en: "Sample Member B", ko: "예시 구성원 B"}
+    role: phd
+    photo: null
+    email: null
+    interests: {en: "Carbon cycle–climate feedback", ko: "탄소순환-기후 되먹임"}
+    since: 2024
+    placeholder: true
+  - name: {en: "Sample Member C", ko: "예시 구성원 C"}
+    role: integrated
+    photo: null
+    email: null
+    interests: {en: "Climate reversibility", ko: "기후 가역성"}
+    since: 2025
+    placeholder: true
+  - name: {en: "Sample Member D", ko: "예시 구성원 D"}
+    role: ms
+    photo: null
+    email: null
+    interests: {en: "Arctic amplification", ko: "북극 증폭"}
+    since: 2025
+    placeholder: true
+
+alumni:
+  - name: {en: "Sample Alumnus", ko: "예시 졸업생"}
+    degree: "Ph.D."
+    year: 2023
+    current: {en: "Postdoctoral researcher", ko: "박사후연구원"}
+    placeholder: true

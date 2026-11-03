@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ t('nav.people') }}</h1>
+
+<section class="sec pi" id="pi">
+  <h2>{{ t('people.pi') }}</h2>
+  <div class="pi-box">
+    <div class="member-photo pi-photo">{% if pi.photo %}<img src="{{ static(pi.photo) }}" alt="{{ tr(pi.name) }}">{% else %}<span class="member-initials">{{ m.initials_of(pi.name.en) }}</span>{% endif %}</div>
+    <div>
+      <h3>{{ tr(pi.name) }} <small>{{ tr(pi.title) }}</small></h3>
+      {% for r in pi.roles %}<div>{{ tr(r) }}</div>{% endfor %}
+      <p><a href="mailto:{{ pi.email }}">{{ pi.email }}</a> · {{ tr(pi.office) }} · {{ pi.phone }}</p>
+      <p>{{ tr(pi.bio) }}</p>
+    </div>
+  </div>
+  <div class="grid grid-2">
+    <div><h4>{{ t('people.education') }}</h4><ul class="cv">{% for e in pi.education %}<li><span>{{ e.year }}</span>{{ tr(e) }}</li>{% endfor %}</ul></div>
+    <div><h4>{{ t('people.career') }}</h4><ul class="cv">{% for e in pi.career %}<li><span>{{ e.period }}</span>{{ tr(e) }}</li>{% endfor %}</ul></div>
+  </div>
+  <h4>{{ t('people.service') }}</h4><ul class="cv">{% for e in pi.service %}<li><span>{{ e.period }}</span>{{ tr(e) }}</li>{% endfor %}</ul>
+</section>
+
+{% for role, ms in member_groups %}
+<section class="sec" id="{{ role }}">
+  <h2>{{ t('people.role.' ~ role) }}</h2>
+  <div class="grid grid-4">{% for mm in ms %}{{ m.member_card(mm) }}{% endfor %}</div>
+</section>
+{% endfor %}
+
+{% if alumni %}
+<section class="sec" id="alumni"><h2>{{ t('people.alumni') }}</h2>{{ m.alumni_list(alumni) }}</section>
+{% endif %}
+{% endblock %}

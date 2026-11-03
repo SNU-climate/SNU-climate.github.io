@@ -1,0 +1,124 @@
+# 화면 고정 문구. 템플릿에서 {{ t('nav.research') }} 처럼 쓴다.
+nav:
+  index: {en: "Home", ko: "홈"}
+  research: {en: "Research", ko: "연구"}
+  people: {en: "People", ko: "구성원"}
+  publications: {en: "Publications", ko: "논문"}
+  presentations: {en: "Presentations", ko: "학회 발표"}
+  news: {en: "News", ko: "뉴스"}
+  videos: {en: "Videos", ko: "영상"}
+  contact: {en: "Contact", ko: "오시는 길"}
+
+lang:
+  name: {en: "English", ko: "한국어"}
+  switch: {en: "한국어", ko: "English"}   # 다른 언어로 가는 버튼 문구
+  code: {en: "EN", ko: "KO"}
+
+home:
+  latest: {en: "Latest", ko: "최근 소식"}
+  news: {en: "News", ko: "뉴스"}
+  publications: {en: "Recent Publications", ko: "최근 논문"}
+  videos: {en: "Videos", ko: "영상"}
+  research: {en: "Research Areas", ko: "연구 분야"}
+  view_all: {en: "View all", ko: "전체 보기"}
+  join: {en: "Join us", ko: "함께할 분을 찾습니다"}
+  join_text:
+    en: "We welcome motivated graduate students and postdoctoral researchers. Please contact Prof. Kug by email."
+    ko: "열정 있는 대학원생과 박사후연구원을 환영합니다. 국종성 교수에게 이메일로 문의해 주세요."
+
+feed:
+  news: {en: "News", ko: "뉴스"}
+  publication: {en: "Paper", ko: "논문"}
+  presentation: {en: "Talk", ko: "발표"}
+  video: {en: "Video", ko: "영상"}
+
+people:
+  pi: {en: "Principal Investigator", ko: "연구책임자"}
+  members: {en: "Members", ko: "구성원"}
+  alumni: {en: "Alumni", ko: "졸업생"}
+  education: {en: "Education", ko: "학력"}
+  career: {en: "Career", ko: "경력"}
+  service: {en: "Professional Service", ko: "학술 활동"}
+  interests: {en: "Research Interests", ko: "연구 관심사"}
+  since: {en: "Since", ko: "합류"}
+  current: {en: "Current position", ko: "현재"}
+  selected: {en: "Selected Publications", ko: "대표 논문"}
+  role:
+    pi: {en: "Professor", ko: "교수"}
+    postdoc: {en: "Postdoctoral Researchers", ko: "박사후연구원"}
+    researcher: {en: "Researchers", ko: "연구원"}
+    integrated: {en: "Integrated M.S./Ph.D. Students", ko: "석박사통합과정"}
+    phd: {en: "Ph.D. Students", ko: "박사과정"}
+    ms: {en: "M.S. Students", ko: "석사과정"}
+    undergrad: {en: "Undergraduate Interns", ko: "학부연구생"}
+    staff: {en: "Staff", ko: "행정직원"}
+
+pubs:
+  title: {en: "Publications", ko: "논문"}
+  intro:
+    en: "Peer-reviewed journal articles. Numbers count from the earliest paper; the most recent appears first."
+    ko: "동료심사 학술지 논문입니다. 번호는 가장 오래된 논문부터 매기며, 최신 논문이 맨 위에 있습니다."
+  total: {en: "papers", ko: "편"}
+  search: {en: "Search title, author, journal…", ko: "제목·저자·학술지 검색…"}
+  corresponding: {en: "Corresponding author", ko: "교신저자"}
+  ca: {en: "CA", ko: "교신"}
+  featured: {en: "Featured", ko: "주요 논문"}
+  related: {en: "Related publications", ko: "관련 논문"}
+  no_results: {en: "No matching papers.", ko: "검색 결과가 없습니다."}
+
+pres:
+  title: {en: "Presentations", ko: "학회 발표"}
+  intro: {en: "Conference talks, posters, and invited seminars.", ko: "학회 구두·포스터 발표와 초청 세미나입니다."}
+  type:
+    invited: {en: "Invited", ko: "초청"}
+    keynote: {en: "Keynote", ko: "기조"}
+    oral: {en: "Oral", ko: "구두"}
+    poster: {en: "Poster", ko: "포스터"}
+    seminar: {en: "Seminar", ko: "세미나"}
+
+news:
+  title: {en: "News", ko: "뉴스"}
+  intro: {en: "Research highlights, awards, and lab events.", ko: "연구 성과, 수상, 연구실 소식입니다."}
+  read_more: {en: "Read more", ko: "더 보기"}
+  back: {en: "Back to news", ko: "뉴스 목록"}
+  category:
+    paper: {en: "New paper", ko: "논문 출판"}
+    award: {en: "Award", ko: "수상"}
+    event: {en: "Event", ko: "행사"}
+    media: {en: "Media", ko: "언론·영상"}
+    lab: {en: "Lab", ko: "연구실"}
+  paper: {en: "Paper", ko: "논문"}
+  video: {en: "Video", ko: "영상"}
+
+videos:
+  title: {en: "Videos", ko: "영상"}
+  intro: {en: "Talks, interviews, and research stories from our YouTube channel.", ko: "연구실 유튜브 채널의 강연, 인터뷰, 연구 소개 영상입니다."}
+  channel: {en: "Visit our YouTube channel", ko: "유튜브 채널 바로가기"}
+  play: {en: "Play video", ko: "영상 재생"}
+
+research:
+  title: {en: "Research", ko: "연구"}
+  intro: {en: "We study the climate system across scales, from interannual variability to centennial change.", ko: "경년 변동부터 백 년 규모의 변화까지, 다양한 시간 규모에서 기후시스템을 연구합니다."}
+  papers: {en: "Key papers", ko: "주요 논문"}
+  videos: {en: "Related videos", ko: "관련 영상"}
+
+contact:
+  title: {en: "Contact", ko: "오시는 길"}
+  address: {en: "Address", ko: "주소"}
+  pi_office: {en: "PI office", ko: "교수 연구실"}
+  lab_room: {en: "Lab", ko: "실험실"}
+  phone: {en: "Phone", ko: "전화"}
+  email: {en: "Email", ko: "이메일"}
+  map: {en: "Open map", ko: "지도 보기"}
+  directions:
+    en: "Building 501 is on the Gwanak campus of Seoul National University."
+    ko: "501동은 서울대학교 관악캠퍼스에 있습니다."
+
+common:
+  sample: {en: "SAMPLE", ko: "예시"}
+  sample_note: {en: "Sample entry — will be replaced with real data.", ko: "예시 항목입니다. 실제 자료로 교체될 예정입니다."}
+  updated: {en: "Last updated", ko: "최종 수정"}
+  copyright: {en: "Climate System Laboratory, Seoul National University", ko: "서울대학교 기후시스템연구실"}
+  menu: {en: "Menu", ko: "메뉴"}
+  doi: {en: "DOI", ko: "DOI"}
+  empty: {en: "Nothing here yet.", ko: "아직 등록된 항목이 없습니다."}

@@ -1,0 +1,229 @@
+# 논문 목록. 번호는 빌드할 때 자동으로 매긴다(가장 오래된 논문 = 1).
+# 새 논문은 `python scripts/add_publication.py <DOI>`로 추가한다.
+# 수동 필드: corresponding(교신저자 여부), featured(주요 논문), image(static/ 기준 그림), links{pdf,data,code},
+#           needs_review(true면 화면에서 숨김), hidden(true면 숨김)
+meta:
+  updated: '2026-11-03'
+  count_visible: 11
+  count_total: 11
+publications:
+- doi: 10.1029/2026ef008209
+  title: Soil Moisture Controls on Permafrost Carbon Cycle Under Greenhouse Warming and Zero Emission Pathways
+  authors:
+  - Mun, J.-H.
+  - Lee, H.
+  - Lee, D.
+  - Shin, Y.
+  - Kug, J.-S.
+  journal: Earth's Future
+  year: 2026
+  date: 2026-07
+  volume: '14'
+  issue: '7'
+  pages: e2026EF008209
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-026-73838-y
+  title: AMOC slowdown amplifies North Atlantic salinity variability to unprecedented levels
+  authors:
+  - Iwakiri, T.
+  - Kug, J.-S.
+  - An, S.-I.
+  - Shin, Y.
+  - Oh, J.-H.
+  - Wang, S.
+  journal: Nature Communications
+  year: 2026
+  date: '2026-05-30'
+  volume: '17'
+  issue: '1'
+  pages: '7021'
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-026-72898-4
+  title: Critical role of low cloud feedback in irreversible sea level rise
+  authors:
+  - Wang, S.
+  - Shin, Y.
+  - Oh, J.-H.
+  - Kim, H.
+  - Kug, J.-S.
+  journal: Nature Communications
+  year: 2026
+  date: '2026-05-11'
+  volume: '17'
+  issue: '1'
+  pages: '6292'
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-026-70140-9
+  title: Stronger ENSO-induced global SST variability in a warming climate
+  authors:
+  - Hong, S.-J.
+  - Kim, G.-I.
+  - Shin, Y.
+  - Iwakiri, T.
+  - Kug, J.-S.
+  journal: Nature Communications
+  year: 2026
+  date: '2026-03-19'
+  volume: '17'
+  issue: '1'
+  pages: '4231'
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-025-66494-1
+  title: Noise-induced tipping of Atlantic Meridional Overturning Circulation under climate mitigation scenarios
+  authors:
+  - Oh, J.-H.
+  - Kug, J.-S.
+  - Shin, Y.
+  - Geng, X.
+  - Wang, S.
+  - Jin, F.-F.
+  - An, S.-I.
+  - Xie, S.-P.
+  - Liu, W.
+  journal: Nature Communications
+  year: 2025
+  date: '2025-12-13'
+  volume: '16'
+  issue: '1'
+  pages: '11515'
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41467-025-66143-7
+  title: Super El Niño events drive climate regime shifts with enhanced risks under global warming
+  authors:
+  - Xue, A.
+  - Geng, X.
+  - Jin, F.-F.
+  - Shin, Y.
+  - Sung, M.-K.
+  - Kug, J.-S.
+  journal: Nature Communications
+  year: 2025
+  date: '2025-12-12'
+  volume: '16'
+  issue: '1'
+  pages: '11262'
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+- doi: 10.1038/s41558-024-01928-0
+  title: Emergent climate change patterns originating from deep ocean warming in climate mitigation scenarios
+  authors:
+  - Oh, J.-H.
+  - Kug, J.-S.
+  - An, S.-I.
+  - Jin, F.-F.
+  - McPhaden, M. J.
+  - Shin, J.
+  journal: Nature Climate Change
+  year: 2024
+  date: 2024-03
+  volume: '14'
+  issue: '3'
+  pages: 260-266
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+  corresponding: true
+  featured: true
+- doi: 10.1038/s41558-021-01211-6
+  title: Hysteresis of the intertropical convergence zone to CO2 forcing
+  authors:
+  - Kug, J.-S.
+  - Oh, J.-H.
+  - An, S.-I.
+  - Yeh, S.-W.
+  - Min, S.-K.
+  - Son, S.-W.
+  - Kam, J.
+  - Ham, Y.-G.
+  - Shin, J.
+  journal: Nature Climate Change
+  year: 2022
+  date: 2022-01
+  volume: '12'
+  issue: '1'
+  pages: 47-53
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+  corresponding: true
+  featured: true
+- doi: 10.1038/s41467-020-15924-3
+  title: The intensification of Arctic warming as a result of CO2 physiological forcing
+  authors:
+  - Park, S.-W.
+  - Kim, J.-S.
+  - Kug, J.-S.
+  journal: Nature Communications
+  year: 2020
+  date: '2020-04-29'
+  volume: '11'
+  issue: '1'
+  pages: '2098'
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+  corresponding: true
+  featured: true
+- doi: 10.1126/sciadv.aax3308
+  title: Extensive fires in southeastern Siberian permafrost linked to preceding Arctic Oscillation
+  authors:
+  - Kim, J.-S.
+  - Kug, J.-S.
+  - Jeong, S.-J.
+  - Park, H.
+  - Schaepman-Strub, G.
+  journal: Science Advances
+  year: 2020
+  date: '2020-01-10'
+  volume: '6'
+  issue: '2'
+  pages: eaax3308
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+  corresponding: true
+  featured: true
+- doi: 10.1038/ngeo2986
+  title: Reduced North American terrestrial primary productivity linked to anomalous Arctic warming
+  authors:
+  - Kim, J.-S.
+  - Kug, J.-S.
+  - Jeong, S.-J.
+  - Huntzinger, D. N.
+  - Michalak, A. M.
+  - Schwalm, C. R.
+  - Wei, Y.
+  - Schaefer, K.
+  journal: Nature Geoscience
+  year: 2017
+  date: 2017-08
+  volume: '10'
+  issue: '8'
+  pages: 572-576
+  type: article
+  sources:
+  - crossref
+  added: '2026-11-03'
+  corresponding: true
+  featured: true

@@ -1,0 +1,38 @@
+{% import 'macros.html' as m with context %}
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+{{ m.head_common() }}
+<link rel="stylesheet" href="{{ asset('style.css') }}">
+</head>
+<body class="page-{{ page }}">
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="brand" href="{{ page_url('index') }}">
+      <img src="{{ asset('shared/favicon.svg') }}" alt="" width="36" height="36">
+      <span><strong>{{ lab_name }}</strong><small>{{ tr(site.lab.affiliation) }}</small></span>
+    </a>
+    <button class="nav-btn" type="button" data-nav-toggle aria-controls="nav" aria-expanded="false">{{ t('common.menu') }}</button>
+    <nav id="nav" class="nav" aria-label="Main">
+      {% for n in nav %}<a href="{{ n.url }}"{% if n.active %} aria-current="page"{% endif %}>{{ n.label }}</a>{% endfor %}
+      {{ m.lang_switch() }}
+    </nav>
+  </div>
+</header>
+<main id="main" class="wrap main">
+{% block content %}{% endblock %}
+</main>
+<footer class="ftr">
+  <div class="wrap ftr-in">
+    <div><strong>{{ lab_name }}</strong><br>{{ tr(site.contact.address) }}<br>
+      <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></div>
+    <div class="ftr-links"><a href="{{ site.links.youtube }}" target="_blank" rel="noopener">YouTube</a>
+      <a href="{{ site.links.department }}" target="_blank" rel="noopener">SEES, SNU</a>
+      <a href="{{ site.links.orcid }}" target="_blank" rel="noopener">ORCID</a></div>
+    <small>© {{ build_date[:4] }} {{ t('common.copyright') }} · {{ t('common.updated') }} {{ build_date }}</small>
+  </div>
+</footer>
+{{ m.scripts_common() }}
+</body>
+</html>
