@@ -10,6 +10,7 @@
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.65 var(--font); }
+:lang(ko) body { word-break: keep-all; overflow-wrap: break-word; }
 a { color: var(--accent-2); text-decoration: none; }
 a:hover { text-decoration: underline; }
 img { max-width: 100%; }
@@ -33,8 +34,13 @@ h2 { font-size: 1.4rem; }
 .lang-switch { border: 1px solid var(--line); }
 .nav-btn { display: none; margin-left: auto; background: none; border: 1px solid var(--line); color: var(--fg); padding: 6px 12px; border-radius: 6px; }
 @media (max-width: 860px) {
-  .nav-btn { display: block; }
+  .hdr-in { padding-top: 10px; padding-bottom: 10px; gap: 12px; }
+  .brand { min-width: 0; flex: 1; }
+  .brand small { display: none; }
+  .brand strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nav-btn { display: block; flex: none; min-height: 44px; min-width: 64px; }
   .nav { display: none; width: 100%; flex-direction: column; align-items: stretch; padding-bottom: 12px; }
+  .nav a { padding: 12px 10px; }
   .nav[data-open] { display: flex; }
 }
 

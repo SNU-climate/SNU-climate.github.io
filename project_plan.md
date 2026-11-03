@@ -102,5 +102,10 @@ first_draft/
 4. Codex 로그인 상태면 build/validate 스크립트를 교차 리뷰한다. 안 되어 있으면 `reports/verification_report.md`에 "Codex 미실시"를 적는다.
 5. 결과는 `reports/verification_report.md`에 정리하고, 작업이 끝나면 Notion "Working Note"에 기록한다(대표 스크린샷 1장).
 
+## 진행 기록
+- 2026-11-03 Phase 1 완료(Task 1~5 + Verification). 결과: `reports/verification_report.md`
+- 계획 대비 변경: 갤러리는 `site/gallery/index.html` 대신 **`site/index.html`**. 논문 `needs_review` 기준은 "출처 1곳"이 아니라 **Crossref 저자 확인 실패·유형 애매**(단일 출처라도 Crossref로 Kug 저자·학술지 논문이 확인되면 표시, 보고서에 목록화 — 실제 단일 출처 0편). 레이아웃 검사 스크립트 `scripts/check_layout.mjs` 추가. 경미한 디자인 문제 16건은 최종 테마 선택 후 해당 테마만 수정.
+- Phase 2 작업 지시서: `reports/briefs/backup_task.md`
+
 ## 사용자 결정 대기(백업 이후)
 - 배포 방식(학교 웹호스팅 업로드 방식), 9종 중 최종 테마 선택, 구성원 사진·소개 문구 확정.

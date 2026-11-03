@@ -29,6 +29,7 @@ def fetch(url):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--no-thumbs', action='store_true')
+    ap.add_argument('--refresh-thumbs', action='store_true', help='이미 받은 썸네일도 다시 받기')
     args = ap.parse_args()
 
     data = L.load_yaml(VID_FILE) or {}
@@ -62,11 +63,15 @@ def main():
     if not args.no_thumbs:
         for vid in old:
             f = vdir / f'{vid}.jpg'
-            if not f.exists():
+            if f.exists() and not args.refresh_thumbs:
+                continue
+            for size in ('maxresdefault', 'sddefault', 'hqdefault'):   # 고해상도(1280×720)부터 시도
                 try:
-                    f.write_bytes(fetch(f'https://i.ytimg.com/vi/{vid}/hqdefault.jpg'))
+                    f.write_bytes(fetch(f'https://i.ytimg.com/vi/{vid}/{size}.jpg'))
+                    break
                 except Exception as ex:  # noqa: BLE001
-                    print(f'[warn] 썸네일 실패 {vid}: {ex}')
+                    if size == 'hqdefault':
+                        print(f'[warn] 썸네일 실패 {vid}: {ex}')
 
     videos = sorted(old.values(), key=lambda v: v['published'], reverse=True)
     out = {'channel': channel, 'featured': data.get('featured', []) or [],
