@@ -17,7 +17,8 @@ const [theme, page = 'index'] = args.filter(a => !a.startsWith('--'));
 if (!theme) { console.error('usage: node scripts/shot.mjs <theme> [page] [--full] [--ko] [--dark]'); process.exit(2); }
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'site');
-const file = path.join(root, theme, flags.has('--ko') ? 'ko' : '', page.endsWith('.html') ? page : `${page}.html`);
+const file = theme === 'gallery' ? path.join(root, 'index.html')   // 템플릿 갤러리(site/index.html)
+  : path.join(root, theme, flags.has('--ko') ? 'ko' : '', page.endsWith('.html') ? page : `${page}.html`);
 if (!fs.existsSync(file)) { console.error('not found: ' + file); process.exit(1); }
 const outDir = path.join(root, '_shots');
 fs.mkdirSync(outDir, { recursive: true });

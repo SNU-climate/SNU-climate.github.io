@@ -16,6 +16,7 @@ import datetime as dt
 import re
 import shutil
 from pathlib import Path
+from urllib.parse import quote
 
 import jinja2
 import markdown
@@ -26,7 +27,9 @@ import sitelib as L
 MONTHS = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split()
 DOI_RE = re.compile(r'10\.\d{4,9}/[^\s"<>)\]]+')
 RICH_OK = re.compile(r'&lt;(/?)(sub|sup|i)&gt;')
-YT_SHORT = re.compile(r'\[\[youtube:([\w-]{6,})\]\]')
+YT_SHORT = re.compile(r'\[\[youtube:([\w-]{11})\]\]')
+YT_ID = re.compile(r'^[\w-]{11}$')
+BUILD_MARK = '.csl-build'      # build.py가 만든 출력 폴더 표시(이 파일이 없는 폴더는 지우지 않는다)
 
 
 # ---------------------------------------------------------------- 언어 독립 헬퍼
@@ -164,7 +167,10 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None):
     def static(path):
         if not path:
             return ''
-        return path if re.match(r'^(https?:)?//', str(path)) else f'{root}static/{path}'
+        if re.match(r'^(https?:)?//', str(path)):
+            return path
+        path = str(path)[2:] if str(path).startswith('./') else str(path)
+        return f'{root}static/{quote(path, safe="/")}'   # 파일명의 #, 공백, 한글 등을 URL 인코딩
 
     def t(key):
         return i18n_get(D['i18n'], key, lang)
@@ -185,17 +191,27 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None):
         return f'https://www.youtube.com/watch?v={vid}'
 
     def yt_html(vid, title=''):
-        return (f'<div class="yt-facade" data-yt="{escape(vid)}"><button type="button" class="yt-play" '
-                f'aria-label="{escape(t("videos.play"))}: {escape(title)}"><img src="{video_thumb(vid)}" alt="" '
+        if not YT_ID.match(str(vid or '')):          # 영상 ID 형식이 아니면 그리지 않는다(속성 주입 방지)
+            return ''
+        return (f'<div class="yt-facade" data-yt="{vid}"><button type="button" class="yt-play" '
+                f'aria-label="{escape(t("videos.play"))}: {escape(title)}"><img src="{escape(video_thumb(vid))}" alt="" '
                 f'loading="lazy"><span class="yt-icon" aria-hidden="true"></span></button></div>')
 
     def md(text, p=None):
         text = YT_SHORT.sub(lambda m: '\n\n' + yt_html(m.group(1)) + '\n\n', text or '')
         html = markdown.markdown(text, extensions=['extra', 'sane_lists'])
         if p is not None:                       # 뉴스 본문의 첨부 파일 경로를 static/news/<slug>/로 바꾼다
-            for f in p.get('files', []):
-                html = html.replace(f'src="{f}"', f'src="{static("news/" + p["slug"] + "/" + f)}"')
-                html = html.replace(f'href="{f}"', f'href="{static("news/" + p["slug"] + "/" + f)}"')
+            files = set(p.get('files', []))
+
+            def fix(m):                         # './fig.png', 'sub/fig.png', 'a.pdf#page=2' 모두 처리
+                url = m.group(2)
+                cut = min([i for i in (url.find('?'), url.find('#')) if i >= 0], default=len(url))
+                path, suffix = url[:cut], url[cut:]
+                path = path[2:] if path.startswith('./') else path
+                if path in files:
+                    return f'{m.group(1)}="{static("news/" + p["slug"] + "/" + path)}{suffix}"'
+                return m.group(0)
+            html = re.sub(r'\b(src|href)="(?!https?:|mailto:|tel:|#|/|data:)([^"]+)"', fix, html)
         return Markup(html)
 
     def cover_url(p):
@@ -293,13 +309,25 @@ def render(env, template, dest, ctx):
     dest.write_text(env.get_template(template).render(**ctx), encoding='utf-8')
 
 
+def safe_clear(out):
+    """출력 폴더를 비운다. 원본 폴더(프로젝트·data·content 등)나 build.py가 만들지 않은 폴더는 거부한다."""
+    out = out.resolve()
+    protected = [L.ROOT, L.DATA, L.CONTENT, L.THEMES, L.STATIC, L.ROOT / 'scripts', L.ROOT / 'reports', L.SITE]
+    if any(out == d or out in d.parents for d in protected) or out == Path(out.anchor) or out == Path.home():
+        raise SystemExit(f'[build] 출력 폴더로 쓸 수 없는 경로: {out}')
+    if out.exists():
+        if out.parent != L.SITE.resolve() and any(out.iterdir()) and not (out / BUILD_MARK).exists():
+            raise SystemExit(f'[build] {out} 는 build.py가 만든 폴더가 아니어서 지우지 않습니다(비어 있는 폴더를 지정하세요).')
+        shutil.rmtree(out)
+
+
 def build_theme(theme, D, out):
     tdir = L.THEMES / theme
     meta = L.load_yaml(tdir / 'theme.yaml') or {'name': theme}
     meta.setdefault('name', theme)
-    if out.exists():
-        shutil.rmtree(out)
+    safe_clear(out)
     out.mkdir(parents=True)
+    (out / BUILD_MARK).write_text(f'{theme} {D["build_date"]}\n', encoding='utf-8')
     if (tdir / 'assets').exists():
         shutil.copytree(tdir / 'assets', out / 'assets')
     shutil.copytree(L.THEMES / '_shared' / 'assets', out / 'assets' / 'shared', dirs_exist_ok=True)
@@ -310,6 +338,7 @@ def build_theme(theme, D, out):
             dst = out / 'static' / 'news' / p['slug']
             dst.mkdir(parents=True, exist_ok=True)
             for f in p['files']:
+                (dst / f).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(p['dir'] / f, dst / f)
 
     env = jinja2.Environment(

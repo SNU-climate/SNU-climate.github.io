@@ -20,7 +20,7 @@ def main():
 
     meta, pubs = P.load_pubs()
     have = {P.norm_doi(p['doi']) for p in pubs if p.get('doi')}
-    added = 0
+    added = failed = 0
     for doi in args.dois:
         doi = P.norm_doi(doi)
         if doi in have:
@@ -30,7 +30,10 @@ def main():
             entry = P.crossref_to_entry(P.crossref_work(doi))
         except Exception as e:  # noqa: BLE001
             print(f'[error] Crossref 조회 실패: {doi} ({e})', file=sys.stderr)
+            failed += 1
             continue
+        if entry.get('needs_review'):
+            print(f'[warn] 발행일 정보가 없어 needs_review로 넣었습니다(화면에 안 보임): {doi}')
         if args.corresponding:
             entry['corresponding'] = True
         if args.featured:
@@ -41,7 +44,8 @@ def main():
         print(f"[add] {entry.get('year')} {entry.get('journal')} — {entry.get('title')[:80]}")
     if added:
         P.save_pubs(meta, pubs)
-    print(f'추가 {added}건, 전체 {len(pubs)}건')
+    print(f'추가 {added}건, 실패 {failed}건, 전체 {len(pubs)}건')
+    sys.exit(1 if failed else 0)
 
 
 if __name__ == '__main__':

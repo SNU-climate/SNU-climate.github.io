@@ -95,6 +95,8 @@ def crossref_to_entry(msg, sources=('crossref',)):
         'sources': list(sources),
         'added': dt.date.today().isoformat(),
     }
+    if not year:                    # 발행일이 없으면 공개하지 않고 사람이 확인하게 둔다
+        entry['needs_review'] = True
     return {k: v for k, v in entry.items() if v not in (None, '', [])}
 
 

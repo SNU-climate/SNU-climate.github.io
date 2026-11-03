@@ -36,20 +36,38 @@ def dump_yaml(obj, path, header=''):
 
 
 # ---------------------------------------------------------------- 날짜
+DATE_RE = re.compile(r'^(\d{4})(?:-(\d{1,2})(?:-(\d{1,2}))?)?$')
+NO_DATE = dt.date(1900, 1, 1)
+
+
+def valid_date(v):
+    """허용 형식(date, 연도 int, 'YYYY', 'YYYY-MM', 'YYYY-MM-DD')이고 실제 존재하는 날짜인지."""
+    if isinstance(v, (dt.date, dt.datetime)):
+        return True
+    if isinstance(v, int) and not isinstance(v, bool):
+        return 1000 <= v <= 9999
+    m = DATE_RE.match(str(v or '').strip())
+    if not m:
+        return False
+    try:
+        dt.date(int(m.group(1)), int(m.group(2) or 1), int(m.group(3) or 1))
+        return True
+    except ValueError:
+        return False
+
+
 def to_date(v):
-    """date / datetime / 'YYYY' / 'YYYY-MM' / 'YYYY-MM-DD' / int → date (정렬용, 모르는 부분은 1로 채움)."""
-    if v is None or v == '':
-        return dt.date(1900, 1, 1)
+    """정렬용 date. 모르는 월·일은 1로 채우고, 형식이 틀리면 1900-01-01(validate.py가 오류로 보고)."""
     if isinstance(v, dt.datetime):
         return v.date()
     if isinstance(v, dt.date):
         return v
+    if not valid_date(v):
+        return NO_DATE
     if isinstance(v, int):
         return dt.date(v, 1, 1)
-    parts = [int(x) for x in re.findall(r'\d+', str(v))[:3]]
-    while len(parts) < 3:
-        parts.append(1)
-    return dt.date(*parts)
+    m = DATE_RE.match(str(v).strip())
+    return dt.date(int(m.group(1)), int(m.group(2) or 1), int(m.group(3) or 1))
 
 
 def date_precision(v):
@@ -104,20 +122,25 @@ def initials(given):
 
 # ---------------------------------------------------------------- 논문
 def visible_pubs(pubs):
-    return [p for p in pubs if not p.get('needs_review') and not p.get('hidden')]
+    """화면에 보일 논문: needs_review·hidden이 아니고 연도를 알 수 있는 것(날짜 없는 논문은 1900년으로 공개하지 않는다)."""
+    return [p for p in pubs if not p.get('needs_review') and not p.get('hidden')
+            and to_date(p.get('date') or p.get('year')) != NO_DATE]
+
+
+def pub_year(p):
+    return int(p['year']) if str(p.get('year') or '').isdigit() else to_date(p.get('date')).year
 
 
 def pub_sort_key(p):
-    return (to_date(p.get('date') or p.get('year')), str(p.get('doi') or '').lower(), str(p.get('title') or ''))
+    """연도를 먼저 비교해 연도 섹션과 정렬이 항상 일치하게 한다(year와 date가 어긋나도 섹션이 쪼개지지 않음)."""
+    return (pub_year(p), to_date(p.get('date') or p.get('year')), str(p.get('doi') or '').lower(), str(p.get('title') or ''))
 
 
 def number_pubs(pubs):
     """표시할 논문에 번호를 매긴다: 가장 오래된 논문 = 1, 최신 = N. 반환은 최신순."""
     vis = [dict(p) for p in visible_pubs(pubs)]
     for p in vis:
-        if not p.get('year'):
-            p['year'] = to_date(p.get('date')).year
-        p['year'] = int(p['year'])
+        p['year'] = pub_year(p)
     vis.sort(key=pub_sort_key)
     for i, p in enumerate(vis, 1):
         p['num'] = i
@@ -164,16 +187,19 @@ def load_news(include_drafts=False):
         ko = d / 'index.ko.md'
         if ko.exists():
             meta_ko, body_ko = split_front_matter(ko.read_text(encoding='utf-8'))
-            for k, v in meta_ko.items():          # index.ko.md 앞머리 값은 ko 쪽으로 덮어쓴다
+            for k, v in meta_ko.items():          # index.ko.md 앞머리의 title·summary는 국문 번역으로 병합
                 if isinstance(meta.get(k), dict):
                     meta[k] = {**meta[k], 'ko': v}
+                elif k in ('title', 'summary') and isinstance(meta.get(k), str):
+                    meta[k] = {'en': meta[k], 'ko': v}
                 else:
                     meta.setdefault(k, v)
         post = dict(meta)
         post['slug'] = d.name
         post['dir'] = d
         post['body'] = {'en': body_en.strip(), 'ko': (body_ko or '').strip() or None}
-        post['files'] = sorted(f.name for f in d.iterdir() if f.is_file() and f.suffix.lower() != '.md')
+        post['files'] = sorted(f.relative_to(d).as_posix() for f in d.rglob('*')     # 하위 폴더 첨부 포함
+                               if f.is_file() and f.suffix.lower() != '.md' and not f.name.startswith('.'))
         posts.append(post)
     posts.sort(key=lambda p: (to_date(p.get('date')), p['slug']), reverse=True)
     return posts

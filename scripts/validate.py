@@ -48,8 +48,11 @@ def check_data(R):
             if not p.get(k):
                 R.err(f'publications: {tag} — {k} 없음')
         if not (p.get('year') or p.get('date')):
-            R.err(f'publications: {tag} — year/date 없음')
-        if p.get('year') and p.get('date') and L.to_date(p['date']).year != int(p['year']):
+            R.err(f'publications: {tag} — year/date 없음(화면에서 제외됨)')
+        for k in ('year', 'date'):
+            if p.get(k) and not L.valid_date(p[k]):
+                R.err(f"publications: {tag} — {k} 형식 오류 '{p[k]}' (YYYY / YYYY-MM / YYYY-MM-DD)")
+        if p.get('year') and p.get('date') and L.valid_date(p['date']) and L.to_date(p['date']).year != L.pub_year(p):
             R.err(f"publications: {tag} — year({p['year']})와 date({p['date']}) 연도 불일치")
         d = str(p.get('doi') or '').lower()
         if d:
@@ -88,6 +91,8 @@ def check_data(R):
             R.warn(f'{tag}: title.ko 없음')
         if not p.get('date'):
             R.err(f'{tag}: date 없음')
+        elif not L.valid_date(p['date']):
+            R.err(f"{tag}: date 형식 오류 '{p['date']}'")
         if p.get('category') not in NEWS_CATS:
             R.err(f"{tag}: category '{p.get('category')}' 는 {sorted(NEWS_CATS)} 중 하나여야 함")
         for f in [p.get('cover')] + [g.get('file') if isinstance(g, dict) else g for g in p.get('gallery') or []]:
@@ -95,7 +100,9 @@ def check_data(R):
                 R.err(f'{tag}: 첨부 파일 없음 {f}')
         if p.get('doi') and str(p['doi']).lower() not in seen:
             R.warn(f"{tag}: doi {p['doi']} 가 논문 목록에 없음(링크 카드 대신 DOI 링크만 표시)")
-        if p.get('youtube') and p['youtube'] not in vids:
+        if p.get('youtube') and not re.match(r'^[\w-]{11}$', str(p['youtube'])):
+            R.err(f"{tag}: youtube '{p['youtube']}' 는 11자 영상 ID가 아님(URL이면 ID만 적기)")
+        elif p.get('youtube') and p['youtube'] not in vids:
             R.warn(f"{tag}: youtube {p['youtube']} 가 videos.yaml에 없음(썸네일은 YouTube에서 직접 로드)")
         if not p['body'].get('ko'):
             R.warn(f'{tag}: index.ko.md 없음(국문 페이지에 영문 본문 표시)')
@@ -127,6 +134,8 @@ def check_data(R):
         for k in ('date', 'title', 'event'):
             if not p.get(k):
                 R.err(f'{tag} — {k} 없음')
+        if p.get('date') and not L.valid_date(p['date']):
+            R.err(f"{tag} — date 형식 오류 '{p['date']}'")
         if p.get('type') not in PRES_TYPES:
             R.err(f"{tag} — type '{p.get('type')}' 는 {sorted(PRES_TYPES)} 중 하나여야 함")
 
@@ -175,12 +184,28 @@ def check_site(R, theme_dir, D):
             R.err(f'[{name}] 페이지 없음 {page}.html')
         if Path(f'{page}.html') not in ko:
             R.err(f'[{name}] 페이지 없음 ko/{page}.html')
-    en_news = len(list((theme_dir / 'news').glob('*.html')))
-    ko_news = len(list((theme_dir / 'ko' / 'news').glob('*.html')))
-    if len(en) != len(ko) or en_news != ko_news:
-        R.err(f'[{name}] EN/KO 페이지 수 불일치 EN {len(en)}+{en_news} / KO {len(ko)}+{ko_news}')
-    if en_news != len(D['news']):
-        R.err(f"[{name}] 뉴스 상세 페이지 수 {en_news} ≠ 뉴스 {len(D['news'])}")
+    want_news = {f"{p['slug']}.html" for p in D['news']}
+    en_news_set = {f.name for f in (theme_dir / 'news').glob('*.html')}
+    ko_news_set = {f.name for f in (theme_dir / 'ko' / 'news').glob('*.html')}
+    en_news, ko_news = len(en_news_set), len(ko_news_set)
+    if set(en) != set(ko):
+        R.err(f'[{name}] EN/KO 페이지 집합 불일치 {sorted(map(str, set(en) ^ set(ko)))}')
+    for label, got in (('news', en_news_set), ('ko/news', ko_news_set)):
+        if got != want_news:
+            R.err(f'[{name}] {label} 상세 페이지가 뉴스 목록과 다름: 없음 {sorted(want_news - got)} / 남는 것 {sorted(got - want_news)}')
+
+    # 생성된 논문 페이지: 번호가 N..1 순서로 빠짐없이, 연도 섹션은 내림차순
+    n_pub = len(D['pubs'])
+    for pp in (theme_dir / 'publications.html', theme_dir / 'ko' / 'publications.html'):
+        if not pp.exists():
+            continue
+        text = pp.read_text(encoding='utf-8', errors='replace')
+        nums = [int(x) for x in re.findall(r'\bid="pub-(\d+)"', text)]
+        if nums != list(range(n_pub, 0, -1)):
+            R.err(f'[{name}] {pp.relative_to(theme_dir)}: 논문 번호 순서 오류(기대 {n_pub}..1, 실제 {len(nums)}개, 처음 {nums[:3]})')
+        years = [int(y) for y in re.findall(r'\bid="y(\d{4})"', text)]
+        if years != sorted(set(years), reverse=True):
+            R.err(f'[{name}] {pp.relative_to(theme_dir)}: 연도 섹션이 내림차순이 아니거나 중복')
 
     cache, bad = {}, 0
     for f in sorted(theme_dir.rglob('*.html')):
@@ -188,22 +213,30 @@ def check_site(R, theme_dir, D):
         rel = f.relative_to(theme_dir)
         if not p.has_title:
             R.err(f'[{name}] {rel}: <title> 없음')
-        if p.lang not in ('en', 'ko'):
-            R.err(f'[{name}] {rel}: <html lang> 없음')
+        want_lang = 'ko' if rel.parts[0] == 'ko' else 'en'
+        if p.lang != want_lang:
+            R.err(f'[{name}] {rel}: <html lang="{p.lang}"> — "{want_lang}" 이어야 함')
         if p.dup_ids:
             R.err(f'[{name}] {rel}: 중복 id {sorted(p.dup_ids)[:5]}')
         for tag, attr, url in p.links:
-            if re.match(r'^(https?:|mailto:|tel:|data:|javascript:|//)', url):
+            if url.lower().startswith('javascript:'):
+                R.err(f'[{name}] {rel}: javascript: 링크 사용 → {url[:40]}')
+                continue
+            if re.match(r'^(https?:|mailto:|tel:|data:|//)', url):
                 continue
             parts = urlsplit(url)
             if not parts.path:          # '#frag' 같은 문서 내 앵커
-                if parts.fragment and parts.fragment not in p.ids and parts.fragment != 'main':
+                if parts.fragment and parts.fragment not in p.ids:
                     R.err(f'[{name}] {rel}: 앵커 없음 #{parts.fragment}')
                     bad += 1
                 continue
             target = (f.parent / unquote(parts.path)).resolve()
             if not target.exists():
                 R.err(f'[{name}] {rel}: 깨진 {attr} → {url}')
+                bad += 1
+                continue
+            if target.is_dir():
+                R.err(f'[{name}] {rel}: 폴더를 가리킴(file://에서 페이지가 안 열림) → {url}')
                 bad += 1
                 continue
             if theme_dir.resolve() not in target.parents and target != theme_dir.resolve():
