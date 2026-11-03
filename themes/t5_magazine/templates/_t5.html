@@ -1,0 +1,61 @@
+{# t5_magazine 전용 매크로. {% import '_t5.html' as x with context %} #}
+
+{# 두 자리 번호(01, 02 …) #}
+{% macro no(i) %}{{ '%02d'|format(i) }}{% endmacro %}
+
+{# 섹션 머리: 붉은 블록 + 디스플레이 제목 + 전체 보기 #}
+{% macro sec_head(title, url=None, more='', cls='') %}
+<div class="sec-head {{ cls }}">
+  <h2 class="sec-title">{{ title }}</h2>
+  {% if url %}<a class="sec-more" href="{{ url }}">{{ more }} <span aria-hidden="true">→</span></a>{% endif %}
+</div>
+{% endmacro %}
+
+{# 이미지가 없는 기사용 타이포그래피 표지 #}
+{% macro art(p, i=0) %}
+<div class="art art--{{ i % 3 }}" aria-hidden="true">
+  <span class="art-word">{{ t('news.category.' ~ p.category) }}</span>
+  <span class="art-mark">{{ site.lab.short }}</span>
+</div>
+{% endmacro %}
+
+{# 기사 이미지(표지 → 영상 썸네일 → 타이포그래피) #}
+{% macro story_img(p, i=0, cls='story-img') %}
+{% set c = cover_url(p) %}
+<div class="{{ cls }}">{% if c %}<img src="{{ c }}" alt="" loading="lazy">{% else %}{{ art(p, i) }}{% endif %}</div>
+{% endmacro %}
+
+{# 기사 카드. size: lg / md / sm #}
+{% macro story(p, size='md', i=0, heading='h3') %}
+<article class="story story--{{ size }}">
+  <a class="story-link" href="{{ news_url(p) }}">
+    {{ story_img(p, i) }}
+    <div class="story-text">
+      <div class="kicker"><span class="kicker-cat">{{ t('news.category.' ~ p.category) }}</span><time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></div>
+      <{{ heading }} class="story-title">{{ tr(p.title) }}</{{ heading }}>
+      {% if p.summary and size != 'sm' %}<p class="story-dek">{{ tr(p.summary) }}</p>{% endif %}
+      {% if size == 'lg' %}<span class="story-more">{{ t('news.read_more') }} <span aria-hidden="true">→</span></span>{% endif %}
+    </div>
+  </a>
+</article>
+{% endmacro %}
+
+{# 연구 지역 위치도: 경위선 격자 + research.regions 점 (실제 데이터) #}
+{% macro coord(reg) %}{{ '%g'|format(reg[0]|abs) }}°{{ 'N' if reg[0] > 0 else ('S' if reg[0] < 0 else '') }} {{ '%g'|format(reg[1]|abs) }}°{{ 'E' if reg[1] > 0 else ('W' if reg[1] < 0 else '') }}{% endmacro %}
+
+{% macro locator(r, i=0, cls='loc') %}
+<div class="{{ cls }} loc--{{ i % 5 }}" aria-hidden="true">
+  <svg viewBox="0 0 360 180" preserveAspectRatio="xMidYMid slice" focusable="false">
+    <g class="loc-grid">
+      {% for lon in range(-150, 180, 30) %}<line x1="{{ lon + 180 }}" y1="0" x2="{{ lon + 180 }}" y2="180"/>{% endfor %}
+      {% for lat in range(-60, 90, 30) %}<line x1="0" y1="{{ 90 - lat }}" x2="360" y2="{{ 90 - lat }}"{% if lat == 0 %} class="loc-eq"{% endif %}/>{% endfor %}
+    </g>
+    {% for reg in r.regions or [] %}
+    <circle class="loc-ring" cx="{{ reg[1] + 180 }}" cy="{{ 90 - reg[0] }}" r="13"/>
+    <circle class="loc-dot" cx="{{ reg[1] + 180 }}" cy="{{ 90 - reg[0] }}" r="4.5"/>
+    {% endfor %}
+  </svg>
+  <span class="loc-no">{{ no(i + 1) }}</span>
+  {% if r.regions %}<span class="loc-coords">{% for reg in r.regions %}{{ coord(reg) }}{% if not loop.last %} · {% endif %}{% endfor %}</span>{% endif %}
+</div>
+{% endmacro %}

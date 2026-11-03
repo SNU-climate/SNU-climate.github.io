@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block ptitle %}{{ t('pres.title') }}{% endblock %}
+{% block plead %}{{ t('pres.intro') }}{% endblock %}
+
+{% block content %}
+<div class="wrap archive archive--pres">
+  <aside class="archive-side"><nav class="pub-years" aria-label="Years">{% for year, items in pres_by_year %}<a href="#p{{ year }}">{{ year }}</a>{% endfor %}</nav></aside>
+  <div class="archive-main">{{ m.pres_list(pres_by_year) }}</div>
+</div>
+{% endblock %}

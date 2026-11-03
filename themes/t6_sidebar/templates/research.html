@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">{{ t('research.title') }}</h1>
+  <p class="page-desc">{{ t('research.intro') }}</p>
+</header>
+
+<nav class="pill-nav" aria-label="{{ t('research.title') }}">
+  {% for r in research %}<a href="#{{ r.key }}">{{ tr(r.title) }}</a>{% endfor %}
+</nav>
+
+{% for r in research %}
+<section class="proj" id="{{ r.key }}" aria-labelledby="h-{{ r.key }}">
+  <div class="proj-top">
+    <div class="proj-media">
+      {% if r.image %}<div class="art"><img src="{{ static(r.image) }}" alt="{{ tr(r.title) }}" loading="lazy"></div>
+      {% else %}{{ ui.topic_art(r, loop.index0) }}{% if r.regions %}<p class="art-cap">{{ 'Key study regions' if lang == 'en' else '주요 연구 지역' }}</p>{% endif %}{% endif %}
+    </div>
+    <div class="proj-text">
+      <p class="proj-idx">{{ '%02d'|format(loop.index) }}</p>
+      <h2 class="proj-title" id="h-{{ r.key }}">{{ tr(r.title) }}</h2>
+      <p>{{ tr(r.summary) }}</p>
+    </div>
+  </div>
+  {% if r.pubs %}
+  <h3 class="sub-title">{{ t('research.papers') }}</h3>
+  <ol class="bib-list bib-list--compact">{% for p in r.pubs %}{{ ui.pub(p, anchor=False) }}{% endfor %}</ol>
+  {% endif %}
+  {% if r.video_items %}
+  <h3 class="sub-title">{{ t('research.videos') }}</h3>
+  <div class="vgrid vgrid--2">{% for v in r.video_items %}{{ m.video_card(v) }}{% endfor %}</div>
+  {% endif %}
+</section>
+{% else %}
+<p class="empty">{{ t('common.empty') }}</p>
+{% endfor %}
+{% endblock %}

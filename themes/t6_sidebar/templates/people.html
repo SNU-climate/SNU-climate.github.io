@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">{{ t('nav.people') }}</h1>
+</header>
+
+<section class="pi-card" id="pi" aria-labelledby="h-pi">
+  {{ ui.portrait(pi, 'portrait portrait--card') }}
+  <div class="pi-card-text">
+    <p class="eyebrow">{{ t('people.pi') }}</p>
+    <h2 class="pi-name" id="h-pi">{{ tr(pi.name) }}</h2>
+    <ul class="pi-roles">{% for r in pi.roles %}<li>{{ tr(r) }}</li>{% endfor %}</ul>
+    <ul class="pi-contact">
+      <li>{{ ui.icon('mail') }}<a href="mailto:{{ pi.email }}">{{ pi.email }}</a></li>
+      <li>{{ ui.icon('contact') }}<span>{{ tr(pi.office) }}</span></li>
+      <li>{{ ui.icon('phone') }}<a href="tel:{{ pi.phone|replace('-', '') }}">{{ pi.phone }}</a></li>
+    </ul>
+  </div>
+</section>
+
+<p class="lead-text">{{ tr(pi.bio) }}</p>
+{% if pi.interests %}
+<p class="interests-label">{{ t('people.interests') }}</p>
+<ul class="chips">{% for i in pi.interests %}<li>{{ tr(i) }}</li>{% endfor %}</ul>
+{% endif %}
+
+<div class="cv">
+  <section class="cv-card">
+    <h3 class="cv-title">{{ t('people.education') }}</h3>
+    <ul class="cv-list">{% for e in pi.education %}<li><span class="cv-when">{{ e.year }}</span><span class="cv-what">{{ tr(e) }}</span></li>{% endfor %}</ul>
+  </section>
+  <section class="cv-card">
+    <h3 class="cv-title">{{ t('people.career') }}</h3>
+    <ul class="cv-list">{% for e in pi.career %}<li><span class="cv-when">{{ e.period }}</span><span class="cv-what">{{ tr(e) }}</span></li>{% endfor %}</ul>
+  </section>
+  <section class="cv-card">
+    <h3 class="cv-title">{{ t('people.service') }}</h3>
+    <ul class="cv-list">{% for e in pi.service %}<li><span class="cv-when">{{ e.period }}</span><span class="cv-what">{{ tr(e) }}</span></li>{% endfor %}</ul>
+  </section>
+</div>
+
+{% for role, ms in member_groups %}
+<section class="sec" id="{{ role }}" aria-labelledby="h-{{ role }}">
+  <div class="sec-head"><h2 class="sec-title" id="h-{{ role }}">{{ t('people.role.' ~ role) }}</h2><span class="count">{{ ms|length }}</span></div>
+  <div class="member-grid">
+    {% for mm in ms %}
+    <article class="person">
+      <div class="avatar avatar--{{ ((mm.name.en if mm.name is mapping else mm.name)|length % 5) + 1 }}">{% if mm.photo %}<img src="{{ static(mm.photo) }}" alt="{{ tr(mm.name) }}" loading="lazy">{% else %}<span aria-hidden="true">{{ ui.ini(mm.name) }}</span>{% endif %}</div>
+      <div class="person-text">
+        <h3 class="person-name">{{ tr(mm.name) }} {{ m.sample_badge(mm) }}</h3>
+        {% if mm.interests %}<p class="person-int">{{ tr(mm.interests) }}</p>{% endif %}
+        {% if mm.since %}<p class="person-meta">{{ t('people.since') }} {{ mm.since }}</p>{% endif %}
+        {% if mm.email %}<a class="person-mail" href="mailto:{{ mm.email }}">{{ mm.email }}</a>{% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% else %}
+<section class="sec" id="members">
+  <div class="sec-head"><h2 class="sec-title">{{ t('people.members') }}</h2></div>
+  <p class="empty">{{ t('common.empty') }}</p>
+</section>
+{% endfor %}
+
+{% if alumni %}
+<section class="sec" id="alumni" aria-labelledby="h-alumni">
+  <div class="sec-head"><h2 class="sec-title" id="h-alumni">{{ t('people.alumni') }}</h2><span class="count">{{ alumni|length }}</span></div>
+  <table class="table">
+    <tbody>
+      {% for a in alumni %}
+      <tr><th scope="row">{{ tr(a.name) }} {{ m.sample_badge(a) }}</th><td>{{ a.degree }}, {{ a.year }}</td><td>{% if a.current %}{{ tr(a.current) }}{% endif %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+{% endblock %}

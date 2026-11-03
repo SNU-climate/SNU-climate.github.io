@@ -48,16 +48,20 @@
     if (q) { input.value = q; run(); }
   }
 
-  // 모바일 메뉴: [data-nav-toggle] 버튼이 aria-controls 대상의 data-open을 토글
+  // 모바일 메뉴: [data-nav-toggle] 버튼이 aria-controls 대상의 data-open을 토글. Esc·메뉴 링크 클릭 시 닫힘
   function initNavToggle() {
     document.querySelectorAll('[data-nav-toggle]').forEach(function (btn) {
       var target = document.getElementById(btn.getAttribute('aria-controls'));
       if (!target) return;
-      btn.addEventListener('click', function () {
-        var open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        target.toggleAttribute('data-open', !open);
-        document.documentElement.classList.toggle('nav-open', !open);
+      function set(open) {
+        btn.setAttribute('aria-expanded', String(open));
+        target.toggleAttribute('data-open', open);
+        document.documentElement.classList.toggle('nav-open', open);
+      }
+      btn.addEventListener('click', function () { set(btn.getAttribute('aria-expanded') !== 'true'); });
+      target.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { set(false); btn.focus(); }
       });
     });
   }

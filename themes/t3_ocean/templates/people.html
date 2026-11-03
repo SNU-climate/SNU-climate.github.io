@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block hero_inner %}
+<p class="eyebrow">{{ lab_name }}</p>
+<h1>{{ t('nav.people') }}</h1>
+<nav class="chips-nav" aria-label="{{ t('nav.people') }}">
+  <a class="chip chip--glass" href="#pi">{{ t('people.pi') }}</a>
+  {% for role, ms in member_groups %}<a class="chip chip--glass" href="#{{ role }}">{{ t('people.role.' ~ role) }}</a>{% endfor %}
+  {% if alumni %}<a class="chip chip--glass" href="#alumni">{{ t('people.alumni') }}</a>{% endif %}
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="sec-first" id="pi" aria-labelledby="h-pi">
+  <h2 class="sec-title" id="h-pi">{{ t('people.pi') }}</h2>
+  <div class="glass pi-card">
+    {{ o.avatar(pi.photo, tr(pi.name), o.ini(tr(pi.name)), 'avatar avatar--xl') }}
+    <div class="pi-card-text">
+      <h3 class="pi-name">{{ tr(pi.name) }} <small>{{ tr(pi.title) }}</small></h3>
+      <ul class="pi-roles">{% for r in pi.roles %}<li>{{ tr(r) }}</li>{% endfor %}</ul>
+      <p class="pi-contact">
+        <a class="chip" href="mailto:{{ pi.email }}">{{ pi.email }}</a>
+        <span class="chip">{{ tr(pi.office) }}</span>
+        <a class="chip" href="tel:{{ pi.phone|replace('-', '') }}">{{ pi.phone }}</a>
+      </p>
+      <p class="pi-bio">{{ tr(pi.bio) }}</p>
+      <h4 class="sub-h">{{ t('people.interests') }}</h4>
+      <p class="pi-interests">{% for it in pi.interests %}<span class="chip chip--accent">{{ tr(it) }}</span>{% endfor %}</p>
+    </div>
+  </div>
+  <div class="cv-grid">
+    <div class="glass panel"><h3 class="sub-h">{{ t('people.education') }}</h3>
+      <ul class="cv">{% for e in pi.education %}<li><span class="cv-when">{{ e.year }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul></div>
+    <div class="glass panel"><h3 class="sub-h">{{ t('people.career') }}</h3>
+      <ul class="cv">{% for e in pi.career %}<li><span class="cv-when">{{ e.period }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul></div>
+    <div class="glass panel"><h3 class="sub-h">{{ t('people.service') }}</h3>
+      <ul class="cv">{% for e in pi.service %}<li><span class="cv-when">{{ e.period }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul></div>
+  </div>
+  {% if selected_pubs %}
+  <div class="glass panel sel-pubs">
+    <h3 class="sub-h">{{ t('people.selected') }}</h3>
+    <ul class="pub-ul">{% for p in selected_pubs %}{{ m.pub_item(p) }}{% endfor %}</ul>
+  </div>
+  {% endif %}
+</section>
+
+{% for role, ms in member_groups %}
+<section class="sec" id="{{ role }}" aria-labelledby="h-{{ role }}">
+  <h2 class="sec-title" id="h-{{ role }}">{{ t('people.role.' ~ role) }}</h2>
+  <div class="grid grid-4">{% for mm in ms %}{{ o.member_card(mm, 'member-card glass') }}{% endfor %}</div>
+</section>
+{% else %}
+<section class="sec"><h2 class="sec-title">{{ t('people.members') }}</h2><p class="empty">{{ t('common.empty') }}</p></section>
+{% endfor %}
+
+{% if alumni %}
+<section class="sec" id="alumni" aria-labelledby="h-alumni">
+  <h2 class="sec-title" id="h-alumni">{{ t('people.alumni') }}</h2>
+  <div class="glass panel">{{ m.alumni_list(alumni) }}</div>
+</section>
+{% endif %}
+{% endblock %}

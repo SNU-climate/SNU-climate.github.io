@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="post">
+  <header class="post-head">
+    <div class="wrap">
+      <p class="phead-no"><a class="post-back" href="{{ page_url('news') }}"><span aria-hidden="true">←</span> {{ t('news.back') }}</a></p>
+      <p class="post-meta"><span class="post-cat">{{ t('news.category.' ~ post.category) }}</span><time datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time></p>
+      <h1 class="post-title">{{ tr(post.title) }}</h1>
+      {% if post.summary %}<p class="post-lead">{{ tr(post.summary) }}</p>{% endif %}
+    </div>
+  </header>
+
+  {% if post.cover and not post.youtube %}
+  <div class="wrap"><figure class="post-cover"><img src="{{ cover_url(post) }}" alt=""></figure></div>
+  {% endif %}
+
+  <div class="wrap post-grid">
+    <aside class="post-aside" aria-label="{{ t('news.title') }}">
+      <dl class="post-facts">
+        <div><dt>{{ 'Date' if lang == 'en' else '날짜' }}</dt><dd><time datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time></dd></div>
+        <div><dt>{{ 'Category' if lang == 'en' else '분류' }}</dt><dd>{{ t('news.category.' ~ post.category) }}</dd></div>
+        {% if post.pub %}<div><dt>{{ t('news.paper') }}</dt><dd><a class="ul" href="{{ pub_url(post.pub) }}"><i>{{ post.pub.journal }}</i> ({{ post.pub.year }})</a></dd></div>{% endif %}
+      </dl>
+    </aside>
+    <div class="post-body">
+      {{ m.news_body(post) }}
+    </div>
+  </div>
+
+  {% set others = news|rejectattr('slug', 'equalto', post.slug)|list %}
+  {% if others %}
+  <section class="post-more">
+    <div class="wrap">
+      <h2 class="post-more-title">{{ 'More news' if lang == 'en' else '다른 소식' }}</h2>
+      <div class="nlist">{% for p in others[:3] %}{{ ui.news_row(p) }}{% endfor %}</div>
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

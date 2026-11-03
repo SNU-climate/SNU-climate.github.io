@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% import '_t1.html' as x %}
+{% block ptitle %}{{ t('contact.title') }}{% endblock %}
+{% block plead %}{{ t('contact.directions') }}{% endblock %}
+
+{% block content %}
+<div class="wrap contact-grid">
+  <section class="contact-card">
+    <h2 class="contact-name">{{ lab_name }}</h2>
+    <p class="contact-aff">{{ tr(site.lab.affiliation) }}</p>
+    <dl class="contact">
+      <dt>{{ t('contact.address') }}</dt><dd>{{ tr(site.contact.address) }}</dd>
+      <dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(site.contact.pi_office.room) }} · <a href="tel:{{ site.contact.pi_office.phone }}">{{ site.contact.pi_office.phone }}</a></dd>
+      <dt>{{ t('contact.lab_room') }}</dt><dd>{{ tr(site.contact.lab_room.room) }} · <a href="tel:{{ site.contact.lab_room.phone }}">{{ site.contact.lab_room.phone }}</a></dd>
+      <dt>{{ t('contact.email') }}</dt><dd><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></dd>
+    </dl>
+    <a class="btn btn-navy" href="{{ site.contact.map_url }}" target="_blank" rel="noopener">{{ t('contact.map') }} <span aria-hidden="true">→</span></a>
+  </section>
+  <div class="contact-side">
+    {{ x.iso_art(2, '', 'iso-art iso-art--contact') }}
+    <section class="join join--side">
+      <div>
+        <h2 class="join-title">{{ t('home.join') }}</h2>
+        <p>{{ t('home.join_text') }}</p>
+      </div>
+      <a class="btn btn-navy" href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+    </section>
+  </div>
+</div>
+{% endblock %}

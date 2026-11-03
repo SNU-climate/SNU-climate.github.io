@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block ptitle %}{{ t('pres.title') }}{% endblock %}
+{% block plead %}{{ t('pres.intro') }}{% endblock %}
+
+{% block content %}
+<div class="wrap narrow pres-page">
+  {{ m.pres_list(pres_by_year) }}
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ ui.phead('news', t('news.title'), t('news.intro')) }}
+
+<div class="wrap">
+  <div class="nlist">
+    {% for p in news %}{{ ui.news_row(p, 'h2') }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

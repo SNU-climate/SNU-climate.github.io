@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block hero_inner %}
+<p class="eyebrow">{{ lab_name }}</p>
+<h1>{{ t('contact.title') }}</h1>
+<p class="phero-lead">{{ t('contact.directions') }}</p>
+{% endblock %}
+
+{% block content %}
+<div class="contact-grid">
+  <div class="glass panel contact-card contact-card--wide">
+    <h2 class="sub-h">{{ t('contact.address') }}</h2>
+    <p class="contact-big">{{ tr(site.contact.address) }}</p>
+    <p><a class="btn btn-warm" href="{{ site.contact.map_url }}" target="_blank" rel="noopener">{{ t('contact.map') }} <span aria-hidden="true">↗</span></a></p>
+  </div>
+  <div class="glass panel contact-card">
+    <h2 class="sub-h">{{ t('contact.pi_office') }}</h2>
+    <p class="contact-big">{{ tr(site.contact.pi_office.room) }}</p>
+    <p>{{ t('contact.phone') }} <a href="tel:{{ site.contact.pi_office.phone|replace('-', '') }}">{{ site.contact.pi_office.phone }}</a></p>
+  </div>
+  <div class="glass panel contact-card">
+    <h2 class="sub-h">{{ t('contact.lab_room') }}</h2>
+    <p class="contact-big">{{ tr(site.contact.lab_room.room) }}</p>
+    <p>{{ t('contact.phone') }} <a href="tel:{{ site.contact.lab_room.phone|replace('-', '') }}">{{ site.contact.lab_room.phone }}</a></p>
+  </div>
+  <div class="glass panel contact-card">
+    <h2 class="sub-h">{{ t('contact.email') }}</h2>
+    <p class="contact-big"><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
+  </div>
+</div>
+
+<section class="sec join" aria-labelledby="h-join">
+  <div class="join-in">
+    <h2 id="h-join">{{ t('home.join') }}</h2>
+    <p>{{ t('home.join_text') }}</p>
+  </div>
+  <a class="btn btn-warm" href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+</section>
+{% endblock %}

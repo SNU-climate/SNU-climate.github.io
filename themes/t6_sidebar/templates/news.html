@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">{{ t('news.title') }}</h1>
+  <p class="page-desc">{{ t('news.intro') }}</p>
+</header>
+
+<div class="post-list">
+  {% for p in news %}
+  <article class="post-item">
+    <a class="post-item-link" href="{{ news_url(p) }}">
+      <div class="post-item-text">
+        <p class="post-item-meta"><time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time> <span class="cat cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span></p>
+        <h2 class="post-item-title">{{ tr(p.title) }}</h2>
+        {% if p.summary %}<p class="post-item-sum">{{ tr(p.summary) }}</p>{% endif %}
+        <span class="more">{{ t('news.read_more') }} {{ ui.icon('arrow', 'ic ic--sm') }}</span>
+      </div>
+      {{ ui.news_thumb(p) }}
+    </a>
+  </article>
+  {% else %}
+  <p class="empty">{{ t('common.empty') }}</p>
+  {% endfor %}
+</div>
+{% endblock %}

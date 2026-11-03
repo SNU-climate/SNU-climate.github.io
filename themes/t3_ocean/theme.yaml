@@ -1,0 +1,5 @@
+title: "Ocean–Atmosphere"
+concept:
+  en: "Sea-surface-temperature palette from the deep ocean to the warm pool: a full-screen gradient hero with slowly drifting isotherms and waves, frosted-glass cards with rounded corners. Sky-blue in light mode, deep sea in dark mode."
+  ko: "심해 남색에서 청록, 따뜻한 주황으로 이어지는 해수면온도 팔레트. 천천히 흐르는 등온선·파도 애니메이션이 있는 풀스크린 그라디언트 히어로와 둥근 반투명(glass) 카드. 라이트 모드는 하늘빛, 다크 모드는 심해."
+palette: ["#04213f", "#0f6e8c", "#25b3a6", "#f39a4b", "#eaf5fc"]

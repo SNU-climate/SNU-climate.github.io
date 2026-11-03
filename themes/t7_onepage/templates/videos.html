@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block head %}
+<h1 id="page-title">{{ t('videos.title') }}</h1>
+<p class="lead">{{ t('videos.intro') }}</p>
+<p><a class="btn btn-primary" href="{{ channel.url }}" target="_blank" rel="noopener">{{ t('videos.channel') }} <span aria-hidden="true">↗</span></a></p>
+{% endblock %}
+
+{% block content %}
+<div class="vgrid">{% for v in videos %}{{ m.video_card(v) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}</div>
+{% endblock %}

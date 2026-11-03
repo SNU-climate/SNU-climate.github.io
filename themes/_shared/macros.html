@@ -25,8 +25,9 @@
 {% macro sample_badge(x) %}{% if x.placeholder %}<span class="sample-badge" title="{{ t('common.sample_note') }}">{{ t('common.sample') }}</span>{% endif %}{% endmacro %}
 
 {# ---------------- 논문 ---------------- #}
-{% macro pub_item(p, show_num=True, tag='li') %}
-<{{ tag }} class="pub" id="pub-{{ p.num }}" data-pub-item data-search="{{ search_text(p) }}">
+{# anchor=False: 같은 논문을 한 페이지에 여러 번 보여줄 때(연구 주제·뉴스) id·검색 속성을 빼서 중복을 막는다 #}
+{% macro pub_item(p, show_num=True, tag='li', anchor=True) %}
+<{{ tag }} class="pub"{% if anchor %} id="pub-{{ p.num }}" data-pub-item data-search="{{ search_text(p) }}"{% endif %}>
   {% if show_num %}<span class="pub-num">{{ p.num }}.</span>{% endif %}
   <div class="pub-body">
     <div class="pub-authors">{{ authors(p) }} ({{ p.year }})</div>
@@ -81,7 +82,7 @@
 
 {# 뉴스 상세 본문(제목은 테마가 그린다) #}
 {% macro news_body(p) %}
-{% if body_fallback %}<p class="lang-note">※ 한국어 본문이 아직 없어 영문으로 표시합니다.</p>{% endif %}
+{% if body_fallback %}<p class="lang-note">{{ t('common.lang_fallback') }}</p>{% endif %}
 <div class="prose">{{ body_html }}</div>
 {% if p.youtube %}<div class="news-video">{{ yt_html(p.youtube, tr(p.title)) }}</div>{% endif %}
 {% if p.gallery %}
@@ -90,7 +91,7 @@
 {% if p.pub %}
 <aside class="news-paper">
   <div class="news-paper-label">{{ t('news.paper') }}</div>
-  <ul class="pub-ul">{{ pub_item(p.pub, show_num=False) }}</ul>
+  <ul class="pub-ul">{{ pub_item(p.pub, show_num=False, anchor=False) }}</ul>
 </aside>
 {% elif p.doi %}
 <aside class="news-paper"><div class="news-paper-label">{{ t('news.paper') }}</div><a href="https://doi.org/{{ p.doi }}" target="_blank" rel="noopener">https://doi.org/{{ p.doi }}</a></aside>
@@ -134,7 +135,8 @@
 {% endmacro %}
 
 {# ---------------- 구성원 ---------------- #}
-{% macro initials_of(name) %}{{ (name.split(' ')|map('first')|join)[:2]|upper }}{% endmacro %}
+{# 한글 이름은 첫 글자(성), 영문은 첫·끝 단어 머리글자 ('Jong-Seong Kug' → 'JK') #}
+{% macro initials_of(name) %}{% set w = (name or '?').split() %}{% if w[0][0] >= '가' and w[0][0] <= '힣' %}{{ w[0][0] }}{% elif w|length > 1 %}{{ (w[0][0] ~ w[-1][0])|upper }}{% else %}{{ w[0][:2]|upper }}{% endif %}{% endmacro %}
 
 {% macro member_card(mm, cls='member-card') %}
 <article class="{{ cls }}">

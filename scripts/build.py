@@ -133,7 +133,8 @@ def derive(data):
         'highlight_keys': hl,
         'stats': {
             'pubs': len(pubs), 'first_year': years[0] if years else None, 'last_year': years[-1] if years else None,
-            'per_year': per_year, 'top_journals': top_journals,
+            'per_year': per_year, 'top_journals': top_journals, 'journals': len(journals),
+            'per_year_full': [(y, dict(per_year).get(y, 0)) for y in range(years[0], years[-1] + 1)] if years else [],
             'members': len([m for m in mlist if not m.get('placeholder')]),
             'videos': len(videos), 'news': len(news), 'presentations': len(pres),
         },

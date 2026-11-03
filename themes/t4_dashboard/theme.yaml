@@ -1,0 +1,5 @@
+title: "Climate Dashboard"
+concept:
+  en: "A dark data dashboard. NASA GISTEMP warming stripes across the top, KPI cards, publications-per-year and journal bar charts built from the lab's own records, monospace readouts."
+  ko: "다크 데이터 대시보드. 상단에 NASA GISTEMP warming stripes, 연구실 실제 기록으로 만든 지표 카드·연도별 논문 수·학술지 막대그래프, 모노스페이스 수치 표기."
+palette: ["#0b0f16", "#121a26", "#5cc8ff", "#ff7a45", "#e8eef6"]

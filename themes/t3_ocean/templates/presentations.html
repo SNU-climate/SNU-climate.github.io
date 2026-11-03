@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block hero_inner %}
+<p class="eyebrow">{{ lab_name }}</p>
+<h1>{{ t('pres.title') }}</h1>
+<p class="phero-lead">{{ t('pres.intro') }}</p>
+{% endblock %}
+
+{% block content %}
+<div class="glass panel">
+  {{ m.pres_list(pres_by_year) }}
+</div>
+{% endblock %}

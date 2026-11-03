@@ -141,7 +141,7 @@ def check_data(R):
 class LinkParser(html.parser.HTMLParser):
     def __init__(self):
         super().__init__()
-        self.links, self.ids, self.has_title, self.lang = [], set(), False, None
+        self.links, self.ids, self.dup_ids, self.has_title, self.lang = [], set(), set(), False, None
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
@@ -150,6 +150,8 @@ class LinkParser(html.parser.HTMLParser):
         if tag == 'title':
             self.has_title = True
         if a.get('id'):
+            if a['id'] in self.ids:
+                self.dup_ids.add(a['id'])
             self.ids.add(a['id'])
         for k in ('href', 'src'):
             if a.get(k):
@@ -188,6 +190,8 @@ def check_site(R, theme_dir, D):
             R.err(f'[{name}] {rel}: <title> 없음')
         if p.lang not in ('en', 'ko'):
             R.err(f'[{name}] {rel}: <html lang> 없음')
+        if p.dup_ids:
+            R.err(f'[{name}] {rel}: 중복 id {sorted(p.dup_ids)[:5]}')
         for tag, attr, url in p.links:
             if re.match(r'^(https?:|mailto:|tel:|data:|javascript:|//)', url):
                 continue

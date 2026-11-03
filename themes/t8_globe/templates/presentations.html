@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block hero %}{{ ui.page_hero(t('pres.title'), t('pres.intro')) }}{% endblock %}
+{% block content %}
+<div class="wrap sec pres-wrap">
+  {{ m.pres_list(pres_by_year) }}
+</div>
+{% endblock %}

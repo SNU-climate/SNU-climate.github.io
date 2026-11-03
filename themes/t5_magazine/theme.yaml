@@ -1,0 +1,12 @@
+title: "Science Magazine"
+concept:
+  en: >-
+    A news-first layout modelled on a science magazine: a masthead, a large cover story with secondary
+    stories, a "Watch" video strip, a "From the journals" band of recent papers, and research feature cards.
+    Serif display headlines with a red accent; news posts read like magazine articles with a large cover,
+    a drop cap, and generous leading.
+  ko: >-
+    과학 잡지처럼 뉴스를 앞세운 레이아웃. 마스트헤드, 대형 커버 기사와 보조 기사, "Watch" 영상 줄,
+    "From the journals" 최근 논문 띠, 연구 분야 피처 카드. 세리프 디스플레이 제목과 붉은 포인트,
+    뉴스 상세는 큰 표지·드롭캡·넓은 행간의 잡지 기사 형식.
+palette: ["#b5121b", "#161513", "#fbf9f4", "#f1ede4", "#5d584f"]

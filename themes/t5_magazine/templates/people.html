@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{% block plead_wrap %}{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <section class="profile" id="pi">
+    <div class="profile-portrait">
+      {% if pi.photo %}<img src="{{ static(pi.photo) }}" alt="{{ tr(pi.name) }}">{% else %}
+      <div class="profile-mono" aria-hidden="true"><span>{{ m.initials_of(pi.name.en) }}</span></div>{% endif %}
+    </div>
+    <div class="profile-text">
+      <p class="kicker"><span class="kicker-cat">{{ t('people.pi') }}</span></p>
+      <h2 class="profile-name">{{ tr(pi.name) }} <span class="profile-alt" lang="{{ other_lang }}">{{ pi.name[other_lang] }}</span></h2>
+      <p class="profile-role">{{ tr(pi.title) }} · {{ tr(pi.major) }}</p>
+      <div class="prose prose--dropcap profile-bio"><p>{{ tr(pi.bio) }}</p></div>
+      <ul class="profile-roles">{% for r in pi.roles %}<li>{{ tr(r) }}</li>{% endfor %}</ul>
+      <dl class="profile-contact">
+        <div><dt>{{ t('contact.email') }}</dt><dd><a href="mailto:{{ pi.email }}">{{ pi.email }}</a></dd></div>
+        <div><dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(pi.office) }}</dd></div>
+        <div><dt>{{ t('contact.phone') }}</dt><dd><a href="tel:{{ pi.phone }}">{{ pi.phone }}</a></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  {% if pi.interests %}
+  <section class="interests">
+    <h3 class="rule-h">{{ t('people.interests') }}</h3>
+    <ol class="interest-list">{% for i in pi.interests %}<li><span class="interest-no">{{ x.no(loop.index) }}</span>{{ tr(i) }}</li>{% endfor %}</ol>
+  </section>
+  {% endif %}
+
+  <section class="cv3">
+    <div>
+      <h3 class="rule-h">{{ t('people.education') }}</h3>
+      <ul class="cv">{% for e in pi.education %}<li><span class="cv-when">{{ e.year }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>
+    </div>
+    <div>
+      <h3 class="rule-h">{{ t('people.career') }}</h3>
+      <ul class="cv">{% for e in pi.career %}<li><span class="cv-when">{{ e.period }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>
+    </div>
+    <div>
+      <h3 class="rule-h">{{ t('people.service') }}</h3>
+      <ul class="cv">{% for e in pi.service %}<li><span class="cv-when">{{ e.period }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>
+    </div>
+  </section>
+
+  <section class="team">
+    {{ x.sec_head(t('people.members')) }}
+    {% for role, ms in member_groups %}
+    <div class="team-group" id="{{ role }}">
+      <h3 class="team-role">{{ t('people.role.' ~ role) }}</h3>
+      <div class="member-grid">{% for mm in ms %}{{ m.member_card(mm) }}{% endfor %}</div>
+    </div>
+    {% else %}
+    <p class="empty">{{ t('common.empty') }}</p>
+    {% endfor %}
+    {% if alumni %}
+    <div class="team-group" id="alumni">
+      <h3 class="team-role">{{ t('people.alumni') }}</h3>
+      {{ m.alumni_list(alumni) }}
+    </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

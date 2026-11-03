@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block hero %}{{ ui.page_hero(t('pubs.title'), t('pubs.intro'), stats.pubs ~ ' ' ~ t('pubs.total')) }}{% endblock %}
+{% block content %}
+<div class="wrap pubs-layout">
+  <aside class="pubs-side">
+    <nav class="year-rail" aria-label="{{ 'Years' if lang == 'en' else '연도' }}">
+      {% for year, items in pubs_by_year %}<a href="#y{{ year }}"><span class="yr">{{ year }}</span><span class="yr-n">{{ items|length }}</span></a>{% endfor %}
+    </nav>
+  </aside>
+  <div class="pubs-main">
+    {{ m.pub_list(pubs_by_year) }}
+  </div>
+</div>
+{% endblock %}

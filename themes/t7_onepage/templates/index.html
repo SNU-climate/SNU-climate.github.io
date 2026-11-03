@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% set COUNTS = {'research': research|length, 'publications': stats.pubs, 'presentations': stats.presentations,
+                 'news': stats.news, 'videos': stats.videos} %}
+{# ---------------------------------------------------------------- 01 히어로 #}
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
+    <div class="hero-main">
+      <p class="hero-aff"><span class="hero-dot" aria-hidden="true"></span>{{ tr(site.lab.affiliation) }}</p>
+      <h1 id="hero-title" class="hero-title">{{ lab_name }}</h1>
+      <p class="hero-tag"><span>{{ tr(site.lab.tagline) }}</span></p>
+      <p class="hero-intro">{{ tr(site.lab.intro) }}</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#research">{{ t('home.research') }} <span aria-hidden="true">↓</span></a>
+        <a class="btn btn-ghost" href="#contact">{{ t('nav.contact') }}</a>
+      </div>
+    </div>
+    <nav class="toc" aria-label="{{ 'On this page' if lang == 'en' else '이 페이지의 구성' }}">
+      <ol>
+        {% for n in nav %}{% if n.key != 'index' %}
+        <li><a href="#{{ n.key }}"><span class="toc-num" aria-hidden="true">{{ '%02d'|format(loop.index) }}</span><span class="toc-label">{{ n.label }}</span>{% if n.key in COUNTS %}<span class="toc-meta">{{ COUNTS[n.key] }}</span>{% endif %}</a></li>
+        {% endif %}{% endfor %}
+      </ol>
+    </nav>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 연구 #}
+<section class="sec" id="research" aria-labelledby="h-research">
+  <div class="wrap">
+    {{ op.sec_head('research', t('home.research'), t('research.intro'), page_url('research')) }}
+    <div class="rgrid">
+      {% for r in research %}
+      <a class="rcard rcard--{{ loop.index0 % 5 }}" href="{{ page_url('research') }}#{{ r.key }}">
+        <span class="rcard-idx" aria-hidden="true">{{ '%02d'|format(loop.index) }}</span>
+        <span class="rcard-title">{{ tr(r.title) }}</span>
+        <span class="rcard-sum">{{ tr(r.summary)|truncate(170) }}</span>
+        <span class="rcard-foot">
+          <span class="rcard-meta">{% if r.pubs %}<span class="tag">{{ t('nav.publications') }} {{ r.pubs|length }}</span>{% endif %}{% if r.video_items %}<span class="tag">{{ t('nav.videos') }} {{ r.video_items|length }}</span>{% endif %}</span>
+          <span class="rcard-go" aria-hidden="true">→</span>
+        </span>
+      </a>
+      {% else %}
+      <p class="empty">{{ t('common.empty') }}</p>
+      {% endfor %}
+      <a class="rcard rcard--all" href="{{ page_url('research') }}">
+        <span class="rcard-title">{{ t('research.title') }}</span>
+        <span class="rcard-sum">{{ t('research.intro') }}</span>
+        <span class="rcard-foot"><span class="rcard-meta">{{ t('home.view_all') }}</span><span class="rcard-go" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 구성원 #}
+<section class="sec sec--tint" id="people" aria-labelledby="h-people">
+  <div class="wrap">
+    {{ op.sec_head('people', t('nav.people'), '', page_url('people')) }}
+    <div class="people-grid">
+      <article class="card pi-card">
+        {{ op.avatar(pi.photo, tr(pi.name), op.ini(tr(pi.name)), 'avatar avatar--pi') }}
+        <div class="pi-text">
+          <p class="eyebrow">{{ t('people.pi') }}</p>
+          <h3 class="pi-name">{{ tr(pi.name) }}</h3>
+          <p class="pi-role">{{ tr(pi.roles[0]) }}</p>
+          <p class="pi-tags">{% for it in pi.interests %}<span class="tag">{{ tr(it) }}</span>{% endfor %}</p>
+          <div class="pi-actions">
+            <a class="btn btn-primary btn-sm" href="mailto:{{ pi.email }}">{{ t('contact.email') }}</a>
+            <a class="btn btn-ghost btn-sm" href="{{ page_url('people') }}#pi">{{ t('people.career') }} <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
+      <div class="card members-card">
+        {% for role, ms in member_groups %}
+        <div class="mgroup">
+          <h3 class="mgroup-title">{{ t('people.role.' ~ role) }}</h3>
+          <ul class="mlist">
+            {% for mm in ms %}
+            <li class="mrow">
+              <span class="mrow-init" aria-hidden="true">{{ op.ini(tr(mm.name)) }}</span>
+              <span class="mrow-text"><span class="mrow-name">{{ tr(mm.name) }} {{ m.sample_badge(mm) }}</span>{% if mm.interests %}<span class="mrow-int">{{ tr(mm.interests) }}</span>{% endif %}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        <p class="empty">{{ t('common.empty') }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 논문(최근 10편) #}
+<section class="sec" id="publications" aria-labelledby="h-publications">
+  <div class="wrap">
+    {{ op.sec_head('publications', t('home.publications'), t('pubs.intro'), page_url('publications')) }}
+    <div class="card pubs-card">
+      <ol class="pub-ol">{% for p in pubs[:10] %}{{ m.pub_item(p) }}{% else %}<li class="empty">{{ t('common.empty') }}</li>{% endfor %}</ol>
+    </div>
+    <a class="btn btn-block" href="{{ page_url('publications') }}">{{ t('home.view_all') }} · {{ stats.pubs }} {{ t('pubs.total') }} <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 발표 #}
+<section class="sec sec--tint" id="presentations" aria-labelledby="h-presentations">
+  <div class="wrap">
+    {{ op.sec_head('presentations', t('pres.title'), t('pres.intro'), page_url('presentations')) }}
+    <div class="card">
+      <ul class="pres-ul">{% for p in presentations[:4] %}{{ m.pres_item(p) }}{% else %}<li class="empty">{{ t('common.empty') }}</li>{% endfor %}</ul>
+    </div>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 뉴스 #}
+<section class="sec" id="news" aria-labelledby="h-news">
+  <div class="wrap">
+    {{ op.sec_head('news', t('home.news'), t('news.intro'), page_url('news')) }}
+    <div class="ngrid">{% for p in news[:site.home.news] %}{{ m.news_card(p) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}</div>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 영상 #}
+<section class="sec sec--tint" id="videos" aria-labelledby="h-videos">
+  <div class="wrap">
+    {{ op.sec_head('videos', t('home.videos'), t('videos.intro'), page_url('videos')) }}
+    <div class="vgrid">{% for v in videos[:site.home.videos] %}{{ m.video_card(v) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}</div>
+    <a class="btn btn-block" href="{{ channel.url }}" target="_blank" rel="noopener">{{ t('videos.channel') }} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 연락처 #}
+<section class="sec sec--ink" id="contact" aria-labelledby="h-contact">
+  <div class="wrap">
+    {{ op.sec_head('contact', t('contact.title'), t('contact.directions'), page_url('contact')) }}
+    <div class="contact-grid">
+      <a class="contact-big" href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+      <dl class="contact-dl">
+        <div><dt>{{ t('contact.address') }}</dt><dd>{{ tr(site.contact.address) }}</dd></div>
+        <div><dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(site.contact.pi_office.room) }} · <a href="tel:{{ site.contact.pi_office.phone|replace('-', '') }}">{{ site.contact.pi_office.phone }}</a></dd></div>
+        <div><dt>{{ t('contact.lab_room') }}</dt><dd>{{ tr(site.contact.lab_room.room) }} · <a href="tel:{{ site.contact.lab_room.phone|replace('-', '') }}">{{ site.contact.lab_room.phone }}</a></dd></div>
+      </dl>
+      <div class="contact-side">
+        <div class="join">
+          <h3>{{ t('home.join') }}</h3>
+          <p>{{ t('home.join_text') }}</p>
+        </div>
+        <div class="contact-actions">
+          <a class="btn btn-amber" href="{{ site.contact.map_url }}" target="_blank" rel="noopener">{{ t('contact.map') }} <span aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost-inv" href="mailto:{{ site.contact.email }}">{{ t('contact.email') }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

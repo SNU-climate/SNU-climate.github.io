@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block hero_inner %}
+<p class="post-back"><a href="{{ page_url('news') }}"><span aria-hidden="true">←</span> {{ t('news.back') }}</a></p>
+<div class="news-card-meta news-card-meta--hero"><span class="news-cat news-cat--{{ post.category }}">{{ t('news.category.' ~ post.category) }}</span> <time datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time></div>
+<h1 class="post-title">{{ tr(post.title) }}</h1>
+{% if post.summary %}<p class="phero-lead">{{ tr(post.summary) }}</p>{% endif %}
+{% endblock %}
+
+{% block content %}
+<article class="glass post">
+  {% if post.cover and not post.youtube %}<img class="post-cover" src="{{ cover_url(post) }}" alt="">{% endif %}
+  {{ m.news_body(post) }}
+</article>
+{% set others = news|rejectattr('slug', 'equalto', post.slug)|list %}
+{% if others %}
+<section class="sec" aria-labelledby="h-more">
+  <div class="sec-head"><h2 id="h-more">{{ t('news.title') }}</h2><a class="more" href="{{ page_url('news') }}">{{ t('home.view_all') }} <span aria-hidden="true">→</span></a></div>
+  <div class="grid grid-3">{% for p in others[:3] %}{{ m.news_card(p, 'news-card glass') }}{% endfor %}</div>
+</section>
+{% endif %}
+{% endblock %}

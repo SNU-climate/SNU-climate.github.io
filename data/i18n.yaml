@@ -122,3 +122,15 @@ common:
   menu: {en: "Menu", ko: "메뉴"}
   doi: {en: "DOI", ko: "DOI"}
   empty: {en: "Nothing here yet.", ko: "아직 등록된 항목이 없습니다."}
+  skip: {en: "Skip to content", ko: "본문 바로가기"}
+  top: {en: "Top", ko: "맨 위로"}
+  links: {en: "Links", ko: "바로가기"}
+  sections: {en: "Sections", ko: "섹션"}
+  snu: {en: "Seoul National University", ko: "서울대학교"}
+  lang_fallback: {en: "This article is shown in English.", ko: "※ 한국어 본문이 아직 없어 영문으로 표시합니다."}
+  prev: {en: "Previous", ko: "이전 글"}
+  next: {en: "Next", ko: "다음 글"}
+  more_news: {en: "More news", ko: "다른 소식"}
+  scroll: {en: "Scroll down", ko: "아래로 이동"}
+  regions: {en: "Key study regions", ko: "주요 연구 지역"}
+  years: {en: "Years", ko: "연도"}

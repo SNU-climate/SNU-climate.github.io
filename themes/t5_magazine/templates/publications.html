@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block ptitle %}{{ t('pubs.title') }}{% endblock %}
+{% block plead %}{{ t('pubs.intro') }}{% endblock %}
+
+{% block content %}
+<div class="wrap archive">
+  <aside class="archive-side">{{ m.year_index(pubs_by_year) }}</aside>
+  <div class="archive-main">{{ m.pub_list(pubs_by_year) }}</div>
+</div>
+{% endblock %}

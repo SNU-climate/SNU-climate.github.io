@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">{{ t('videos.title') }}</h1>
+  <p class="page-desc">{{ t('videos.intro') }}</p>
+  <p><a class="btn btn--outline" href="{{ channel.url or site.links.youtube }}" target="_blank" rel="noopener">{{ ui.icon('youtube') }} {{ t('videos.channel') }}</a></p>
+</header>
+
+<div class="vgrid vgrid--2">
+  {% for v in videos %}{{ m.video_card(v) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}
+</div>
+{% endblock %}

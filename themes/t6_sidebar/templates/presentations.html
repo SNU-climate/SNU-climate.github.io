@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">{{ t('pres.title') }}</h1>
+  <p class="page-desc">{{ t('pres.intro') }}</p>
+</header>
+
+{% for year, items in pres_by_year %}
+<section class="bib-year" id="p{{ year }}">
+  <h2 class="bib-year-title">{{ year }}</h2>
+  <ul class="talks">
+    {% for p in items %}
+    <li class="talk">
+      <div class="talk-side">
+        <span class="ttype ttype--{{ p.type }}">{{ t('pres.type.' ~ p.type) }}</span>
+        <time class="talk-date" datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time>
+      </div>
+      <div class="talk-main">
+        <div class="talk-title">{% if p.link %}<a href="{{ p.link }}" target="_blank" rel="noopener">{{ p.title }}</a>{% else %}{{ p.title }}{% endif %} {{ m.sample_badge(p) }}</div>
+        {% if p.presenters %}<div class="talk-who">{% for n in p.presenters %}{% if is_me(n) %}<strong class="au-me">{{ n }}</strong>{% else %}{{ n }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+        <div class="talk-event"><em>{{ p.event }}</em>{% if p.location %}, {{ p.location }}{% endif %}</div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% else %}
+<p class="empty">{{ t('common.empty') }}</p>
+{% endfor %}
+{% endblock %}

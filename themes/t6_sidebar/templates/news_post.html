@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="post">
+  <p class="crumb"><a href="{{ page_url('news') }}">{{ ui.icon('back', 'ic ic--sm') }} {{ t('news.back') }}</a></p>
+  <header class="post-head">
+    <h1 class="page-title post-title">{{ tr(post.title) }}</h1>
+    <p class="post-meta"><time datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time> <span class="sep" aria-hidden="true">•</span> <span class="cat cat--{{ post.category }}">{{ t('news.category.' ~ post.category) }}</span></p>
+    {% if post.summary %}<p class="post-lead">{{ tr(post.summary) }}</p>{% endif %}
+  </header>
+
+  {% if post.cover and not post.youtube %}
+  <figure class="post-cover"><img src="{{ cover_url(post) }}" alt=""></figure>
+  {% endif %}
+
+  {{ m.news_body(post) }}
+
+  {% set ns = namespace(i=-1) %}
+  {% for p in news %}{% if p.slug == post.slug %}{% set ns.i = loop.index0 %}{% endif %}{% endfor %}
+  {% set newer = news[ns.i - 1] if ns.i > 0 else none %}
+  {% set older = news[ns.i + 1] if (ns.i >= 0 and ns.i + 1 < news|length) else none %}
+  {% if newer or older %}
+  <nav class="pager" aria-label="{{ t('news.title') }}">
+    {% if older %}<a class="pager-link pager-link--prev" href="{{ news_url(older) }}"><span class="pager-dir">{{ ui.icon('back', 'ic ic--sm') }} {{ 'Previous' if lang == 'en' else '이전 글' }}</span><span class="pager-title">{{ tr(older.title) }}</span></a>{% else %}<span></span>{% endif %}
+    {% if newer %}<a class="pager-link pager-link--next" href="{{ news_url(newer) }}"><span class="pager-dir">{{ 'Next' if lang == 'en' else '다음 글' }} {{ ui.icon('arrow', 'ic ic--sm') }}</span><span class="pager-title">{{ tr(newer.title) }}</span></a>{% endif %}
+  </nav>
+  {% endif %}
+</article>
+{% endblock %}

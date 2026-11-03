@@ -44,7 +44,8 @@ def clean_title(t):
     t = html.unescape(t or '')
     t = re.sub(r'<(?!/?(sub|sup|i|em)>)[^>]+>', '', t, flags=re.I)
     t = re.sub(r'<(/?)em>', r'<\1i>', t, flags=re.I)
-    return re.sub(r'\s+', ' ', t).strip()
+    t = re.sub(r'\s+', ' ', t).strip()
+    return re.sub(r'\s+(<su[bp]>)', r'\1', t, flags=re.I)   # 'CO <sub>2</sub>' → 'CO<sub>2</sub>'
 
 
 def fmt_author(a):

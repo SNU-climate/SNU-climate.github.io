@@ -31,6 +31,12 @@ for (const [suffix, vp] of [['', { width: 1440, height: 900 }], ['_mobile', { wi
     colorScheme: flags.has('--dark') ? 'dark' : 'light' });
   const p = await ctx.newPage();
   await p.goto(pathToFileURL(file).href, { waitUntil: 'load', timeout: 30000 });
+  if (flags.has('--full')) {   // lazy 이미지가 로드되도록 끝까지 스크롤했다가 맨 위로
+    await p.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); }
+      window.scrollTo(0, 0);
+    });
+  }
   await p.waitForTimeout(1200);
   const overflow = await p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   const out = path.join(outDir, `${base}${suffix}.png`);

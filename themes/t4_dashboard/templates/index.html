@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% set en = lang == 'en' %}
+
+{% block hero %}
+<section class="stripes-hero" aria-labelledby="stripes-cap">
+  <div class="stripes-box" data-stripes data-label="{{ 'Warming stripes — global annual temperature anomaly' if en else '온난화 줄무늬 — 전지구 연평균 기온 편차' }}">
+    <span class="stripes-cursor" data-stripes-cursor hidden></span>
+  </div>
+  <div class="wrap stripes-meta mono">
+    <p class="stripes-cap" id="stripes-cap"><span class="chip">{{ 'GLOBAL ΔT' if en else '전지구 ΔT' }}</span> <span data-gistemp-period></span></p>
+    <p class="stripes-read" data-stripes-readout></p>
+    <p class="stripes-src">{{ 'Source' if en else '자료' }}: <a href="https://data.giss.nasa.gov/gistemp/" target="_blank" rel="noopener">NASA GISTEMP v4</a> · {{ 'annual mean, anomaly vs 1951–1980' if en else '연평균, 1951–1980 평균 대비 편차' }}</p>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="dash">
+
+  <section class="panel span-8 overview" aria-labelledby="ov-t">
+    {{ ui.panel_head('Overview' if en else '개요', tag='p') }}
+    <h1 id="ov-t">{{ lab_name }}</h1>
+    <p class="lead">{{ tr(site.lab.tagline) }}</p>
+    <p class="ov-intro">{{ tr(site.lab.intro) }}</p>
+    <p class="btn-row">
+      <a class="btn btn-primary" href="{{ page_url('research') }}">{{ t('nav.research') }} <span aria-hidden="true">→</span></a>
+      <a class="btn" href="{{ page_url('publications') }}">{{ t('nav.publications') }}</a>
+      <a class="btn" href="{{ page_url('contact') }}">{{ t('home.join') }}</a>
+    </p>
+  </section>
+
+  <section class="panel span-4 pi-card" aria-labelledby="pi-t">
+    {{ ui.panel_head(t('people.pi'), page_url('people') ~ '#pi', t('nav.people')) }}
+    <div class="pi-row">
+      <div class="avatar avatar-lg">{% if pi.photo %}<img src="{{ static(pi.photo) }}" alt="{{ tr(pi.name) }}">{% else %}<span aria-hidden="true">{{ m.initials_of(pi.name.en) }}</span>{% endif %}</div>
+      <div>
+        <h2 class="pi-name" id="pi-t">{{ tr(pi.name) }}</h2>
+        <p class="pi-title">{{ tr(pi.title) }}</p>
+      </div>
+    </div>
+    <ul class="kv mono">
+      <li><span>{{ t('contact.email') }}</span><a href="mailto:{{ pi.email }}">{{ pi.email }}</a></li>
+      <li><span>{{ t('contact.pi_office') }}</span>{{ tr(pi.office) }}</li>
+      <li><span>{{ t('contact.phone') }}</span>{{ pi.phone }}</li>
+    </ul>
+    <ul class="tags">{% for i in pi.interests %}<li>{{ tr(i) }}</li>{% endfor %}</ul>
+  </section>
+
+  {# ---------- 지표 카드: 모두 stats/데이터에서 계산 ---------- #}
+  <section class="span-12" aria-label="{{ 'Key figures' if en else '주요 지표' }}">
+    <ul class="kpis">
+      <li class="kpi"><a href="{{ page_url('publications') }}">
+        <span class="kpi-label">{{ t('nav.publications') }}</span>
+        <span class="kpi-val">{{ stats.pubs }}</span>
+        <span class="kpi-sub">{% if stats.first_year %}{{ stats.first_year }}–{{ stats.last_year }}{% endif %}</span></a></li>
+      {% if stats.first_year %}
+      <li class="kpi"><a href="{{ page_url('publications') }}#y{{ stats.first_year }}">
+        <span class="kpi-label">{{ 'Years active' if en else '활동 연도' }}</span>
+        <span class="kpi-val">{{ stats.last_year - stats.first_year + 1 }}</span>
+        <span class="kpi-sub">{{ 'since' if en else '시작' }} {{ stats.first_year }}</span></a></li>
+      {% endif %}
+      <li class="kpi"><a href="{{ page_url('research') }}">
+        <span class="kpi-label">{{ t('home.research') }}</span>
+        <span class="kpi-val">{{ research|length }}</span>
+        <span class="kpi-sub">{{ research|map(attribute='regions')|map('length')|sum }} {{ 'regions' if en else '지역' }}</span></a></li>
+      <li class="kpi"><a href="{{ page_url('videos') }}">
+        <span class="kpi-label">{{ t('nav.videos') }}</span>
+        <span class="kpi-val">{{ stats.videos }}</span>
+        <span class="kpi-sub">YouTube</span></a></li>
+      <li class="kpi"><a href="{{ page_url('news') }}">
+        <span class="kpi-label">{{ t('nav.news') }}</span>
+        <span class="kpi-val">{{ stats.news }}</span>
+        <span class="kpi-sub">{% if news %}{{ fmt_date(news[0].date, 'month') }}{% endif %}</span></a></li>
+      <li class="kpi"><a href="{{ page_url('publications') }}">
+        <span class="kpi-label">{{ 'Journals' if en else '학술지' }}</span>
+        <span class="kpi-val">{{ pubs|map(attribute='journal')|unique|list|length }}</span>
+        <span class="kpi-sub">{% if stats.top_journals %}{{ stats.top_journals[0][0] }}{% endif %}</span></a></li>
+      {% if stats.members %}
+      <li class="kpi"><a href="{{ page_url('people') }}">
+        <span class="kpi-label">{{ t('people.members') }}</span>
+        <span class="kpi-val">{{ stats.members }}</span>
+        <span class="kpi-sub">{{ t('nav.people') }}</span></a></li>
+      {% endif %}
+    </ul>
+  </section>
+
+  <section class="panel span-8" aria-labelledby="yb-h">
+    {{ ui.panel_head('Publications per year' if en else '연도별 논문 수', page_url('publications'), id='yb-h') }}
+    {{ ui.year_bars(256) }}
+  </section>
+
+  <section class="panel span-4" aria-labelledby="jb-h">
+    {{ ui.panel_head('Top journals' if en else '주요 학술지', id='jb-h') }}
+    {{ ui.journal_bars(6) }}
+  </section>
+
+  {# ---------- 연구 분야 ---------- #}
+  <section class="panel span-12" aria-labelledby="ra-h">
+    {{ ui.panel_head(t('home.research'), page_url('research'), id='ra-h') }}
+    <ol class="topics">
+      {% for r in research %}
+      <li class="topic-row">
+        <a href="{{ page_url('research') }}#{{ r.key }}">
+          <span class="topic-idx mono">{{ '%02d'|format(loop.index) }}</span>
+          <span class="topic-main">
+            <span class="topic-title">{{ tr(r.title) }}</span>
+            <span class="topic-sum">{{ tr(r.summary)|truncate(150) }}</span>
+          </span>
+          <span class="topic-geo mono">{% for c in r.regions %}<span>{{ ui.coord(c) }}</span>{% endfor %}</span>
+          <span class="topic-n mono"><span title="{{ t('research.papers') }}">{{ r.pubs|length }} <small>{{ 'PAP' if en else '논문' }}</small></span><span title="{{ t('research.videos') }}">{{ r.video_items|length }} <small>{{ 'VID' if en else '영상' }}</small></span></span>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  {# ---------- 최근 소식 로그 + 최근 논문 ---------- #}
+  <section class="panel span-5" aria-labelledby="lg-h">
+    {{ ui.panel_head(t('home.latest'), id='lg-h') }}
+    <ol class="log">
+      {% for it in latest(5) %}
+      <li class="log-row">
+        <time class="mono" datetime="{{ it.date }}">{{ fmt_date(it.date, 'month') }}</time>
+        <span class="log-kind log-kind--{{ it.kind }} mono">{{ t('feed.' ~ it.kind) }}</span>
+        <a class="log-title" href="{{ it.url }}">{{ rich(it.title) }}</a>
+        {% if it.meta %}<span class="log-meta">{{ it.meta }}</span>{% endif %} {{ m.sample_badge(it.obj) }}
+      </li>
+      {% else %}<li class="empty">{{ t('common.empty') }}</li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section class="panel span-7" aria-labelledby="rp-h">
+    {{ ui.panel_head(t('home.publications'), page_url('publications'), id='rp-h') }}
+    <ol class="pub-ol pub-compact">{% for p in pubs[:site.home.publications] %}{{ m.pub_item(p) }}{% endfor %}</ol>
+  </section>
+
+  {# ---------- 뉴스 ---------- #}
+  <section class="span-12 block" aria-labelledby="nw-h">
+    {{ ui.panel_head(t('home.news'), page_url('news'), id='nw-h') }}
+    <div class="grid grid-3">{% for p in news[:site.home.news] %}{{ m.news_card(p) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}</div>
+  </section>
+
+  {# ---------- 영상 ---------- #}
+  <section class="span-12 block" aria-labelledby="vd-h">
+    {{ ui.panel_head(t('home.videos'), page_url('videos'), id='vd-h') }}
+    <div class="grid grid-3">{% for v in videos[:site.home.videos] %}{{ m.video_card(v) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}</div>
+  </section>
+
+</div>
+{% endblock %}

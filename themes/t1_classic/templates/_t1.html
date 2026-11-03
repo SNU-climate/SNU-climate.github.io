@@ -1,0 +1,15 @@
+{# t1_classic 전용 소형 매크로 #}
+{% macro roman(i) %}{{ ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV'][i] if i < 15 else i + 1 }}{% endmacro %}
+
+{# 섹션 제목 + 전체 보기 링크 #}
+{% macro sec_head(title, url=None, more='', tag='h2') %}
+<div class="sec-head">
+  <{{ tag }} class="sec-title">{{ title }}</{{ tag }}>
+  {% if url %}<a class="more" href="{{ url }}">{{ more }} <span aria-hidden="true">→</span></a>{% endif %}
+</div>
+{% endmacro %}
+
+{# 이미지가 없을 때 쓰는 등압선 그래픽 #}
+{% macro iso_art(i, label='', cls='iso-art') %}
+<div class="{{ cls }}" style="--i: {{ i }}" aria-hidden="true">{% if label %}<span class="iso-art-label">{{ label }}</span>{% endif %}</div>
+{% endmacro %}

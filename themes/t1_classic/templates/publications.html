@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block ptitle %}{{ t('pubs.title') }}{% endblock %}
+{% block plead %}{{ t('pubs.intro') }}{% endblock %}
+
+{% block content %}
+<div class="wrap with-side">
+  <aside class="side">
+    <div class="side-nav side-years">
+      <div class="side-h">{{ 'Years' if lang == 'en' else '연도' }}</div>
+      {{ m.year_index(pubs_by_year) }}
+    </div>
+  </aside>
+  <div class="side-main pubs-page">
+    {{ m.pub_list(pubs_by_year) }}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block hero %}{{ ui.page_hero(t('news.title'), t('news.intro')) }}{% endblock %}
+{% block content %}
+<div class="wrap sec">
+  {% if news %}
+  <div class="news-lead">{{ m.news_card(news[0], 'news-card news-card--lead') }}</div>
+  <div class="grid grid-3">{% for p in news[1:] %}{{ m.news_card(p) }}{% endfor %}</div>
+  {% else %}<p class="empty">{{ t('common.empty') }}</p>{% endif %}
+</div>
+{% endblock %}

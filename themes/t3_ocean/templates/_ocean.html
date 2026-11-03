@@ -1,0 +1,107 @@
+{# Ocean–Atmosphere 테마 전용 그래픽 매크로. {% import '_ocean.html' as o with context %} #}
+{% import 'macros.html' as m with context %}
+
+{# 로고 마크: 원 안의 세 줄 파도 #}
+{% macro logo(size=36) %}
+<svg class="logo" width="{{ size }}" height="{{ size }}" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+  <defs><linearGradient id="lg-logo-{{ size }}" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0f6e8c"/><stop offset=".6" stop-color="#25b3a6"/><stop offset="1" stop-color="#f39a4b"/></linearGradient></defs>
+  <circle cx="20" cy="20" r="19" fill="url(#lg-logo-{{ size }})"/>
+  <path d="M7 15 q3.25 -3 6.5 0 t6.5 0 t6.5 0 t6.5 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+  <path d="M7 21 q3.25 -3 6.5 0 t6.5 0 t6.5 0 t6.5 0" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M7 27 q3.25 -3 6.5 0 t6.5 0 t6.5 0 t6.5 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+</svg>
+{% endmacro %}
+
+{# 히어로 배경의 등온선(주기적 곡선, 두 겹이 서로 다른 속도로 흐른다). 폭 200% SVG를 -50% 이동 → 이음매 없음 #}
+{% macro isotherms() %}
+<div class="iso" aria-hidden="true">
+  <svg class="iso-layer iso-a" viewBox="0 0 2880 600" preserveAspectRatio="none" focusable="false">
+    <path class="iso-c" d="M0 70 Q360 26 720 70 T1440 70 T2160 70 T2880 70"/>
+    <path class="iso-c" d="M0 200 Q360 132 720 200 T1440 200 T2160 200 T2880 200"/>
+    <path class="iso-t" d="M0 330 Q180 278 360 330 T720 330 T1080 330 T1440 330 T1800 330 T2160 330 T2520 330 T2880 330"/>
+    <path class="iso-w" d="M0 455 Q120 427 240 455 T480 455 T720 455 T960 455 T1200 455 T1440 455 T1680 455 T1920 455 T2160 455 T2400 455 T2640 455 T2880 455"/>
+    <path class="iso-w" d="M0 570 Q360 510 720 570 T1440 570 T2160 570 T2880 570"/>
+  </svg>
+  <svg class="iso-layer iso-b" viewBox="0 0 2880 600" preserveAspectRatio="none" focusable="false">
+    <path class="iso-c" d="M0 130 Q180 98 360 130 T720 130 T1080 130 T1440 130 T1800 130 T2160 130 T2520 130 T2880 130"/>
+    <path class="iso-t" d="M0 265 Q120 241 240 265 T480 265 T720 265 T960 265 T1200 265 T1440 265 T1680 265 T1920 265 T2160 265 T2400 265 T2640 265 T2880 265"/>
+    <path class="iso-t" d="M0 395 Q360 315 720 395 T1440 395 T2160 395 T2880 395"/>
+    <path class="iso-w" d="M0 515 Q180 467 360 515 T720 515 T1080 515 T1440 515 T1800 515 T2160 515 T2520 515 T2880 515"/>
+  </svg>
+</div>
+{% endmacro %}
+
+{# 히어로 아래쪽 파도: 맨 앞 파도가 페이지 배경색이라 본문과 자연스럽게 이어진다 #}
+{% macro waves() %}
+<div class="waves" aria-hidden="true">
+  <svg class="wave-layer wave-1" viewBox="0 0 2880 120" preserveAspectRatio="none" focusable="false"><path d="M0 48 Q360 20 720 48 T1440 48 T2160 48 T2880 48 L2880 120 L0 120Z"/></svg>
+  <svg class="wave-layer wave-2" viewBox="0 0 2880 120" preserveAspectRatio="none" focusable="false"><path d="M0 60 Q180 40 360 60 T720 60 T1080 60 T1440 60 T1800 60 T2160 60 T2520 60 T2880 60 L2880 120 L0 120Z"/></svg>
+  <svg class="wave-layer wave-3" viewBox="0 0 2880 120" preserveAspectRatio="none" focusable="false"><path d="M0 74 Q240 58 480 74 T960 74 T1440 74 T1920 74 T2400 74 T2880 74 L2880 120 L0 120Z"/></svg>
+</div>
+{% endmacro %}
+
+{# 연구 주제 그래픽: 등장방형(equirectangular) 미니 지도 위에 위도별 수온 그라디언트 + 등온선 + research.regions 지점.
+   연구 주제 그림(r.image)이 있으면 그림을 쓴다. #}
+{% set ART = [
+  ['#0b2f57', '#1a7f9a', '#ef6a3a'],
+  ['#073763', '#0f8aa0', '#f5b14a'],
+  ['#0c3340', '#1f8a70', '#c9c25a'],
+  ['#d7eefa', '#4f9fd0', '#0d3b66'],
+  ['#1b1f5c', '#2f6fb0', '#2bb3a6'],
+] %}
+{% macro topic_art(r, i, cls='topic-art') %}
+{% if r.image %}
+<div class="{{ cls }}"><img src="{{ static(r.image) }}" alt="{{ tr(r.title) }}" loading="lazy"></div>
+{% else %}
+{% set c = ART[i % (ART|length)] %}
+{% set gid = 'ta-' ~ r.key ~ '-' ~ (cls|replace(' ', '_')) %}
+<div class="{{ cls }}">
+<svg viewBox="0 0 360 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="{{ tr(r.title) }}" focusable="false">
+  <defs>
+    <linearGradient id="{{ gid }}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="{{ c[0] }}"/><stop offset=".32" stop-color="{{ c[1] }}"/>
+      <stop offset=".5" stop-color="{{ c[2] }}"/><stop offset=".68" stop-color="{{ c[1] }}"/><stop offset="1" stop-color="{{ c[0] }}"/>
+    </linearGradient>
+  </defs>
+  <rect width="360" height="180" fill="url(#{{ gid }})"/>
+  <g class="ta-grid">
+    {% for x in range(30, 360, 30) %}<line x1="{{ x }}" y1="0" x2="{{ x }}" y2="180"/>{% endfor %}
+    {% for y in range(30, 180, 30) %}<line x1="0" y1="{{ y }}" x2="360" y2="{{ y }}"/>{% endfor %}
+  </g>
+  {% set ph = (i * 37) % 90 %}
+  <g class="ta-iso">
+    <path d="M-{{ ph }} 52 q45 -{{ 8 + i * 2 }} 90 0 t90 0 t90 0 t90 0 t90 0"/>
+    <path d="M-{{ ph }} 72 q45 {{ 6 + i }} 90 0 t90 0 t90 0 t90 0 t90 0"/>
+    <path d="M-{{ 90 - ph }} 108 q45 -{{ 6 + i }} 90 0 t90 0 t90 0 t90 0 t90 0"/>
+    <path d="M-{{ 90 - ph }} 128 q45 {{ 8 + i * 2 }} 90 0 t90 0 t90 0 t90 0 t90 0"/>
+  </g>
+  {% for pt in r.regions or [] %}
+  <g class="ta-pt" transform="translate({{ (12 + (pt[1] + 180) * 336 / 360)|round(1) }} {{ (12 + (90 - pt[0]) * 156 / 180)|round(1) }})">
+    <circle class="ta-ring" r="11"/><circle class="ta-dot" r="4.5"/>
+  </g>
+  {% endfor %}
+</svg>
+</div>
+{% endif %}
+{% endmacro %}
+
+{# 사진이 없을 때의 아바타(이니셜 + 그라디언트) #}
+{% macro avatar(img, name, initials, cls='avatar') %}
+<div class="{{ cls }}">{% if img %}<img src="{{ static(img) }}" alt="{{ name }}" loading="lazy">{% else %}<span aria-hidden="true">{{ initials }}</span>{% endif %}</div>
+{% endmacro %}
+
+{# 이니셜: 한글 이름이면 첫 글자(성), 아니면 단어 머리글자 2개 #}
+{% macro ini(name) %}{% set s = (name or '')|trim %}{% if s[:1] >= '가' and s[:1] <= '힣' %}{{ s[:1] }}{% else %}{{ (s.split(' ')|map('first')|join)[:2]|upper }}{% endif %}{% endmacro %}
+
+{# 구성원 카드(공통 m.member_card와 같은 구조, 이니셜만 한글 이름에 맞게) #}
+{% macro member_card(mm, cls='member-card') %}
+<article class="{{ cls }}">
+  <div class="member-photo">{% if mm.photo %}<img src="{{ static(mm.photo) }}" alt="{{ tr(mm.name) }}" loading="lazy">{% else %}<span class="member-initials" aria-hidden="true">{{ ini(tr(mm.name)) }}</span>{% endif %}</div>
+  <div class="member-text">
+    <h4 class="member-name">{{ tr(mm.name) }} {{ m.sample_badge(mm) }}</h4>
+    {% if mm.interests %}<p class="member-interests">{{ tr(mm.interests) }}</p>{% endif %}
+    {% if mm.email %}<a class="member-email" href="mailto:{{ mm.email }}">{{ mm.email }}</a>{% endif %}
+  </div>
+</article>
+{% endmacro %}

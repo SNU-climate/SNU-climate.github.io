@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block hero_inner %}
+<p class="eyebrow">{{ lab_name }}</p>
+<h1>{{ t('news.title') }}</h1>
+<p class="phero-lead">{{ t('news.intro') }}</p>
+{% endblock %}
+
+{% block content %}
+{% if news %}
+{% set first = news[0] %}
+<article class="glass news-lead">
+  <a class="news-lead-link" href="{{ news_url(first) }}">
+    {% set c = cover_url(first) %}
+    <div class="news-card-img{% if not c %} news-card-img--empty{% endif %}">{% if c %}<img src="{{ c }}" alt="" loading="lazy">{% endif %}</div>
+    <div class="news-lead-text">
+      <div class="news-card-meta"><span class="news-cat news-cat--{{ first.category }}">{{ t('news.category.' ~ first.category) }}</span> <time datetime="{{ first.date }}">{{ fmt_date(first.date) }}</time></div>
+      <h2 class="news-lead-title">{{ tr(first.title) }}</h2>
+      {% if first.summary %}<p class="news-card-summary">{{ tr(first.summary) }}</p>{% endif %}
+      <span class="more">{{ t('news.read_more') }} <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>
+<div class="grid grid-3 news-rest">{% for p in news[1:] %}{{ m.news_card(p, 'news-card glass') }}{% endfor %}</div>
+{% else %}
+<p class="empty">{{ t('common.empty') }}</p>
+{% endif %}
+{% endblock %}
