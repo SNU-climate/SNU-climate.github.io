@@ -40,6 +40,7 @@ home:
   videos: {en: "Videos", ko: "영상"}
   research: {en: "Research Areas", ko: "연구 분야"}
   view_all: {en: "View all", ko: "전체 보기"}
+  welcome: {en: "Welcome", ko: "환영합니다"}
   join: {en: "Join us", ko: "함께할 분을 찾습니다"}
   join_text:
     en: "We welcome motivated graduate students and postdoctoral researchers. Please contact Prof. Kug by email."
@@ -50,7 +51,6 @@ feed:
   publication: {en: "Paper", ko: "논문"}
   presentation: {en: "Talk", ko: "발표"}
   video: {en: "Video", ko: "영상"}
-  link: {en: "Original article", ko: "원문 보기"}
 
 gallery:
   title: {en: "Gallery", ko: "갤러리"}
@@ -77,6 +77,7 @@ people:
   homepage: {en: "Homepage", ko: "홈페이지"}
   awards: {en: "Awards", ko: "수상"}
   memberships: {en: "Memberships", ko: "학회 회원"}
+  full_profile: {en: "Full profile", ko: "자세한 이력"}
   experience: {en: "Research Experience", ko: "연구 경력"}
   pubs: {en: "Publications in the lab list", ko: "연구실 논문 목록 중 참여 논문"}
   pubs_note: {en: "Matched automatically by author name.", ko: "저자 이름으로 자동 연결한 목록입니다."}
@@ -106,6 +107,7 @@ pubs:
   featured: {en: "Featured", ko: "주요 논문"}
   related: {en: "Related publications", ko: "관련 논문"}
   no_results: {en: "No matching papers.", ko: "검색 결과가 없습니다."}
+  search_short: {en: "Search papers", ko: "논문 검색"}
 
 pres:
   title: {en: "Presentations", ko: "학회 발표"}
@@ -133,6 +135,9 @@ news:
     lab: {en: "Lab", ko: "연구실"}
   paper: {en: "Paper", ko: "논문"}
   video: {en: "Video", ko: "영상"}
+  link: {en: "Original article", ko: "원문 보기"}
+  all: {en: "All", ko: "전체"}
+  filter: {en: "Filter by category", ko: "분류별 보기"}
 
 videos:
   title: {en: "Videos", ko: "영상"}
@@ -149,6 +154,7 @@ research:
   figures: {en: "Highlights", ko: "연구 하이라이트"}
   more: {en: "Learn more", ko: "자세히 보기"}
   back: {en: "All research areas", ko: "연구 분야 전체"}
+  regions: {en: "Study regions", ko: "연구 지역"}
 
 contact:
   title: {en: "Contact", ko: "오시는 길"}
@@ -182,3 +188,4 @@ common:
   scroll: {en: "Scroll down", ko: "아래로 이동"}
   regions: {en: "Key study regions", ko: "주요 연구 지역"}
   years: {en: "Years", ko: "연도"}
+  breadcrumb: {en: "You are here", ko: "현재 위치"}

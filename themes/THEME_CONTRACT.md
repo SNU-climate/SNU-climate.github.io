@@ -66,6 +66,21 @@ bash -lc "module load anaconda3/2023.03 && cd /data5/CSL_homepage/first_draft &&
 연구 주제 `themes{en:[...]}`, `figures[{image, caption, doi, pub}]`, 논문 `corr_authors`(교신저자 → `authors()`가 `*` 표시), 뉴스 `album, link, year`.
 `tr(값)`은 목록 값을 `, `로 이어 준다. 목록이 필요하면 `tr_list(값)`.
 
+### 3-2. 공통 도우미 (Phase 3 추가, 2차 리뷰 `reports/review_round2.md` 3-1절 반영)
+| 이름 | 내용 |
+|---|---|
+| `news_items`, `albums` | 앨범을 뺀 뉴스(99) / 앨범(89). `news`는 테마에 `gallery.html`이 없으면 둘을 합친 목록이다 |
+| `news_by_year`, `albums_by_year` | `[(연도, [글])]` 연도 내림차순 |
+| `news_cats` | `[(분류, 건수)]` 앨범 제외 뉴스의 분류별 건수 |
+| `stats.news_items`, `stats.albums`, `stats.alumni` | 건수(`stats.news`는 합계 188) |
+| `pi_person` + `theme.yaml`의 `pi_page: true` | `member.html`이 있는 테마에서 교수 개인 페이지 `people/jong-seong-kug.html`을 만든다(`person.is_pi`, `person.pubs`=대표 논문). `member_url(pi)`도 이때만 URL을 준다 |
+| `text_lang(s)` | 한글이 있으면 `'ko'`, 없으면 `'en'`(국문 제목에 `lang`을 달아 keep-all 적용) |
+| 메뉴 | 발표가 0건이면 `nav`에서 Presentations가 빠진다(`site.yaml`의 `nav_hide_empty: false`로 끌 수 있음). 홈의 발표 섹션은 `{% if presentations %}`로 감싼다 |
+
+매크로: `m.news_filter()`(분류 버튼, `shared.js`가 `[data-news-item][data-cat]`과 `[data-news-year]`를 거름), `m.news_year_list(news_by_year)`(연도별 목록, 표지 없는 글은 글자 행),
+`m.year_links(groups, prefix)`, `m.post_cover(post)`(영상·앨범이면 표지 생략), `m.topic_figures(r)`, `m.topic_themes(r)`, `m.alumni_list(alumni, photos=True)`, `m.email_wbr(email)`.
+`research`의 각 주제에 `region_names`(`regions`와 같은 순서의 `{en, ko}`)가 있다. i18n 추가 키: `news.all`, `news.filter`, `news.link`, `home.welcome`, `people.full_profile`, `pubs.search_short`, `research.regions`, `common.breadcrumb`.
+
 ## 4. 반드시 지킬 것
 1. `<head>`에 `{{ m.head_common() }}`, `</body>` 앞에 `{{ m.scripts_common() }}` (YouTube 클릭 로드·논문 검색·모바일 메뉴 JS).
 2. **모든 URL은 위 함수로 만든다**(상대경로). `/`로 시작하는 절대경로·하드코딩 금지 → file://로 열어도 동작해야 한다.

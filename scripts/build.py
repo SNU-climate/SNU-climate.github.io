@@ -78,6 +78,19 @@ def strip_tags(text):
     return re.sub(r'<[^>]+>', '', str(text or ''))
 
 
+HANGUL = re.compile(r'[\uac00-\ud7a3]')
+
+
+def group_years(items):
+    """최신순 목록 → [(연도, [항목])] 연도 내림차순(뉴스·앨범용)."""
+    out = []
+    for p in items:
+        if not out or out[-1][0] != p['year']:
+            out.append((p['year'], []))
+        out[-1][1].append(p)
+    return out
+
+
 # ---------------------------------------------------------------- 파생 데이터(언어 공통)
 def derive(data):
     site, pi, members = data['site'], data['pi'], data['members']
@@ -143,6 +156,12 @@ def derive(data):
         return [p for p in pubs if rule_ok(r, p) and any(L.name_key(a) == r['key'] for a in p.get('authors') or [])]
     people_pages = [{**m, 'pubs': own_pubs(m), 'alumnus': alum}
                     for alum, group in ((False, mlist), (True, alumni)) for m in group if m.get('id')]
+    # 교수 개인 페이지(theme.yaml의 pi_page: true일 때만 만든다). 논문은 대표 논문만 붙인다.
+    pi_person = {**pi, 'id': pi.get('id') or 'jong-seong-kug', 'is_pi': True, 'alumnus': False, 'role': 'pi',
+                 'position': pi.get('title'),
+                 'pubs': [by_doi[d.lower()] for d in pi.get('selected_dois') or [] if d.lower() in by_doi]}
+    news_items = [p for p in news if not p.get('album')]
+    albums = [p for p in news if p.get('album')]
 
     hl = {L.name_key(n) for n in site.get('highlight_names') or []}     # 교수: 이니셜 접두 매칭 허용('Kug, J.')
 
@@ -160,7 +179,11 @@ def derive(data):
         'featured_pubs': [p for p in pubs if p.get('featured')],
         'selected_pubs': [by_doi[d.lower()] for d in pi.get('selected_dois') or [] if d.lower() in by_doi],
         'presentations': pres, 'pres_by_year': L.group_by_year(pres),
-        'news': news, 'news_all': news, 'albums': [p for p in news if p.get('album')],
+        'news': news, 'news_all': news, 'albums': albums, 'news_items': news_items,
+        'news_by_year': group_years(news_items), 'albums_by_year': group_years(albums),
+        'news_cats': [(c, sum(1 for p in news_items if p.get('category') == c))
+                      for c in ('paper', 'award', 'event', 'media', 'lab') if any(p.get('category') == c for p in news_items)],
+        'pi_person': pi_person,
         'videos': videos, 'channel': vids_cfg.get('channel') or {},
         'research': research, 'member_groups': member_groups, 'members_all': mlist, 'alumni': alumni,
         'people_pages': people_pages,
@@ -171,6 +194,7 @@ def derive(data):
             'per_year_full': [(y, dict(per_year).get(y, 0)) for y in range(years[0], years[-1] + 1)] if years else [],
             'members': len([m for m in mlist if not m.get('placeholder')]),
             'videos': len(videos), 'news': len(news), 'presentations': len(pres),
+            'news_items': len(news_items), 'albums': len(albums), 'alumni': len(alumni),
         },
         'has_placeholders': any(x.get('placeholder') for x in mlist + pres + (members.get('alumni') or [])),
         'build_date': dt.date.today().isoformat(),
@@ -197,6 +221,8 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None, person=None, topic=Non
 
     def member_url(m, lg=None):
         """구성원 상세 페이지(테마에 member.html이 있고 id가 있을 때). 없으면 ''."""
+        if m.get('is_pi') or m is D['pi']:
+            m = D['pi_person'] if theme_meta.get('pi_page') else {}
         if 'member.html' in tpl and m.get('id'):
             return f"{root}{lang_prefix(lg or lang)}people/{m['id']}.html"
         return ''
@@ -328,8 +354,9 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None, person=None, topic=Non
         items.sort(key=lambda x: L.to_date(x['date']), reverse=True)
         return items[:n or site.get('home', {}).get('latest', 8)]
 
+    hide = {'presentations'} if site.get('nav_hide_empty', True) and not D['presentations'] else set()
     nav = [{'key': k, 'label': t('nav.' + k), 'url': page_url(k), 'active': k == page}
-           for k in site.get('nav') or L.PAGES]
+           for k in site.get('nav') or L.PAGES if k not in hide]
     lab_name = _tr(site['lab']['name'])
     if post is not None:
         page_title = f"{_tr(post.get('title'))} | {lab_name}"
@@ -356,6 +383,7 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None, person=None, topic=Non
         'video_thumb': video_thumb, 'youtube_url': youtube_url, 'yt_html': lambda v, ti='': Markup(yt_html(v, ti)),
         'cover_url': cover_url, 'authors': authors, 'cite': cite, 'doi_url': doi_url, 'pub_url': pub_url,
         'search_text': search_text, 'latest': latest, 'is_me': is_me,
+        'text_lang': lambda s: 'ko' if HANGUL.search(str(s or '')) else 'en',
     })
     if post is not None:
         body = post['body'].get(lang) or post['body'].get('en') or ''
@@ -421,7 +449,7 @@ def build_theme(theme, D, out):
                             depth + 1, post=p))
             n += 1
         if 'member.html' in meta['_tpl']:
-            for m in D['people_pages']:
+            for m in D['people_pages'] + ([D['pi_person']] if meta.get('pi_page') else []):
                 render(env, 'member.html', base / 'people' / f"{m['id']}.html",
                        make_ctx(D, meta, lang, 'people', depth + 1, person=m))
                 n += 1
@@ -440,10 +468,16 @@ def build_gallery(themes, D):
         m['name'] = th
         m['shot'] = f'_shots/{th}.png' if (L.SITE / '_shots' / f'{th}.png').exists() else ''
         m['shot_m'] = f'_shots/{th}_mobile.png' if (L.SITE / '_shots' / f'{th}_mobile.png').exists() else ''
+        m['family'] = th.split('.')[0].split('_')[0]      # 't8_globe', 't8.v01', 't8.v02' → 't8'
+        m['version'] = th.split('.', 1)[1] if '.' in th else ''
         metas.append(m)
+    families = {}
+    for m in metas:                                       # 원본 시안 먼저, 그다음 v01, v02 …
+        families.setdefault(m['family'], []).append(m)
+    groups = [sorted(ms, key=lambda m: (m['version'] != '', m['version'])) for ms in families.values()]
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(str(Path(__file__).parent / 'templates')),
                              autoescape=True, trim_blocks=True, lstrip_blocks=True)
-    html = env.get_template('gallery.html').render(themes=metas, D=D, tr=tr, build_date=D['build_date'])
+    html = env.get_template('gallery.html').render(themes=metas, groups=groups, D=D, tr=tr, build_date=D['build_date'])
     (L.SITE / 'index.html').write_text(html, encoding='utf-8')
 
 

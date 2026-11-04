@@ -26,28 +26,36 @@
   .links a { font-size:.9rem; padding:6px 12px; border-radius:8px; background:var(--accent); color:#fff; text-decoration:none; }
   .links a.alt { background:transparent; color:var(--accent); border:1px solid var(--line); }
   @media (prefers-color-scheme: dark) { .links a { color:#0e131c; } }
+  .fam { margin-top:40px; } .fam h2 { font-size:1.3rem; margin:0 0 14px; padding-bottom:8px; border-bottom:2px solid var(--line); }
+  .fam h2 small { font-size:.8rem; color:var(--muted); font-weight:500; margin-left:6px; }
+  .tag--v { background:var(--accent); color:var(--card); border-color:var(--accent); }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>기후시스템연구실 홈페이지 — 템플릿 갤러리</h1>
+  <h1>기후시스템연구실 홈페이지 — 시안 갤러리</h1>
   <p class="sub">모든 템플릿은 같은 데이터(<code>data/</code>, <code>content/</code>)를 다른 디자인으로 보여줍니다. 빌드 {{ build_date }} · 논문 {{ D.stats.pubs }}편 · 뉴스 {{ D.stats.news }}건 · 영상 {{ D.stats.videos }}개</p>
-  <div class="grid">
-  {% for th in themes %}
+  {% for ms in groups %}
+  <section class="fam">
+    <h2>{{ ms[0].title or ms[0].name }}{% if ms|length > 1 %} <small>{{ ms|length }}개 버전</small>{% endif %}</h2>
+    <div class="grid">
+  {% for th in ms %}
     <article class="card">
       <a class="shot" href="{{ th.name }}/index.html" aria-label="{{ th.title }} 미리보기">
         {% if th.shot %}<img src="{{ th.shot }}" alt="{{ th.title }} 화면" loading="lazy">
         {% else %}<iframe src="{{ th.name }}/index.html" loading="lazy" tabindex="-1" title="{{ th.title }}" scrolling="no"></iframe>{% endif %}
       </a>
       <div class="body">
-        <div class="name">{{ th.title or th.name }} <span class="tag">{{ th.name }}</span></div>
+        <div class="name">{{ th.title or th.name }} <span class="tag{% if th.version %} tag--v{% endif %}">{{ th.name }}</span></div>
         <p class="desc">{{ tr(th.concept, 'ko') }}</p>
         {% if th.palette %}<div class="pal">{% for c in th.palette %}<span style="background:{{ c }}"></span>{% endfor %}</div>{% endif %}
         <div class="links"><a href="{{ th.name }}/index.html">English</a><a class="alt" href="{{ th.name }}/ko/index.html">한국어</a>{% if th.shot_m %}<a class="alt" href="{{ th.shot_m }}">모바일 화면</a>{% endif %}</div>
       </div>
     </article>
   {% endfor %}
-  </div>
+    </div>
+  </section>
+  {% endfor %}
 </div>
 <script>
   // 스크린샷이 없을 때 iframe 미리보기를 카드 폭에 맞춰 축소

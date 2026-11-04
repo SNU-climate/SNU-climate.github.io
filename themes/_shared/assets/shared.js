@@ -66,8 +66,25 @@
     });
   }
 
+  // 뉴스 분류 필터: [data-news-filter] 버튼의 data-cat으로 [data-news-item]을 거르고, 빈 연도 섹션([data-news-year])은 숨김
+  function initNewsFilter() {
+    var box = document.querySelector('[data-news-filter]');
+    if (!box) return;
+    var items = Array.prototype.slice.call(document.querySelectorAll('[data-news-item]'));
+    var years = Array.prototype.slice.call(document.querySelectorAll('[data-news-year]'));
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-cat]');
+      if (!b) return;
+      var cat = b.getAttribute('data-cat');
+      box.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      items.forEach(function (it) { it.hidden = !!cat && it.getAttribute('data-cat') !== cat; });
+      years.forEach(function (y) { y.hidden = !y.querySelector('[data-news-item]:not([hidden])'); });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initPubSearch();
     initNavToggle();
+    initNewsFilter();
   });
 })();

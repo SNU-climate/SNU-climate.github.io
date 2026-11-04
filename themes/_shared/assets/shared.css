@@ -26,4 +26,21 @@
 .prose pre, .prose table { display: block; max-width: 100%; overflow-x: auto; }
 .news-gallery { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
 .news-gallery figure { margin: 0; min-width: 0; }
+/* Phase 3 공통 도우미의 최소 스타일(테마 CSS가 덮어쓴다) */
+.alumni-ul--photos li { display: flex; align-items: center; gap: 10px; }
+.alumni-photo { width: 40px; height: 40px; flex: none; border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: #8894a8; }
+.alumni-photo img { width: 100%; height: 100%; object-fit: cover; }
+.alumni-photo .member-initials { font-size: .8rem; color: #fff; }
+.news-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.news-filter button { font: inherit; min-height: 44px; padding: 6px 14px; border-radius: 999px; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; opacity: .75; }
+.news-filter button[aria-pressed="true"] { opacity: 1; font-weight: 700; }
+.news-filter button span { opacity: .7; font-weight: 400; }
+.news-rows { list-style: none; padding: 0; margin: 0; }
+.news-row { display: grid; grid-template-columns: 136px minmax(0, 1fr); gap: 16px; padding: 14px 0; }
+.news-row--text { grid-template-columns: minmax(0, 1fr); }
+.news-row-img img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; border-radius: 6px; }
+@media (max-width: 600px) { .news-row { grid-template-columns: 88px minmax(0, 1fr); gap: 12px; } .news-row--text { grid-template-columns: minmax(0, 1fr); } }
+.year-links { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.topic-figs { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); align-items: start; }
+.topic-fig { margin: 0; } .topic-fig img { width: 100%; display: block; background: #fff; }
 .lang-note { font-size: .85em; opacity: .7; }

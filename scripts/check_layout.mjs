@@ -1,5 +1,5 @@
 // 모든 테마·페이지를 휴대폰 폭(360px)으로 열어 가로 넘침과 JS 오류를 검사한다.
-// 사용: node scripts/check_layout.mjs [theme ...]   (기본: site/ 아래 모든 테마)
+// 사용: node scripts/check_layout.mjs [theme ...] [--sample]   (기본: site/ 아래 모든 테마, --sample: 하위 폴더는 앞쪽 3쪽만)
 // 문제가 있으면 종료 코드 1.
 import { createRequire } from 'module';
 import { fileURLToPath, pathToFileURL } from 'url';
@@ -11,8 +11,22 @@ const require = createRequire(path.join(os.homedir(), '.local/opt/shot/package.j
 const { chromium } = require('playwright');
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'site');
-const themes = process.argv.slice(2).length ? process.argv.slice(2)
+const args = process.argv.slice(2);
+const sample = args.includes('--sample');   // 상위 페이지 전부 + 하위 폴더(news/, people/ …)마다 앞쪽 3쪽만(테마가 많을 때 빠른 검사)
+const named = args.filter(a => !a.startsWith('--'));
+const themes = named.length ? named
   : fs.readdirSync(root).filter(d => !d.startsWith('_') && fs.statSync(path.join(root, d)).isDirectory());
+
+function pick(list, base) {
+  if (!sample) return list;
+  const seen = {};
+  return list.filter(f => {
+    const dir = path.dirname(path.relative(base, f));
+    if (dir === '.' || dir === 'ko') return true;
+    seen[dir] = (seen[dir] || 0) + 1;
+    return seen[dir] <= 3;
+  });
+}
 
 function pages(dir) {
   const out = [];
@@ -28,7 +42,7 @@ const browser = await chromium.launch();
 const ctx = await browser.newContext({ viewport: { width: 360, height: 780 } });
 let problems = 0, total = 0;
 for (const th of themes) {
-  const list = pages(path.join(root, th));
+  const list = pick(pages(path.join(root, th)), path.join(root, th));
   let bad = 0;
   for (const f of list) {
     const p = await ctx.newPage();

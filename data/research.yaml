@@ -29,6 +29,7 @@ topics:
     dois: ["10.1038/s41558-021-01211-6", "10.1038/s41558-024-01928-0"]
     videos: ["Hue-7jhfw5E", "X-Uq1stg17g", "br6dk9cHB8w"]
     regions: [[80, 0], [5, -30], [0, 150]]
+    region_names: [{en: "Arctic", ko: "북극"}, {en: "Tropical Atlantic (ITCZ)", ko: "열대 대서양(열대수렴대)"}, {en: "Western Pacific warm pool", ko: "서태평양 난수역"}]
 
   - key: ocean-atmosphere
     title: {en: "Ocean-Atmosphere Interaction and El Niño", ko: "해양-대기 상호 작용 및 엘니뇨"}
@@ -56,6 +57,7 @@ topics:
     dois: ["10.1175/jcli-d-20-0402.1", "10.1175/jcli-d-20-0302.1"]
     videos: ["n8xFW4A_Oc8", "rLo8Va_ZyGA"]
     regions: [[0, -140], [0, 170]]
+    region_names: [{en: "Eastern equatorial Pacific", ko: "동태평양 적도"}, {en: "Central equatorial Pacific", ko: "중태평양 적도"}]
 
   - key: biogeochemical
     title: {en: "Bio-Geochemical Processes", ko: "지구 생지화학 과정"}
@@ -86,6 +88,7 @@ topics:
     dois: ["10.1038/ngeo2986", "10.1126/sciadv.aax3308", "10.1038/s41467-020-15924-3"]
     videos: ["ULbrjMLw9GE", "B0oD8gfmKDI"]
     regions: [[45, -100], [52, 128], [-5, -60]]
+    region_names: [{en: "North America", ko: "북미"}, {en: "Northeast Asia", ko: "동북아시아"}, {en: "Amazon", ko: "아마존"}]
 
   - key: extremes
     title: {en: "High-Impacts Climate Event", ko: "극한 기후 현상"}
@@ -115,6 +118,7 @@ topics:
     dois: ["10.1038/ngeo2517"]
     videos: ["XKp5Iix2eUY"]
     regions: [[37.5, 127], [45, -100]]
+    region_names: [{en: "Korean Peninsula", ko: "한반도"}, {en: "North America", ko: "북미"}]
 
   - key: modeling
     title: {en: "Climate Modeling and Prediction", ko: "기후모델링 및 기후예측"}
@@ -145,3 +149,4 @@ topics:
     dois: ["10.1038/s41598-018-33191-7"]
     videos: ["DaqKSaZQapQ"]
     regions: [[37.5, 127], [0, -110]]
+    region_names: [{en: "Korean Peninsula", ko: "한반도"}, {en: "Eastern tropical Pacific", ko: "동태평양 열대"}]

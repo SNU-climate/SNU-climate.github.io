@@ -105,7 +105,7 @@
 <article class="{{ cls }}">
   {{ yt_html(v.id, v.title) }}
   <div class="video-card-text">
-    <h3 class="video-card-title"><a href="{{ youtube_url(v.id) }}" target="_blank" rel="noopener">{{ v.title }}</a></h3>
+    <h3 class="video-card-title" lang="{{ text_lang(v.title) }}"><a href="{{ youtube_url(v.id) }}" target="_blank" rel="noopener">{{ v.title }}</a></h3>
     <time class="video-card-date" datetime="{{ v.published }}">{{ fmt_date(v.published) }}</time>
     {% if v.pub %}<a class="video-card-pub" href="{{ pub_url(v.pub) }}">{{ t('news.paper') }}: {{ v.pub.journal }} ({{ v.pub.year }})</a>{% endif %}
   </div>
@@ -146,13 +146,62 @@
     <h4 class="member-name">{% if u %}<a href="{{ u }}">{{ tr(mm.name) }}</a>{% else %}{{ tr(mm.name) }}{% endif %} {{ sample_badge(mm) }}</h4>
     {% if mm.position %}<p class="member-position">{{ tr(mm.position) }}</p>{% endif %}
     {% if mm.interests %}<p class="member-interests">{{ tr(mm.interests) }}</p>{% endif %}
-    {% if mm.email %}<a class="member-email" href="mailto:{{ mm.email }}">{{ mm.email }}</a>{% endif %}
+    {% if mm.email %}<a class="member-email" href="mailto:{{ mm.email }}">{{ email_wbr(mm.email) }}</a>{% endif %}
   </div>
 </article>
 {% endmacro %}
 
-{% macro alumni_list(items) %}
-<ul class="alumni-ul">
-{% for a in items %}{% set u = member_url(a) %}<li><span class="alumni-name">{% if u %}<a href="{{ u }}">{{ tr(a.name) }}</a>{% else %}{{ tr(a.name) }}{% endif %}</span> <span class="alumni-degree">{{ [a.degree, a.year]|select|join(', ') }}</span>{% if a.current %} — <span class="alumni-current">{{ tr(a.current) }}</span>{% endif %} {{ sample_badge(a) }}</li>{% endfor %}
+{# 이메일은 @ 앞에서만 줄이 바뀌게 #}
+{% macro email_wbr(e) %}{% set parts = (e or '').split('@', 1) %}{{ parts[0] }}{% if parts|length > 1 %}<wbr>@{{ parts[1] }}{% endif %}{% endmacro %}
+{# photos=True면 졸업생 사진(없으면 이니셜)을 함께 보인다 #}
+{% macro alumni_list(items, photos=False) %}
+<ul class="alumni-ul{% if photos %} alumni-ul--photos{% endif %}">
+{% for a in items %}{% set u = member_url(a) %}<li>{% if photos %}<span class="alumni-photo">{% if a.photo %}<img src="{{ static(a.photo) }}" alt="" loading="lazy">{% else %}<span class="member-initials" aria-hidden="true">{{ initials_of(tr(a.name)) }}</span>{% endif %}</span>{% endif %}<span class="alumni-name">{% if u %}<a href="{{ u }}">{{ tr(a.name) }}</a>{% else %}{{ tr(a.name) }}{% endif %}</span> <span class="alumni-degree">{{ [a.degree, a.year]|select|join(', ') }}</span>{% if a.current %} — <span class="alumni-current">{{ tr(a.current) }}</span>{% endif %} {{ sample_badge(a) }}</li>{% endfor %}
 </ul>
 {% endmacro %}
+
+
+{# ---------- 공통 도우미(Phase 3, 선택해서 쓴다) ---------- #}
+{# 뉴스 상세의 표지: 영상이나 앨범 사진 묶음이 있으면 중복이라 생략 #}
+{% macro post_cover(post, cls='post-cover') %}{% if post.cover and not post.youtube and not post.gallery %}<img class="{{ cls }}" src="{{ cover_url(post) }}" alt="">{% endif %}{% endmacro %}
+
+{# 연구 주제의 원본 그림(+설명, 연결 논문)과 주요 연구 주제 목록 #}
+{% macro topic_figures(r, cls='topic-figs') %}
+{% if r.figures %}<div class="{{ cls }}">{% for f in r.figures %}
+  <figure class="topic-fig"><a href="{{ static(f.image) }}" target="_blank" rel="noopener"><img src="{{ static(f.image) }}" alt="{{ tr(f.caption)|truncate(80) }}" loading="lazy"></a>
+    {% if f.caption or f.pub %}<figcaption>{{ tr(f.caption) }}{% if f.pub %} <a href="{{ pub_url(f.pub) }}">[{{ f.pub.num }}]</a>{% endif %}</figcaption>{% endif %}</figure>
+{% endfor %}</div>{% endif %}
+{% endmacro %}
+{% macro topic_themes(r, cls='topic-themes') %}{% set th = tr_list(r.themes) %}{% if th %}<ul class="{{ cls }}">{% for x in th %}<li>{{ x }}</li>{% endfor %}</ul>{% endif %}{% endmacro %}
+
+{# 뉴스 분류 필터 버튼(shared.js가 [data-news-item][data-cat]과 [data-news-year]를 거른다) #}
+{% macro news_filter(cls='news-filter') %}
+{% if news_cats|length > 1 %}<div class="{{ cls }}" role="group" aria-label="{{ t('news.filter') }}" data-news-filter>
+  <button type="button" aria-pressed="true" data-cat="">{{ t('news.all') }} <span>{{ news_items|length }}</span></button>
+  {% for c, n in news_cats %}<button type="button" aria-pressed="false" data-cat="{{ c }}">{{ t('news.category.' ~ c) }} <span>{{ n }}</span></button>{% endfor %}
+</div>{% endif %}
+{% endmacro %}
+
+{# 연도별 뉴스 목록(앨범 제외). 표지가 없는 글은 글자만 있는 행 #}
+{% macro news_year_list(groups, cls='news-years') %}
+<div class="{{ cls }}">
+{% for y, items in groups %}
+  <section class="news-year" id="n{{ y }}" data-news-year>
+    <h2 class="news-year-title">{{ y }}</h2>
+    <ul class="news-rows">{% for p in items %}{% set c = cover_url(p) %}
+      <li class="news-row{% if not c %} news-row--text{% endif %}" data-news-item data-cat="{{ p.category }}">
+        {% if c %}<a class="news-row-img" href="{{ news_url(p) }}" tabindex="-1" aria-hidden="true"><img src="{{ c }}" alt="" loading="lazy"></a>{% endif %}
+        <div class="news-row-text">
+          <div class="news-card-meta"><span class="news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span> <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></div>
+          <h3 class="news-row-title"><a href="{{ news_url(p) }}">{{ tr(p.title) }}</a></h3>
+          {% if p.summary %}<p class="news-card-summary">{{ tr(p.summary) }}</p>{% endif %}
+        </div>
+      </li>{% endfor %}
+    </ul>
+  </section>
+{% endfor %}
+</div>
+{% endmacro %}
+
+{# 연도 바로가기(뉴스 prefix 'n', 앨범 prefix 'g') #}
+{% macro year_links(groups, prefix='n', cls='year-links') %}{% if groups|length > 1 %}<nav class="{{ cls }}" aria-label="{{ t('common.years') }}">{% for y, items in groups %}<a href="#{{ prefix }}{{ y }}">{{ y }}</a>{% endfor %}</nav>{% endif %}{% endmacro %}
