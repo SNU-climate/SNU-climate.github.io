@@ -26,7 +26,7 @@
 
 ## 2. 이관 규칙(판단한 것)
 
-- **날짜**: 공지는 DB 작성일(원본 목록에 보이던 날짜). 단, 원본 사이트 이전 때 일괄 등록한 글이라 **2021-08-16 60편, 2021-06-11 7편**은 실제 기사 날짜(2014–2020)가 아니다(본문·링크 URL에 원래 날짜가 보이는 글이 많음). 갤러리는 제목 앞의 행사 시작일, 월만 있으면 1일(6편: 생일 5, 서울 나들이 1), 날짜 없으면 작성일(`International Workshop on Climate system` → 2023-05-18).
+- **날짜**: 공지는 DB 작성일(원본 목록에 보이던 날짜). 단, 원본 사이트 이전 때 일괄 등록한 **2021-08-16 60편, 2021-06-11 7편**은 실제 기사 날짜가 아니어서 2026-11-04에 따로 바로잡았다(아래 §2.1). 갤러리는 제목 앞의 행사 시작일, 월만 있으면 1일(6편: 생일 5, 서울 나들이 1), 날짜 없으면 작성일(`International Workshop on Climate system` → 2023-05-18).
 - **언어**: 원문이 국문이면 `index.ko.md` = 원문 그대로(HTML → Markdown, 링크 유지), `index.md` = 영문 제목 + 1~3문장 번역 요약 + 원문 링크 목록. 원제가 영문인 공지 8편(#229·250·255·258, 캐시 95·98·99·100)은 영문 제목이 원문이고 국문 제목이 번역(본문은 4편 모두 국문 원문).
 - **링크**: 본문 첫 링크를 `link:`(원문 보기 버튼). 유튜브는 `youtube:`(7편). 논문 소식은 `doi:`(publications.yaml에 있는 것만, 22편 — 부록 A 비고).
 - **본문 그림**: 공지 본문 `<img>`는 원본 크기 파일로 바꿔 `figN.jpg` + `gallery:`/`cover:`(10편, 그림 20장). 구 사이트 `csl.postech.ac.kr/editor/...` 그림 1장(#200, 같은 그림의 사본)은 백업에 없어 생략.
@@ -36,11 +36,40 @@
 - **앨범 본문**: 원제목(행사 기간 포함) 한 줄 + 원문 본문이 있으면 그 내용(5편: 경주 워크샵, BK21 시상식, 2022·2023 기상학회, 2023 해양학회). 영문은 번역.
 - **source**: `notice#uid`, `gallery#uid`, `gsmagazine#uid`, `portfolio#ID`(합친 글은 목록).
 
+### 2.1 일괄 등록 공지 67편의 날짜 수정 (2026-11-04)
+
+근거 우선순위: 원문 기사 페이지의 게시일(메타 태그) > 기사 URL 속 날짜 > 본문·제목의 명시 날짜 > 연·월만 나오는 근거. 논문 출판일로 추정하지 않았다.
+각 글 `index.md`에 `date`(정밀도대로 YYYY-MM-DD / YYYY-MM / YYYY), `posted`(원 등록일), `date_source`(근거)를 넣었고, 날짜를 바꾼 57편은 폴더 이름도 새 날짜로 바꿨다(월·연까지만 확실하면 `YYYY-MM-`·`YYYY-` 접두, validate 규칙도 이에 맞춤). 아래 부록 A의 폴더 이름은 바뀐 이름이다.
+
+| 결과 | 편수 |
+|---|---|
+| 날짜까지 확인 | 45 |
+| 월까지만 확인 | 4 — 동아사이언스 2020년 11호·12호, 과학동아 2014년 4월호(원본 첨부 파일명), 2018 국가연구개발 성과평가 포상(2018-12) |
+| 연도만 확인 | 8 — MBC 다시보기 3편(URL 연도 2014·2015·2015), 2015 한국기상학회 봄학술대회 수상, 임형규 장학생 인터뷰 2018·2019, SBS 희망TV 2018, 한국인 첫 APEC과학상 기사 모음(2015년 수상) |
+| 근거 없음(등록일 유지) | 10 |
+
+추론이 들어간 판정 2건: 한국일보 몬스터 엘니뇨 인터뷰는 본문의 "6월 13일 금요일자"가 2014–2021년 중 2014년에만 맞아 2014-06-13으로 정했다. 유튜브 영상 2편은 업로드 시각(태평양 시간)을 한국 시간으로 바꿔 2015-09-07, 2020-09-09로 정했다.
+
+**근거 없음 10편** — 원문이 삭제됐거나 본문에 날짜가 없다. 실제 날짜를 알면 `date`만 고치고 폴더 이름을 바꾸면 된다.
+
+| 폴더 | 사유 |
+|---|---|
+| `2021-06-11-jeon-jaegyu-award-woo` | 제4회 전재규 젊은과학자상(우성호) — 본문·링크에 날짜 없음 |
+| `2021-06-11-kscc-young-scientist-award` | 한국기후변화학회 신진연구자상 — "지난 6월 19일"만 있고 연도 없음 |
+| `2021-08-16-earth-com-plants-arctic` | Earth.com 기사 삭제(HTTP 410) |
+| `2021-08-16-gs-caltex-tipping-points` | GS칼텍스 미디어허브 접속 안 됨 |
+| `2021-08-16-jtbc-arctic-summer-heat` | JTBC 영상 삭제(김다슬 인터뷰) |
+| `2021-08-16-kim-jung-sungki-thesis-award` | 정성기논문상 — "2018학년도"만 있음(학년도라 달력 날짜 단정 불가) |
+| `2021-08-16-lim-science-donga-feature` | 과학동아 "11월호" — 연도 없음 |
+| `2021-08-16-rok-pi-clips-phase-2` | SPREP 기사 접근 거부(HTTP 403) |
+| `2021-08-16-samsung-wealth-management` | 첨부 간행물만 있음 |
+| `2021-08-16-yonhap-iod-australia-fires` | 연합뉴스 네이버TV 영상 삭제 |
+
 ## 3. 합친 항목(중복 글을 만들지 않음)
 
 | 원본 | 합친 대상 | 근거 |
 |---|---|---|
-| GS칼텍스매거진 #1 「동아사이언스 2020년 11호 기획_과학난제 기사」 | 공지 #256 (같은 제목, PDF 첨부) → `2021-06-11-dongascience-science-puzzles-11` | 제목 동일 |
+| GS칼텍스매거진 #1 「동아사이언스 2020년 11호 기획_과학난제 기사」 | 공지 #256 (같은 제목, PDF 첨부) → `2020-11-dongascience-science-puzzles-11` | 제목 동일 |
 | portfolio 819 「2014.05.15 UNIST-POSTECH 공동 세미나」 | gallery #260 | 같은 사진 파일(1415782843/833) |
 | portfolio 874 「2014.8.5~8.7 POSTECH-OST JOINT WORKSHOP」 | gallery #261 | 같은 사진(1415857xxx) |
 | portfolio 876 「irreversible climate change work」 | gallery #262 (장연수 생일) | 사진 3장이 #262와 완전히 같음(dHash 0) — 제목만 잘못 붙은 복제 글 |
@@ -85,7 +114,7 @@
 | `2026-07-08-net-zero-speaks-interview` | notice#22044 (99번) | 영문 원제, 유튜브 ID 모름 |
 | `2026-08-05-live-science-super-el-nino-threshold` | notice#22045 (100번) | **원제가 목록에서 잘려 있음**("…climate change researc") — 전체 제목 필요 |
 | `2026-10-07-kbs-strongest-el-nino-heavy-rain` | notice#22363 (101번, 홈 최신글 위젯) | `youtube: DaqKSaZQapQ` — videos.yaml의 같은 제목 영상으로 연결. 공지 목록 캐시(2026-09-12) 이후 글이라 번호는 추정 |
-| `2021-06-11-dongascience-science-puzzles-12` | gsmagazine#2 | 원본 본문·첨부 없음 |
+| `2020-12-dongascience-science-puzzles-12` | gsmagazine#2 | 원본 본문·첨부 없음 |
 
 ### 5.2 번역한 항목
 - 공지 뉴스 95편: 국문 원문 글의 **영문 제목·요약은 모두 번역**(원문에 있는 내용만). 영문 원제 8편의 **국문 제목은 번역**(#229·250·255·258·95·98·99·100).
@@ -99,7 +128,7 @@
 - `site.yaml`의 전화(연구실 880-8177, 교수실 880-6725)·연구실 507호는 원본과 일치 → **contact는 바꾸지 않음**. 다만 `address`의 **522호(교수실)는 원본에 없는 정보**(학과 페이지 출처로 보임)이고, 원본 꼬리말은 507호(연구실)를 주소로 썼다. 대표 주소를 522호/507호 중 무엇으로 할지 확인 필요.
 
 ### 5.4 그 밖
-- **공지 첨부 PDF 공개 여부**: 원본 KBoard 설정에서 첨부 다운로드 권한이 '관리자'였다(방문자는 내려받을 수 없었음). 지시대로 옮겼으나 대부분 언론·간행물 지면(과학동아, 동아사이언스, M이코노미뉴스, 삼성생명 WM)이라 공개 게시 전 저작권 확인 필요. 공개하지 않으려면 해당 폴더의 PDF와 본문 '첨부' 줄을 지우면 된다(`2021-06-11-science-donga-fine-dust`, `2021-08-16-m-economy-el-nino-food-prices`, `2021-08-16-kiost-postech-workshop-2014`, `2021-08-16-lim-science-donga-feature`, `2021-08-16-samsung-wealth-management`, `2021-06-11-dongascience-science-puzzles-11`).
+- **공지 첨부 PDF 공개 여부**: 원본 KBoard 설정에서 첨부 다운로드 권한이 '관리자'였다(방문자는 내려받을 수 없었음). 지시대로 옮겼으나 대부분 언론·간행물 지면(과학동아, 동아사이언스, M이코노미뉴스, 삼성생명 WM)이라 공개 게시 전 저작권 확인 필요. 공개하지 않으려면 해당 폴더의 PDF와 본문 '첨부' 줄을 지우면 된다(`2014-04-science-donga-fine-dust`, `2014-07-10-m-economy-el-nino-food-prices`, `2014-12-22-kiost-postech-workshop-2014`, `2021-08-16-lim-science-donga-feature`, `2021-08-16-samsung-wealth-management`, `2020-11-dongascience-science-puzzles-11`).
 - 갤러리 portfolio 글 날짜: 「최상급자 전용 스키체험」·「드론촬영」 → WordPress 작성일 2021-06-18(원본 페이지 표시 날짜 2020-02-07은 복제 원본에서 따라온 값), 「22년 해양학회 추계학술대회」 → 작성일 2022-02-16(제목의 '22년'과 맞지 않음, 2021년 행사일 가능성), 「CSL 단체 사진」 → 페이지 표시일 2024-01-29. 스키·드론은 대표 이미지 1장(원본도 1장)뿐.
 - 원문 그대로 둔 어긋남: #237 제목은 [연합뉴스]인데 본문은 YTN 인터뷰·YTN 링크(#239와 같은 링크). #4411·#13432는 링크 글자와 실제 주소가 달라 실제 주소(href)를 씀. #11668 본문의 '아래' 링크는 앞 글(#11166) 영상이 잘못 복사된 것이라 링크만 뺌.
 - DOI 연결 판단: 기사 본문이 "연구 결과를 발표"라고 밝히고 논문이 하나로 특정되는 경우만 연결. 특정이 애매한 #237·239(엘니뇨-아마존 탄소), #252(시베리아 산불), #698(CO2 감축 후 비가역성, ITCZ 논문일 가능성)은 연결하지 않음.
@@ -118,71 +147,71 @@
 
 | 폴더(content/news/) | 원본 | category | 비고 | 국문 제목(원문) |
 |---|---|---|---|---|
-| `2021-06-11-mbc-el-nino-interview` | notice#3 | media |  | [MBC뉴스 인터뷰] 기상이변 주범 '엘니뇨'온다...피해에 철저한 대비 필요 |
-| `2021-06-11-science-donga-fine-dust` | notice#4 | media | 그림 1; 첨부 PDF | [과학동아 인터뷰] 내 허파에 낀 초미세먼지는 정말 중국산일까 |
+| `2014-04-04-mbc-el-nino-interview` | notice#3 | media |  | [MBC뉴스 인터뷰] 기상이변 주범 '엘니뇨'온다...피해에 철저한 대비 필요 |
+| `2014-04-science-donga-fine-dust` | notice#4 | media | 그림 1; 첨부 PDF | [과학동아 인터뷰] 내 허파에 낀 초미세먼지는 정말 중국산일까 |
 | `2021-06-11-kscc-young-scientist-award` | notice#5 | award |  | 국종성 교수, 신진연구자상 수상 |
-| `2021-06-11-hankookilbo-monster-el-nino` | notice#6 | media | 그림 1 | [한국일보 인터뷰] 동태평양 수온 5~6도 급등...16년 만에 몬스터 엘니뇨가 온다. |
+| `2014-06-13-hankookilbo-monster-el-nino` | notice#6 | media | 그림 1 | [한국일보 인터뷰] 동태평양 수온 5~6도 급등...16년 만에 몬스터 엘니뇨가 온다. |
 | `2021-06-11-jeon-jaegyu-award-woo` | notice#7 | award | 그림 1 | 제4회 전재규 젊은과학자상, 포스텍 우성호 박사 우수상 수상 |
-| `2021-08-16-mbc-el-nino-korea-summer` | notice#198 | media |  | [MBC뉴스 인터뷰]5년 만에 중대형급 엘니뇨 온다...한반도 여름은? |
-| `2021-08-16-m-economy-el-nino-food-prices` | notice#199 | media | 첨부 PDF | [M이코노미뉴스 인터뷰] 엘니뇨와 식량가격 |
-| `2021-08-16-apcc-multimodel-patent` | notice#200 | media | 그림 1 | [연합뉴스,투데이에너지 기사]APEC 기후센터 '다중모델 확률예측 기법' 특허 |
-| `2021-08-16-kiost-postech-workshop-2014` | notice#201 | event | 첨부 PDF | KIOST-POSTECH JOINT WORKSHOP (2014.12.22~12.24) |
-| `2021-08-16-mk-winter-drought-siberian-snow` | notice#202 | media |  | [매일경제 인터뷰]한반도 극심한 겨울가뭄...원인은 시베리아 폭설 |
-| `2021-08-16-kbs-phytoplankton-arctic-warming` | notice#203 | media | doi 10.1073/pnas.1416884112 | [KBS뉴스 인터뷰]북극 급격한 온난화, 식물성 플랑크톤 증폭 탓 |
-| `2021-08-16-phytoplankton-two-faces` | notice#204 | media | doi 10.1073/pnas.1416884112 | [국민일보,한국일보 외 기사]지구 온난화 해결사? 오히려 온난화 20% 증폭…식물성 플랑크톤의 '두 얼굴' |
-| `2021-08-16-ytn-science-phytoplankton` | notice#205 | media | doi 10.1073/pnas.1416884112 | [YTN Science 인터뷰]식물성 플랑크톤 두 얼굴...북극 온난화 증폭 |
-| `2021-08-16-kms-spring-2015-presentation-award` | notice#206 | award | 그림 2 | 김진수 연구원, 2015년도 한국기상학회 봄학술대회 우수논문발표상 수상 |
-| `2021-08-16-mbc-early-summer-heat` | notice#207 | media |  | [MBC뉴스 인터뷰]올해 초여름 불볕더위 빨리 온다...엘니뇨 변수 |
-| `2021-08-16-ytn-super-el-nino-18-years` | notice#208 | media |  | [YTN뉴스인터뷰]18년만의 '슈퍼 엘니뇨'온다...올여름 비상 |
-| `2021-08-16-apec-science-prize` | notice#209 | award | 그림 4 | 국종성 교수, 2015 APEC 과학상 수상 |
-| `2021-08-16-mbc-el-nino-droughts-floods` | notice#210 | media |  | [MBC뉴스 인터뷰]동태평양 엘니뇨 발달…세계 곳곳 가뭄·홍수 |
-| `2021-08-16-kbs-jang-yeong-sil-show` | notice#211 | media | 그림 5 | [KBS 궁금한일요일 장영실쇼] 국종성 교수, 지구온난화, 슈퍼태풍이 온다? 출연 |
-| `2021-08-16-mk-seawater-2c-warmer` | notice#212 | media |  | [MK 뉴스 인터뷰] 엄청난 양의 바닷물 온도 2°C나 상승…무슨 일? |
-| `2021-08-16-apec-science-prize-press` | notice#213 | media | 그림 1 | [한겨레 외 기사]한국인 첫'APEC과학상'국종성 교수 |
-| `2021-08-16-kbs-arctic-cold-wave-secret` | notice#214 | media | doi 10.1038/ngeo2517 | [KBS 뉴스 인터뷰] 온난화 속 ‘북극 한파’ 비밀, 한국 과학자가 풀다 |
-| `2021-08-16-obs-el-nino-stronger` | notice#215 | media |  | [OBS 뉴스 인터뷰]'엘니뇨' 더 강해진다…한반도 영향은? |
-| `2021-08-16-ytn-super-el-nino-second-strongest` | notice#216 | media |  | [YTN 뉴스 인터뷰]슈퍼 엘니뇨 현실로..역대 2번째 강력 |
-| `2021-08-16-khan-niagara-cold-wave` | notice#217 | media | doi 10.1038/ngeo2517 | [경향신문 기사]나이아가라 폭포 얼렸던 한파 원인, 국내 과학자가 풀어 |
-| `2021-08-16-veritas-alpha-cold-wave` | notice#218 | media | doi 10.1038/ngeo2517 | [베리타스 알파 기사]전남대-포항공대 한파 현상 원인 밝혀내 |
-| `2021-08-16-asiae-cold-wave` | notice#219 | media | doi 10.1038/ngeo2517 | [아시아경제 기사]전남대·포항공과대 공동 연구팀,동아시아 ·북미 한파 원인 규명 |
-| `2021-08-16-ytn-el-nino-grain-prices` | notice#220 | media |  | [YTN 뉴스 인터뷰]최악 엘니뇨 기상이변에 곡물가도 들썩 |
-| `2021-08-16-youtube-arctic-warming-cold-winters` | notice#221 | media | doi 10.1038/ngeo2517; yt O1GXEsNF0tM | [YouTube 동영상] Two distinct influences of Arctic warming on cold winters over North America and East Asia |
-| `2021-08-16-obs-seoraksan-first-ice` | notice#222 | media |  | [OBS 뉴스 인터뷰]설악산 '첫 얼음'... 올겨울 대체로 '온화' |
-| `2021-08-16-obs-november-rainy-spell` | notice#223 | media |  | [OBS 뉴스 인터뷰]"11월의 장마"...매일 비 온다 |
-| `2021-08-16-kbs-super-el-nino-winter` | notice#224 | media |  | [KBS NEWS 인터뷰] 이번 겨울 '슈퍼 엘니뇨' 온다... 한반도 기후는? |
-| `2021-08-16-yonhap-warmest-in-42-years` | notice#225 | media |  | [연합뉴스 기사]'冬來不似冬'...42년만의 최고기온 |
-| `2021-08-16-obs-la-nina-coming` | notice#226 | media |  | [OBS 뉴스 인터뷰] 동장군 귀환…'엘니뇨' 가고 '라니냐' 온다 |
-| `2021-08-16-mbc-weather-shock` | notice#227 | media |  | [MBC 뉴스 인터뷰] 기록적 한파에 '웨더쇼크', 경제도 일시적 마비 |
-| `2021-08-16-scientist-of-the-month-award` | notice#228 | award | 그림 3 | 국종성 교수, 한국연구재단 '이달의 과학기술자상'수상 |
-| `2021-08-16-natureindex-phytoplankton-arctic` | notice#229 | media | doi 10.1073/pnas.1416884112 | 식물성 플랑크톤이 북극을 데우고 있다는 사실을 연구자들은 어떻게 밝혀냈나 |
-| `2021-08-16-repi-jeju-international-conference` | notice#231 | event |  | [포항공과대학교 환경공학부주관] ‘21세기 지역의 도전과제’ 국제학술대회, 제주서 성공적 개최 |
-| `2021-08-16-donga-young-scientists` | notice#232 | media |  | [동아뉴스 기사] 이 젊은 과학자들, 대한민국의 미래를 연다 |
-| `2021-08-16-kim-nature-geoscience-paper` | notice#233 | paper | doi 10.1038/ngeo2986 | 김진수 박사과정 학생 , "Nature Geoscience" 지 논문 게재 |
-| `2021-08-16-news1-arctic-warming-crops` | notice#234 | media | doi 10.1038/ngeo2986 | [뉴스1뉴스 기사] 포스텍 연구팀 "북극 온난화가 곡물 생산 감소 원인" |
-| `2021-08-16-kaos-science-lecture` | notice#235 | media |  | [카오스 과학강연] 지구의 낯선 미래 : 설국열차 대 인터스텔라 |
-| `2021-08-16-sedaily-ai-column` | notice#236 | media |  | [서울경제 사설] [Science&Market] AI 만능주의를 경계한다 |
-| `2021-08-16-yonhap-el-nino-amazon-carbon` | notice#237 | media |  | [연합뉴스 기사] 엘니뇨 현상이 '지구 허파' 아마존 밀림 탄소흡수 능력 줄인다 |
-| `2021-08-16-bk21-plus-award-kim` | notice#238 | award |  | 김진수 박사과정 학생, 교육부, 'BK21 플러스' 우수 연구인력 수상 |
-| `2021-08-16-ytn-el-nino-amazon` | notice#239 | media |  | [YTN 뉴스 인터뷰] "엘니뇨, '지구 허파' 아마존 숨통 막는다" |
-| `2021-08-16-kbs-el-nino-mechanism` | notice#240 | media |  | [KBS 뉴스 인터뷰] 이상기후 주범 ‘엘니뇨’ 가면 벗다…발생 메커니즘 최초 규명 |
-| `2021-08-16-ytn-science-climate-future` | notice#241 | media |  | [YTN사이언스 인터뷰] 기후변화와 지구의 미래 |
-| `2021-08-16-yonhap-enso-17-months` | notice#242 | media | doi 10.1038/s41598-018-33191-7 | [연합뉴스기사] 기상이변 원인 엘니뇨·라니냐 17개월 전 예측 가능하다 |
+| `2014-mbc-el-nino-korea-summer` | notice#198 | media |  | [MBC뉴스 인터뷰]5년 만에 중대형급 엘니뇨 온다...한반도 여름은? |
+| `2014-07-10-m-economy-el-nino-food-prices` | notice#199 | media | 첨부 PDF | [M이코노미뉴스 인터뷰] 엘니뇨와 식량가격 |
+| `2014-07-15-apcc-multimodel-patent` | notice#200 | media | 그림 1 | [연합뉴스,투데이에너지 기사]APEC 기후센터 '다중모델 확률예측 기법' 특허 |
+| `2014-12-22-kiost-postech-workshop-2014` | notice#201 | event | 첨부 PDF | KIOST-POSTECH JOINT WORKSHOP (2014.12.22~12.24) |
+| `2015-01-28-mk-winter-drought-siberian-snow` | notice#202 | media |  | [매일경제 인터뷰]한반도 극심한 겨울가뭄...원인은 시베리아 폭설 |
+| `2015-04-21-kbs-phytoplankton-arctic-warming` | notice#203 | media | doi 10.1073/pnas.1416884112 | [KBS뉴스 인터뷰]북극 급격한 온난화, 식물성 플랑크톤 증폭 탓 |
+| `2015-04-21-phytoplankton-two-faces` | notice#204 | media | doi 10.1073/pnas.1416884112 | [국민일보,한국일보 외 기사]지구 온난화 해결사? 오히려 온난화 20% 증폭…식물성 플랑크톤의 '두 얼굴' |
+| `2015-04-21-ytn-science-phytoplankton` | notice#205 | media | doi 10.1073/pnas.1416884112 | [YTN Science 인터뷰]식물성 플랑크톤 두 얼굴...북극 온난화 증폭 |
+| `2015-kms-spring-2015-presentation-award` | notice#206 | award | 그림 2 | 김진수 연구원, 2015년도 한국기상학회 봄학술대회 우수논문발표상 수상 |
+| `2015-mbc-early-summer-heat` | notice#207 | media |  | [MBC뉴스 인터뷰]올해 초여름 불볕더위 빨리 온다...엘니뇨 변수 |
+| `2015-05-14-ytn-super-el-nino-18-years` | notice#208 | media |  | [YTN뉴스인터뷰]18년만의 '슈퍼 엘니뇨'온다...올여름 비상 |
+| `2015-08-17-apec-science-prize` | notice#209 | award | 그림 4 | 국종성 교수, 2015 APEC 과학상 수상 |
+| `2015-mbc-el-nino-droughts-floods` | notice#210 | media |  | [MBC뉴스 인터뷰]동태평양 엘니뇨 발달…세계 곳곳 가뭄·홍수 |
+| `2015-08-09-kbs-jang-yeong-sil-show` | notice#211 | media | 그림 5 | [KBS 궁금한일요일 장영실쇼] 국종성 교수, 지구온난화, 슈퍼태풍이 온다? 출연 |
+| `2015-08-28-mk-seawater-2c-warmer` | notice#212 | media |  | [MK 뉴스 인터뷰] 엄청난 양의 바닷물 온도 2°C나 상승…무슨 일? |
+| `2015-apec-science-prize-press` | notice#213 | media | 그림 1 | [한겨레 외 기사]한국인 첫'APEC과학상'국종성 교수 |
+| `2015-09-01-kbs-arctic-cold-wave-secret` | notice#214 | media | doi 10.1038/ngeo2517 | [KBS 뉴스 인터뷰] 온난화 속 ‘북극 한파’ 비밀, 한국 과학자가 풀다 |
+| `2015-09-02-obs-el-nino-stronger` | notice#215 | media |  | [OBS 뉴스 인터뷰]'엘니뇨' 더 강해진다…한반도 영향은? |
+| `2015-09-04-ytn-super-el-nino-second-strongest` | notice#216 | media |  | [YTN 뉴스 인터뷰]슈퍼 엘니뇨 현실로..역대 2번째 강력 |
+| `2015-09-02-khan-niagara-cold-wave` | notice#217 | media | doi 10.1038/ngeo2517 | [경향신문 기사]나이아가라 폭포 얼렸던 한파 원인, 국내 과학자가 풀어 |
+| `2015-09-02-veritas-alpha-cold-wave` | notice#218 | media | doi 10.1038/ngeo2517 | [베리타스 알파 기사]전남대-포항공대 한파 현상 원인 밝혀내 |
+| `2015-09-02-asiae-cold-wave` | notice#219 | media | doi 10.1038/ngeo2517 | [아시아경제 기사]전남대·포항공과대 공동 연구팀,동아시아 ·북미 한파 원인 규명 |
+| `2015-09-06-ytn-el-nino-grain-prices` | notice#220 | media |  | [YTN 뉴스 인터뷰]최악 엘니뇨 기상이변에 곡물가도 들썩 |
+| `2015-09-07-youtube-arctic-warming-cold-winters` | notice#221 | media | doi 10.1038/ngeo2517; yt O1GXEsNF0tM | [YouTube 동영상] Two distinct influences of Arctic warming on cold winters over North America and East Asia |
+| `2015-10-02-obs-seoraksan-first-ice` | notice#222 | media |  | [OBS 뉴스 인터뷰]설악산 '첫 얼음'... 올겨울 대체로 '온화' |
+| `2015-11-16-obs-november-rainy-spell` | notice#223 | media |  | [OBS 뉴스 인터뷰]"11월의 장마"...매일 비 온다 |
+| `2015-11-17-kbs-super-el-nino-winter` | notice#224 | media |  | [KBS NEWS 인터뷰] 이번 겨울 '슈퍼 엘니뇨' 온다... 한반도 기후는? |
+| `2015-12-31-yonhap-warmest-in-42-years` | notice#225 | media |  | [연합뉴스 기사]'冬來不似冬'...42년만의 최고기온 |
+| `2016-01-05-obs-la-nina-coming` | notice#226 | media |  | [OBS 뉴스 인터뷰] 동장군 귀환…'엘니뇨' 가고 '라니냐' 온다 |
+| `2016-01-26-mbc-weather-shock` | notice#227 | media |  | [MBC 뉴스 인터뷰] 기록적 한파에 '웨더쇼크', 경제도 일시적 마비 |
+| `2016-01-27-scientist-of-the-month-award` | notice#228 | award | 그림 3 | 국종성 교수, 한국연구재단 '이달의 과학기술자상'수상 |
+| `2016-05-23-natureindex-phytoplankton-arctic` | notice#229 | media | doi 10.1073/pnas.1416884112 | 식물성 플랑크톤이 북극을 데우고 있다는 사실을 연구자들은 어떻게 밝혀냈나 |
+| `2016-08-23-repi-jeju-international-conference` | notice#231 | event |  | [포항공과대학교 환경공학부주관] ‘21세기 지역의 도전과제’ 국제학술대회, 제주서 성공적 개최 |
+| `2016-11-24-donga-young-scientists` | notice#232 | media |  | [동아뉴스 기사] 이 젊은 과학자들, 대한민국의 미래를 연다 |
+| `2017-07-10-kim-nature-geoscience-paper` | notice#233 | paper | doi 10.1038/ngeo2986 | 김진수 박사과정 학생 , "Nature Geoscience" 지 논문 게재 |
+| `2017-07-11-news1-arctic-warming-crops` | notice#234 | media | doi 10.1038/ngeo2986 | [뉴스1뉴스 기사] 포스텍 연구팀 "북극 온난화가 곡물 생산 감소 원인" |
+| `2017-11-08-kaos-science-lecture` | notice#235 | media |  | [카오스 과학강연] 지구의 낯선 미래 : 설국열차 대 인터스텔라 |
+| `2017-11-26-sedaily-ai-column` | notice#236 | media |  | [서울경제 사설] [Science&Market] AI 만능주의를 경계한다 |
+| `2018-01-17-yonhap-el-nino-amazon-carbon` | notice#237 | media |  | [연합뉴스 기사] 엘니뇨 현상이 '지구 허파' 아마존 밀림 탄소흡수 능력 줄인다 |
+| `2018-03-15-bk21-plus-award-kim` | notice#238 | award |  | 김진수 박사과정 학생, 교육부, 'BK21 플러스' 우수 연구인력 수상 |
+| `2018-01-17-ytn-el-nino-amazon` | notice#239 | media |  | [YTN 뉴스 인터뷰] "엘니뇨, '지구 허파' 아마존 숨통 막는다" |
+| `2018-07-27-kbs-el-nino-mechanism` | notice#240 | media |  | [KBS 뉴스 인터뷰] 이상기후 주범 ‘엘니뇨’ 가면 벗다…발생 메커니즘 최초 규명 |
+| `2018-08-16-ytn-science-climate-future` | notice#241 | media |  | [YTN사이언스 인터뷰] 기후변화와 지구의 미래 |
+| `2018-10-10-yonhap-enso-17-months` | notice#242 | media | doi 10.1038/s41598-018-33191-7 | [연합뉴스기사] 기상이변 원인 엘니뇨·라니냐 17개월 전 예측 가능하다 |
 | `2021-08-16-lim-science-donga-feature` | notice#243 | media | 첨부 PDF | 임형규 박사과정 학생 , "과학동아 11월호"에 연구소개 |
 | `2021-08-16-samsung-wealth-management` | notice#244 | media | 첨부 PDF | [삼성생명 웰스매니지먼트(Wealth Management)]기상이변 피해, 장기적인 안목의 대책이 시급하다. |
-| `2021-08-16-sbs-hope-tv` | notice#245 | media |  | [SBS 희망TV 출연] 2018 창사특집 희망TV SBS 6부 출연 |
-| `2021-08-16-national-rnd-evaluation-award` | notice#246 | award |  | 국종성 교수, 2018 국가연구개발성과평가 유공 포상 수상 |
-| `2021-08-16-lim-scholarship-interview-2019` | notice#247 | media |  | 임형규 박사과정 학생, 글로벌 우수 장학생 인터뷰(2019년) |
-| `2021-08-16-lim-scholarship-interview-2018` | notice#248 | media |  | 임형규 박사과정 학생, 글로벌 우수 장학생 인터뷰(2018년) |
+| `2018-sbs-hope-tv` | notice#245 | media |  | [SBS 희망TV 출연] 2018 창사특집 희망TV SBS 6부 출연 |
+| `2018-12-national-rnd-evaluation-award` | notice#246 | award |  | 국종성 교수, 2018 국가연구개발성과평가 유공 포상 수상 |
+| `2019-lim-scholarship-interview-2019` | notice#247 | media |  | 임형규 박사과정 학생, 글로벌 우수 장학생 인터뷰(2019년) |
+| `2018-lim-scholarship-interview-2018` | notice#248 | media |  | 임형규 박사과정 학생, 글로벌 우수 장학생 인터뷰(2018년) |
 | `2021-08-16-kim-jung-sungki-thesis-award` | notice#249 | award | 그림 1 | 김진수 박사과정 학생, 정성기논문상 수상 |
 | `2021-08-16-rok-pi-clips-phase-2` | notice#250 | media |  | ROK-PI CliPS 2단계, 태평양 지역 기상 서비스 강화 |
-| `2021-08-16-hankookilbo-ieodo-winter` | notice#251 | media | doi 10.1007/s13143-019-00146-5 | [한국일보기사] 올 겨울 얼마나 추울지, “이어도 인근 해수 온도 보면 미리 안다” |
-| `2021-08-16-kbs-siberia-fires-fine-dust` | notice#252 | media |  | [KBS 뉴스 인터뷰] 온난화로 시베리아도 ‘활활’…한반도 초미세먼지 ‘악화’ |
+| `2019-10-16-hankookilbo-ieodo-winter` | notice#251 | media | doi 10.1007/s13143-019-00146-5 | [한국일보기사] 올 겨울 얼마나 추울지, “이어도 인근 해수 온도 보면 미리 안다” |
+| `2020-01-16-kbs-siberia-fires-fine-dust` | notice#252 | media |  | [KBS 뉴스 인터뷰] 온난화로 시베리아도 ‘활활’…한반도 초미세먼지 ‘악화’ |
 | `2021-08-16-yonhap-iod-australia-fires` | notice#253 | media |  | [연합뉴스 인터뷰] 호주 산불 주범 '인도양 다이폴'…포근한 겨울 불러왔다. |
-| `2021-08-16-kyongbuk-plants-arctic` | notice#254 | media | doi 10.1038/s41467-020-15924-3 | [경북일보기사]‘식물의 반란’ 식물이 숨을 안 쉬면, 북극이 녹는다 |
+| `2020-05-11-kyongbuk-plants-arctic` | notice#254 | media | doi 10.1038/s41467-020-15924-3 | [경북일보기사]‘식물의 반란’ 식물이 숨을 안 쉬면, 북극이 녹는다 |
 | `2021-08-16-earth-com-plants-arctic` | notice#255 | media | doi 10.1038/s41467-020-15924-3 | 식물이 숨을 멈추면 북극 기온이 오른다 |
-| `2021-06-11-dongascience-science-puzzles-11` | notice#256, gsmagazine#1 | media | 첨부 PDF | 동아사이언스 2020년 11호 기획_과학난제 기사 |
+| `2020-11-dongascience-science-puzzles-11` | notice#256, gsmagazine#1 | media | 첨부 PDF | 동아사이언스 2020년 11호 기획_과학난제 기사 |
 | `2021-08-16-gs-caltex-tipping-points` | notice#257 | media |  | [GS칼텍스매거진] 인터스텔라와 설국열차의 지구, 그 배후의 조종자, 기후변화 티핑포인트 |
-| `2021-08-16-aspire-decade-video` | notice#258 | media | yt Qs19JBTUdu8 | APEC 과학상(ASPIRE) 10년 |
+| `2020-09-09-aspire-decade-video` | notice#258 | media | yt Qs19JBTUdu8 | APEC 과학상(ASPIRE) 10년 |
 | `2021-08-16-jtbc-arctic-summer-heat` | notice#259 | media |  | [JTBC 인터뷰] [날씨박사] 7월에 북극 더워지면 '여름 폭염' 강해진다 |
 | `2022-01-17-etnews-no-return-to-past-climate` | notice#698 | media |  | [전자신문] 이산화탄소 줄여도 과거 기후로 돌아갈수 없다 |
 | `2022-07-04-leader-researcher-selection` | notice#3297 | award |  | [한국경제기사] 윤성로 교수 등 12명 기초과학 '리더연구자' 선정 |
@@ -212,7 +241,7 @@
 | `2026-07-08-net-zero-speaks-interview` | notice#22044 | media |  | [YouTube] Net Zero Speaks, 국종성 교수와의 대화 |
 | `2026-08-05-live-science-super-el-nino-threshold` | notice#22045 | media |  | [LIVE SCIENCE] 슈퍼 엘니뇨가 이미 압박받는 기후 생태계를 임계점 너머로 밀어낼 수 있다, 기후변화 연구자… |
 | `2026-10-07-kbs-strongest-el-nino-heavy-rain` | notice#22363 | media | yt DaqKSaZQapQ | [KBS NEWS] 역대 최강 엘니뇨 온다…“다음 달부터 많은 비” |
-| `2021-06-11-dongascience-science-puzzles-12` | gsmagazine#2 | media |  | 동아사이언스 2020년 12호 기획_과학난제 기사 |
+| `2020-12-dongascience-science-puzzles-12` | gsmagazine#2 | media |  | 동아사이언스 2020년 12호 기획_과학난제 기사 |
 
 ### 부록 B. 갤러리 → 앨범 뉴스 (89편, `album: true`)
 

@@ -83,8 +83,8 @@ def check_data(R):
     vids = {v['id'] for v in (D['videos'] or {}).get('videos') or []}
     for p in D['news']:
         tag = f"news/{p['slug']}"
-        if not re.match(r'^\d{4}-\d{2}-\d{2}-[a-z0-9-]+$', p['slug']):
-            R.warn(f'{tag}: 폴더 이름은 YYYY-MM-DD-영문-slug 형식을 권장')
+        if not re.match(r'^\d{4}(-\d{2}){0,2}-[a-z0-9-]+$', p['slug']):     # 날짜가 월·연까지만 확실하면 YYYY-MM-, YYYY-
+            R.warn(f'{tag}: 폴더 이름은 YYYY-MM-DD-영문-slug 형식을 권장(날짜 정밀도에 따라 YYYY-MM-·YYYY-)')
         if not p.get('title'):
             R.err(f'{tag}: title 없음')
         elif missing_ko(p['title']):

@@ -16,5 +16,5 @@
 - news/2024-02-05-kbs-heated-ocean-after-mitigation: youtube 3xaMRNKV3bU 가 videos.yaml에 없음(썸네일은 YouTube에서 직접 로드)
 - news/2023-10-26-youth-agora-national-assembly: youtube sE2lLXcaex4 가 videos.yaml에 없음(썸네일은 YouTube에서 직접 로드)
 - news/2023-08-07-pohang-mbc-climate-crisis: youtube o5CvYBhnB70 가 videos.yaml에 없음(썸네일은 YouTube에서 직접 로드)
-- news/2021-08-16-youtube-arctic-warming-cold-winters: youtube O1GXEsNF0tM 가 videos.yaml에 없음(썸네일은 YouTube에서 직접 로드)
-- news/2021-08-16-aspire-decade-video: youtube Qs19JBTUdu8 가 videos.yaml에 없음(썸네일은 YouTube에서 직접 로드)
+- news/2020-09-09-aspire-decade-video: youtube Qs19JBTUdu8 가 videos.yaml에 없음(썸네일은 YouTube에서 직접 로드)
+- news/2015-09-07-youtube-arctic-warming-cold-winters: youtube O1GXEsNF0tM 가 videos.yaml에 없음(썸네일은 YouTube에서 직접 로드)
