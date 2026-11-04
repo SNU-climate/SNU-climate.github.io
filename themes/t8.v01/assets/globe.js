@@ -7,7 +7,7 @@
 (function () {
   'use strict';
   var SVGNS = 'http://www.w3.org/2000/svg';
-  var FALLBACK = ['#2ef2d0', '#ff8a3d', '#6cb8ff', '#c3f26b', '#ff6fd8'];
+  var FALLBACK = ['#00796b', '#c2410c', '#1f5fc9', '#467510', '#b8237a'];   // style.css --t0..--t4 와 같게
   var HIDE = Math.PI / 2 - 0.18;      // 이보다 멀면(지평선 약 10° 앞) 마커를 숨긴다
   var RING = Math.PI / 2 - 0.35;      // 이보다 멀면 바깥 링(펄스)을 숨긴다
   var uid = 0;
@@ -41,19 +41,20 @@
     if (!o.links) svg.setAttribute('aria-hidden', 'true');
     var defs = el('defs', {}, svg);
     var g1 = el('radialGradient', { id: id + 'o', cx: '40%', cy: '36%', r: '72%' }, defs);
-    el('stop', { offset: '0%', 'stop-color': '#12456e' }, g1);
-    el('stop', { offset: '62%', 'stop-color': '#07203d' }, g1);
-    el('stop', { offset: '100%', 'stop-color': '#020a17' }, g1);
+    // 정지점 색은 style.css 토큰(.g-o*, .g-h*, .g-s* → --g-ocean-*, --g-air, --g-lo)에서 정한다
+    el('stop', { offset: '0%', 'class': 'g-o0' }, g1);
+    el('stop', { offset: '62%', 'class': 'g-o1' }, g1);
+    el('stop', { offset: '100%', 'class': 'g-o2' }, g1);
     var g2 = el('radialGradient', { id: id + 'h', cx: '50%', cy: '50%', r: '50%' }, defs);
-    el('stop', { offset: '80%', 'stop-color': '#2ef2d0', 'stop-opacity': '.38' }, g2);
-    el('stop', { offset: '88%', 'stop-color': '#2ef2d0', 'stop-opacity': '.10' }, g2);
-    el('stop', { offset: '100%', 'stop-color': '#2ef2d0', 'stop-opacity': '0' }, g2);
+    el('stop', { offset: '80%', 'class': 'g-h0' }, g2);
+    el('stop', { offset: '88%', 'class': 'g-h1' }, g2);
+    el('stop', { offset: '100%', 'class': 'g-h2' }, g2);
     var g3 = el('radialGradient', { id: id + 's', cx: '36%', cy: '30%', r: '75%' }, defs);
-    el('stop', { offset: '0%', 'stop-color': '#ffffff', 'stop-opacity': '.10' }, g3);
-    el('stop', { offset: '55%', 'stop-color': '#ffffff', 'stop-opacity': '0' }, g3);
-    el('stop', { offset: '100%', 'stop-color': '#000000', 'stop-opacity': '.55' }, g3);
+    el('stop', { offset: '0%', 'class': 'g-s0' }, g3);
+    el('stop', { offset: '55%', 'class': 'g-s1' }, g3);
+    el('stop', { offset: '100%', 'class': 'g-s2' }, g3);
     var fl = el('filter', { id: id + 'f', x: '-100%', y: '-100%', width: '300%', height: '300%' }, defs);
-    el('feGaussianBlur', { stdDeviation: o.mini ? 1.6 : 2.6, result: 'b' }, fl);
+    el('feGaussianBlur', { stdDeviation: o.mini ? 1.2 : 2, result: 'b' }, fl);
     var fm = el('feMerge', {}, fl);
     el('feMergeNode', { 'in': 'b' }, fm);
     el('feMergeNode', { 'in': 'SourceGraphic' }, fm);
