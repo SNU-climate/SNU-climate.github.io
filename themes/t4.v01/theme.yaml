@@ -1,0 +1,48 @@
+title: "Climate Dashboard v01"
+concept:
+  en: "Refined dashboard: news become a filterable log by year with albums moved to a Gallery, the PI CV moves to its own page so People opens with the team, members get profile pages with personal KPIs, and Korean labels switch from monospace to sans."
+  ko: "정제판: 뉴스는 연도별·분류별 로그로, 앨범 89건은 갤러리로 분리했다. 교수 이력은 개인 페이지로 옮겨 구성원 목록이 바로 보이고, 구성원 개인 페이지(개인 지표)와 연구 주제 페이지를 더했으며, 국문 라벨은 모노 대신 본문 글꼴로 바꿨다."
+palette: ["#0b0f16", "#121a26", "#5cc8ff", "#ff7a45", "#e8eef6"]
+extra_pages: [gallery]
+pi_page: true
+
+# 테마 고유 문구(템플릿에서 ui.s('키') → tr(theme.strings.키)). 공통 i18n.yaml에 없는 대시보드 라벨만 둔다.
+strings:
+  overview: {en: "Overview", ko: "개요"}
+  key_figures: {en: "Key figures", ko: "주요 지표"}
+  years_active: {en: "Years active", ko: "활동 연도"}
+  since: {en: "since", ko: "시작"}
+  regions: {en: "regions", ko: "지역"}
+  journals: {en: "Journals", ko: "학술지"}
+  per_year: {en: "Publications per year", ko: "연도별 논문 수"}
+  top_journals: {en: "Top journals", ko: "주요 학술지"}
+  ytd: {en: "{y} counts papers to date", ko: "{y}년은 현재까지 집계"}
+  papers: {en: "papers", ko: "논문"}
+  videos: {en: "videos", ko: "영상"}
+  photos: {en: "photos", ko: "사진"}
+  albums: {en: "albums", ko: "앨범"}
+  alumni: {en: "alumni", ko: "졸업생"}
+  items: {en: "items", ko: "건"}
+  stripes_label: {en: "Warming stripes — global annual temperature anomaly", ko: "온난화 줄무늬 — 전지구 연평균 기온 편차"}
+  global_dt: {en: "GLOBAL ΔT", ko: "전지구 ΔT"}
+  source: {en: "Source", ko: "자료"}
+  annual_mean: {en: "annual mean, anomaly vs 1951–1980", ko: "연평균, 1951–1980 평균 대비 편차"}
+  stripes: {en: "Warming stripes", ko: "온난화 줄무늬"}
+  anomaly: {en: "anomaly vs 1951–1980", ko: "1951–1980 평균 대비 편차"}
+  warmest: {en: "warmest", ko: "최고"}
+  snu: {en: "SNU", ko: "서울대학교"}
+  sees: {en: "SEES", ko: "지구환경과학부"}
+  sees_snu: {en: "SEES, SNU", ko: "서울대 지구환경과학부"}
+  home: {en: "home", ko: "홈"}
+  details: {en: "Details", ko: "자세히"}
+  papers_in_list: {en: "Papers", ko: "논문"}
+  first_paper: {en: "First paper", ko: "첫 논문"}
+  latest_paper: {en: "Latest paper", ko: "최근 논문"}
+  top_journal: {en: "Top journal", ko: "주요 학술지"}
+  selected: {en: "Selected", ko: "대표 논문"}
+  lab_papers: {en: "Lab papers", ko: "연구실 논문"}
+  degree: {en: "Degree", ko: "학위"}
+  per_year_person: {en: "Papers per year", ko: "연도별 참여 논문"}
+  album_log: {en: "Event log", ko: "행사 기록"}
+  latest_albums: {en: "Gallery", ko: "갤러리"}
+  role_jump: {en: "Groups", ko: "구분"}

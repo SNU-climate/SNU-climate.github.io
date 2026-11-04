@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% import 'ui.html' as ui with context %}
+{# v02 공지 게시판: 원본 게시판처럼 번호·분류·제목·날짜 한 줄 목록 + 분류 탭 + 제목·요약 검색(board.js).
+   앨범 89건은 Gallery로 분리(news_items 99건만). 번호는 목록 순서(가장 오래된 글 = 1) #}
+{% set total = news_items|length %}
+{% block content %}
+<p class="crumb">{{ t('menu.notice') }}</p>
+<h1>{{ t('menu.announcement') }}</h1>
+<p class="lead">{{ t('news.intro') }}</p>
+<div class="board-app" data-board>
+  <div class="board-tools">
+    {% if news_cats|length > 1 %}
+    <div class="board-tabs" role="group" aria-label="{{ t('news.filter') }}" data-board-tabs>
+      <button type="button" aria-pressed="true" data-cat="">{{ t('news.all') }} <span>{{ total }}</span></button>
+      {% for c, n in news_cats %}<button type="button" aria-pressed="false" data-cat="{{ c }}"><i class="dot dot--{{ c }}" aria-hidden="true"></i>{{ t('news.category.' ~ c) }} <span>{{ n }}</span></button>{% endfor %}
+    </div>
+    {% endif %}
+    <div class="board-search">
+      <input type="search" data-board-search placeholder="{{ tr(ui.TX.board_search) }}" aria-label="{{ tr(ui.TX.board_search) }}">
+      <span class="board-count" aria-live="polite"><span data-board-count>{{ total }}</span> / {{ total }}</span>
+    </div>
+  </div>
+  {{ m.year_links(news_by_year, 'n', 'pub-years chip-row') }}
+  <div class="brd-head" aria-hidden="true"><span>{{ tr(ui.TX.no) }}</span><span>{{ tr(ui.TX.category) }}</span><span>{{ tr(ui.TX.title) }}</span><span>{{ tr(ui.TX.date) }}</span></div>
+  {% set ns = namespace(i=0) %}
+  {% for y, items in news_by_year %}
+  <section class="brd-year" id="n{{ y }}" data-board-group>
+    <h2 class="brd-year-title">{{ y }} <span>({{ items|length }})</span></h2>
+    <ol class="brd-list">
+      {% for p in items %}
+      <li class="brd-row" data-board-item data-cat="{{ p.category }}"
+          data-search="{{ [p.title.en if p.title is mapping else p.title, p.title.ko if p.title is mapping else '', tr(p.summary)]|join(' ')|lower }}">
+        <span class="brd-no">{{ total - ns.i }}</span>
+        <span class="brd-cat news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span>
+        <a class="brd-title" href="{{ news_url(p) }}"><span lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</span>
+          {% if p.youtube %}<svg class="brd-ico" viewBox="0 0 24 24" width="16" height="16" role="img" aria-label="{{ tr(ui.TX.has_video) }}"><path fill="currentColor" d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.6 2.6 0 0 0-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8a2.6 2.6 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg>
+          {% elif p.cover %}<svg class="brd-ico" viewBox="0 0 24 24" width="16" height="16" role="img" aria-label="{{ tr(ui.TX.has_photo) }}"><path fill="currentColor" d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 12h16l-5-6.5-3.5 4.5-2.5-3L4 17z"/></svg>{% endif %}
+        </a>
+        <time class="brd-date" datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time>
+      </li>
+      {% set ns.i = ns.i + 1 %}
+      {% endfor %}
+    </ol>
+  </section>
+  {% else %}<p class="empty">{{ t('common.empty') }}</p>
+  {% endfor %}
+  <p class="empty" data-board-empty hidden>{{ tr(ui.TX.no_match) }}</p>
+</div>
+{% endblock %}

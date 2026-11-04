@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set r = topic %}
+<p class="crumb"><a href="{{ page_url('research') }}">{{ t('nav.research') }}</a></p>
+<article class="topic-page">
+  <h1>{{ tr(r.title) }}</h1>
+  <p class="muted" lang="{{ other_lang }}">{{ r.title[other_lang] }}</p>
+  {% if r.image and r.image not in r.figures|map(attribute='image')|list %}<img class="topic-hero" src="{{ static(r.image) }}" alt="">{% endif %}
+  {% for para in tr(r.summary).split('\n\n') %}<p>{{ para }}</p>{% endfor %}
+
+  {% set th = tr_list(r.themes) %}
+  {% if th %}
+  <section class="sec"><h2>{{ t('research.themes') }}</h2>
+    <ul class="theme-list">{% for x in th %}<li>{{ x }}</li>{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  {% if r.region_names %}
+  <section class="sec"><h2>{{ t('research.regions') }}</h2>
+    <ul class="chips region-chips">{% for n in r.region_names %}<li>{{ tr(n) }}</li>{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  {% if r.figures %}
+  <section class="sec"><h2>{{ t('research.figures') }}</h2>
+    <div class="figs">
+      {% for f in r.figures %}
+      <figure class="fig">
+        <a href="{{ static(f.image) }}" target="_blank" rel="noopener"><img src="{{ static(f.image) }}" alt="{{ tr(f.caption)|truncate(80) }}" loading="lazy"></a>
+        <figcaption>{{ tr(f.caption) }}{% if f.pub %} <a href="{{ pub_url(f.pub) }}">[{{ f.pub.num }}]</a>{% elif f.doi %} <a href="https://doi.org/{{ f.doi }}" target="_blank" rel="noopener">DOI</a>{% endif %}</figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if r.pubs %}
+  <section class="sec"><h2>{{ t('research.papers') }}</h2>
+    <ul class="pub-ul">{% for p in r.pubs %}{{ m.pub_item(p, anchor=False) }}{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  {% if r.video_items %}
+  <section class="sec"><h2>{{ t('research.videos') }}</h2>
+    <div class="grid grid-3">{% for v in r.video_items %}{{ m.video_card(v) }}{% endfor %}</div>
+  </section>
+  {% endif %}
+</article>
+
+<nav class="sec pager" aria-label="{{ t('nav.research') }}">
+  {% for x in research %}{% if x.key == r.key %}
+    {% if not loop.first %}{% set p = research[loop.index0 - 1] %}<a href="{{ topic_url(p) }}">← {{ tr(p.title) }}</a>{% else %}<span></span>{% endif %}
+    {% if not loop.last %}{% set n = research[loop.index0 + 1] %}<a href="{{ topic_url(n) }}">{{ tr(n.title) }} →</a>{% endif %}
+  {% endif %}{% endfor %}
+</nav>
+{% endblock %}

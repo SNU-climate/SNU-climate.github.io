@@ -1,0 +1,148 @@
+{# One-page 테마 전용 매크로. {% import '_op.html' as op with context %} #}
+{% import 'macros.html' as m with context %}
+{# 메뉴(NAV): 공통 nav에 Gallery를 News 바로 뒤에 끼운다(앨범이 있을 때). 발표 0건이면 공통 nav에서 이미 빠져 있다. #}
+{% set _ns = namespace(items=[]) %}
+{% for n in nav %}
+  {% set _ns.items = _ns.items + [n] %}
+  {% if n.key == 'news' and albums %}
+    {% set _ns.items = _ns.items + [{'key': 'gallery', 'label': t('nav.gallery'), 'url': page_url('gallery'), 'active': page == 'gallery'}] %}
+  {% endif %}
+{% endfor %}
+{% set NAV = _ns.items %}
+{% set NAV_KEYS = NAV|map(attribute='key')|list %}
+
+{# 섹션 번호(메뉴 순서 기준 01, 02, …). 메뉴에 없는 키는 빈 문자열 #}
+{% macro num(key) %}{% for n in NAV %}{% if n.key == key %}{{ '%02d'|format(loop.index) }}{% endif %}{% endfor %}{% endmacro %}
+{# 홈 섹션 id: index → top #}
+{% macro sid(key) %}{{ 'top' if key == 'index' else key }}{% endmacro %}
+{# 홈의 해당 섹션 주소(홈에서는 #id, 다른 페이지에서는 index.html#id) #}
+{% macro sec_url(key) %}{% if key not in NAV_KEYS %}{{ page_url('index') }}{% elif page == 'index' %}#{{ sid(key) }}{% else %}{{ page_url('index') }}#{{ sid(key) }}{% endif %}{% endmacro %}
+{# 메뉴 주소: 홈에서는 섹션으로 스크롤, 상세 페이지에서는 해당 상세 페이지 #}
+{% macro nav_url(n) %}{% if page == 'index' %}#{{ sid(n.key) }}{% else %}{{ n.url }}{% endif %}{% endmacro %}
+
+{# 섹션 머리: 번호 + 제목 + 설명 + 전체 보기 #}
+{% macro sec_head(key, title, lead='', more_url='', more_label='') %}
+<div class="sec-head">
+  <p class="sec-num" aria-hidden="true">{{ num(key) }}</p>
+  <div class="sec-titles">
+    <h2 id="h-{{ key }}">{{ title }}</h2>
+    {% if lead %}<p class="sec-lead">{{ lead }}</p>{% endif %}
+  </div>
+  {% if more_url %}<a class="btn btn-ghost sec-more" href="{{ more_url }}">{{ more_label or t('home.view_all') }} <span aria-hidden="true">→</span></a>{% endif %}
+</div>
+{% endmacro %}
+
+{# 사진이 없을 때의 이니셜 블록 #}
+{% macro avatar(img, name, initials, cls='avatar') %}
+<div class="{{ cls }}">{% if img %}<img src="{{ static(img) }}" alt="{{ name }}" loading="lazy">{% else %}<span aria-hidden="true">{{ initials }}</span>{% endif %}</div>
+{% endmacro %}
+
+{# 이니셜: 한글 이름이면 첫 글자(성), 아니면 단어 머리글자 2개 #}
+{% macro ini(name) %}{% set s = (name or '')|trim %}{% if s[:1] >= '가' and s[:1] <= '힣' %}{{ s[:1] }}{% else %}{{ (s.split(' ')|map('first')|join)[:2]|upper }}{% endif %}{% endmacro %}
+
+{# 구성원 카드: 사진 + 이름(개인 페이지 링크) + 직위 + 관심 분야 + 이메일 #}
+{% macro member_card(mm, cls='member-card') %}
+{% set u = member_url(mm) %}
+<article class="{{ cls }}">
+  {% if u %}<a class="member-photo" href="{{ u }}" tabindex="-1" aria-hidden="true">{% else %}<div class="member-photo">{% endif %}{% if mm.photo %}<img src="{{ static(mm.photo) }}" alt="" loading="lazy">{% else %}<span class="member-initials">{{ ini(tr(mm.name)) }}</span>{% endif %}{% if u %}</a>{% else %}</div>{% endif %}
+  <div class="member-text">
+    <h4 class="member-name">{% if u %}<a href="{{ u }}">{{ tr(mm.name) }}</a>{% else %}{{ tr(mm.name) }}{% endif %} {{ m.sample_badge(mm) }}</h4>
+    {% if mm.position %}<p class="member-position">{{ tr(mm.position) }}</p>{% endif %}
+    {% if mm.interests %}<p class="member-interests">{{ tr(mm.interests) }}</p>{% endif %}
+    {% if mm.email %}<a class="member-email" href="mailto:{{ mm.email }}">{{ m.email_wbr(mm.email) }}</a>{% endif %}
+  </div>
+</article>
+{% endmacro %}
+
+{# 뉴스 카드: 표지가 있으면 그림 카드, 없으면 글자 카드(대체 이미지 없음) #}
+{% macro news_card(p, cls='news-card') %}
+{% set c = cover_url(p) %}
+<article class="{{ cls }}{% if not c %} news-card--text{% endif %}">
+  <a class="news-card-link" href="{{ news_url(p) }}">
+    {% if c %}<div class="news-card-img"><img src="{{ c }}" alt="" loading="lazy"></div>{% endif %}
+    <div class="news-card-text">
+      <div class="news-card-meta"><span class="news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span> <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></div>
+      <h3 class="news-card-title" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</h3>
+      {% if p.summary %}<p class="news-card-summary">{{ tr(p.summary) }}</p>{% endif %}
+    </div>
+  </a>
+</article>
+{% endmacro %}
+
+{# 앨범 카드(Gallery): 표지 + 날짜 + 제목 + 사진 수 #}
+{% macro album_card(p) %}
+{% set c = cover_url(p) %}
+<a class="album" href="{{ news_url(p) }}">
+  <span class="album-img">{% if c %}<img src="{{ c }}" alt="" loading="lazy">{% endif %}{% if p.gallery %}<span class="album-count">{{ p.gallery|length }} {{ t('gallery.photos') }}</span>{% endif %}</span>
+  <span class="album-text">
+    <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time>
+    <strong lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</strong>
+  </span>
+</a>
+{% endmacro %}
+
+{# 연도 칩 띠(논문·뉴스·갤러리 공통). groups = [(연도, [항목])], prefix = id 머리글자 #}
+{% macro year_chips(groups, prefix) %}
+{% if groups|length > 1 %}
+<nav class="years" data-spy aria-label="{{ t('common.years') }}">
+  {% for y, items in groups %}<a href="#{{ prefix }}{{ y }}">{{ y }}<span class="years-n">{{ items|length }}</span></a>{% endfor %}
+</nav>
+{% endif %}
+{% endmacro %}
+
+{# 이력 목록(학력·경력·수상 등) #}
+{% macro cv(items, key) %}
+<ul class="cv">{% for e in items %}<li><span class="cv-when">{{ e[key] or e.year or e.period }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>
+{% endmacro %}
+
+{# ---------------------------------------------------------------- v02 #}
+{# 테마 고유 문구(공통 i18n.yaml에 없는 것만). i18n.yaml로 옮길 후보는 보고서에 적었다. #}
+{% set L = {
+  'per_year': {'en': 'Papers per year', 'ko': '연도별 논문'},
+  'top_journals': {'en': 'Top journals', 'ko': '주요 학술지'},
+  'watch': {'en': 'Watch the paper', 'ko': '영상으로 보는 논문'},
+  'watch_lead': {'en': 'Each video below was made for one of our papers. Play it, then open the paper.', 'ko': '논문을 소개하는 영상과 그 논문을 한 쌍으로 묶었습니다. 영상을 보고 바로 논문으로 넘어가세요.'},
+  'overview': {'en': 'Overview', 'ko': '개요'},
+  'figure': {'en': 'Figure', 'ko': '그림'},
+  'story_hint': {'en': 'Scroll — the figure changes with each step.', 'ko': '스크롤하면 단계마다 그림이 바뀝니다.'},
+  'open_figure': {'en': 'Open full figure', 'ko': '원본 그림 열기'},
+  'latest': {'en': 'Latest', 'ko': '최근'},
+  'figures_n': {'en': '{n} figures', 'ko': '그림 {n}점'},
+} %}
+
+{# 영상 ↔ 논문 쌍(videos[].pub). 같은 영상을 쓴 뉴스가 있으면 함께 연결 #}
+{% set PAIRS = videos|selectattr('pub')|list %}
+{% macro pair_card(v, anchor=False) %}
+{% set p = v.pub %}
+{% set nw = (news|selectattr('youtube', 'equalto', v.id)|list) %}
+<article class="pair"{% if anchor %} id="watch-{{ v.id }}"{% endif %}>
+  <div class="pair-video">{{ yt_html(v.id, v.title) }}</div>
+  <div class="pair-body">
+    <p class="pair-video-title" lang="{{ text_lang(v.title) }}"><span class="pair-kicker">{{ t('news.video') }} · <time datetime="{{ v.published }}">{{ fmt_date(v.published) }}</time></span>{{ v.title }}</p>
+    <div class="pair-paper">
+      <span class="pair-kicker">{{ t('news.paper') }} {{ p.num }} · {{ p.journal }} ({{ p.year }})</span>
+      <a class="pair-paper-title" href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ rich(p.title) }}</a>
+      <span class="pair-authors">{{ authors(p, 6) }}</span>
+    </div>
+    <div class="pair-actions">
+      <a class="btn btn-sm btn-primary" href="{{ pub_url(p) }}">{{ t('news.paper') }} {{ p.num }} <span aria-hidden="true">→</span></a>
+      {% if nw %}<a class="btn btn-sm btn-ghost" href="{{ news_url(nw[0]) }}">{{ t('nav.news') }} <span aria-hidden="true">→</span></a>{% endif %}
+    </div>
+  </div>
+</article>
+{% endmacro %}
+
+{# 연도별 논문 막대(스파크라인). 실제 stats.per_year_full에서만 그린다 #}
+{% macro sparkline(cls='spark') %}
+{% set rows = stats.per_year_full %}
+{% if rows %}
+{% set mx = rows|map(attribute=1)|max %}
+{% set W, H, n = 270, 64, rows|length %}
+{% set bw = W / n %}
+<svg class="{{ cls }}" viewBox="0 0 {{ W }} {{ H }}" preserveAspectRatio="none" role="img" aria-label="{{ tr(L.per_year) }}, {{ stats.first_year }}–{{ stats.last_year }}">
+  {% for y, c in rows %}{% set h = (c / mx * (H - 2)) if mx else 0 %}
+  <rect class="spark-bar{% if loop.last %} is-last{% elif c == mx %} is-max{% endif %}" x="{{ '%.2f'|format(loop.index0 * bw + 1) }}" y="{{ '%.2f'|format(H - h) }}" width="{{ '%.2f'|format(bw - 2) }}" height="{{ '%.2f'|format(h) }}" rx="1.5"><title>{{ y }} · {{ c }}</title></rect>
+  {% endfor %}
+</svg>
+{% endif %}
+{% endmacro %}

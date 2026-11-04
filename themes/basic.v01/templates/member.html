@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% macro cv(items, key) %}<ul class="cv">{% for e in items %}<li><span>{{ e[key] }}</span><div>{{ tr(e) }}</div></li>{% endfor %}</ul>{% endmacro %}
+{% block content %}
+{% set p = person %}
+{% set back = 'pi' if p.is_pi else ('alumni' if p.alumnus else ('researchers' if p.role in ['postdoc', 'researcher', 'staff'] else 'students')) %}
+<p class="crumb"><a href="{{ page_url('people') }}#{{ back }}">← {{ t('people.back') }}</a></p>
+<article class="profile{% if p.is_pi %} profile--pi{% endif %}">
+  <div class="profile-head">
+    <div class="member-photo profile-photo">{% if p.photo %}<img src="{{ static(p.photo) }}" alt="{{ tr(p.name) }}">{% else %}<span class="member-initials">{{ m.initials_of(tr(p.name)) }}</span>{% endif %}</div>
+    <div class="profile-id">
+      <h1>{{ tr(p.name) }}</h1>
+      {% if p.name is mapping and p.name[other_lang] and p.name[other_lang] != tr(p.name) %}<p class="muted" lang="{{ other_lang }}">{{ p.name[other_lang] }}</p>{% endif %}
+      <dl class="profile-facts">
+        {% if p.is_pi %}
+          <dt>{{ t('people.position') }}</dt><dd>{% for r in p.roles %}<div>{{ tr(r) }}</div>{% endfor %}</dd>
+          {% if p.office %}<dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(p.office) }}{% if p.phone %} · {{ p.phone }}{% endif %}</dd>{% endif %}
+        {% elif p.alumnus %}
+          {% set dg = [p.degree, p.year]|select|join(', ') %}{% if dg %}<dt>{{ t('menu.alumni') }}</dt><dd>{{ dg }}</dd>{% endif %}
+          {% if p.current %}<dt>{{ t('people.current') }}</dt><dd>{{ tr(p.current) }}</dd>{% endif %}
+        {% else %}
+          <dt>{{ t('people.position') }}</dt><dd>{{ tr(p.position) if p.position else t('people.role.' ~ p.role) }}</dd>
+        {% endif %}
+        {% if p.email %}<dt>{{ t('people.email') }}</dt><dd><a href="mailto:{{ p.email }}">{{ m.email_wbr(p.email) }}</a></dd>{% endif %}
+        {% if p.homepage %}<dt>{{ t('people.homepage') }}</dt><dd><a href="{{ p.homepage }}" target="_blank" rel="noopener">{{ p.homepage|replace('https://', '')|replace('http://', '')|truncate(48) }}</a></dd>{% endif %}
+      </dl>
+    </div>
+  </div>
+
+  {% if p.is_pi and p.bio %}<p class="profile-bio">{{ tr(p.bio) }}</p>{% endif %}
+  {# 교수 interests는 [{en,ko}, …], 구성원은 {en:[…], ko:[…]} #}
+  {% set it = [] %}
+  {% if p.is_pi %}{% for i in p.interests or [] %}{% set _ = it.append(tr(i)) %}{% endfor %}{% else %}{% set it = tr_list(p.interests) %}{% endif %}
+  {% if it %}<section class="sec"><h2>{{ t('people.interests') }}</h2><ul class="chips">{% for x in it %}<li>{{ x }}</li>{% endfor %}</ul></section>{% endif %}
+
+  {% if p.is_pi %}
+  {# 교수 이력: 학력+경력+학회 회원 / 학술 활동+수상 두 단(행 수가 비슷하게) #}
+  <div class="profile-cv profile-cv--2">
+    <div>
+      {% if p.education %}<section class="sec"><h2>{{ t('people.education') }}</h2>{{ cv(p.education, 'year') }}</section>{% endif %}
+      {% if p.career %}<section class="sec"><h2>{{ t('people.career') }}</h2>{{ cv(p.career, 'period') }}</section>{% endif %}
+      {% if p.memberships %}<section class="sec"><h2>{{ t('people.memberships') }}</h2>{{ cv(p.memberships, 'year') }}</section>{% endif %}
+    </div>
+    <div>
+      {% if p.service %}<section class="sec"><h2>{{ t('people.service') }}</h2>{{ cv(p.service, 'period') }}</section>{% endif %}
+      {% if p.awards %}<section class="sec"><h2>{{ t('people.awards') }}</h2>{{ cv(p.awards, 'year') }}</section>{% endif %}
+    </div>
+  </div>
+  {% else %}
+  <div class="profile-cv">
+    {% if p.education %}<section class="sec"><h2>{{ t('people.education') }}</h2>{{ cv(p.education, 'year') }}</section>{% endif %}
+    {% if p.career %}<section class="sec"><h2>{{ t('people.experience') }}</h2>{{ cv(p.career, 'period') }}</section>{% endif %}
+    {% if p.awards %}<section class="sec"><h2>{{ t('people.awards') }}</h2>{{ cv(p.awards, 'year') }}</section>{% endif %}
+  </div>
+  {% endif %}
+
+  {% if p.pubs %}
+  <section class="sec"><h2>{{ t('people.selected') if p.is_pi else t('people.pubs') }} <span class="pub-year-n">({{ p.pubs|length }})</span></h2>
+    {% if not p.is_pi %}<p class="muted">{{ t('people.pubs_note') }}</p>{% endif %}
+    <ul class="pub-ul">{% for x in p.pubs %}<li class="pub"><span class="pub-num"><a href="{{ pub_url(x) }}">{{ x.num }}.</a></span><div class="pub-body">
+      <div class="pub-authors">{{ authors(x) }} ({{ x.year }})</div>
+      <div class="pub-title">{% if x.doi %}<a href="{{ doi_url(x) }}" target="_blank" rel="noopener">{{ rich(x.title) }}</a>{% else %}{{ rich(x.title) }}{% endif %}</div>
+      <div class="pub-cite">{{ cite(x) }}</div></div></li>{% endfor %}</ul>
+    {% if p.is_pi %}<p><a href="{{ page_url('publications') }}">{{ t('home.view_all') }} ({{ stats.pubs }}) →</a></p>{% endif %}
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

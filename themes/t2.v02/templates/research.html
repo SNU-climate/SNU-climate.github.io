@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+{% call ui.phead('research', t('research.title'), t('research.intro')) %}
+<ol class="toc">
+  {% for r in research %}<li><a href="#{{ r.key }}"><span class="toc-idx">{{ '%02d'|format(loop.index) }}</span>{{ tr(r.title) }}</a></li>{% endfor %}
+</ol>
+{% endcall %}
+
+<div class="wrap">
+  {% for r in research %}
+  {% set u = topic_url(r) %}
+  <section class="topic" id="{{ r.key }}" aria-labelledby="th-{{ r.key }}">
+    <div class="topic-head">
+      <span class="topic-idx">{{ '%02d'|format(loop.index) }}</span>
+      <h2 class="topic-title" id="th-{{ r.key }}"><a href="{{ u }}">{{ tr(r.title) }}</a></h2>
+      <p class="topic-counts">
+        {% if r.figures %}<span>{{ r.figures|length }} {{ t('research.figures') }}</span>{% endif %}
+        {% if r.pubs %}<span>{{ r.pubs|length }} {{ t('research.papers') }}</span>{% endif %}
+        {% if r.video_items %}<span>{{ r.video_items|length }} {{ t('nav.videos') }}</span>{% endif %}
+      </p>
+    </div>
+    <div class="topic-body">
+      <div class="topic-sum">{% for para in tr(r.summary).split('\n\n') %}<p>{{ para }}</p>{% endfor %}</div>
+      {% if r.image %}
+      <figure class="topic-fig topic-fig--lead"><a href="{{ u }}"><img src="{{ static(r.image) }}" alt="{{ tr(r.title) }}" loading="lazy"></a></figure>
+      {% elif r.regions %}
+      <figure class="topic-fig topic-fig--lead">{{ ui.geo(r.regions, r.region_names) }}<figcaption>{{ t('common.regions') }}</figcaption></figure>
+      {% endif %}
+      {{ m.topic_themes(r, 'slash-list topic-themes') }}
+      <p class="topic-go"><a class="big-link big-link--sm" href="{{ u }}">{{ t('research.more') }} <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+  {% else %}
+  <p class="empty">{{ t('common.empty') }}</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+{% call ui.phead('videos', t('videos.title'), t('videos.intro')) %}
+<p class="phead-cta"><a class="big-link big-link--sm" href="{{ channel.url or site.links.youtube }}" target="_blank" rel="noopener">{{ t('videos.channel') }} <span aria-hidden="true">↗</span></a></p>
+{% endcall %}
+
+<div class="wrap">
+  <div class="vgrid vgrid--page">
+    {% for v in videos %}{{ m.video_card(v) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}
+  </div>
+</div>
+{% endblock %}

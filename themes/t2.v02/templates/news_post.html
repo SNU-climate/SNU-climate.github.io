@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set is_album = post.album and ui.has_gallery() %}
+<article class="post">
+  <header class="post-head">
+    <div class="wrap">
+      <p class="phead-no">{% if is_album %}<a class="post-back" href="{{ page_url('gallery') }}"><span aria-hidden="true">←</span> {{ t('gallery.back') }}</a>
+        {%- else %}<a class="post-back" href="{{ page_url('news') }}"><span aria-hidden="true">←</span> {{ t('news.back') }}</a>{% endif %}</p>
+      <p class="post-meta"><span class="post-cat">{{ t('nav.gallery') if is_album else t('news.category.' ~ post.category) }}</span><time datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time></p>
+      <h1 class="post-title" lang="{{ text_lang(tr(post.title)) }}">{{ tr(post.title) }}</h1>
+      {% if post.summary %}<p class="post-lead">{{ tr(post.summary) }}</p>{% endif %}
+    </div>
+  </header>
+
+  {# 표지: 영상이나 앨범 사진 묶음이 있으면 중복이라 생략(m.post_cover와 같은 조건) #}
+  {% if post.cover and not post.youtube and not post.gallery %}
+  <div class="wrap"><figure class="post-cover"><img src="{{ cover_url(post) }}" alt=""></figure></div>
+  {% endif %}
+
+  <div class="wrap post-grid">
+    <aside class="post-aside" aria-label="{{ t('nav.gallery') if is_album else t('news.title') }}">
+      <dl class="post-facts">
+        <div><dt>{{ ui.tx('date') }}</dt><dd><time datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time></dd></div>
+        {% if not is_album %}<div><dt>{{ ui.tx('category') }}</dt><dd>{{ t('news.category.' ~ post.category) }}</dd></div>{% endif %}
+        {% if post.gallery %}<div><dt>{{ t('nav.gallery') }}</dt><dd>{{ post.gallery|length }} {{ ui.tx('photo_one') if post.gallery|length == 1 else t('gallery.photos') }}</dd></div>{% endif %}
+        {% if post.pub %}<div><dt>{{ t('news.paper') }}</dt><dd><a class="ul" href="{{ pub_url(post.pub) }}"><i>{{ post.pub.journal }}</i> ({{ post.pub.year }})</a></dd></div>{% endif %}
+      </dl>
+      {% if post.link %}<p class="post-link"><a class="btn" href="{{ post.link }}" target="_blank" rel="noopener">{{ t('news.link') }} <span aria-hidden="true">↗</span></a></p>{% endif %}
+    </aside>
+    <div class="post-body">
+      {{ m.news_body(post) }}
+    </div>
+  </div>
+
+  {# 이어서 볼 글: 목록에서 이 글 다음(더 오래된) 글부터 #}
+  {% set pool = albums if is_album else news %}
+  {% set ns = namespace(i=-1) %}{% for p in pool %}{% if p.slug == post.slug %}{% set ns.i = loop.index0 %}{% endif %}{% endfor %}
+  {% set others = (pool[ns.i + 1:] + pool[:ns.i]) if ns.i >= 0 else pool %}
+  {% if others %}
+  <section class="post-more">
+    <div class="wrap">
+      <h2 class="post-more-title">{{ t('nav.gallery') if is_album else t('common.more_news') }}</h2>
+      {% if is_album %}
+      <div class="albs albs--more">{% for p in others[:4] %}{{ ui.album_tile(p, albums|length - albums.index(p)) }}{% endfor %}</div>
+      {% else %}
+      <div class="nlist">{% for p in others[:3] %}{{ ui.news_row(p) }}{% endfor %}</div>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

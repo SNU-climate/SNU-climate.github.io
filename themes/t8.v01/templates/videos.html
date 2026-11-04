@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block hero %}{{ ui.page_hero(t('videos.title'), t('videos.intro'), channel.title or 'YouTube') }}{% endblock %}
+{% block content %}
+<div class="wrap sec">
+  <p class="hero-cta"><a class="btn btn-neon" href="{{ channel.url }}" target="_blank" rel="noopener">{{ t('videos.channel') }} <span aria-hidden="true">↗</span></a></p>
+  <div class="grid grid-3">{% for v in videos %}{{ m.video_card(v) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}</div>
+</div>
+{% endblock %}

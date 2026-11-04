@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block content %}
+{% call ui.phead('people', t('nav.people')) %}
+<nav class="jump" aria-label="{{ t('common.sections') }}">
+  <a href="#pi">{{ t('people.pi') }}</a>
+  {% for role, ms in member_groups %}<a href="#{{ role }}">{{ t('people.role.' ~ role) }} <span>{{ ms|length }}</span></a>{% endfor %}
+  {% if alumni %}<a href="#alumni">{{ t('people.alumni') }} <span>{{ alumni|length }}</span></a>{% endif %}
+</nav>
+{% endcall %}
+
+<div class="wrap">
+  {# PI: 요약만 먼저 보이고, 자세한 이력은 접어 둔다(구성원 목록이 위로 올라오게) #}
+  <section class="block" id="pi" aria-labelledby="h-pi">
+    <div class="block-head"><h2 class="block-title" id="h-pi">{{ t('people.pi') }}</h2></div>
+    <div class="block-body">
+      <div class="pi">
+        {{ ui.photo(pi, 'ph ph--pi') }}
+        <div class="pi-text">
+          <h3 class="pi-name">{{ tr(pi.name) }}</h3>
+          <p class="pi-title">{{ tr(pi.title) }}</p>
+          <ul class="pi-roles">{% for r in pi.roles %}<li>{{ tr(r) }}</li>{% endfor %}</ul>
+          <p class="pi-contact">
+            <a class="ul" href="mailto:{{ pi.email }}">{{ m.email_wbr(pi.email) }}</a>
+            <span>{{ tr(pi.office) }}</span>
+            <a href="tel:{{ pi.phone|replace('-', '') }}">{{ pi.phone }}</a>
+          </p>
+        </div>
+      </div>
+      <p class="pi-bio">{{ tr(pi.bio) }}</p>
+      {% if pi.interests %}
+      <h4 class="mini-h">{{ t('people.interests') }}</h4>
+      <ul class="slash-list slash-list--lg">{% for i in pi.interests %}<li>{{ tr(i) }}</li>{% endfor %}</ul>
+      {% endif %}
+
+      <details class="cv-more">
+        <summary><span class="cv-more-label">{{ t('people.full_profile') }}</span><span class="cv-more-sub">{{ t('people.education') }} · {{ t('people.career') }} · {{ t('people.service') }}{% if pi.awards %} · {{ t('people.awards') }}{% endif %}</span></summary>
+        <div class="cv-grid">
+          {% if pi.education %}<div>
+            <h4 class="mini-h">{{ t('people.education') }}</h4>
+            <ul class="cv">{% for e in pi.education %}<li><span class="cv-when">{{ e.year }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>
+          </div>{% endif %}
+          {% if pi.memberships %}<div>
+            <h4 class="mini-h">{{ t('people.memberships') }}</h4>
+            <ul class="cv">{% for e in pi.memberships %}<li><span class="cv-when">{{ e.year }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>
+          </div>{% endif %}
+          {% if pi.career %}<div class="cv-wide">
+            <h4 class="mini-h">{{ t('people.career') }}</h4>
+            <ul class="cv">{% for e in pi.career %}<li><span class="cv-when">{{ e.period }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>
+          </div>{% endif %}
+          {% if pi.service %}<div class="cv-wide">
+            <h4 class="mini-h">{{ t('people.service') }}</h4>
+            <ul class="cv">{% for e in pi.service %}<li><span class="cv-when">{{ e.period }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>
+          </div>{% endif %}
+          {% if pi.awards %}<div class="cv-wide">
+            <h4 class="mini-h">{{ t('people.awards') }}</h4>
+            <ul class="cv">{% for e in pi.awards %}<li><span class="cv-when">{{ e.year }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>
+          </div>{% endif %}
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <div id="members">
+  {% for role, ms in member_groups %}
+  <section class="block" id="{{ role }}" aria-labelledby="h-{{ role }}">
+    <div class="block-head">
+      <h2 class="block-title" id="h-{{ role }}">{{ t('people.role.' ~ role) }}</h2>
+      <span class="block-n">{{ ms|length }}</span>
+    </div>
+    <div class="block-body">
+      <div class="mgrid">
+        {% for mm in ms %}
+        {% set u = member_url(mm) %}
+        <article class="mcard">
+          {{ ui.photo(mm, 'ph ph--sm') }}
+          <div class="mcard-text">
+            <h3 class="mcard-name">{% if u %}<a href="{{ u }}">{{ tr(mm.name) }}</a>{% else %}{{ tr(mm.name) }}{% endif %} {{ m.sample_badge(mm) }}</h3>
+            {% if mm.position %}<p class="mcard-pos">{{ tr(mm.position) }}</p>{% endif %}
+            {% if mm.interests %}<p class="mcard-int">{{ tr(mm.interests) }}</p>{% endif %}
+            {% if mm.since %}<p class="mcard-since">{{ t('people.since') }} {{ mm.since }}</p>{% endif %}
+            {% if mm.email %}<a class="mcard-mail ul" href="mailto:{{ mm.email }}">{{ m.email_wbr(mm.email) }}</a>{% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% else %}
+  <section class="block" aria-labelledby="h-members">
+    <div class="block-head"><h2 class="block-title" id="h-members">{{ t('people.members') }}</h2></div>
+    <div class="block-body"><p class="empty">{{ t('common.empty') }}</p></div>
+  </section>
+  {% endfor %}
+  </div>
+
+  {% if alumni %}
+  <section class="block" id="alumni" aria-labelledby="h-alumni">
+    <div class="block-head"><h2 class="block-title" id="h-alumni">{{ t('people.alumni') }}</h2><span class="block-n">{{ alumni|length }}</span></div>
+    <div class="block-body">
+      <ul class="alist">
+        {% for a in alumni %}
+        {% set u = member_url(a) %}
+        <li class="alist-item">
+          {{ ui.photo(a, 'ph ph--xs', alt=False) }}
+          <div class="alist-text">
+            <p class="alist-name">{% if u %}<a href="{{ u }}">{{ tr(a.name) }}</a>{% else %}{{ tr(a.name) }}{% endif %} {{ m.sample_badge(a) }}</p>
+            {% if a.degree or a.year %}<p class="alist-deg">{{ [a.degree, a.year]|select|join(", ") }}</p>{% endif %}
+            {% if a.current %}<p class="alist-now">{{ tr(a.current) }}</p>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

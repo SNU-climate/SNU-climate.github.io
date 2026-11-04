@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block hero %}{{ ui.page_hero(t('research.title'), t('research.intro'), t('home.research')) }}{% endblock %}
+{% block content %}
+<nav class="wrap topic-jump" aria-label="{{ t('home.research') }}">
+  {% for r in research %}<a href="#{{ r.key }}" style="--c: var(--t{{ loop.index0 % 5 }})"><span class="lg-dot" aria-hidden="true"></span>{{ tr(r.title) }}</a>{% endfor %}
+</nav>
+
+{% for r in research %}
+<section class="wrap topic" id="{{ r.key }}" style="--c: var(--t{{ loop.index0 % 5 }})" aria-labelledby="{{ r.key }}-t">
+  <div class="topic-grid">
+    <div class="topic-text">
+      <p class="topic-num" aria-hidden="true">{{ '%02d'|format(loop.index) }}</p>
+      <h2 class="topic-title" id="{{ r.key }}-t"><a href="{{ topic_url(r) }}">{{ tr(r.title) }}</a></h2>
+      <p class="topic-sum">{{ tr(r.summary).split('\n\n')[0]|truncate(420) }}</p>
+      {{ m.topic_themes(r, 'topic-themes') }}
+      <p class="topic-meta">
+        {% if r.pubs %}<span>{{ t('research.papers') }} <b>{{ r.pubs|length }}</b></span>{% endif %}
+        {% if r.figures %}<span>{{ t('research.figures') }} <b>{{ r.figures|length }}</b></span>{% endif %}
+        {% if r.video_items %}<span>{{ t('research.videos') }} <b>{{ r.video_items|length }}</b></span>{% endif %}
+      </p>
+      <p><a class="btn btn-ghost btn-sm" href="{{ topic_url(r) }}">{{ t('research.more') }} <span aria-hidden="true">→</span></a></p>
+    </div>
+    <figure class="topic-side">
+      <div class="mini-globe" data-mini-globe="{{ r.key }}" aria-hidden="true"></div>
+      {% if r.region_names %}<figcaption>{{ ui.region_chips(r, 'region-chips region-chips--c') }}</figcaption>{% endif %}
+    </figure>
+  </div>
+</section>
+{% endfor %}
+{% endblock %}
+
+{% block scripts %}{{ ui.globe_scripts() }}{% endblock %}

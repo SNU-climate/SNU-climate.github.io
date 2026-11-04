@@ -1,0 +1,16 @@
+title: "Science Magazine v01"
+concept:
+  en: >-
+    Refined Science Magazine: an "Editor's note" with the lab introduction and group photo now opens the
+    home page, albums move to a separate Photo-essay gallery, news is grouped by year with category
+    filters and text rows, and every member, the PI, and each research area gets its own profile or
+    feature page.
+  ko: >-
+    과학 잡지 정제판. 홈 첫머리에 연구실 소개와 단체 사진을 "여는 글"로 넣고, 앨범은 별도 포토 에세이
+    갤러리로 분리했으며, 뉴스는 연도별 묶음·분류 필터·글자 행으로 정리했다. 구성원·교수·연구 분야마다
+    인물 기사와 피처 기사 페이지가 생겼다.
+palette: ["#b5121b", "#161513", "#fbf9f4", "#f1ede4", "#5d584f"]
+# 공통 8페이지 외 페이지(템플릿 about.html, gallery.html)
+extra_pages: [about, gallery]
+# 교수 개인 페이지 people/jong-seong-kug.html (member.html 재사용)
+pi_page: true

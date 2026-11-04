@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% set COUNTS = {'research': research|length, 'people': stats.members, 'publications': stats.pubs, 'presentations': stats.presentations,
+                 'news': stats.news_items, 'gallery': stats.albums, 'videos': stats.videos} %}
+{# ---------------------------------------------------------------- 01 히어로 #}
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
+    <div class="hero-main">
+      <p class="hero-aff"><span class="hero-dot" aria-hidden="true"></span>{{ tr(site.lab.affiliation) }}</p>
+      <h1 id="hero-title" class="hero-title">{{ lab_name }}</h1>
+      <p class="hero-tag"><span>{{ tr(site.lab.tagline) }}</span></p>
+      <p class="hero-intro">{{ tr(site.lab.intro) }}</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#research">{{ t('home.research') }} <span aria-hidden="true">↓</span></a>
+        <a class="btn btn-ghost" href="#contact">{{ t('nav.contact') }}</a>
+      </div>
+    </div>
+    {# 목차 = 연구실 현황판: 연도별 논문 막대 + 주요 학술지 + 항목별 건수·최근 날짜 #}
+    {% set vdates = videos|map(attribute='published')|map('string')|list %}
+    {% set LATEST = {'publications': pubs[0].date if pubs else none, 'news': news[0].date if news else none,
+                     'gallery': albums[0].date if albums else none, 'videos': (vdates|max) if vdates else none,
+                     'presentations': presentations[0].date if presentations else none} %}
+    <div class="toc toc--dash">
+      <div class="dash" aria-labelledby="dash-h">
+        <div class="dash-top">
+          <p class="dash-big"><span>{{ stats.pubs }}</span> {{ t('pubs.total') }}</p>
+          <p class="dash-sub" id="dash-h">{{ tr(op.L.per_year) }} · {{ stats.first_year }}–{{ stats.last_year }}</p>
+        </div>
+        <a class="dash-spark" href="{{ page_url('publications') }}">{{ op.sparkline() }}<span class="spark-axis" aria-hidden="true"><span>{{ stats.first_year }}</span><span>{{ stats.last_year }}</span></span></a>
+        {% set tj = stats.top_journals[:3] %}
+        {% if tj %}
+        <p class="dash-label">{{ tr(op.L.top_journals) }}</p>
+        <ul class="dash-journals">
+          {% for j, c in tj %}<li><span class="dj-name">{{ j }}</span><span class="dj-n">{{ c }}</span><span class="dj-bar" aria-hidden="true"><i style="width: {{ (c / tj[0][1] * 100)|round(1) }}%"></i></span></li>{% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <nav aria-label="{{ t('common.sections') }}">
+      <ol>
+        {% for n in op.NAV %}{% if n.key != 'index' %}
+        <li><a href="#{{ n.key }}"><span class="toc-num" aria-hidden="true">{{ '%02d'|format(loop.index) }}</span><span class="toc-label">{{ n.label }}{% if LATEST[n.key] %}<span class="toc-date">{{ tr(op.L.latest) }} · <time datetime="{{ LATEST[n.key] }}">{{ fmt_date(LATEST[n.key]) }}</time></span>{% elif n.key == 'people' and stats.alumni %}<span class="toc-date">{{ t('people.alumni') }} {{ stats.alumni }}</span>{% elif n.key == 'contact' %}<span class="toc-date">{{ tr(site.contact.pi_office.room) }}</span>{% elif n.key == 'research' %}<span class="toc-date">{{ tr(op.L.figures_n)|replace('{n}', research|map(attribute='figures')|map('length')|sum|string) }}</span>{% endif %}</span>{% if COUNTS[n.key] %}<span class="toc-meta">{{ COUNTS[n.key] }}</span>{% endif %}</a></li>
+        {% endif %}{% endfor %}
+      </ol>
+      </nav>
+    </div>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 연구 #}
+<section class="sec" id="research" aria-labelledby="h-research">
+  <div class="wrap">
+    {{ op.sec_head('research', t('home.research'), t('research.intro'), page_url('research')) }}
+    <div class="rgrid">
+      {% for r in research %}
+      <a class="rcard rcard--{{ loop.index0 % 5 }}" href="{{ topic_url(r) }}">
+        <span class="rcard-idx" aria-hidden="true">{{ '%02d'|format(loop.index) }}</span>
+        <span class="rcard-title">{{ tr(r.title) }}</span>
+        <span class="rcard-sum">{{ tr(r.summary)|truncate(170) }}</span>
+        <span class="rcard-foot">
+          <span class="rcard-meta">{% if r.pubs %}<span class="tag">{{ t('nav.publications') }} {{ r.pubs|length }}</span>{% endif %}{% if r.video_items %}<span class="tag">{{ t('nav.videos') }} {{ r.video_items|length }}</span>{% endif %}</span>
+          <span class="rcard-go" aria-hidden="true">→</span>
+        </span>
+      </a>
+      {% else %}
+      <p class="empty">{{ t('common.empty') }}</p>
+      {% endfor %}
+      <a class="rcard rcard--all" href="{{ page_url('research') }}">
+        <span class="rcard-title">{{ t('research.title') }}</span>
+        <span class="rcard-sum">{{ t('research.intro') }}</span>
+        <span class="rcard-foot"><span class="rcard-meta">{{ t('home.view_all') }}</span><span class="rcard-go" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 구성원 #}
+<section class="sec" id="people" aria-labelledby="h-people">
+  <div class="wrap">
+    {{ op.sec_head('people', t('nav.people'), '', page_url('people')) }}
+    <div class="people-grid">
+      {% set pu = member_url(pi) %}
+      <article class="card pi-card">
+        {{ op.avatar(pi.photo, tr(pi.name), op.ini(tr(pi.name)), 'avatar avatar--pi') }}
+        <div class="pi-text">
+          <p class="eyebrow">{{ t('people.pi') }}</p>
+          <h3 class="pi-name">{% if pu %}<a href="{{ pu }}">{{ tr(pi.name) }}</a>{% else %}{{ tr(pi.name) }}{% endif %}</h3>
+          <p class="pi-role">{{ tr(pi.roles[0]) }}</p>
+          <p class="pi-tags">{% for it in pi.interests %}<span class="tag">{{ tr(it) }}</span>{% endfor %}</p>
+          <div class="pi-actions">
+            <a class="btn btn-primary btn-sm" href="mailto:{{ pi.email }}">{{ t('contact.email') }}</a>
+            <a class="btn btn-ghost btn-sm" href="{{ pu or (page_url('people') ~ '#pi') }}">{{ t('people.full_profile') }} <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </article>
+      <div class="card members-card">
+        {% for role, ms in member_groups %}
+        <div class="mgroup">
+          <h3 class="mgroup-title">{{ t('people.role.' ~ role) }} <span class="mgroup-n">{{ ms|length }}</span></h3>
+          <ul class="mlist">
+            {% for mm in ms %}{% set u = member_url(mm) %}
+            <li class="mrow">
+              {% if u %}<a class="mrow-in" href="{{ u }}">{% else %}<div class="mrow-in">{% endif %}
+                <span class="mrow-photo">{% if mm.photo %}<img src="{{ static(mm.photo) }}" alt="" loading="lazy">{% else %}<span aria-hidden="true">{{ op.ini(tr(mm.name)) }}</span>{% endif %}</span>
+                <span class="mrow-text"><span class="mrow-name">{{ tr(mm.name) }} {{ m.sample_badge(mm) }}</span>{% if mm.interests %}<span class="mrow-int">{{ tr(mm.interests) }}</span>{% endif %}</span>
+                {% if u %}<span class="mrow-go" aria-hidden="true">→</span>{% endif %}
+              {% if u %}</a>{% else %}</div>{% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        <p class="empty">{{ t('common.empty') }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 논문(최근 10편) #}
+<section class="sec" id="publications" aria-labelledby="h-publications">
+  <div class="wrap">
+    {{ op.sec_head('publications', t('home.publications'), t('pubs.intro'), page_url('publications')) }}
+    <div class="card pubs-card">
+      <ol class="pub-ol">{% for p in pubs[:10] %}{{ m.pub_item(p) }}{% else %}<li class="empty">{{ t('common.empty') }}</li>{% endfor %}</ol>
+    </div>
+    <a class="btn btn-block" href="{{ page_url('publications') }}">{{ t('home.view_all') }} · {{ stats.pubs }} {{ t('pubs.total') }} <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 발표(있을 때만) #}
+{% if presentations %}
+<section class="sec" id="presentations" aria-labelledby="h-presentations">
+  <div class="wrap">
+    {{ op.sec_head('presentations', t('pres.title'), t('pres.intro'), page_url('presentations')) }}
+    <div class="card">
+      <ul class="pres-ul">{% for p in presentations[:4] %}{{ m.pres_item(p) }}{% endfor %}</ul>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# ---------------------------------------------------------------- 뉴스: 대표 1건 + 최근 목록 #}
+<section class="sec" id="news" aria-labelledby="h-news">
+  <div class="wrap">
+    {{ op.sec_head('news', t('home.news'), t('news.intro'), page_url('news')) }}
+    {% set items = news[:5] %}
+    {% if items %}
+    <div class="news-home">
+      {{ op.news_card(items[0], 'news-card news-card--lead') }}
+      <ul class="news-list">
+        {% for p in items[1:] %}
+        <li><a class="news-li" href="{{ news_url(p) }}">
+          <span class="news-card-meta"><span class="news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span> <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></span>
+          <span class="news-li-title" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</span>
+        </a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% else %}
+    <p class="empty">{{ t('common.empty') }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 갤러리(최근 앨범 6) #}
+{% if albums and 'gallery' in op.NAV_KEYS %}
+<section class="sec" id="gallery" aria-labelledby="h-gallery">
+  <div class="wrap">
+    {{ op.sec_head('gallery', t('gallery.title'), t('gallery.intro'), page_url('gallery')) }}
+    <div class="albums albums--home">{% for p in albums[:6] %}{{ op.album_card(p) }}{% endfor %}</div>
+  </div>
+</section>
+{% endif %}
+
+{# ---------------------------------------------------------------- 영상: Watch the paper 띠 + 최근 영상 #}
+<section class="sec" id="videos" aria-labelledby="h-videos">
+  <div class="wrap">
+    {{ op.sec_head('videos', t('home.videos'), t('videos.intro'), page_url('videos')) }}
+    {% if op.PAIRS %}
+    <div class="watch">
+      <div class="watch-head">
+        <h3 class="watch-title"><span class="watch-dot" aria-hidden="true"></span>{{ tr(op.L.watch) }} <span class="watch-n">{{ op.PAIRS|length }}</span></h3>
+        <p class="watch-lead">{{ tr(op.L.watch_lead) }}</p>
+      </div>
+      <div class="watch-strip" tabindex="0" role="region" aria-label="{{ tr(op.L.watch) }}">{% for v in op.PAIRS %}{{ op.pair_card(v) }}{% endfor %}</div>
+    </div>
+    {% endif %}
+    {% set others = videos|rejectattr('pub')|list %}
+    <div class="vgrid">{% for v in (others if op.PAIRS else videos)[:site.home.videos] %}{{ m.video_card(v) }}{% else %}{% if not op.PAIRS %}<p class="empty">{{ t('common.empty') }}</p>{% endif %}{% endfor %}</div>
+    <a class="btn btn-block" href="{{ channel.url }}" target="_blank" rel="noopener">{{ t('videos.channel') }} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+{# ---------------------------------------------------------------- 연락처 #}
+<section class="sec sec--ink" id="contact" aria-labelledby="h-contact">
+  <div class="wrap">
+    {{ op.sec_head('contact', t('contact.title'), t('contact.directions'), page_url('contact')) }}
+    <div class="contact-grid">
+      <a class="contact-big" href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>
+      <dl class="contact-dl">
+        <div><dt>{{ t('contact.address') }}</dt><dd>{{ tr(site.contact.address) }}</dd></div>
+        <div><dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(site.contact.pi_office.room) }} · <a href="tel:{{ site.contact.pi_office.phone|replace('-', '') }}">{{ site.contact.pi_office.phone }}</a></dd></div>
+        <div><dt>{{ t('contact.lab_room') }}</dt><dd>{{ tr(site.contact.lab_room.room) }} · <a href="tel:{{ site.contact.lab_room.phone|replace('-', '') }}">{{ site.contact.lab_room.phone }}</a></dd></div>
+      </dl>
+      <div class="contact-side">
+        <div class="join">
+          <h3>{{ t('home.join') }}</h3>
+          <p>{{ t('home.join_text') }}</p>
+        </div>
+        <div class="contact-actions">
+          <a class="btn btn-amber" href="{{ site.contact.map_url }}" target="_blank" rel="noopener">{{ t('contact.map') }} <span aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost-inv" href="mailto:{{ site.contact.email }}">{{ t('contact.email') }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

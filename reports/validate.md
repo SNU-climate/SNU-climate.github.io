@@ -1,12 +1,30 @@
 # validate — 논문 318편(숨김 1), 뉴스 188, 발표 0
 - basic: 496 pages
+- basic.v01: 498 pages
+- basic.v02: 500 pages
+- t1.v01: 496 pages
+- t1.v02: 498 pages
 - t1_classic: 392 pages
+- t2.v01: 404 pages
+- t2.v02: 404 pages
 - t2_minimal: 392 pages
+- t3.v01: 488 pages
+- t3.v02: 488 pages
 - t3_ocean: 392 pages
+- t4.v01: 496 pages
+- t4.v02: 496 pages
 - t4_dashboard: 392 pages
+- t5.v01: 498 pages
+- t5.v02: 502 pages
 - t5_magazine: 392 pages
+- t6.v01: 496 pages
+- t6.v02: 496 pages
 - t6_sidebar: 392 pages
+- t7.v01: 486 pages
+- t7.v02: 486 pages
 - t7_onepage: 392 pages
+- t8.v01: 496 pages
+- t8.v02: 496 pages
 - t8_globe: 392 pages
 
 ## 오류 0

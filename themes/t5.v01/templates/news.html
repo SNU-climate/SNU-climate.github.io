@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{% block ptitle %}{{ t('news.title') }}{% endblock %}
+{% block plead %}{{ t('news.intro') }}{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  {% if news_by_year %}
+  <div class="news-tools">
+    {{ m.news_filter('news-filter') }}
+    {{ m.year_links(news_by_year, 'n', 'year-links') }}
+  </div>
+  {% for y, items in news_by_year %}
+  <section class="news-year" id="n{{ y }}" data-news-year>
+    <h2 class="news-year-title">{{ y }}</h2>
+    <ul class="nrows">{% for p in items %}{{ x.news_row(p) }}{% endfor %}</ul>
+  </section>
+  {% endfor %}
+  {% if albums %}<p class="news-gallery-note"><a href="{{ page_url('gallery') }}">{{ x.L('essay') }} · {{ t('gallery.title') }} ({{ albums|length }}) <span aria-hidden="true">→</span></a></p>{% endif %}
+  {% else %}
+  <p class="empty">{{ t('common.empty') }}</p>
+  {% endif %}
+</div>
+{% endblock %}

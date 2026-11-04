@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block hero_inner %}
+<p class="eyebrow">{{ lab_name }}</p>
+<h1>{{ t('pubs.title') }}</h1>
+<p class="phero-lead">{{ t('pubs.intro') }}</p>
+{% endblock %}
+
+{% block content %}
+<div class="pubs-layout">
+  <aside class="pubs-side">
+    <div class="glass pubs-side-in">
+      {{ m.year_index(pubs_by_year) }}
+    </div>
+  </aside>
+  <div class="glass panel pubs-main">
+    {{ m.pub_list(pubs_by_year) }}
+  </div>
+</div>
+{% endblock %}

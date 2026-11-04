@@ -1,0 +1,9 @@
+title: "Interactive Globe v02"
+concept:
+  en: "Extended Interactive Globe: study regions glow as areas on the globe and open an explorer card with the area's papers and videos; the night side of the Earth is shaded in real time; a publication timeline (2000–2026) lets you slide or play through each year's papers; research pages tour their study regions with a zooming lens."
+  ko: "Interactive Globe 확장판. 지구본의 연구 지역이 빛나는 영역으로 표시되고, 누르면 그 분야의 논문·영상을 담은 탐색 카드가 열린다. 지금 이 순간 밤인 지역을 실시간으로 어둡게 칠한다. 논문 타임라인(2000–2026)을 밀거나 재생해 해마다의 논문을 훑어보고, 연구 주제 페이지는 확대 렌즈로 연구 지역을 차례로 둘러본다."
+palette: ["#03060f", "#0a1b33", "#2ef2d0", "#ff8a3d", "#eaf6ff"]
+# 공통 8페이지 외 추가 페이지(템플릿이 있어야 함). 앨범 89편은 gallery로 분리된다.
+extra_pages: [gallery]
+# member.html이 있으므로 교수 개인 페이지 people/jong-seong-kug.html도 만든다(people 페이지에는 요약 카드만).
+pi_page: true

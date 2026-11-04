@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block hero %}{{ ui.page_hero(t('news.title'), t('news.intro'), news_items|length ~ ' · ' ~ t('nav.news')) }}{% endblock %}
+{% block content %}
+<div class="wrap sec sec-top">
+  {% if news_by_year %}
+  <div class="list-tools">
+    {{ m.news_filter('news-filter chips') }}
+    {{ m.year_links(news_by_year, 'n', 'year-links chips chips--scroll') }}
+  </div>
+  {% for y, items in news_by_year %}
+  <section class="news-year" id="n{{ y }}" data-news-year aria-labelledby="n{{ y }}-h">
+    <h2 class="year-title" id="n{{ y }}-h">{{ y }} <span class="pub-year-n">({{ items|length }})</span></h2>
+    {{ ui.news_rows(items) }}
+  </section>
+  {% endfor %}
+  {% else %}<p class="empty">{{ t('common.empty') }}</p>{% endif %}
+  <p class="aside-link"><a class="more" href="{{ page_url('gallery') }}">{{ t('gallery.title') }} · {{ albums|length }} <span aria-hidden="true">→</span></a></p>
+</div>
+{% endblock %}

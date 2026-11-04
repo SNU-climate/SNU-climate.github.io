@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% set r = topic %}
+{% set ci = namespace(i=0) %}
+{% for x in research %}{% if x.key == r.key %}{% set ci.i = loop.index0 %}{% endif %}{% endfor %}
+
+{% block hero %}
+<header class="topic-hero" style="--c: var(--t{{ ci.i % 5 }})">
+  <div class="wrap topic-hero-in">
+    <div class="topic-hero-text">
+      <nav class="crumb" aria-label="{{ t('common.breadcrumb') }}"><a href="{{ page_url('research') }}">{{ t('nav.research') }}</a><span aria-hidden="true"> / </span><span>{{ '%02d'|format(ci.i + 1) }} / {{ '%02d'|format(research|length) }}</span></nav>
+      <p class="topic-num" aria-hidden="true">{{ '%02d'|format(ci.i + 1) }}</p>
+      <h1 class="display topic-display">{{ tr(r.title) }}</h1>
+      <p class="muted-alt" lang="{{ other_lang }}">{{ r.title[other_lang] }}</p>
+      {{ ui.region_chips(r, 'region-chips region-chips--c region-chips--btn', buttons=True) }}
+    </div>
+    <div class="topic-globe-wrap">
+      <div class="topic-globe" data-topic-globe="{{ r.key }}" tabindex="0" aria-label="{{ ui.s('topic_globe') }}"></div>
+      <p class="globe-caption" data-region-caption aria-live="polite"></p>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<article class="wrap topic-page" style="--c: var(--t{{ ci.i % 5 }})">
+  <div class="topic-body">
+    {% for para in tr(r.summary).split('\n\n') %}<p>{{ para }}</p>{% endfor %}
+  </div>
+
+  {% set th = tr_list(r.themes) %}
+  {% if th %}
+  <section class="tp-sec" aria-labelledby="th-h">
+    <h2 class="sub-h" id="th-h">{{ t('research.themes') }}</h2>
+    <ul class="theme-grid">{% for x in th %}<li><span aria-hidden="true">{{ '%02d'|format(loop.index) }}</span>{{ x }}</li>{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  {% set figs = r.figures or ([{'image': r.image}] if r.image else []) %}
+  {% if figs %}
+  <section class="tp-sec" aria-labelledby="fg-h">
+    <h2 class="sub-h" id="fg-h">{{ t('research.figures') }}</h2>
+    <div class="fig-grid">
+      {% for f in figs %}
+      <figure class="fig">
+        <a class="fig-frame" href="{{ static(f.image) }}" target="_blank" rel="noopener"><img src="{{ static(f.image) }}" alt="{{ tr(f.caption)|truncate(80) if f.caption else tr(r.title) }}" loading="lazy"></a>
+        {% if f.caption or f.pub %}<figcaption>{{ tr(f.caption) }}{% if f.pub %} <a href="{{ pub_url(f.pub) }}">[{{ f.pub.num }}]</a>{% endif %}</figcaption>{% endif %}
+      </figure>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if r.pubs %}
+  <section class="tp-sec" aria-labelledby="kp-h">
+    <h2 class="sub-h" id="kp-h">{{ t('research.papers') }}</h2>
+    <ul class="ref-list">
+      {% for p in r.pubs %}
+      <li>
+        <a class="ref-num" href="{{ pub_url(p) }}" aria-label="{{ t('nav.publications') }} {{ p.num }}">{{ p.num }}</a>
+        <div>
+          <div class="ref-title">{% if p.doi %}<a href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ rich(p.title) }}</a>{% else %}{{ rich(p.title) }}{% endif %}</div>
+          <div class="ref-meta">{{ authors(p) }} · {{ cite(p) }} ({{ p.year }})</div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if r.video_items %}
+  <section class="tp-sec" aria-labelledby="tv-h">
+    <h2 class="sub-h" id="tv-h">{{ t('research.videos') }}</h2>
+    <div class="grid grid-3">{% for v in r.video_items %}{{ m.video_card(v) }}{% endfor %}</div>
+  </section>
+  {% endif %}
+
+  <nav class="pager" aria-label="{{ t('nav.research') }}">
+    {% if ci.i > 0 %}{% set p = research[ci.i - 1] %}<a class="pager-prev" href="{{ topic_url(p) }}" style="--c: var(--t{{ (ci.i - 1) % 5 }})"><small>{{ t('common.prev') }}</small><span>← {{ tr(p.title) }}</span></a>{% else %}<span></span>{% endif %}
+    <a class="pager-up" href="{{ page_url('research') }}">{{ t('research.back') }}</a>
+    {% if ci.i + 1 < research|length %}{% set n = research[ci.i + 1] %}<a class="pager-next" href="{{ topic_url(n) }}" style="--c: var(--t{{ (ci.i + 1) % 5 }})"><small>{{ t('common.next') }}</small><span>{{ tr(n.title) }} →</span></a>{% else %}<span></span>{% endif %}
+  </nav>
+</article>
+{% endblock %}
+
+{% block scripts %}{{ ui.globe_scripts() }}{% endblock %}

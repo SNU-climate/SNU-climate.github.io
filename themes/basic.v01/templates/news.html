@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{# 공지 99건(앨범 제외). 분류 필터(shared.js: [data-news-filter] → [data-news-item][data-cat], [data-news-year]) + 연도 바로가기.
+   표지가 없는 글도 같은 폭의 분류 타일을 둬 제목 시작 위치를 맞춘다 #}
+{% block content %}
+<p class="crumb">{{ t('menu.notice') }}</p>
+<h1>{{ t('menu.announcement') }}</h1>
+<p class="lead">{{ t('news.intro') }}</p>
+{{ m.news_filter() }}
+{{ m.year_links(news_by_year, 'n', 'pub-years chip-row') }}
+{% for y, items in news_by_year %}
+<section class="news-year" id="n{{ y }}" data-news-year>
+  <h2 class="pub-year-title">{{ y }} <span class="pub-year-n">({{ items|length }})</span></h2>
+  <ul class="news-rows">
+    {% for p in items %}
+    {% set c = cover_url(p) %}
+    <li class="news-row{% if not c %} news-row--tile{% endif %}" data-news-item data-cat="{{ p.category }}">
+      {% if c %}<a class="news-row-img" href="{{ news_url(p) }}" tabindex="-1" aria-hidden="true"><img src="{{ c }}" alt="" loading="lazy"></a>
+      {% else %}<span class="news-row-img news-row-tile news-row-tile--{{ p.category }}" aria-hidden="true">{{ t('news.category.' ~ p.category) }}</span>{% endif %}
+      <div class="news-row-text">
+        <div class="news-card-meta"><span class="news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span> <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></div>
+        <h3 class="news-row-title" lang="{{ text_lang(tr(p.title)) }}"><a href="{{ news_url(p) }}">{{ tr(p.title) }}</a></h3>
+        {% if p.summary %}<p class="news-card-summary">{{ tr(p.summary) }}</p>{% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% else %}<p class="empty">{{ t('common.empty') }}</p>
+{% endfor %}
+{% endblock %}

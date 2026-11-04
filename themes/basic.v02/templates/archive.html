@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% import 'ui.html' as ui with context %}
+{# v02 이전 사이트 글 찾기: 뉴스·앨범 앞머리의 source(원본 게시판#번호)로 '이전 글 → 새 주소' 표를 만든다.
+   원본 주소 형식은 자료에 없어서 게시판 이름과 번호만 보인다(주소를 지어내지 않음) #}
+{% set page_title = tr(ui.TX.archive) ~ ' | ' ~ lab_name %}
+{% set rows = [] %}
+{% for p in news_all %}
+  {% set srcs = p.source if p.source is iterable and p.source is not string else ([p.source] if p.source else []) %}
+  {% for s in srcs if s and '#' in s %}{% set b, no = s.split('#', 1) %}{% set _ = rows.append({'b': b, 'no': no|int, 'o': (['notice', 'gallery', 'portfolio', 'gsmagazine'].index(b) if b in ['notice', 'gallery', 'portfolio', 'gsmagazine'] else 9), 'p': p}) %}{% endfor %}
+{% endfor %}
+{% set boards = [] %}
+{% for b in ['notice', 'gallery', 'portfolio', 'gsmagazine'] %}{% set n = rows|selectattr('b', 'equalto', b)|list|length %}{% if n %}{% set _ = boards.append((b, n)) %}{% endif %}{% endfor %}
+{% block content %}
+<p class="crumb">{{ t('menu.notice') }}</p>
+<h1>{{ tr(ui.TX.archive) }}</h1>
+<p class="lead">{{ tr(ui.TX.archive_intro) }}</p>
+<div class="board-app" data-board>
+  <div class="board-tools">
+    <div class="board-tabs" role="group" aria-label="{{ tr(ui.TX.board) }}" data-board-tabs>
+      <button type="button" aria-pressed="true" data-cat="">{{ tr(ui.TX.all) }} <span>{{ rows|length }}</span></button>
+      {% for b, n in boards %}<button type="button" aria-pressed="false" data-cat="{{ b }}">{{ tr(ui.TX.boards[b]) if ui.TX.boards[b] else b }} <span>{{ n }}</span></button>{% endfor %}
+    </div>
+    <div class="board-search">
+      <input type="search" data-board-search placeholder="{{ tr(ui.TX.archive_search) }}" aria-label="{{ tr(ui.TX.archive_search) }}" inputmode="search">
+      <span class="board-count" aria-live="polite"><span data-board-count>{{ rows|length }}</span> / {{ rows|length }}</span>
+    </div>
+  </div>
+  <div class="arc-wrap">
+  <table class="arc">
+    <thead><tr><th scope="col">{{ tr(ui.TX.board) }}</th><th scope="col">{{ tr(ui.TX.no) }}</th><th scope="col">{{ tr(ui.TX.title) }}</th><th scope="col">{{ tr(ui.TX.new_place) }}</th><th scope="col">{{ tr(ui.TX.date) }}</th></tr></thead>
+    <tbody data-board-group>
+      {% for r in rows|sort(attribute='no', reverse=True)|sort(attribute='o') %}{% set p = r.p %}
+      <tr data-board-item data-cat="{{ r.b }}" data-search="#{{ r.no }} {{ r.b }}#{{ r.no }} {{ [p.title.en if p.title is mapping else p.title, p.title.ko if p.title is mapping else '']|join(' ')|lower }}">
+        <td class="arc-board">{{ tr(ui.TX.boards[r.b]) if ui.TX.boards[r.b] else r.b }}</td>
+        <td class="arc-no">#{{ r.no }}</td>
+        <td class="arc-title"><a href="{{ news_url(p) }}" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</a></td>
+        <td class="arc-new">{% if p.album %}<a href="{{ page_url('gallery') }}">{{ t('menu.gallery') }}</a>{% else %}<a href="{{ page_url('news') }}">{{ t('menu.announcement') }}</a>{% endif %}</td>
+        <td class="arc-date"><time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="empty" data-board-empty hidden>{{ tr(ui.TX.no_match) }}</p>
+</div>
+{% endblock %}

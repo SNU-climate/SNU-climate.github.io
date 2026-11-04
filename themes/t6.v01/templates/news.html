@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">{{ t('news.title') }}</h1>
+  <p class="page-desc">{{ t('news.intro') }}</p>
+  {% if albums %}<p class="page-aside"><a href="{{ page_url('gallery') }}">{{ ui.icon('gallery', 'ic ic--sm') }} {{ t('gallery.title') }} <span class="count">{{ stats.albums }}</span></a></p>{% endif %}
+</header>
+
+{% if news_items %}
+<div class="list-tools">
+  {{ m.news_filter() }}
+  {% if news_by_year|length > 1 %}
+  <div class="pills-wrap">
+    <nav class="year-pills" aria-label="{{ t('common.years') }}">{% for y, items in news_by_year %}<a href="#n{{ y }}">{{ y }} <span>{{ items|length }}</span></a>{% endfor %}</nav>
+  </div>
+  {% endif %}
+</div>
+{{ m.news_year_list(news_by_year) }}
+{% else %}
+<p class="empty">{{ t('common.empty') }}</p>
+{% endif %}
+{% endblock %}

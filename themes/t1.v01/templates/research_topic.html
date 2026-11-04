@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% import '_t1.html' as x with context %}
+{% set r = topic %}
+
+{% block pagehead %}
+<div class="phead">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="{{ t('common.breadcrumb') }}"><a href="{{ page_url('index') }}">{{ t('nav.index') }}</a><span aria-hidden="true">›</span><a href="{{ page_url('research') }}">{{ t('nav.research') }}</a></nav>
+    {% for y in research %}{% if y.key == r.key %}<div class="topic-num topic-num--head">{{ t('research.title') }} {{ x.roman(loop.index0) }}</div>{% endif %}{% endfor %}
+    <h1 class="phead-title">{{ tr(r.title) }}</h1>
+    {% if r.title[other_lang] %}<p class="phead-lead" lang="{{ other_lang }}">{{ r.title[other_lang] }}</p>{% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="wrap with-side">
+  <aside class="side">
+    <nav class="side-nav" aria-label="{{ t('home.research') }}">
+      <div class="side-h">{{ t('home.research') }}</div>
+      <ol>{% for y in research %}<li><a href="{{ topic_url(y) }}"{% if y.key == r.key %} aria-current="page"{% endif %}><span aria-hidden="true">{{ x.roman(loop.index0) }}.</span> {{ tr(y.title) }}</a></li>{% endfor %}</ol>
+    </nav>
+  </aside>
+
+  <article class="side-main topic-page">
+    <div class="topic-summary">
+      {% for para in tr(r.summary).split('\n\n') %}<p>{{ para }}</p>{% endfor %}
+    </div>
+
+    {% set th = tr_list(r.themes) %}
+    {% if th %}
+    <section class="topic-sec" id="themes">
+      {{ x.sec_head(t('research.themes')) }}
+      <ol class="theme-list">{% for it in th %}<li>{{ it }}</li>{% endfor %}</ol>
+    </section>
+    {% endif %}
+
+    {% if r.figures %}
+    <section class="topic-sec" id="figures">
+      {{ x.sec_head(t('research.figures')) }}
+      <div class="plates">
+        {% for f in r.figures %}
+        <figure class="plate">
+          <a class="plate-img" href="{{ static(f.image) }}" target="_blank" rel="noopener"><img src="{{ static(f.image) }}" alt="{{ tr(f.caption)|truncate(80) }}" loading="lazy"></a>
+          <figcaption><span class="plate-no" aria-hidden="true">{{ loop.index }}</span> {{ tr(f.caption) }}{% if f.pub %} <a href="{{ pub_url(f.pub) }}">[{{ f.pub.num }}]</a>{% elif f.doi %} <a href="https://doi.org/{{ f.doi }}" target="_blank" rel="noopener">DOI</a>{% endif %}</figcaption>
+        </figure>
+        {% endfor %}
+      </div>
+    </section>
+    {% elif r.image %}
+    <figure class="plate plate--single"><a class="plate-img" href="{{ static(r.image) }}" target="_blank" rel="noopener"><img src="{{ static(r.image) }}" alt="{{ tr(r.title) }}"></a></figure>
+    {% endif %}
+
+    {% if r.region_names %}
+    <section class="topic-sec" id="regions">
+      {{ x.sec_head(t('research.regions')) }}
+      <ul class="tags">{% for g in r.region_names %}<li>{{ tr(g) }}</li>{% endfor %}</ul>
+    </section>
+    {% endif %}
+
+    {% if r.pubs %}
+    <section class="topic-sec" id="papers">
+      {{ x.sec_head(t('research.papers'), n=r.pubs|length) }}
+      <ul class="pub-ul">{% for p in r.pubs %}{{ m.pub_item(p, anchor=False) }}{% endfor %}</ul>
+    </section>
+    {% endif %}
+
+    {% if r.video_items %}
+    <section class="topic-sec" id="videos">
+      {{ x.sec_head(t('research.videos')) }}
+      <div class="grid grid-3">{% for v in r.video_items %}{{ m.video_card(v) }}{% endfor %}</div>
+    </section>
+    {% endif %}
+
+    <nav class="pager" aria-label="{{ t('home.research') }}">
+      {% for y in research %}{% if y.key == r.key %}
+        {% if not loop.first %}{% set pv = research[loop.index0 - 1] %}<a class="pager-prev" href="{{ topic_url(pv) }}"><span>← {{ x.roman(loop.index0 - 1) }}</span>{{ tr(pv.title) }}</a>{% else %}<span></span>{% endif %}
+        {% if not loop.last %}{% set nx = research[loop.index0 + 1] %}<a class="pager-next" href="{{ topic_url(nx) }}"><span>{{ x.roman(loop.index0 + 1) }} →</span>{{ tr(nx.title) }}</a>{% endif %}
+      {% endif %}{% endfor %}
+    </nav>
+    <p class="post-back"><a href="{{ page_url('research') }}"><span aria-hidden="true">←</span> {{ t('research.back') }}</a></p>
+  </article>
+</div>
+{% endblock %}

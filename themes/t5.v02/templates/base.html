@@ -1,0 +1,101 @@
+{% import 'macros.html' as m with context %}
+{% import '_t5.html' as x with context %}
+{# 메뉴: 원본 사이트 순서에 가깝게 Introduction · Research · People · Publications · News · Gallery (+ Videos · Contact).
+   발표가 0건이면 Presentations는 뺀다(build.py nav와 같은 규칙). #}
+{% set menu = ['about', 'research', 'people', 'publications', 'issues'] + (['presentations'] if presentations else []) + ['news', 'gallery', 'videos', 'contact'] %}
+{% set detail = post or person or topic %}
+{# 저널 데스크는 Publications 아래 페이지 #}
+{% set section = 'publications' if page == 'journals' else page %}
+{% macro nav_label(k) %}{% if k == 'issues' %}{{ x.L('issues') }}{% else %}{{ t('nav.' ~ k) }}{% endif %}{% endmacro %}
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+{{ m.head_common() }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Noto+Serif+KR:wght@500;700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="{{ asset('style.css') }}">
+{% block head_extra %}{% endblock %}
+</head>
+<body class="page-{{ page }}{% if detail %} is-detail{% endif %}">
+<a class="skip" href="#main">{{ t('common.skip') }}</a>
+
+<div class="topbar">
+  <div class="wrap topbar-in">
+    <span class="topbar-date">{{ t('common.updated') }} <time datetime="{{ build_date }}">{{ fmt_date(build_date) }}</time></span>
+    <span class="topbar-aff">{{ tr(site.lab.affiliation) }}</span>
+    <span class="topbar-right">
+      <a class="topbar-link" href="{{ site.links.youtube }}" target="_blank" rel="noopener">YouTube</a>
+      {{ m.lang_switch('lang-switch') }}
+    </span>
+  </div>
+</div>
+
+<header class="mast">
+  <div class="wrap mast-in">
+    <p class="mast-over">{{ t('common.snu') }} <span aria-hidden="true">·</span> {{ site.lab.short }}</p>
+    <a class="mast-title" href="{{ page_url('index') }}">{{ lab_name }}</a>
+    <p class="mast-tag">{{ tr(site.lab.tagline) }}</p>
+    <button class="nav-btn" type="button" data-nav-toggle aria-controls="nav" aria-expanded="false">
+      <span class="nav-btn-bars" aria-hidden="true"></span><span class="nav-btn-label">{{ t('common.menu') }}</span>
+    </button>
+  </div>
+  <nav id="nav" class="nav" aria-label="{{ t('common.menu') }}">
+    <div class="wrap nav-in">
+      {% for k in menu %}<a href="{{ page_url(k) }}"{% if k == page and not detail %} aria-current="page"{% elif k == section %} class="is-section"{% endif %}>{{ nav_label(k) }}</a>{% endfor %}
+    </div>
+  </nav>
+</header>
+
+{% block pagehead %}
+<div class="wrap">
+  <header class="phead">
+    <p class="phead-kicker">{{ lab_name }}</p>
+    <h1 class="phead-title">{% block ptitle %}{{ t('nav.' ~ page) }}{% endblock %}</h1>
+    {% block plead_wrap %}<p class="phead-lead">{% block plead %}{% endblock %}</p>{% endblock %}
+  </header>
+</div>
+{% endblock %}
+
+<main id="main" class="main">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <a class="ftr-title" href="{{ page_url('index') }}">{{ lab_name }}</a>
+      <p class="ftr-tag">{{ tr(site.lab.tagline) }}</p>
+    </div>
+    <div class="ftr-grid">
+      <div>
+        <h2 class="ftr-h">{{ t('common.menu') }}</h2>
+        <ul class="ftr-menu"><li><a href="{{ page_url('index') }}">{{ t('nav.index') }}</a></li>{% for k in menu %}<li><a href="{{ page_url(k) }}">{{ nav_label(k) }}</a></li>{% endfor %}<li><a href="{{ page_url('journals') }}">{{ x.L('desk') }}</a></li></ul>
+      </div>
+      <div>
+        <h2 class="ftr-h">{{ t('contact.title') }}</h2>
+        <address class="ftr-addr">{{ tr(site.contact.address) }}</address>
+        <p class="ftr-line"><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
+        <p class="ftr-line">{{ t('contact.pi_office') }} <a href="tel:{{ site.contact.pi_office.phone }}">{{ site.contact.pi_office.phone }}</a> · {{ t('contact.lab_room') }} <a href="tel:{{ site.contact.lab_room.phone }}">{{ site.contact.lab_room.phone }}</a></p>
+      </div>
+      <div>
+        <h2 class="ftr-h">{{ t('common.links') }}</h2>
+        <ul class="ftr-menu">
+          <li><a href="{{ site.links.snu }}" target="_blank" rel="noopener">{{ t('common.snu') }}</a></li>
+          <li><a href="{{ site.links.department }}" target="_blank" rel="noopener">{{ x.L('dept') }}</a></li>
+          <li><a href="{{ site.links.youtube }}" target="_blank" rel="noopener">YouTube</a></li>
+          <li><a href="{{ site.links.orcid }}" target="_blank" rel="noopener">ORCID</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr-bottom">
+      <span>© {{ build_date[:4] }} {{ t('common.copyright') }}</span>
+      <span>{{ t('common.updated') }} {{ build_date }} · {{ m.lang_switch('ftr-lang') }}</span>
+    </div>
+  </div>
+</footer>
+{{ m.scripts_common() }}
+{% block scripts_extra %}{% endblock %}
+</body>
+</html>

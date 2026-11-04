@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% import 'ui.html' as ui with context %}
+{% block content %}
+<h1>{{ t('research.title') }}</h1>
+<p class="lead">{{ t('research.intro') }}</p>
+{# v02: 연구 분야별 주요 연구 지역(research.yaml regions/region_names)을 한 장의 경위도 지도에. 같은 좌표가 겹치면 옆으로 살짝 민다 #}
+{% set pts = [] %}{% set seen = [] %}
+{% for r in research %}{% set ti = loop.index %}
+  {% for ll in r.regions or [] %}{% set key = ll[0] ~ ',' ~ ll[1] %}
+    {% set nm = tr(r.region_names[loop.index0]) if r.region_names and r.region_names|length > loop.index0 else '' %}
+    {% set _ = pts.append({'lat': ll[0], 'lon': ll[1], 'cls': 'rmap-t' ~ ti, 'dx': 14 * (seen|select('equalto', key)|list|length),
+                           'label': tr(r.title) ~ (' — ' ~ nm if nm else ''), 'href': topic_url(r)}) %}{% set _ = seen.append(key) %}
+  {% endfor %}
+{% endfor %}
+{% if pts %}
+<section class="sec rmap-block">
+  <h2>{{ tr(ui.TX.map_title) }}</h2>
+  {{ ui.region_map(pts, tr(ui.TX.map_title)) }}
+  <ul class="rmap-legend">
+    {% for r in research if r.regions %}<li class="rmap-t{{ loop.index }}"><a href="#{{ r.key }}"><i class="dot" aria-hidden="true"></i><strong>{{ tr(r.title) }}</strong></a>
+      <span class="muted">{% for n in r.region_names or [] %}{{ tr(n) }}{% if not loop.last %} · {% endif %}{% endfor %}</span></li>{% endfor %}
+  </ul>
+  <p class="muted">{{ tr(ui.TX.map_note) }}</p>
+</section>
+{% endif %}
+{% for r in research %}
+<section class="sec topic-row" id="{{ r.key }}">
+  <a class="topic-row-img" href="{{ topic_url(r) }}" tabindex="-1" aria-hidden="true">{% if r.image %}<img src="{{ static(r.image) }}" alt="" loading="lazy">{% endif %}</a>
+  <div>
+    <h2><a href="{{ topic_url(r) }}">{{ tr(r.title) }}</a></h2>
+    <p class="muted" lang="{{ other_lang }}">{{ r.title[other_lang] }}</p>
+    <p>{{ tr(r.summary)|truncate(360) }}</p>
+    {% set th = tr_list(r.themes) %}
+    {% if th %}<ul class="chips">{% for x in th[:6] %}<li>{{ x }}</li>{% endfor %}</ul>{% endif %}
+    <a href="{{ topic_url(r) }}">{{ t('research.more') }} →</a>
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

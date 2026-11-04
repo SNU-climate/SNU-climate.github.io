@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{# 공통 8페이지 밖의 페이지라 i18n에 nav.issues가 없다 → <title>을 직접 정한다 #}
+{% set page_title = x.L('issues_t')|trim ~ ' | ' ~ lab_name %}
+{% block ptitle %}{{ x.L('issues_t') }}{% endblock %}
+{% block plead %}{{ x.L('issues_lead') }}{% endblock %}
+{% block scripts_extra %}<script src="{{ asset('issues.js') }}" defer></script>{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  {{ x.pub_tabs('issues') }}
+
+  {# ---------- 표지 진열대 ---------- #}
+  <section class="rack" aria-labelledby="rack-h">
+    <h2 class="visually-hidden" id="rack-h">{{ x.L('all_issues') }}</h2>
+    <div class="rack-grid">
+      {% for y, items in pubs_by_year %}{{ x.issue_cover(y, items, '#issue-' ~ y) }}{% endfor %}
+    </div>
+    <p class="rack-note">{{ x.L('issues_note') }}</p>
+  </section>
+
+  {# ---------- 연간호(한 해씩). JS가 있으면 고른 호 하나만 보인다 ---------- #}
+  {% for y, items in pubs_by_year %}
+  {% set ns = namespace(cp=None, news=[], als=[], vids=[], js={}) %}
+  {% for p in items %}{% if p.featured and not ns.cp %}{% set ns.cp = p %}{% endif %}{% endfor %}
+  {% if not ns.cp %}{% set ns.cp = items[0] %}{% endif %}
+  {% for yy, g in news_by_year %}{% if yy == y %}{% set ns.news = g %}{% endif %}{% endfor %}
+  {% for yy, g in albums_by_year %}{% if yy == y %}{% set ns.als = g %}{% endif %}{% endfor %}
+  {% for v in videos %}{% if (v.published|string)[:4] == y|string %}{% set ns.vids = ns.vids + [v] %}{% endif %}{% endfor %}
+  <section class="issue" id="issue-{{ y }}" data-issue aria-labelledby="issue-{{ y }}-h">
+    <header class="issue-head">
+      <div class="issue-cover">{{ x.issue_cover(y, items, '', 'icover icover--big') }}</div>
+      <div class="issue-intro">
+        <p class="kicker"><span class="kicker-cat">{{ x.L('annual') }}</span><span>{{ x.vol(y) }}</span></p>
+        <h2 class="issue-title" id="issue-{{ y }}-h">{{ y }}</h2>
+        <dl class="issue-counts">
+          <div><dt>{{ t('pubs.title') }}</dt><dd>{{ items|length }}</dd></div>
+          <div><dt>{{ t('news.title') }}</dt><dd>{{ ns.news|length }}</dd></div>
+          <div><dt>{{ x.L('essay') }}</dt><dd>{{ ns.als|length }}</dd></div>
+          <div><dt>{{ t('videos.title') }}</dt><dd>{{ ns.vids|length }}</dd></div>
+        </dl>
+        <div class="issue-cp">
+          <p class="rule-h">{{ x.L('cover_paper') }}</p>
+          <p class="issue-cp-j">{{ ns.cp.journal }}{% if ns.cp.featured %} · <span class="pub-badge">{{ t('pubs.featured') }}</span>{% endif %}</p>
+          <h3 class="issue-cp-t">{% if ns.cp.doi %}<a href="{{ doi_url(ns.cp) }}" target="_blank" rel="noopener">{{ rich(ns.cp.title) }}</a>{% else %}{{ rich(ns.cp.title) }}{% endif %}</h3>
+          <p class="issue-cp-a">{{ authors(ns.cp) }} · <a href="{{ pub_url(ns.cp) }}">№ {{ ns.cp.num }}</a></p>
+        </div>
+        <div class="issue-js">
+          <p class="rule-h">{{ x.L('journals_year') }}</p>
+          <ul>
+            {% set ranked = [] %}
+            {% for grp in items|groupby('journal') %}{% set _ = ranked.append({'j': grp.grouper, 'n': grp.list|length}) %}{% endfor %}
+            {% for r in (ranked|sort(attribute='n', reverse=True))[:4] %}<li><span>{{ r.j }}</span><b>{{ r.n }}</b></li>{% endfor %}
+          </ul>
+        </div>
+        <nav class="issue-pager" aria-label="{{ x.L('all_issues') }}">
+          {% if not loop.last %}{% set pv = pubs_by_year[loop.index0 + 1][0] %}<a href="#issue-{{ pv }}">← {{ x.L('prev_issue') }} · {{ pv }}</a>{% else %}<span></span>{% endif %}
+          {% if not loop.first %}{% set nx = pubs_by_year[loop.index0 - 1][0] %}<a href="#issue-{{ nx }}">{{ x.L('next_issue') }} · {{ nx }} →</a>{% endif %}
+        </nav>
+      </div>
+    </header>
+
+    <div class="issue-body">
+      <section class="issue-papers" aria-labelledby="issue-{{ y }}-toc">
+        <h3 class="issue-sec" id="issue-{{ y }}-toc">{{ x.L('in_issue') }} <span class="pub-year-n">{{ items|length }}</span></h3>
+        <ol class="toc-list">
+          {% for p in items %}
+          <li><a class="toc-row" href="{{ pub_url(p) }}"><span class="toc-n">{{ p.num }}</span><span class="toc-body"><span class="toc-t">{{ rich(p.title) }}</span><span class="toc-j">{{ p.journal }}</span></span></a></li>
+          {% endfor %}
+        </ol>
+      </section>
+      {% if ns.news or ns.als or ns.vids %}
+      <aside class="issue-side">
+        {% if ns.news %}
+        <section>
+          <h3 class="issue-sec">{{ t('news.title') }} <span class="pub-year-n">{{ ns.news|length }}</span></h3>
+          <ul class="briefs-ul">{% for p in ns.news[:8] %}{{ x.brief(p) }}{% endfor %}</ul>
+          {% if ns.news|length > 8 %}<a class="story-more issue-more" href="{{ page_url('news') }}#n{{ y }}">{{ t('home.view_all') }} ({{ ns.news|length }}) <span aria-hidden="true">→</span></a>{% endif %}
+        </section>
+        {% endif %}
+        {% if ns.als %}
+        <section>
+          <h3 class="issue-sec">{{ x.L('essay') }} <span class="pub-year-n">{{ ns.als|length }}</span></h3>
+          <div class="issue-albums">{% for p in ns.als[:4] %}{{ x.album(p, 'album album--sm', 'h4') }}{% endfor %}</div>
+          {% if ns.als|length > 4 %}<a class="story-more issue-more" href="{{ page_url('gallery') }}#g{{ y }}">{{ t('home.view_all') }} ({{ ns.als|length }}) <span aria-hidden="true">→</span></a>{% endif %}
+        </section>
+        {% endif %}
+        {% if ns.vids %}
+        <section>
+          <h3 class="issue-sec">{{ x.L('watch') }} <span class="pub-year-n">{{ ns.vids|length }}</span></h3>
+          <ul class="issue-vids">{% for v in ns.vids %}<li><a href="{{ youtube_url(v.id) }}" target="_blank" rel="noopener"><img src="{{ video_thumb(v) }}" alt="" loading="lazy"><span lang="{{ text_lang(v.title) }}">{{ v.title }}</span></a></li>{% endfor %}</ul>
+        </section>
+        {% endif %}
+      </aside>
+      {% endif %}
+    </div>
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

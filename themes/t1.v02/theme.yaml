@@ -1,0 +1,48 @@
+title: "Classic Academic v02"
+concept:
+  en: >-
+    The expanded Classic Academic site, built on v01. A History page lays 27 years of papers, the professor's career
+    and awards, graduations and lab news on one chronicle, and each year opens into an annual record. The People page
+    adds a formal alumni table, member profiles are linked, and the home banner carries real figures from the lab's
+    research with their source papers.
+  ko: >-
+    v01을 바탕으로 한 Classic Academic 확장판. 연혁 페이지에 27년간의 논문, 교수 경력·수상, 졸업생 배출, 연구실 소식을
+    한 연표로 엮고 연도마다 그해 논문·소식·사진·영상을 모은 연간 기록을 펼쳐 볼 수 있게 했다. 구성원 페이지에는 졸업생
+    진로 표를 두고 개인 페이지를 연결했으며, 홈 배너에는 연구실 논문의 실제 그림을 출처와 함께 실었다.
+palette: ["#0b2a5b", "#ffffff", "#f2f5fa", "#2c5a9a", "#b8954a"]
+# 공통 8페이지 외 페이지: 갤러리(앨범 분리) + 연혁(history.html)
+extra_pages: [gallery, history]
+pi_page: true
+
+# 이 테마에만 있는 화면 문구(templates에서 tr(theme.strings.키)로 쓴다)
+strings:
+  history: {en: "History", ko: "연혁"}
+  history_lead:
+    en: "The lab's record year by year: papers, the professor's career and awards, graduates, and news. Open a year to see its annual record."
+    ko: "연구실의 발자취를 해마다 정리했습니다. 논문, 교수 경력·수상, 졸업생, 소식을 한 줄에 놓았고, 연도를 펼치면 그해의 연간 기록이 나옵니다."
+  at_a_glance: {en: "At a glance", ko: "한눈에 보기"}
+  per_year: {en: "Papers per year", ko: "연도별 논문 수"}
+  per_year_note: {en: "Select a year to open its annual record.", ko: "막대를 누르면 그해의 연간 기록으로 이동합니다."}
+  peak: {en: "Peak year", ko: "최다 연도"}
+  span: {en: "Years active", ko: "활동 기간"}
+  chronicle: {en: "Chronicle", ko: "연대기"}
+  annual: {en: "Annual record", ko: "연간 기록"}
+  open_all: {en: "Open all", ko: "모두 펼치기"}
+  close_all: {en: "Close all", ko: "모두 접기"}
+  career: {en: "Career", ko: "경력"}
+  education: {en: "Education", ko: "학력"}
+  award: {en: "Award", ko: "수상"}
+  graduates: {en: "Graduates", ko: "졸업"}
+  paper_no: {en: "Paper No.", ko: "논문 번호"}
+  milestone: {en: "Milestone", ko: "이정표"}
+  selected: {en: "Selected paper", ko: "대표 논문"}
+  albums: {en: "Photo albums", ko: "사진 앨범"}
+  history_teaser: {en: "Lab history", ko: "연구실 연혁"}
+  alumni_table: {en: "Alumni and current positions", ko: "졸업생과 현재 진로"}
+  col_name: {en: "Name", ko: "이름"}
+  col_degree: {en: "Degree / role", ko: "학위·직위"}
+  col_year: {en: "Year", ko: "연도"}
+  unrecorded: {en: "Not recorded", ko: "기록 없음"}
+  plate: {en: "From our research", ko: "연구 그림"}
+  plate_prev: {en: "Previous figure", ko: "이전 그림"}
+  plate_next: {en: "Next figure", ko: "다음 그림"}

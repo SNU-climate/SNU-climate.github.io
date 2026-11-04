@@ -1,0 +1,205 @@
+{# t5 Science Magazine 전용 매크로. {% import '_t5.html' as x with context %} #}
+
+{# 테마 고유 장식 문구(잡지 용어). i18n.yaml에 없는 것만 여기 둔다. #}
+{% set _L = {
+  'cover': ['Cover story', '커버 스토리'],
+  'editor': ["Editor's note", '여는 글'],
+  'brief': ['In brief', '짧은 소식'],
+  'watch': ['Watch', '영상으로 보기'],
+  'journals': ['From the journals', '최근 학술지 논문'],
+  'essay': ['Photo essay', '포토 에세이'],
+  'feature': ['Feature', '피처'],
+  'read_feature': ['Read the feature', '피처 기사 읽기'],
+  'about_lab': ['About the lab', '연구실 소개'],
+  'numbers': ['By the numbers', '숫자로 보는 연구실'],
+  'masthead': ['The masthead', '만드는 사람들'],
+  'interview': ['Profile', '인물'],
+  'in_feature': ['In this feature', '이 기사에서'],
+  'since': ['since', '부터'],
+  'papers_n': ['papers', '편'],
+  'members_n': ['members', '명'],
+  'alumni_n': ['alumni', '명'],
+  'journals_t': ['Journals', '학술지'],
+  'top': ['Most:', '최다:'],
+  'issues': ['Issues', '연간호'],
+  'issues_t': ['Annual issues', '연간호'],
+  'issues_lead': ['Every year of the lab as one issue: an automatic cover from the cover paper, then its papers, news, photo essays and videos.', '연구실의 한 해를 한 권의 잡지로 묶었습니다. 대표 논문으로 표지를 만들고, 그해의 논문·뉴스·포토 에세이·영상을 차례로 엮었습니다.'],
+  'issues_note': ['Cover paper: the featured paper of the year if there is one, otherwise the most recent. Cover image: a research figure from that year, otherwise a photo essay of that year.', '대표 논문: 그해 주요 논문(featured)이 있으면 그 논문, 없으면 가장 최근 논문. 표지 그림: 그해 논문의 연구 그림, 없으면 그해 포토 에세이 사진.'],
+  'vol': ['Vol.', '제'],
+  'vol_after': ['', '호'],
+  'annual': ['Annual issue', '연간호'],
+  'cover_paper': ['Cover paper', '대표 논문'],
+  'in_issue': ['In this issue', '이번 호 차례'],
+  'journals_year': ['Journals this year', '올해의 학술지'],
+  'prev_issue': ['Previous issue', '이전 호'],
+  'next_issue': ['Next issue', '다음 호'],
+  'all_issues': ['All issues', '전체 연간호'],
+  'by_year': ['By year', '연도별'],
+  'desk': ['Journal desk', '저널 데스크'],
+  'desk_lead': ['Where our papers appear: the ten journals we publish in most, with their latest papers and year-by-year record.', '논문이 실린 곳: 가장 많이 게재한 학술지 10곳의 최신 논문과 연도별 기록입니다.'],
+  'first_paper': ['First paper', '첫 게재'],
+  'latest_papers': ['Latest', '최신 논문'],
+  'all_n': ['All papers in this journal', '이 학술지의 논문 전체'],
+  'other_journals': ['All journals', '전체 학술지'],
+  'watch_read': ['Watch & Read', '보고 읽기'],
+  'watch_read_lead': ['Explainer videos paired with the paper they are based on.', '해설 영상과 그 바탕이 된 논문을 짝지었습니다.'],
+  'read_paper': ['Read the paper', '논문 보기'],
+  'in_list': ['In our list', '논문 목록에서'],
+  'more_videos': ['More videos', '다른 영상'],
+  'back_issues': ['Back issues', '지난 호'],
+  'videos_n': ['videos', '편'],
+  'more_in': ['More from the gallery', '다른 사진 묶음'],
+  'contents': ['Contents', '차례'],
+  'dept': ['School of Earth and Environmental Sciences', '지구환경과학부'],
+} %}
+{% macro vol(y) %}{{ L('vol') }} {{ y - stats.first_year + 1 }}{{ L('vol_after') }}{% endmacro %}
+{% macro L(k) %}{{ _L[k][0] if lang == 'en' else _L[k][1] }}{% endmacro %}
+
+{% set _MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] %}
+
+{# 논문 수 단위(영문 1편은 단수) #}
+{% macro npapers(n) %}{{ t('pubs.total')[:-1] if lang == 'en' and n == 1 and t('pubs.total').endswith('s') else t('pubs.total') }}{% endmacro %}
+
+{# 사진 수 단위(영문 1장은 단수) #}
+{% macro photos(n) %}{{ t('gallery.photos')[:-1] if lang == 'en' and n == 1 and t('gallery.photos').endswith('s') else t('gallery.photos') }}{% endmacro %}
+
+{# 두 자리 번호(01, 02 …) #}
+{% macro no(i) %}{{ '%02d'|format(i) }}{% endmacro %}
+
+{# 섹션 머리: 굵은 선 + 디스플레이 제목 + 전체 보기 #}
+{% macro sec_head(title, url=None, more='', cls='', hid='') %}
+<div class="sec-head {{ cls }}">
+  <h2 class="sec-title"{% if hid %} id="{{ hid }}"{% endif %}>{{ title }}</h2>
+  {% if url %}<a class="sec-more" href="{{ url }}">{{ more }} <span aria-hidden="true">→</span></a>{% endif %}
+</div>
+{% endmacro %}
+
+{# 기사 키커: 분류 + 날짜 #}
+{% macro kicker(p, cls='kicker') %}<div class="{{ cls }}"><span class="kicker-cat">{{ t('news.category.' ~ p.category) }}</span><time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></div>{% endmacro %}
+
+{# 기사 카드. size: lg / md / sm. 표지가 없으면 글자만 있는 카드(story--text) #}
+{% macro story(p, size='md', heading='h3') %}
+{% set c = cover_url(p) %}
+<article class="story story--{{ size }}{% if not c %} story--text{% endif %}">
+  <a class="story-link" href="{{ news_url(p) }}">
+    {% if c %}<div class="story-img"><img src="{{ c }}" alt="" loading="lazy"></div>{% endif %}
+    <div class="story-text">
+      {{ kicker(p) }}
+      <{{ heading }} class="story-title" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</{{ heading }}>
+      {% if p.summary and size != 'sm' %}<p class="story-dek">{{ tr(p.summary) }}</p>{% endif %}
+      {% if size == 'lg' %}<span class="story-more">{{ t('news.read_more') }} <span aria-hidden="true">→</span></span>{% endif %}
+    </div>
+  </a>
+</article>
+{% endmacro %}
+
+{# 짧은 소식 한 줄(표지 없음) #}
+{% macro brief(p) %}
+<li class="brief"><a href="{{ news_url(p) }}">
+  {{ kicker(p) }}
+  <span class="brief-title" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</span>
+</a></li>
+{% endmacro %}
+
+{# 뉴스 목록 행. 표지가 있으면 썸네일, 없으면 날짜 표식(일·월) #}
+{% macro news_row(p) %}
+{% set c = cover_url(p) %}{% set ds = p.date|string %}{% set mo = (ds[5:7] or '1')|int %}
+<li class="nrow{% if not c %} nrow--text{% endif %}" data-news-item data-cat="{{ p.category }}">
+  <a class="nrow-link" href="{{ news_url(p) }}">
+    {% if c %}<span class="nrow-img"><img src="{{ c }}" alt="" loading="lazy"></span>
+    {% else %}<span class="nrow-date" aria-hidden="true"><b>{{ ds[8:10] or '—' }}</b><span>{{ _MON[mo - 1] if lang == 'en' else mo ~ '월' }}</span></span>{% endif %}
+    <span class="nrow-text">
+      {{ kicker(p) }}
+      <h3 class="nrow-title" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</h3>
+      {% if p.summary %}<span class="nrow-dek">{{ tr(p.summary) }}</span>{% endif %}
+    </span>
+  </a>
+</li>
+{% endmacro %}
+
+{# 앨범(포토 에세이) 카드 #}
+{% macro album(p, cls='album', heading='h3') %}
+{% set c = cover_url(p) %}
+<article class="{{ cls }}">
+  <a class="album-link" href="{{ news_url(p) }}">
+    <div class="album-img">{% if c %}<img src="{{ c }}" alt="" loading="lazy">{% endif %}
+      {% if p.gallery %}<span class="album-n">{{ p.gallery|length }} {{ photos(p.gallery|length) }}</span>{% endif %}</div>
+    <div class="album-text">
+      <time class="album-date" datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time>
+      <{{ heading }} class="album-title" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</{{ heading }}>
+    </div>
+  </a>
+</article>
+{% endmacro %}
+
+{# 연구 지역 위치도: 경위선 격자 + research.regions 점(실제 데이터). 태평양 중심(왼쪽 끝 20°E) 등장방형 #}
+{% macro locator(r, i=0, cls='loc') %}
+<div class="{{ cls }} loc--{{ i % 5 }}" aria-hidden="true">
+  <svg viewBox="0 0 360 180" preserveAspectRatio="xMidYMid meet" focusable="false">
+    <g class="loc-grid">
+      {% for lon in range(-150, 180, 30) %}{% set gx = (lon - 20) % 360 %}<line x1="{{ gx }}" y1="0" x2="{{ gx }}" y2="180"/>{% endfor %}
+      {% for lat in range(-60, 90, 30) %}<line x1="0" y1="{{ 90 - lat }}" x2="360" y2="{{ 90 - lat }}"{% if lat == 0 %} class="loc-eq"{% endif %}/>{% endfor %}
+    </g>
+    <text class="loc-axis" x="4" y="87">EQ</text><text class="loc-axis" x="4" y="57">30°N</text><text class="loc-axis" x="4" y="27">60°N</text>
+    <text class="loc-axis" x="{{ (180 - 20) % 360 + 3 }}" y="176">180°</text>
+    {% for reg in r.regions or [] %}{% set px = (reg[1] - 20) % 360 %}{% set py = 90 - reg[0] %}
+    <circle class="loc-ring" cx="{{ px }}" cy="{{ py }}" r="11"/>
+    <circle class="loc-dot" cx="{{ px }}" cy="{{ py }}" r="4"/>
+    <text class="loc-label" x="{{ px - 16 if px > 330 else px + 8 }}" y="{{ py + 16 if py < 20 else py - 7 }}">{{ loop.index }}</text>
+    {% endfor %}
+  </svg>
+</div>
+{% endmacro %}
+
+{# 연구 지역 이름 목록(region_names) #}
+{% macro region_list(r, cls='region-list') %}
+{% if r.region_names %}<ol class="{{ cls }}">{% for n in r.region_names %}<li>{{ tr(n) }}</li>{% endfor %}</ol>{% endif %}
+{% endmacro %}
+
+{# 이력 목록(학력·경력·수상 등) #}
+{% macro cv(items, key) %}<ul class="cv">{% for e in items %}<li><span class="cv-when">{{ e[key] }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>{% endmacro %}
+
+{# 논문 탭: 연도별 · 저널 데스크 · 연간호 #}
+{% macro pub_tabs(active) %}
+<nav class="ptabs" aria-label="{{ t('pubs.title') }}">
+  <a href="{{ page_url('publications') }}"{% if active == 'publications' %} aria-current="page"{% endif %}>{{ L('by_year') }} <span>{{ stats.pubs }}</span></a>
+  <a href="{{ page_url('journals') }}"{% if active == 'journals' %} aria-current="page"{% endif %}>{{ L('desk') }} <span>{{ stats.journals }}</span></a>
+  <a href="{{ page_url('issues') }}"{% if active == 'issues' %} aria-current="page"{% endif %}>{{ L('issues_t') }} <span>{{ pubs_by_year|length }}</span></a>
+</nav>
+{% endmacro %}
+
+{# 연간호 표지. 대표 논문 = 그해 featured 논문, 없으면 가장 최근 논문.
+   표지 그림 = 그해 논문의 연구 그림(research.figures) → 그해 포토 에세이 표지 → 없으면 글자 표지(연도 + 연도별 논문 수 막대) #}
+{% macro issue_cover(y, items, href='', cls='icover') %}
+{% set ns = namespace(cp=None, img='', fig=False) %}
+{% for p in items %}{% if p.featured and not ns.cp %}{% set ns.cp = p %}{% endif %}{% endfor %}
+{% if not ns.cp %}{% set ns.cp = items[0] %}{% endif %}
+{% for r in research %}{% for f in r.figures %}{% if f.pub and f.pub.year == y and not ns.img %}{% set ns.img = static(f.image) %}{% set ns.fig = True %}{% endif %}{% endfor %}{% endfor %}
+{% if not ns.img %}{% for yy, al in albums_by_year %}{% if yy == y and al and cover_url(al[0]) %}{% set ns.img = cover_url(al[0]) %}{% endif %}{% endfor %}{% endif %}
+{% set tag = 'a' if href else 'div' %}
+<{{ tag }} class="{{ cls }} icover--{{ y % 4 }}{% if ns.img %} icover--img{% endif %}{% if ns.fig %} icover--fig{% endif %}"{% if href %} href="{{ href }}" data-issue-link{% else %} aria-hidden="true"{% endif %}>
+  <span class="icover-top"><span class="icover-mast">{{ site.lab.short }}</span><span class="icover-vol">{{ vol(y) }}<span class="icover-vy"> · {{ y }}</span></span></span>
+  <span class="icover-art">{% if ns.img %}<img src="{{ ns.img }}" alt="" loading="lazy">{% else %}{{ year_bars(y) }}{% endif %}<span class="icover-year">{{ y }}</span></span>
+  <span class="icover-line"><span class="icover-j">{{ ns.cp.journal }}</span><span class="icover-t">{{ strip_tags(ns.cp.title)|truncate(86) }}</span></span>
+  <span class="icover-n">{{ items|length }} {{ npapers(items|length) }}</span>
+</{{ tag }}>
+{% endmacro %}
+
+{# 연도별 논문 수 막대(stats.per_year_full). hl 연도는 강조, 이후 연도는 흐리게 #}
+{% macro year_bars(hl=None, cls='ybars') %}
+{% set rows = stats.per_year_full %}{% set mx = rows|map(attribute=1)|max if rows else 1 %}
+<svg class="{{ cls }}" viewBox="0 0 {{ rows|length * 10 }} 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  {% for yy, n in rows %}{% set h = (n / mx * 56)|round(1) %}<rect x="{{ loop.index0 * 10 + 1 }}" y="{{ 60 - h }}" width="8" height="{{ h }}" class="{{ 'hl' if yy == hl else ('later' if hl and yy > hl else '') }}"/>{% endfor %}
+</svg>
+{% endmacro %}
+
+{# 학술지 하나의 연도별 논문 수 막대 #}
+{% macro journal_bars(items, cls='jbars') %}
+{% set rows = stats.per_year_full %}
+{% set ns = namespace(mx=1) %}
+{% for yy, n in rows %}{% set c = items|selectattr('year', 'equalto', yy)|list|length %}{% if c > ns.mx %}{% set ns.mx = c %}{% endif %}{% endfor %}
+<svg class="{{ cls }}" viewBox="0 0 {{ rows|length * 10 }} 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <line x1="0" y1="39.5" x2="{{ rows|length * 10 }}" y2="39.5"/>
+  {% for yy, n in rows %}{% set c = items|selectattr('year', 'equalto', yy)|list|length %}{% if c %}{% set h = (c / ns.mx * 38)|round(1) %}<rect x="{{ loop.index0 * 10 + 1 }}" y="{{ 39 - h }}" width="8" height="{{ h }}"/>{% endif %}{% endfor %}
+</svg>
+{% endmacro %}

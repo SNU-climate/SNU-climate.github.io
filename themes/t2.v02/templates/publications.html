@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ ui.phead('publications', t('pubs.title'), t('pubs.intro')) }}
+
+<div class="wrap">
+  <div class="pub-tools">
+    <label class="visually-hidden" for="pub-q">{{ t('pubs.search') }}</label>
+    <input id="pub-q" type="search" class="pub-search" data-pub-search placeholder="{{ t('pubs.search') }}" autocomplete="off">
+    <p class="pub-count"><span class="pub-count-n" data-pub-count>{{ pubs|length }}</span> {{ t('pubs.total') }}</p>
+  </div>
+  {# v02 저널 인덱스 필터: stats.top_journals 칩 + Featured·CA 토글. 검색어와 함께 걸린다(assets/t2.js) #}
+  {% set n_feat = pubs|selectattr('featured')|list|length %}
+  {% set n_ca = pubs|selectattr('corresponding')|list|length %}
+  {% set n_vid = videos|selectattr('pub')|map(attribute='pub.num')|unique|list|length %}
+  <div class="pfilter" data-pub-filters>
+    <div class="pfilter-row">
+      <span class="pfilter-h" id="pf-j">{{ ui.tx('journals') }}</span>
+      <div class="pfilter-chips" role="group" aria-labelledby="pf-j">
+        {% for j, n in stats.top_journals %}<button type="button" class="pchip" aria-pressed="false" data-journal="{{ j }}"><i>{{ j }}</i> <span>{{ n }}</span></button>{% endfor %}
+      </div>
+    </div>
+    {% if n_feat or n_ca or n_vid %}
+    <div class="pfilter-row">
+      <span class="pfilter-h" id="pf-t">{{ ui.tx('show_only') }}</span>
+      <div class="pfilter-chips" role="group" aria-labelledby="pf-t">
+        {% if n_feat %}<button type="button" class="pchip pchip--tog" aria-pressed="false" data-toggle="featured">{{ t('pubs.featured') }} <span>{{ n_feat }}</span></button>{% endif %}
+        {% if n_ca %}<button type="button" class="pchip pchip--tog" aria-pressed="false" data-toggle="ca">{{ t('pubs.corresponding') }} <span>{{ n_ca }}</span></button>{% endif %}
+        {% if n_vid %}<button type="button" class="pchip pchip--tog" aria-pressed="false" data-toggle="video">{{ t('news.video') }} <span>{{ n_vid }}</span></button>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  {# 논문 ↔ 영상: 영상 설명의 DOI로 연결된 논문(videos[].pub). t2.js가 해당 논문 줄에 영상 링크를 붙인다 #}
+  <script type="application/json" id="pub-videos" data-label="{{ t('news.video') }}">{ {% for v in videos if v.pub %}"pub-{{ v.pub.num }}": "{{ page_url('videos') }}#v-{{ v.id }}"{% if not loop.last %}, {% endif %}{% endfor %} }</script>
+  <nav class="years" aria-label="{{ t('common.years') }}">
+    {% for year, items in pubs_by_year %}<a href="#y{{ year }}">{{ year }}</a>{% endfor %}
+  </nav>
+  <p class="pub-empty" data-pub-empty hidden>{{ t('pubs.no_results') }}</p>
+
+  {% for year, items in pubs_by_year %}
+  <section class="yr" data-pub-year id="y{{ year }}" aria-labelledby="yh{{ year }}">
+    <div class="yr-label">
+      <h2 class="yr-title" id="yh{{ year }}">{{ year }}</h2>
+      <span class="yr-n">{{ items|length }} {{ ui.tx('paper_one') if items|length == 1 else t('pubs.total') }}</span>
+    </div>
+    <ol class="yr-list pub-ol">
+      {% for p in items %}{{ m.pub_item(p) }}{% endfor %}
+    </ol>
+  </section>
+  {% else %}
+  <p class="empty">{{ t('common.empty') }}</p>
+  {% endfor %}
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ asset('t2.js') }}" defer></script>{% endblock %}

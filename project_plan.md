@@ -108,6 +108,7 @@ first_draft/
 - Phase 2 작업 지시서: `reports/briefs/backup_task.md`
 - 2026-11-04 Phase 2 완료(Task 6~8). 백업 = WordPress 전체(캐시 2026-10 + DB 2024-04 + uploads). 서브에이전트 3개 병렬(구성원 / 공지·갤러리·연구 / 논문 대조), 주 세션은 빌드 확장 + basic 재구성. 결과: `reports/backup_mapping.md`, `reports/verification_report.md`
 - Phase 2 변경: Gallery는 별도 콘텐츠 형식 대신 뉴스에 `album: true`. 선택 페이지 기능(`theme.yaml` extra_pages, `member.html`→`people/<id>.html`, `research_topic.html`→`research/<key>.html`)은 basic만 사용(다른 테마는 기존 8페이지). 구성원 굵게 표시는 정확 일치 + 기간·제외 규칙. 언론 PDF 6개는 저작권 확인 전까지 비공개 보류.
+- 2026-11-04 Phase 3: 2차 리뷰(`reports/review_round2.md`, Opus) → 공통 도우미(뉴스·앨범 분리·필터, 교수 페이지 `pi_page`, 발표 0건 메뉴 숨김 등) → 시안마다 v01(정제)·v02(확장) 18개(`themes/<prefix>.v01|v02`, 보고서 `reports/themes_v/`). 27개 테마 빌드·검증 오류 0, 표본 레이아웃 846쪽 문제 0. 갤러리(`site/index.html`)는 시안별 버전 묶음.
 
 ## 사용자 결정 대기(백업 이후)
 - 배포 방식(학교 웹호스팅 업로드 방식), 9종 중 최종 테마 선택, 구성원 사진·소개 문구 확정.

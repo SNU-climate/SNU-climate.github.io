@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% import 'ui.html' as ui with context %}
+{% block content %}
+{% set r = topic %}
+<p class="crumb"><a href="{{ page_url('research') }}">{{ t('nav.research') }}</a></p>
+<article class="topic-page">
+  <h1>{{ tr(r.title) }}</h1>
+  <p class="muted" lang="{{ other_lang }}">{{ r.title[other_lang] }}</p>
+  {% if r.image and r.image not in r.figures|map(attribute='image')|list %}<img class="topic-hero" src="{{ static(r.image) }}" alt="">{% endif %}
+  <div class="topic-intro{% if r.regions %} topic-intro--map{% endif %}">
+  <div class="topic-summary">
+  {% for para in tr(r.summary).split('\n\n') %}<p>{{ para }}</p>{% endfor %}
+  </div>
+  {% if r.regions %}
+  {% set mine = [] %}{% for ll in r.regions %}{% set _ = mine.append(ll[0] ~ ',' ~ ll[1]) %}{% endfor %}
+  {% set pts = [] %}
+  {% for x in research if x.key != r.key %}{% for ll in x.regions or [] %}{% if (ll[0] ~ ',' ~ ll[1]) not in mine %}
+    {% set _ = pts.append({'lat': ll[0], 'lon': ll[1], 'cls': 'is-other', 'label': tr(x.title), 'href': topic_url(x)}) %}
+  {% endif %}{% endfor %}{% endfor %}
+  {% for ll in r.regions %}{% set nm = tr(r.region_names[loop.index0]) if r.region_names and r.region_names|length > loop.index0 else '' %}
+    {% set _ = pts.append({'lat': ll[0], 'lon': ll[1], 'cls': 'is-mine', 'n': loop.index, 'label': nm}) %}
+  {% endfor %}
+  <aside class="rmap-block rmap-block--topic" aria-label="{{ t('research.regions') }}"><h2>{{ t('research.regions') }}</h2>
+    <div class="rmap-split">
+      {{ ui.region_map(pts, t('research.regions') ~ ': ' ~ tr(r.title), k=1.5) }}
+      <ol class="rmap-list">{% for ll in r.regions %}<li><span class="rmap-num" aria-hidden="true">{{ loop.index }}</span><span><strong>{{ tr(r.region_names[loop.index0]) if r.region_names and r.region_names|length > loop.index0 else '' }}</strong>
+        <span class="muted">{{ ll[0]|abs }}°{{ '' if ll[0] == 0 else ('N' if ll[0] > 0 else 'S') }}, {{ ll[1]|abs }}°{{ '' if ll[1] == 0 or ll[1]|abs == 180 else ('E' if ll[1] > 0 else 'W') }}</span></span></li>{% endfor %}</ol>
+    </div>
+    <p class="muted">{{ tr(ui.TX.map_note) }}</p>
+  </aside>
+  {% endif %}
+
+  </div>
+
+  {% set th = tr_list(r.themes) %}
+  {% if th %}
+  <section class="sec"><h2>{{ t('research.themes') }}</h2>
+    <ul class="theme-list">{% for x in th %}<li>{{ x }}</li>{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  {% if r.figures %}
+  <section class="sec"><h2>{{ t('research.figures') }}</h2>
+    <div class="figs">
+      {% for f in r.figures %}
+      <figure class="fig">
+        <a href="{{ static(f.image) }}" target="_blank" rel="noopener"><img src="{{ static(f.image) }}" alt="{{ tr(f.caption)|truncate(80) }}" loading="lazy"></a>
+        <figcaption>{{ tr(f.caption) }}{% if f.pub %} <a href="{{ pub_url(f.pub) }}">[{{ f.pub.num }}]</a>{% elif f.doi %} <a href="https://doi.org/{{ f.doi }}" target="_blank" rel="noopener">DOI</a>{% endif %}</figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if r.pubs %}
+  <section class="sec"><h2>{{ t('research.papers') }}</h2>
+    <ul class="pub-ul">{% for p in r.pubs %}{{ m.pub_item(p, anchor=False) }}{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  {% if r.video_items %}
+  <section class="sec"><h2>{{ t('research.videos') }}</h2>
+    <div class="grid grid-3">{% for v in r.video_items %}{{ m.video_card(v) }}{% endfor %}</div>
+  </section>
+  {% endif %}
+</article>
+
+<nav class="sec pager" aria-label="{{ t('nav.research') }}">
+  {% for x in research %}{% if x.key == r.key %}
+    {% if not loop.first %}{% set p = research[loop.index0 - 1] %}<a href="{{ topic_url(p) }}">← {{ tr(p.title) }}</a>{% else %}<span></span>{% endif %}
+    {% if not loop.last %}{% set n = research[loop.index0 + 1] %}<a href="{{ topic_url(n) }}">{{ tr(n.title) }} →</a>{% endif %}
+  {% endif %}{% endfor %}
+</nav>
+{% endblock %}

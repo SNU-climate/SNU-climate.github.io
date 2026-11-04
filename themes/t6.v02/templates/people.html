@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+{# 개인 페이지에 붙는 논문 수(구성원 pub_name으로 자동 연결)를 카드에 보인다 #}
+{% set NP = {} %}{% for x in people_pages %}{% set _ = NP.update({x.id: x.pubs|length}) %}{% endfor %}
+<header class="page-head">
+  <h1 class="page-title">{{ t('nav.people') }}</h1>
+</header>
+
+<nav class="pill-nav pill-nav--jump" aria-label="{{ t('common.sections') }}">
+  <a href="#pi">{{ t('people.role.pi') }}</a>
+  {% for role, ms in member_groups %}<a href="#{{ role }}">{{ t('people.role.' ~ role) }} <span>{{ ms|length }}</span></a>{% endfor %}
+  {% if alumni %}<a href="#alumni">{{ t('people.alumni') }} <span>{{ alumni|length }}</span></a>{% endif %}
+</nav>
+
+{% set pu = member_url(pi) %}
+<section class="pi-card" id="pi" aria-labelledby="h-pi">
+  {{ ui.portrait(pi, 'portrait portrait--card') }}
+  <div class="pi-card-text">
+    <p class="eyebrow">{{ t('people.pi') }}</p>
+    <h2 class="pi-name" id="h-pi">{% if pu %}<a href="{{ pu }}">{{ tr(pi.name) }}</a>{% else %}{{ tr(pi.name) }}{% endif %}</h2>
+    <ul class="pi-roles">{% for r in pi.roles %}<li>{{ tr(r) }}</li>{% endfor %}</ul>
+    <ul class="pi-contact">
+      <li>{{ ui.icon('mail') }}<a href="mailto:{{ pi.email }}">{{ pi.email }}</a></li>
+      <li>{{ ui.icon('contact') }}<span>{{ tr(pi.office) }}</span></li>
+      <li>{{ ui.icon('phone') }}<a href="tel:{{ pi.phone|replace('-', '') }}">{{ pi.phone }}</a></li>
+    </ul>
+    {% if pu %}<p class="pi-actions"><a class="btn btn--outline" href="{{ pu }}">{{ ui.icon('user') }} {{ t('people.full_profile') }}</a></p>{% endif %}
+  </div>
+</section>
+
+{% for role, ms in member_groups %}
+<section class="sec" id="{{ role }}" aria-labelledby="h-{{ role }}">
+  <div class="sec-head"><h2 class="sec-title" id="h-{{ role }}">{{ t('people.role.' ~ role) }}</h2><span class="count">{{ ms|length }}</span></div>
+  <div class="member-grid">
+    {% for mm in ms %}{{ ui.person(mm, npubs=NP.get(mm.id, 0)) }}{% endfor %}
+  </div>
+</section>
+{% else %}
+<section class="sec" id="members">
+  <div class="sec-head"><h2 class="sec-title">{{ t('people.members') }}</h2></div>
+  <p class="empty">{{ t('common.empty') }}</p>
+</section>
+{% endfor %}
+
+{% if alumni %}
+<section class="sec" id="alumni" aria-labelledby="h-alumni">
+  <div class="sec-head"><h2 class="sec-title" id="h-alumni">{{ t('people.alumni') }}</h2><span class="count">{{ alumni|length }}</span></div>
+  <div class="member-grid member-grid--alum">
+    {% for a in alumni %}{{ ui.person(a, alum=True, npubs=NP.get(a.id, 0)) }}{% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

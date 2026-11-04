@@ -1,0 +1,78 @@
+{# basic.v02 테마 전용 문구와 매크로. 문구는 i18n.yaml에 아직 없는 것만 두고, 공통 키가 생기면 t()로 바꾼다.
+   사용: {% import 'ui.html' as ui with context %} … {{ tr(ui.TX.since)|replace('{y}', stats.first_year) }} #}
+{% set TX = {
+  'since': {'en': 'Since {y}', 'ko': '{y}년부터'},
+  'board_search': {'en': 'Search notices…', 'ko': '공지 제목·요약 검색…'},
+  'gallery_search': {'en': 'Search albums…', 'ko': '앨범 제목 검색…'},
+  'shown': {'en': 'shown', 'ko': '건 표시'},
+  'no': {'en': 'No.', 'ko': '번호'},
+  'category': {'en': 'Category', 'ko': '분류'},
+  'title': {'en': 'Title', 'ko': '제목'},
+  'date': {'en': 'Date', 'ko': '날짜'},
+  'no_match': {'en': 'No matching posts.', 'ko': '조건에 맞는 글이 없습니다.'},
+  'has_photo': {'en': 'with picture', 'ko': '사진 있음'},
+  'has_video': {'en': 'with video', 'ko': '영상 있음'},
+  'per_year': {'en': 'Papers per year', 'ko': '연도별 논문 수'},
+  'lab_per_year': {'en': 'Lab papers per year', 'ko': '연구실 연도별 논문 수'},
+  'per_year_note': {'en': 'Click a bar to jump to that year.', 'ko': '막대를 누르면 그 해로 이동합니다.'},
+  'coauthors': {'en': 'Co-authors in the lab', 'ko': '연구실 내 공저자'},
+  'coauthors_note': {'en': 'Lab members and alumni who appear on the papers above (excluding the professor).', 'ko': '위 논문에 함께 이름을 올린 구성원·졸업생입니다(교수 제외).'},
+  'papers_n': {'en': '{n} papers', 'ko': '논문 {n}편'},
+  'paper_1': {'en': '1 paper', 'ko': '논문 1편'},
+  'map_title': {'en': 'Where we look', 'ko': '연구 지역'},
+  'map_note': {'en': 'Key study regions of each research area (points from the research data; map centered on the Pacific).', 'ko': '연구 분야별 주요 연구 지역입니다(연구 자료의 좌표, 태평양 중심 지도).'},
+  'archive': {'en': 'Old site posts', 'ko': '이전 사이트 글 찾기'},
+  'archive_intro': {'en': 'Posts from the previous lab website (climate.snu.ac.kr) and where they live now. Search by the original board number or by title.', 'ko': '이전 연구실 홈페이지(climate.snu.ac.kr)의 게시글이 새 사이트 어디로 옮겨졌는지 보여 줍니다. 원래 게시판 번호나 제목으로 찾을 수 있습니다.'},
+  'archive_search': {'en': 'Board number or title…', 'ko': '게시판 번호 또는 제목…'},
+  'board': {'en': 'Original board', 'ko': '원래 게시판'},
+  'new_place': {'en': 'Now in', 'ko': '새 위치'},
+  'boards': {'notice': {'en': 'Notice', 'ko': '공지'}, 'gallery': {'en': 'Gallery', 'ko': '갤러리'},
+             'portfolio': {'en': 'Portfolio', 'ko': '포트폴리오'}, 'gsmagazine': {'en': 'GS Caltex Magazine', 'ko': 'GS칼텍스 매거진'}},
+  'all': {'en': 'All', 'ko': '전체'},
+} %}
+
+{# 연도 막대 그래프(SVG). series = [(연도, 건수)], href(y) 대신 prefix(+연도)로 링크. 데이터는 stats/논문에서만 온다 #}
+{% macro year_bars(series, prefix='', label='', cls='ybars') %}
+{% set mx = (series|map(attribute=1)|max) or 1 %}
+{% set n = series|length %}
+{% set bw = 24 %}{% set h = 120 %}
+<figure class="{{ cls }}">
+  <svg viewBox="0 0 {{ n * bw }} {{ h + 34 }}" width="{{ (n * bw * 1.3)|round|int }}" height="{{ ((h + 34) * 1.3)|round|int }}" role="img" aria-label="{{ label }}">
+    <line class="ybars-base" x1="0" x2="{{ n * bw }}" y1="{{ h + 6 }}" y2="{{ h + 6 }}"/>
+    {% for y, c in series %}{% set bh = (c / mx * h)|round(1) %}{% set x = (loop.index0 * bw) %}
+    {% if c and prefix %}<a href="{{ prefix }}{{ y }}">{% endif %}
+    <g class="ybars-bar{% if not c %} is-zero{% endif %}"><title>{{ y }}: {{ c }}</title>
+      <rect class="ybars-hit" x="{{ x }}" y="0" width="{{ bw }}" height="{{ h + 34 }}"/>
+      <rect x="{{ x + 4 }}" y="{{ h + 6 - bh }}" width="{{ bw - 8 }}" height="{{ bh if c else 0 }}" rx="2"/>
+      {% if c %}<text class="ybars-n" x="{{ x + bw / 2 }}" y="{{ h + 2 - bh }}">{{ c }}</text>{% endif %}
+      {% if loop.first or loop.last or (y % 5 == 0 and loop.index0 > 1 and loop.revindex0 > 1) %}<text class="ybars-y" x="{{ x + bw / 2 }}" y="{{ h + 26 }}">{{ y }}</text>{% endif %}
+    </g>
+    {% if c and prefix %}</a>{% endif %}
+    {% endfor %}
+  </svg>
+</figure>
+{% endmacro %}
+
+{# 경위도 격자 지도(위도 90°N–55°S). k = 표식 크기 배율. pts = [{lat, lon, cls, label, n, href, dx}] — 지도 좌표식은 tools/make_land.mjs와 같다(중심 160°E, 1° = 2px) #}
+{% macro region_map(pts, label='', cls='rmap', k=1) %}
+<figure class="{{ cls }}">
+  <svg viewBox="0 0 720 290" role="img" aria-label="{{ label }}">
+    <rect class="rmap-sea" x="0" y="0" width="720" height="290"/>
+    <image href="{{ asset('land.svg') }}" x="0" y="0" width="720" height="360"/>
+    {% for lat in [60, 30, -30] %}<line class="rmap-grid" x1="0" x2="720" y1="{{ 180 - 2 * lat }}" y2="{{ 180 - 2 * lat }}"/>{% endfor %}
+    <line class="rmap-grid rmap-eq" x1="0" x2="720" y1="180" y2="180"/>
+    {% for lon in range(-180, 180, 30) %}{% set gx = 360 + 2 * (((lon - 160 + 540) % 360) - 180) %}<line class="rmap-grid" x1="{{ gx }}" x2="{{ gx }}" y1="0" y2="290"/>{% endfor %}
+    {% for lon, txt in [(120, '120°E'), (180, '180°'), (-120, '120°W'), (-60, '60°W'), (60, '60°E')] %}{% set gx = 360 + 2 * (((lon - 160 + 540) % 360) - 180) %}<text class="rmap-lab" x="{{ gx + 3 }}" y="286">{{ txt }}</text>{% endfor %}
+    <text class="rmap-lab" x="4" y="177">EQ</text>
+    {% for p in pts %}{% set x = 360 + 2 * (((p.lon - 160 + 540) % 360) - 180) + (p.dx or 0) %}{% set y = 180 - 2 * p.lat %}
+    {% if p.href %}<a href="{{ p.href }}">{% endif %}
+    <g class="rmap-pt {{ p.cls }}"><title>{{ p.label }}</title>
+      <circle class="rmap-halo" cx="{{ x }}" cy="{{ y }}" r="{{ 13 * k }}"/>
+      <circle class="rmap-dot" cx="{{ x }}" cy="{{ y }}" r="{{ (8 if p.n else 6) * k }}"/>
+      {% if p.n %}<text class="rmap-n" x="{{ x }}" y="{{ y + 3.5 * k }}" style="font-size: {{ 9.5 * k }}px">{{ p.n }}</text>{% endif %}
+    </g>
+    {% if p.href %}</a>{% endif %}
+    {% endfor %}
+  </svg>
+</figure>
+{% endmacro %}

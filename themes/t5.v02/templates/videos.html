@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{% block ptitle %}{{ t('videos.title') }}{% endblock %}
+{% block plead %}{{ t('videos.intro') }}{% endblock %}
+
+{% block content %}
+{% set paired = videos|selectattr('pub')|list %}
+{% set rest = videos|rejectattr('pub')|list %}
+<div class="wrap">
+  <p class="channel-line"><a class="channel-btn" href="{{ channel.url or site.links.youtube }}" target="_blank" rel="noopener">{{ t('videos.channel') }} <span aria-hidden="true">→</span></a>{% if channel.title %} <span class="channel-name">{{ channel.title }}</span>{% endif %}</p>
+
+  {% if paired %}
+  {# ---------- Watch & Read: 영상 설명의 DOI로 연결된 논문과 짝 ---------- #}
+  <section class="wr" aria-labelledby="wr-h">
+    {{ x.sec_head(x.L('watch_read') ~ ' · ' ~ paired|length, hid='wr-h') }}
+    <p class="wr-lead">{{ x.L('watch_read_lead') }}</p>
+    {% for v in paired %}{% set p = v.pub %}
+    <article class="wr-pair">
+      <div class="wr-video">
+        {{ yt_html(v.id, v.title) }}
+        <h3 class="video-card-title" lang="{{ text_lang(v.title) }}"><a href="{{ youtube_url(v.id) }}" target="_blank" rel="noopener">{{ v.title }}</a></h3>
+        <time class="video-card-date" datetime="{{ v.published }}">{{ fmt_date(v.published) }}</time>
+      </div>
+      <div class="wr-paper">
+        <p class="kicker"><span class="kicker-cat">{{ t('news.paper') }}</span><span>{{ p.journal }}</span><span>{{ p.year }}</span></p>
+        <h3 class="wr-title">{% if p.doi %}<a href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ rich(p.title) }}</a>{% else %}{{ rich(p.title) }}{% endif %}</h3>
+        <p class="wr-authors">{{ authors(p) }}</p>
+        <p class="wr-cite">{{ cite(p) }}</p>
+        <p class="wr-actions">
+          {% if p.doi %}<a class="join-btn" href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ x.L('read_paper') }} <span aria-hidden="true">↗</span></a>{% endif %}
+          <a class="wr-num" href="{{ pub_url(p) }}">{{ x.L('in_list') }} · № {{ p.num }}</a>
+        </p>
+        {% for n in news_items if n.youtube == v.id %}<p class="wr-story"><span class="kicker-cat">{{ t('news.title') }}</span> <a href="{{ news_url(n) }}">{{ tr(n.title) }}</a></p>{% endfor %}
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if rest %}
+  <section class="more-videos" aria-labelledby="mv-h">
+    {{ x.sec_head(x.L('more_videos') if paired else t('videos.title'), hid='mv-h') }}
+    <div class="video-grid video-grid--page">
+      {% for v in rest %}{{ m.video_card(v) }}{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+  {% if not videos %}<p class="empty">{{ t('common.empty') }}</p>{% endif %}
+</div>
+{% endblock %}

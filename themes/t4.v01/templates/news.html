@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ ui.page_head(t('news.title'), t('news.intro'), [(t('nav.news'), none)]) }}
+
+<div class="news-tools panel">
+  {{ m.news_filter('news-filter') }}
+  {{ m.year_links(news_by_year, 'n', 'year-strip') }}
+</div>
+
+{% for y, items in news_by_year %}
+<section class="panel news-year" id="n{{ y }}" data-news-year aria-labelledby="n{{ y }}-h">
+  <h2 class="news-year-title" id="n{{ y }}-h"><span class="mono">{{ y }}</span> <span class="news-year-n">{{ items|length }} {{ ui.s('items') }}</span></h2>
+  <ul class="nlogs">{% for p in items %}{{ ui.news_row(p) }}{% endfor %}</ul>
+</section>
+{% else %}<p class="empty">{{ t('common.empty') }}</p>
+{% endfor %}
+{% endblock %}

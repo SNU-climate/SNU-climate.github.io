@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{% block ptitle %}{{ t('about.title') }}{% endblock %}
+{% block plead %}{{ tr(site.lab.tagline) }}{% endblock %}
+
+{% block content %}
+{% set pu = member_url(pi) %}
+{% set groups = dict(member_groups) %}
+<div class="wrap">
+  {# 여는 글(연구실 소개 전문) #}
+  <section class="ednote ednote--page" aria-labelledby="welcome-h">
+    {% if site.lab.photo %}<figure class="ednote-photo"><img src="{{ static(site.lab.photo) }}" alt="{{ lab_name }}"><figcaption>{{ lab_name }} · {{ tr(site.lab.affiliation) }}</figcaption></figure>{% endif %}
+    <div class="ednote-text">
+      <p class="cover-label">{{ x.L('editor') }}</p>
+      <h2 class="ednote-title" id="welcome-h">{{ t('home.welcome') }}</h2>
+      <div class="prose ednote-prose{% if lang == 'en' %} prose--dropcap{% endif %}">{% for para in tr(site.lab.intro).split('\n\n') %}<p>{{ para }}</p>{% endfor %}</div>
+    </div>
+  </section>
+
+  {# 숫자로 보는 연구실(실제 데이터) #}
+  <section class="numbers" aria-labelledby="numbers-h">
+    {{ x.sec_head(x.L('numbers'), hid='numbers-h') }}
+    <dl class="numbers-row">
+      <div><dt>{{ t('pubs.title') }}</dt><dd><a href="{{ page_url('publications') }}">{{ stats.pubs }}</a></dd><dd class="numbers-sub">{{ stats.first_year }}–{{ stats.last_year }}</dd></div>
+      <div><dt>{{ x.L('journals_t') }}</dt><dd>{{ stats.journals }}</dd>{% if stats.top_journals %}<dd class="numbers-sub">{{ x.L('top') }} {{ stats.top_journals[0][0] }} ({{ stats.top_journals[0][1] }})</dd>{% endif %}</div>
+      <div><dt>{{ t('people.members') }}</dt><dd><a href="{{ page_url('people') }}">{{ stats.members }}</a></dd><dd class="numbers-sub">+ {{ stats.alumni }} {{ t('people.alumni')|lower if lang == 'en' else '졸업생' }}</dd></div>
+      <div><dt>{{ t('videos.title') }}</dt><dd><a href="{{ page_url('videos') }}">{{ stats.videos }}</a></dd><dd class="numbers-sub">YouTube</dd></div>
+    </dl>
+  </section>
+
+  <div class="about-grid">
+    {# 만드는 사람들(구성원 명단) #}
+    <section class="staffbox" aria-labelledby="staff-h">
+      <h2 class="rule-h" id="staff-h">{{ x.L('masthead') }}</h2>
+      <dl class="staff">
+        <div><dt>{{ t('people.pi') }}</dt><dd>{% if pu %}<a href="{{ pu }}">{{ tr(pi.name) }}</a>{% else %}{{ tr(pi.name) }}{% endif %}</dd></div>
+        {% for role, ms in member_groups %}
+        <div><dt>{{ t('people.role.' ~ role) }}</dt><dd>{% for mm in ms %}{% set u = member_url(mm) %}{% if u %}<a href="{{ u }}">{{ tr(mm.name) }}</a>{% else %}{{ tr(mm.name) }}{% endif %}{% if not loop.last %}<span class="staff-sep" aria-hidden="true"> · </span>{% endif %}{% endfor %}</dd></div>
+        {% endfor %}
+        {% if alumni %}<div><dt>{{ t('people.alumni') }}</dt><dd><a href="{{ page_url('people') }}#alumni">{{ alumni|length }} {{ t('people.alumni')|lower if lang == 'en' else '명' }} <span aria-hidden="true">→</span></a></dd></div>{% endif %}
+      </dl>
+    </section>
+
+    <div class="about-side">
+      <section aria-labelledby="areas-h">
+        <h2 class="rule-h" id="areas-h">{{ t('home.research') }}</h2>
+        <ol class="side-list side-list--links">
+          {% for r in research %}<li><span class="interest-no">{{ x.no(loop.index) }}</span><a href="{{ topic_url(r) }}">{{ tr(r.title) }}</a></li>{% endfor %}
+        </ol>
+      </section>
+      <section aria-labelledby="loc-h">
+        <h2 class="rule-h" id="loc-h">{{ t('menu.location') }}</h2>
+        <address class="about-addr">{{ tr(site.contact.address) }}</address>
+        <a class="story-more" href="{{ page_url('contact') }}">{{ t('contact.title') }} <span aria-hidden="true">→</span></a>
+      </section>
+    </div>
+  </div>
+</div>
+{% endblock %}

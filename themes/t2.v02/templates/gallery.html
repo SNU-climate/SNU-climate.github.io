@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+{% call ui.phead('gallery', t('gallery.title'), t('gallery.intro')) %}
+<div class="list-tools">
+  <p class="list-count"><span class="pub-count-n">{{ albums|length }}</span> {{ ui.tx('albums') }}</p>
+  {{ m.year_links(albums_by_year, 'g', 'years years--tools') }}
+</div>
+{% endcall %}
+
+<div class="wrap">
+  {% set ns = namespace(i=0) %}
+  {% for y, ps in albums_by_year %}
+  <section class="yr yr--gal" id="g{{ y }}" aria-labelledby="gh{{ y }}">
+    <div class="yr-label">
+      <h2 class="yr-title" id="gh{{ y }}">{{ y }}</h2>
+      <span class="yr-n">{{ ps|length }}</span>
+    </div>
+    <div class="yr-list albs">
+      {% for p in ps %}{{ ui.album_tile(p, albums|length - ns.i) }}{% set ns.i = ns.i + 1 %}{% endfor %}
+    </div>
+  </section>
+  {% else %}
+  <p class="empty">{{ t('common.empty') }}</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+title: "Sidebar Portfolio v02"
+concept:
+  en: >-
+    v01's lab-centred al-folio layout, pushed toward a research-portfolio tool: every paper gets a
+    BibTeX / citation copy panel; the publication list gains a live year chart with publisher badges,
+    corresponding-author and featured toggles; a title-keyword timeline compares El Niño, Arctic, carbon,
+    monsoon, extremes and AI papers across 2000–2026; and member pages become research profiles
+    (papers per year, journals, first-author count, lab co-authors).
+  ko: >-
+    v01의 연구실 중심 al-folio 구성을 연구 포트폴리오 도구로 확장했다. 논문마다 BibTeX·인용문 복사 창을 달고,
+    논문 목록에 출판사 배지·교신저자·대표 논문 필터와 실시간 연도 막대그래프를 붙였다. 제목 키워드로 엘니뇨·북극·탄소·
+    몬순·극한·AI 논문의 연도별 흐름을 나란히 보여 주고, 구성원 페이지는 연도별 논문·학술지·제1저자 수·연구실 공저자를
+    담은 연구 프로필이 됐다.
+palette: ["#0b6a8a", "#ffffff", "#212529", "#f6f7f9", "#9c1d3b"]
+fonts: ["Roboto", "Roboto Slab", "Pretendard"]
+extra_pages: [gallery]
+pi_page: true

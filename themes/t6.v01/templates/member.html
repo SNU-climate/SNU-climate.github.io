@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set p = person %}
+{% set back = '#pi' if p.is_pi else ('#alumni' if p.alumnus else '#' ~ p.role) %}
+<p class="crumb"><a href="{{ page_url('people') }}{{ back }}">{{ ui.icon('back', 'ic ic--sm') }} {{ t('people.back') }}</a></p>
+
+<header class="profile-head">
+  {% if p.is_pi %}{{ ui.portrait(p, 'portrait portrait--profile') }}{% else %}{{ ui.avatar(p, 'avatar avatar--xl') }}{% endif %}
+  <div class="profile-id">
+    <p class="eyebrow">{% if p.is_pi %}{{ t('people.pi') }}{% elif p.alumnus %}{{ t('people.alumni') }}{% else %}{{ t('people.members') }}{% endif %}</p>
+    <h1 class="page-title profile-name">{{ tr(p.name) }}</h1>
+    {% if p.name is mapping and p.name[other_lang] and p.name[other_lang] != tr(p.name) %}<p class="profile-alt" lang="{{ other_lang }}">{{ p.name[other_lang] }}</p>{% endif %}
+    <ul class="profile-facts">
+      {% if p.is_pi %}
+        {% for r in p.roles %}<li>{{ ui.icon('building') }}<span>{{ tr(r) }}</span></li>{% endfor %}
+        <li>{{ ui.icon('contact') }}<span>{{ tr(p.office) }}</span></li>
+        <li>{{ ui.icon('phone') }}<a href="tel:{{ p.phone|replace('-', '') }}">{{ p.phone }}</a></li>
+      {% elif p.alumnus %}
+        {% set deg = [p.degree, p.year]|select|join(', ') %}
+        {% if deg %}<li>{{ ui.icon('publications') }}<span>{{ deg }}</span></li>{% endif %}
+        {% if p.current %}<li>{{ ui.icon('building') }}<span>{{ t('people.current') }}: {{ tr(p.current) }}</span></li>{% endif %}
+      {% else %}
+        <li>{{ ui.icon('user') }}<span>{{ tr(p.position) if p.position else t('people.role.' ~ p.role) }}</span></li>
+      {% endif %}
+      {% if p.email %}<li>{{ ui.icon('mail') }}<a href="mailto:{{ p.email }}">{{ m.email_wbr(p.email) }}</a></li>{% endif %}
+      {% if p.homepage %}<li>{{ ui.icon('link') }}<a href="{{ p.homepage }}" target="_blank" rel="noopener">{{ p.homepage|replace('https://', '')|replace('http://', '')|replace('www.', '')|truncate(42, True, '…', 0) }}</a></li>{% endif %}
+    </ul>
+  </div>
+</header>
+
+{% if p.is_pi and p.bio %}<p class="lead-text">{{ tr(p.bio) }}</p>{% endif %}
+
+{% if p.is_pi and p.interests %}
+<p class="interests-label">{{ t('people.interests') }}</p>
+<ul class="chips">{% for i in p.interests %}<li>{{ tr(i) }}</li>{% endfor %}</ul>
+{% elif not p.is_pi and tr_list(p.interests) %}
+<p class="interests-label">{{ t('people.interests') }}</p>
+<ul class="chips">{% for x in tr_list(p.interests) %}<li>{{ x }}</li>{% endfor %}</ul>
+{% endif %}
+
+<div class="cv">
+  {{ ui.cv_card(t('people.education'), p.education, 'year') }}
+  {{ ui.cv_card(t('people.career') if p.is_pi else t('people.experience'), p.career, 'period') }}
+  {% if p.is_pi %}{{ ui.cv_card(t('people.service'), p.service, 'period') }}{% endif %}
+  {{ ui.cv_card(t('people.awards'), p.awards, 'year') }}
+  {% if p.is_pi %}{{ ui.cv_card(t('people.memberships'), p.memberships, 'year') }}{% endif %}
+</div>
+
+{% if p.pubs %}
+<section class="sec" aria-labelledby="h-ppubs">
+  <div class="sec-head">
+    <h2 class="sec-title" id="h-ppubs">{{ t('people.selected') if p.is_pi else t('people.pubs') }}</h2>
+    <span class="count">{{ p.pubs|length }}</span>
+    <a class="sec-more" href="{{ page_url('publications') }}">{{ t('home.view_all') }} ({{ stats.pubs }}) {{ ui.icon('arrow', 'ic ic--sm') }}</a>
+  </div>
+  {% if not p.is_pi %}<p class="note">{{ t('people.pubs_note') }}</p>{% endif %}
+  <ol class="bib-list bib-list--compact">{% for x in p.pubs %}{{ ui.pub(x, anchor=False) }}{% endfor %}</ol>
+</section>
+{% endif %}
+{% endblock %}

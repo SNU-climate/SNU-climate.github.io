@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% import 'ui.html' as ui %}
+{# 원본 홈 배치: 히어로(슬로건) → 연구 5개 → Welcome → Notice·Gallery → (추가) 최근 논문·유튜브 #}
+{% block hero %}
+<section class="hero-band">
+  {% if site.lab.hero or site.lab.photo %}<img class="hero-bg" src="{{ static(site.lab.hero or site.lab.photo) }}" alt="">{% endif %}
+  <div class="wrap hero-in">
+    <p class="eyebrow">{{ lab_name }} · {{ t('common.snu') }}</p>
+    <h1 class="hero-title">{{ tr(site.lab.tagline) }}</h1>
+    {% if site.lab.lead %}<p class="hero-lead">{{ tr(site.lab.lead) }}</p>{% endif %}
+    <a class="btn" href="{{ page_url('about') }}">{{ t('research.more') }} →</a>
+  </div>
+  <div class="hero-facts">
+    <div class="wrap hero-facts-in">
+      <a href="{{ page_url('publications') }}"><strong>{{ stats.pubs }}</strong> {{ t('pubs.title') }} <span class="hero-facts-sub">{{ tr(ui.TX.since)|replace('{y}', stats.first_year) }}</span></a>
+      <a href="{{ page_url('research') }}"><strong>{{ research|length }}</strong> {{ t('home.research') }}</a>
+      <a href="{{ page_url('people') }}"><strong>{{ stats.members }}</strong> {{ t('people.members') }}</a>
+      <a href="{{ page_url('people') }}#alumni"><strong>{{ stats.alumni }}</strong> {{ t('people.alumni') }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block content %}
+<section class="sec">
+  <div class="sec-head"><h2>{{ t('home.research') }}</h2><a href="{{ page_url('research') }}">{{ t('home.view_all') }} →</a></div>
+  <div class="topic-cards">
+    {% for r in research %}
+    <a class="topic-card" href="{{ topic_url(r) }}">
+      <div class="topic-card-img">{% if r.image %}<img src="{{ static(r.image) }}" alt="" loading="lazy">{% endif %}</div>
+      <h3>{{ tr(r.title) }}</h3>
+      <p class="muted" lang="{{ other_lang }}">{{ r.title[other_lang] }}</p>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="sec welcome">
+  {% if site.lab.photo %}<img class="welcome-img" src="{{ static(site.lab.photo) }}" alt="" loading="lazy">{% endif %}
+  <div>
+    <h2>{{ t('home.welcome') }}</h2>
+    <p>{{ tr(site.lab.intro)|truncate(420) }}</p>
+    <a href="{{ page_url('about') }}">{{ t('research.more') }} →</a>
+  </div>
+</section>
+
+<div class="sec two-col">
+  <section>
+    <div class="sec-head"><h2>{{ t('menu.notice') }}</h2><a href="{{ page_url('news') }}">{{ t('home.view_all') }} →</a></div>
+    <ul class="board">
+      {% for p in news_items[:6] %}
+      <li><a href="{{ news_url(p) }}"><span class="news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span> <span lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</span></a><time datetime="{{ p.date }}">{{ fmt_date(p.date, 'short') }}</time></li>
+      {% else %}<li>{{ t('common.empty') }}</li>{% endfor %}
+    </ul>
+  </section>
+  <section>
+    <div class="sec-head"><h2>{{ t('menu.gallery') }}</h2><a href="{{ page_url('gallery') }}">{{ t('home.view_all') }} →</a></div>
+    <div class="album-mini">
+      {% for p in albums[:4] %}
+      <a class="album-mini-item" href="{{ news_url(p) }}">
+        {% set c = cover_url(p) %}<span class="album-mini-img">{% if c %}<img src="{{ c }}" alt="" loading="lazy">{% endif %}</span>
+        <span class="album-mini-title">{{ tr(p.title) }}</span>
+      </a>
+      {% else %}<p>{{ t('common.empty') }}</p>{% endfor %}
+    </div>
+  </section>
+</div>
+
+<section class="sec">
+  <div class="sec-head"><h2>{{ t('home.publications') }}</h2><a href="{{ page_url('publications') }}">{{ t('home.view_all') }} →</a></div>
+  <ol class="pub-ol">{% for p in pubs[:site.home.publications] %}{{ m.pub_item(p) }}{% endfor %}</ol>
+</section>
+
+{% if videos %}
+<section class="sec">
+  <div class="sec-head"><h2>{{ t('menu.videos') }}</h2><a href="{{ channel.url or site.links.youtube }}" target="_blank" rel="noopener">{{ t('videos.channel') }} →</a></div>
+  <div class="grid grid-3 grid-3--fixed">{% for v in videos[:site.home.videos] %}{{ m.video_card(v) }}{% endfor %}</div>
+</section>
+{% endif %}
+{% endblock %}

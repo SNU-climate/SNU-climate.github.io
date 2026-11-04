@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set p = person %}
+{% set back = '#pi' if p.is_pi else ('#alumni' if p.alumnus else '#' ~ p.role) %}
+<p class="crumb"><a href="{{ page_url('people') }}{{ back }}">{{ ui.icon('back', 'ic ic--sm') }} {{ t('people.back') }}</a></p>
+
+<header class="profile-head">
+  {% if p.is_pi %}{{ ui.portrait(p, 'portrait portrait--profile') }}{% else %}{{ ui.avatar(p, 'avatar avatar--xl') }}{% endif %}
+  <div class="profile-id">
+    <p class="eyebrow">{% if p.is_pi %}{{ t('people.pi') }}{% elif p.alumnus %}{{ t('people.alumni') }}{% else %}{{ t('people.members') }}{% endif %}</p>
+    <h1 class="page-title profile-name">{{ tr(p.name) }}</h1>
+    {% if p.name is mapping and p.name[other_lang] and p.name[other_lang] != tr(p.name) %}<p class="profile-alt" lang="{{ other_lang }}">{{ p.name[other_lang] }}</p>{% endif %}
+    <ul class="profile-facts">
+      {% if p.is_pi %}
+        {% for r in p.roles %}<li>{{ ui.icon('building') }}<span>{{ tr(r) }}</span></li>{% endfor %}
+        <li>{{ ui.icon('contact') }}<span>{{ tr(p.office) }}</span></li>
+        <li>{{ ui.icon('phone') }}<a href="tel:{{ p.phone|replace('-', '') }}">{{ p.phone }}</a></li>
+      {% elif p.alumnus %}
+        {% set deg = [p.degree, p.year]|select|join(', ') %}
+        {% if deg %}<li>{{ ui.icon('publications') }}<span>{{ deg }}</span></li>{% endif %}
+        {% if p.current %}<li>{{ ui.icon('building') }}<span>{{ t('people.current') }}: {{ tr(p.current) }}</span></li>{% endif %}
+      {% else %}
+        <li>{{ ui.icon('user') }}<span>{{ tr(p.position) if p.position else t('people.role.' ~ p.role) }}</span></li>
+      {% endif %}
+      {% if p.email %}<li>{{ ui.icon('mail') }}<a href="mailto:{{ p.email }}">{{ m.email_wbr(p.email) }}</a></li>{% endif %}
+      {% if p.homepage %}<li>{{ ui.icon('link') }}<a href="{{ p.homepage }}" target="_blank" rel="noopener">{{ p.homepage|replace('https://', '')|replace('http://', '')|replace('www.', '')|truncate(42, True, '…', 0) }}</a></li>{% endif %}
+    </ul>
+  </div>
+</header>
+
+{% if p.is_pi and p.bio %}<p class="lead-text">{{ tr(p.bio) }}</p>{% endif %}
+
+{% if p.is_pi and p.interests %}
+<p class="interests-label">{{ t('people.interests') }}</p>
+<ul class="chips">{% for i in p.interests %}<li>{{ tr(i) }}</li>{% endfor %}</ul>
+{% elif not p.is_pi and tr_list(p.interests) %}
+<p class="interests-label">{{ t('people.interests') }}</p>
+<ul class="chips">{% for x in tr_list(p.interests) %}<li>{{ x }}</li>{% endfor %}</ul>
+{% endif %}
+
+{# ---- 연구 프로필: 논문 목록(교수는 연구실 전체 논문)에서 연도별 건수·학술지·제1저자·연구실 공저자를 센다 ---- #}
+{% macro nk(name) %}{{ (name or '')|lower|replace('.', '')|replace(' ', '')|replace('-', '')|replace('‐', '') }}{% endmacro %}
+{% set plist = pubs if p.is_pi else (p.pubs or []) %}
+{% if plist %}
+{% set me = nk(p.pub_name)|string %}
+{% set YC = {} %}{% set JC = {} %}{% set AK = {} %}
+{% set nf = namespace(first=0, ca=0) %}
+{% for x in plist %}
+  {% set _ = YC.update({x.year: YC.get(x.year, 0) + 1}) %}
+  {% set _ = JC.update({x.journal: JC.get(x.journal, 0) + 1}) %}
+  {% set keys = namespace(s='|') %}{% for a in x.authors or [] %}{% set keys.s = keys.s ~ nk(a) ~ '|' %}{% endfor %}
+  {% set _ = AK.update({x.num: keys.s}) %}
+  {% if me and x.authors and (nk(x.authors[0])|string) == me %}{% set nf.first = nf.first + 1 %}{% endif %}
+  {% if x.corresponding %}{% set nf.ca = nf.ca + 1 %}{% endif %}
+{% endfor %}
+{% set years = YC.keys()|list|sort %}
+{% set y0, y1 = years[0], years[-1] %}
+{% set ymax = YC.values()|max %}
+{% set co = namespace(rows=[]) %}
+{% for o in members_all + alumni if o.pub_name and o.id != p.id %}
+  {% set ok = '|' ~ nk(o.pub_name) ~ '|' %}
+  {% set c = namespace(n=0) %}
+  {% for x in plist %}{% if ok in AK[x.num] and is_me(o.pub_name, x) %}{% set c.n = c.n + 1 %}{% endif %}{% endfor %}
+  {% if c.n %}{% set co.rows = co.rows + [(c.n, o)] %}{% endif %}
+{% endfor %}
+{% set corows = co.rows|sort(attribute='0', reverse=True) %}
+{% set nums = plist|map(attribute='num')|list %}
+{% set linked = [] %}
+{% if not p.is_pi %}{% for r in research %}{% if r.pubs|selectattr('num', 'in', nums)|list %}{% set _ = linked.append(r) %}{% endif %}{% endfor %}{% endif %}
+<section class="rp" aria-labelledby="h-rp">
+  <h2 class="side-label" id="h-rp">{{ ui.icon('chart', 'ic ic--sm') }} {{ tr(ui.TXT.profile) }}</h2>
+  <div class="rp-grid">
+    <dl class="rp-stats">
+      <div><dt>{{ tr(ui.TXT.lab_total) if p.is_pi else tr(ui.TXT.papers) }}</dt><dd>{{ plist|length }}</dd></div>
+      {% if p.is_pi %}<div><dt>{{ t('pubs.corresponding') }}</dt><dd>{{ nf.ca }}</dd></div>
+      {% else %}<div><dt>{{ tr(ui.TXT.first_author) }}</dt><dd>{{ nf.first }}</dd></div>{% endif %}
+      <div><dt>{{ tr(ui.TXT.years_active) }}</dt><dd>{{ y0 }}{% if y1 != y0 %}–{{ y1 }}{% endif %}</dd></div>
+    </dl>
+    <figure class="rp-chart">
+      <figcaption class="px-label">{{ tr(ui.TXT.per_year) }}</figcaption>
+      {% set span = y1 - y0 + 1 %}{% set bw = 20 %}
+      <svg class="rp-svg" viewBox="0 0 {{ span * bw }} 86" width="{{ span * bw }}" height="86" role="img" aria-label="{{ tr(ui.TXT.per_year) }} {{ y0 }}–{{ y1 }}">
+        {% for y in range(y0, y1 + 1) %}{% set n = YC.get(y, 0) %}{% set h = (n / ymax * 64)|round(1) %}
+        <g><title>{{ y }}: {{ n }}</title>{% if n %}<rect x="{{ loop.index0 * bw + 3 }}" y="{{ 68 - h }}" width="{{ bw - 6 }}" height="{{ h }}" rx="2"/>{% endif %}<line x1="{{ loop.index0 * bw + 2 }}" y1="68.5" x2="{{ loop.index0 * bw + bw - 2 }}" y2="68.5"/></g>
+        {% if loop.first or loop.last or (span > 8 and y % 5 == 0 and y1 - y >= 3 and y - y0 >= 3) %}<text x="{{ 0 if loop.first else (span * bw if loop.last else loop.index0 * bw + bw / 2) }}" y="82" text-anchor="{{ 'start' if loop.first else ('end' if loop.last else 'middle') }}">{{ y }}</text>{% endif %}
+        {% endfor %}
+      </svg>
+    </figure>
+  </div>
+
+  <div class="rp-block">
+    <p class="px-label">{{ tr(ui.TXT.journals) }}</p>
+    <ul class="rp-journals">{% for j, n in (JC.items()|sort(attribute='1', reverse=True))[:8] %}<li>{{ ui.jbadge(j) }}<span>{{ n }}</span></li>{% endfor %}</ul>
+  </div>
+
+  {% if corows %}
+  <div class="rp-block">
+    <p class="px-label">{{ tr(ui.TXT.coauthors) }}</p>
+    <p class="px-note">{{ tr(ui.TXT.coauthors_note) }}</p>
+    <ul class="rp-co">
+      {% for n, o in corows[:12] %}{% set ou = member_url(o) %}
+      <li>{{ ui.avatar(o, 'avatar avatar--sm') }}<span class="rp-co-name">{% if ou %}<a href="{{ ou }}">{{ tr(o.name) }}</a>{% else %}{{ tr(o.name) }}{% endif %}</span><span class="rp-co-n">{{ n }}</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if linked %}
+  <div class="rp-block">
+    <p class="px-label">{{ tr(ui.TXT.topics) }}</p>
+    <ul class="chips chips--sm chips--link">{% for r in linked %}<li><a href="{{ topic_url(r) }}">{{ tr(r.title) }}</a></li>{% endfor %}</ul>
+  </div>
+  {% endif %}
+</section>
+{% endif %}
+
+<div class="cv">
+  {{ ui.cv_card(t('people.education'), p.education, 'year') }}
+  {{ ui.cv_card(t('people.career') if p.is_pi else t('people.experience'), p.career, 'period') }}
+  {% if p.is_pi %}{{ ui.cv_card(t('people.service'), p.service, 'period') }}{% endif %}
+  {{ ui.cv_card(t('people.awards'), p.awards, 'year') }}
+  {% if p.is_pi %}{{ ui.cv_card(t('people.memberships'), p.memberships, 'year') }}{% endif %}
+</div>
+
+{% if p.pubs %}
+<section class="sec" aria-labelledby="h-ppubs">
+  <div class="sec-head">
+    <h2 class="sec-title" id="h-ppubs">{{ t('people.selected') if p.is_pi else t('people.pubs') }}</h2>
+    <span class="count">{{ p.pubs|length }}</span>
+    <a class="sec-more" href="{{ page_url('publications') }}">{{ t('home.view_all') }} ({{ stats.pubs }}) {{ ui.icon('arrow', 'ic ic--sm') }}</a>
+  </div>
+  {% if not p.is_pi %}<p class="note">{{ t('people.pubs_note') }}</p>{% endif %}
+  <ol class="bib-list bib-list--compact">{% for x in p.pubs %}{{ ui.pub(x, anchor=False) }}{% endfor %}</ol>
+</section>
+{% endif %}
+{% endblock %}
+{% block scripts_extra %}{{ ui.bib_json(person.pubs) }}{% endblock %}

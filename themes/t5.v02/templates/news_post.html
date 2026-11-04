@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{% block pagehead %}{% endblock %}
+
+{% block content %}
+<article class="article{% if post.album %} article--album{% endif %}">
+  <header class="article-head wrap">
+    <p class="article-back">{% if post.album %}<a href="{{ page_url('gallery') }}"><span aria-hidden="true">←</span> {{ t('gallery.back') }}</a>
+      {% else %}<a href="{{ page_url('news') }}"><span aria-hidden="true">←</span> {{ t('news.back') }}</a>{% endif %}</p>
+    {% if post.album %}
+    <div class="kicker kicker--center"><span class="kicker-cat">{{ x.L('essay') }}</span><time datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time>{% if post.gallery %}<span>{{ post.gallery|length }} {{ x.photos(post.gallery|length) }}</span>{% endif %}</div>
+    {% else %}{{ x.kicker(post, 'kicker kicker--center') }}{% endif %}
+    <h1 class="article-title" lang="{{ text_lang(tr(post.title)) }}">{{ tr(post.title) }}</h1>
+    {% if post.summary %}<p class="article-dek">{{ tr(post.summary) }}</p>{% endif %}
+    <p class="article-byline">{{ lab_name }} <span aria-hidden="true">·</span> {{ tr(site.lab.affiliation) }}</p>
+  </header>
+
+  {% if post.album %}
+  {# 앨범: 표지는 갤러리 사진과 겹치므로 생략. 공통 본문(사진마다 원본 링크) #}
+  <div class="article-body article-body--wide">
+    {{ m.news_body(post) }}
+  </div>
+  {% else %}
+  {# 큰 표지: 표지 그림 → (그림이 없으면) 클릭해서 재생하는 영상 표지. 둘 다 없으면 표지 없이 본문.
+     표지 그림과 영상이 둘 다 있으면 영상은 본문 아래에 둔다(본문의 "아래 영상" 문구와 맞춘다). #}
+  {% set video_hero = post.youtube and not post.cover %}
+  {% if post.cover or video_hero %}
+  <figure class="article-cover wrap">
+    {% if post.cover %}
+    <div class="article-cover-media"><img src="{{ cover_url(post) }}" alt=""></div>
+    {% else %}
+    <div class="article-cover-media">{{ yt_html(post.youtube, tr(post.title)) }}</div>
+    <figcaption><span class="cap-mark" aria-hidden="true">▶</span> {{ t('news.video') }}{% if post.video %} — <span lang="{{ text_lang(post.video.title) }}">{{ post.video.title }}</span>{% endif %}</figcaption>
+    {% endif %}
+  </figure>
+  {% else %}
+  <div class="article-rule wrap" aria-hidden="true"></div>
+  {% endif %}
+
+  <div class="article-body">
+    {% if body_fallback %}<p class="lang-note">{{ t('common.lang_fallback') }}</p>{% endif %}
+    {# 본문이 숫자·기호로 시작하면(예: "2024년 3월") 드롭캡이 숫자를 쪼개므로 쓰지 않는다. 국문도 쓰지 않는다 #}
+    {% set first_ch = (body_html|striptags|trim)[:1] %}
+    {% set dropcap = lang == 'en' and not body_fallback and first_ch and first_ch not in '0123456789*"“‘\'([' and text_lang(first_ch) == 'en' %}
+    <div class="prose{% if dropcap %} prose--dropcap{% endif %}">{{ body_html }}</div>
+    {% if post.youtube and not video_hero %}
+    <figure class="news-video">
+      {{ yt_html(post.youtube, tr(post.title)) }}
+      <figcaption><span class="cap-mark" aria-hidden="true">▶</span> {{ t('news.video') }}{% if post.video %} — <span lang="{{ text_lang(post.video.title) }}">{{ post.video.title }}</span>{% endif %}</figcaption>
+    </figure>
+    {% endif %}
+    {% if post.pub %}
+    <aside class="news-paper">
+      <div class="news-paper-label">{{ t('news.paper') }}</div>
+      <ul class="pub-ul">{{ m.pub_item(post.pub, show_num=False, anchor=False) }}</ul>
+    </aside>
+    {% elif post.doi %}
+    <aside class="news-paper"><div class="news-paper-label">{{ t('news.paper') }}</div><a href="https://doi.org/{{ post.doi }}" target="_blank" rel="noopener">https://doi.org/{{ post.doi }}</a></aside>
+    {% endif %}
+    {% if post.link %}<p class="article-link"><a class="join-btn" href="{{ post.link }}" target="_blank" rel="noopener">{{ t('news.link') }} <span aria-hidden="true">↗</span></a></p>{% endif %}
+    <p class="article-end" aria-hidden="true">■</p>
+  </div>
+  {% endif %}
+</article>
+
+{% if post.album %}
+{% set others = albums|rejectattr('slug', 'equalto', post.slug)|list %}
+{% if others %}
+<section class="wrap read-next" aria-labelledby="next-h">
+  {{ x.sec_head(x.L('more_in'), page_url('gallery'), t('home.view_all'), hid='next-h') }}
+  <div class="essay-row">{% for p in others[:4] %}{{ x.album(p) }}{% endfor %}</div>
+</section>
+{% endif %}
+{% else %}
+{% set others = news_items|rejectattr('slug', 'equalto', post.slug)|list %}
+{% if others %}
+<section class="wrap read-next" aria-labelledby="next-h">
+  {{ x.sec_head(t('common.more_news'), page_url('news'), t('home.view_all'), hid='next-h') }}
+  <div class="stories-3">{% for p in others[:3] %}{{ x.story(p, 'sm') }}{% endfor %}</div>
+</section>
+{% endif %}
+{% endif %}
+{% endblock %}

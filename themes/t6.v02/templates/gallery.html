@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">{{ t('gallery.title') }}</h1>
+  <p class="page-desc">{{ t('gallery.intro') }}</p>
+  <p class="page-aside"><a href="{{ page_url('news') }}">{{ ui.icon('news', 'ic ic--sm') }} {{ t('news.title') }} <span class="count">{{ stats.news_items }}</span></a></p>
+</header>
+
+{% if albums_by_year|length > 1 %}
+<div class="pills-wrap">
+  <nav class="year-pills" aria-label="{{ t('common.years') }}">{% for y, items in albums_by_year %}<a href="#g{{ y }}">{{ y }} <span>{{ items|length }}</span></a>{% endfor %}</nav>
+</div>
+{% endif %}
+
+{% for y, items in albums_by_year %}
+<section class="album-year" id="g{{ y }}" aria-labelledby="h-g{{ y }}">
+  <h2 class="bib-year-title" id="h-g{{ y }}">{{ y }}</h2>
+  <div class="album-grid">
+    {% for p in items %}{{ ui.album_card(p) }}{% endfor %}
+  </div>
+</section>
+{% else %}
+<p class="empty">{{ t('common.empty') }}</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ ui.page_head(t('research.title'), t('research.intro'), [(t('nav.research'), none)]) }}
+
+<section class="panel map-panel" aria-labelledby="mp-h">
+  {{ ui.panel_head(ui.s('map_title') ~ ' · ' ~ research|map(attribute='regions')|map('length')|sum, id='mp-h') }}
+  {{ ui.region_map(filter=True) }}
+</section>
+
+{% for r in research %}
+<section class="panel topic" id="{{ r.key }}" data-topic-panel="{{ r.key }}" style="--c: {{ ui.topic_color(loop.index0) }}" aria-labelledby="{{ r.key }}-t">
+  <div class="topic-head">
+    <span class="topic-idx mono" aria-hidden="true">{{ '%02d'|format(loop.index) }}</span>
+    <div class="topic-head-main">
+      <h2 id="{{ r.key }}-t"><a href="{{ topic_url(r) }}">{{ tr(r.title) }}</a></h2>
+    </div>
+    <a class="btn topic-more" href="{{ topic_url(r) }}">{{ ui.s('details') }} <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="topic-body">
+    <div class="topic-text">
+      {% if r.image %}<a class="fig-frame" href="{{ topic_url(r) }}" tabindex="-1" aria-hidden="true"><img src="{{ static(r.image) }}" alt="" loading="lazy"></a>{% endif %}
+      {% for para in tr(r.summary).split('\n\n') %}<p>{{ para }}</p>{% endfor %}
+      {{ m.topic_themes(r, 'tags topic-themes') }}
+    </div>
+    <dl class="topic-stats">
+      <div><dt>{{ t('research.papers') }}</dt><dd class="mono">{{ r.pubs|length }}</dd></div>
+      <div><dt>{{ t('research.videos') }}</dt><dd class="mono">{{ r.video_items|length }}</dd></div>
+      {% if r.regions %}<div class="topic-stats-geo"><dt>{{ t('research.regions') }}</dt><dd>{{ ui.region_chips(r) }}</dd></div>{% endif %}
+    </dl>
+  </div>
+
+  {% if r.pubs %}
+  <h3 class="sub-h">{{ t('research.papers') }}</h3>
+  <ul class="ref-list">
+    {% for p in r.pubs %}
+    <li>
+      <a class="ref-num mono" href="{{ pub_url(p) }}" title="{{ t('nav.publications') }} #{{ p.num }}">#{{ p.num }}</a>
+      <div>
+        <div class="ref-title">{% if p.doi %}<a href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ rich(p.title) }}</a>{% else %}{{ rich(p.title) }}{% endif %}</div>
+        <div class="ref-meta">{{ authors(p) }} · {{ cite(p) }} · <span class="mono">{{ p.year }}</span></div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+{% endfor %}
+{% endblock %}

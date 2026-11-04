@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block head %}
+<div class="post-head">
+  <div class="news-card-meta">{% if post.album %}<span class="news-cat news-cat--album">{{ t('gallery.title') }}</span>{% if post.gallery %} <span>{{ post.gallery|length }} {{ t('gallery.photos') }}</span>{% endif %}{% else %}<span class="news-cat news-cat--{{ post.category }}">{{ t('news.category.' ~ post.category) }}</span>{% endif %} <time datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time></div>
+  <h1 id="page-title" class="post-title" lang="{{ text_lang(tr(post.title)) }}">{{ tr(post.title) }}</h1>
+  {% if post.summary %}<p class="lead">{{ tr(post.summary) }}</p>{% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+{% set seq = albums if post.album else news %}
+{% set ns = namespace(i=-1) %}
+{% for x in seq %}{% if x.slug == post.slug %}{% set ns.i = loop.index0 %}{% endif %}{% endfor %}
+{% set newer = seq[ns.i - 1] if ns.i > 0 else none %}
+{% set older = seq[ns.i + 1] if ns.i >= 0 and ns.i + 1 < seq|length else none %}
+{% set back_url = page_url('gallery') if post.album else page_url('news') %}
+<article class="post{% if post.album %} post--album{% endif %}">
+  {{ m.post_cover(post) }}
+  {{ m.news_body(post) }}
+  {% if post.link %}<p class="post-link"><a class="btn btn-primary" href="{{ post.link }}" target="_blank" rel="noopener">{{ t('news.link') }} <span aria-hidden="true">↗</span></a></p>{% endif %}
+
+  {% if older or newer %}
+  <nav class="pager" aria-label="{{ t('common.prev') }} / {{ t('common.next') }}">
+    {% if older %}<a class="pager-a pager-prev" href="{{ news_url(older) }}" rel="prev"><span class="pager-dir"><span aria-hidden="true">←</span> {{ t('common.prev') }}</span><span class="pager-title" lang="{{ text_lang(tr(older.title)) }}">{{ tr(older.title) }}</span><time datetime="{{ older.date }}">{{ fmt_date(older.date) }}</time></a>{% endif %}
+    {% if newer %}<a class="pager-a pager-next" href="{{ news_url(newer) }}" rel="next"><span class="pager-dir">{{ t('common.next') }} <span aria-hidden="true">→</span></span><span class="pager-title" lang="{{ text_lang(tr(newer.title)) }}">{{ tr(newer.title) }}</span><time datetime="{{ newer.date }}">{{ fmt_date(newer.date) }}</time></a>{% endif %}
+  </nav>
+  {% endif %}
+  <p class="post-back"><a class="btn btn-ghost" href="{{ back_url }}"><span aria-hidden="true">←</span> {{ t('gallery.back') if post.album else t('news.back') }}</a></p>
+</article>
+
+{# 같은 분류(앨범은 가까운 앨범) 3건. 이전·다음 글과 겹치지 않게 #}
+{% set after = seq[ns.i + 1:] if ns.i >= 0 else seq %}
+{% set before = (seq[:ns.i] if ns.i > 0 else [])|reverse|list %}
+{% set pool = after + before %}
+{% if not post.album %}{% set pool = pool|selectattr('category', 'equalto', post.category)|list %}{% endif %}
+{% set skip = [post.slug, older.slug if older else '', newer.slug if newer else ''] %}
+{% set related = pool|rejectattr('slug', 'in', skip)|list %}
+{% if related %}
+<section class="block post-related" aria-labelledby="h-more">
+  <h2 class="block-title" id="h-more">{% if post.album %}{{ t('gallery.title') }}{% else %}{{ t('common.more_news') }} · {{ t('news.category.' ~ post.category) }}{% endif %}</h2>
+  {% if post.album %}
+  <div class="albums">{% for p in related[:3] %}{{ op.album_card(p) }}{% endfor %}</div>
+  {% else %}
+  <div class="ngrid">{% for p in related[:3] %}{{ op.news_card(p) }}{% endfor %}</div>
+  {% endif %}
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block hero %}{{ ui.page_hero(t('pubs.title'), t('pubs.intro'), stats.pubs ~ ' ' ~ t('pubs.total')) }}{% endblock %}
+{% block content %}
+{{ ui.pub_page(pubs_by_year) }}
+{% endblock %}

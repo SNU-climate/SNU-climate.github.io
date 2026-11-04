@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block head %}
+<h1 id="page-title">{{ t('gallery.title') }}</h1>
+<p class="lead">{{ t('gallery.intro') }}</p>
+{% endblock %}
+
+{% block content %}
+{{ op.year_chips(albums_by_year, 'g') }}
+{% for y, items in albums_by_year %}
+<section class="album-year" id="g{{ y }}" aria-labelledby="h-g{{ y }}">
+  <h2 class="pub-year-title" id="h-g{{ y }}">{{ y }} <span class="pub-year-n">({{ items|length }})</span></h2>
+  <div class="albums">{% for p in items %}{{ op.album_card(p) }}{% endfor %}</div>
+</section>
+{% else %}
+<p class="empty">{{ t('common.empty') }}</p>
+{% endfor %}
+{% endblock %}

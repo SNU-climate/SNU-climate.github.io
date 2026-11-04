@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set r = topic %}
+{% set ns = namespace(i=0) %}
+{% for x in research %}{% if x.key == r.key %}{% set ns.i = loop.index0 %}{% endif %}{% endfor %}
+<p class="crumb"><a href="{{ page_url('research') }}">{{ ui.icon('back', 'ic ic--sm') }} {{ t('research.back') }}</a></p>
+
+<header class="page-head topic-head">
+  <p class="proj-idx">{{ '%02d'|format(ns.i + 1) }} / {{ '%02d'|format(research|length) }}</p>
+  <h1 class="page-title">{{ tr(r.title) }}</h1>
+  {% if r.title is mapping and r.title[other_lang] %}<p class="profile-alt" lang="{{ other_lang }}">{{ r.title[other_lang] }}</p>{% endif %}
+</header>
+
+{% set fig_imgs = r.figures|map(attribute='image')|list %}
+{% if r.image and r.image not in fig_imgs %}{{ ui.figframe(static(r.image), tr(r.title), 'figframe figframe--hero', lazy=False) }}{% endif %}
+
+<div class="topic-intro">
+  <div class="topic-body">
+    {% for para in tr(r.summary).split('\n\n') %}<p>{{ para }}</p>{% endfor %}
+  </div>
+  {% if r.region_names %}
+  <aside class="topic-regions" aria-labelledby="h-reg">
+    <h2 class="side-label" id="h-reg">{{ t('research.regions') }}</h2>
+    {{ ui.topic_art(r, ns.i) }}
+    <ul class="region-list">{% for n in r.region_names %}<li>{{ ui.icon('pin', 'ic ic--sm') }}{{ tr(n) }}</li>{% endfor %}</ul>
+  </aside>
+  {% endif %}
+</div>
+
+{% set th = tr_list(r.themes) %}
+{% if th %}
+<section class="sec" aria-labelledby="h-th">
+  <div class="sec-head"><h2 class="sec-title" id="h-th">{{ t('research.themes') }}</h2></div>
+  <ul class="theme-list">{% for x in th %}<li>{{ x }}</li>{% endfor %}</ul>
+</section>
+{% endif %}
+
+{% if r.figures %}
+<section class="sec" aria-labelledby="h-fig">
+  <div class="sec-head"><h2 class="sec-title" id="h-fig">{{ t('research.figures') }}</h2><span class="count">{{ r.figures|length }}</span></div>
+  <div class="fig-grid">
+    {% for f in r.figures %}
+    <figure class="fig">
+      <a href="{{ static(f.image) }}" target="_blank" rel="noopener">{{ ui.figframe(static(f.image), tr(f.caption)|truncate(80)) }}</a>
+      {% if f.caption or f.pub or f.doi %}<figcaption>{{ tr(f.caption) }}{% if f.pub %} <a class="fig-ref" href="{{ pub_url(f.pub) }}">[{{ f.pub.num }}]</a>{% elif f.doi %} <a class="fig-ref" href="https://doi.org/{{ f.doi }}" target="_blank" rel="noopener">DOI</a>{% endif %}</figcaption>{% endif %}
+    </figure>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if r.pubs %}
+<section class="sec" aria-labelledby="h-kp">
+  <div class="sec-head"><h2 class="sec-title" id="h-kp">{{ t('research.papers') }}</h2><span class="count">{{ r.pubs|length }}</span></div>
+  <ol class="bib-list bib-list--compact">{% for p in r.pubs %}{{ ui.pub(p, anchor=False) }}{% endfor %}</ol>
+</section>
+{% endif %}
+
+{% if r.video_items %}
+<section class="sec" aria-labelledby="h-rv">
+  <div class="sec-head"><h2 class="sec-title" id="h-rv">{{ t('research.videos') }}</h2><span class="count">{{ r.video_items|length }}</span></div>
+  <div class="vgrid vgrid--2">{% for v in r.video_items %}{{ m.video_card(v) }}{% endfor %}</div>
+</section>
+{% endif %}
+
+{% set prev = research[ns.i - 1] if ns.i > 0 else none %}
+{% set next = research[ns.i + 1] if ns.i + 1 < research|length else none %}
+{% if prev or next %}
+<nav class="pager" aria-label="{{ t('research.title') }}">
+  {% if prev %}<a class="pager-link pager-link--prev" href="{{ topic_url(prev) }}"><span class="pager-dir">{{ ui.icon('back', 'ic ic--sm') }} {{ t('common.prev') }}</span><span class="pager-title">{{ tr(prev.title) }}</span></a>{% else %}<span></span>{% endif %}
+  {% if next %}<a class="pager-link pager-link--next" href="{{ topic_url(next) }}"><span class="pager-dir">{{ t('common.next') }} {{ ui.icon('arrow', 'ic ic--sm') }}</span><span class="pager-title">{{ tr(next.title) }}</span></a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

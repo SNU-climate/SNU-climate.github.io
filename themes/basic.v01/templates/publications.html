@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{# 검색창 → 연도 바로가기 → 연도별 목록 순서(모바일에서 연도 칩 27개가 검색창을 밀어내지 않게).
+   검색 속성(data-pub-search/count/empty)과 번호·연도 섹션은 공통 매크로 규약 그대로 #}
+{% block content %}
+<p class="crumb">{{ t('menu.publication') }}</p>
+<h1>{{ t('pubs.title') }}</h1>
+<p class="lead">{{ t('pubs.intro') }}</p>
+<div class="pub-tools">
+  <input type="search" class="pub-search" data-pub-search placeholder="{{ t('pubs.search') }}" aria-label="{{ t('pubs.search') }}">
+  <span class="pub-count"><span data-pub-count>{{ pubs|length }}</span> {{ t('pubs.total') }}</span>
+</div>
+<nav class="pub-years chip-row" aria-label="{{ t('common.years') }}">{% for year, items in pubs_by_year %}<a href="#y{{ year }}">{{ year }}</a>{% endfor %}</nav>
+<p class="pub-empty empty" data-pub-empty hidden>{{ t('pubs.no_results') }}</p>
+{{ m.pub_list(pubs_by_year, search=False) }}
+{% endblock %}

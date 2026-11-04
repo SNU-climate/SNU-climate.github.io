@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{% block ptitle %}{{ t('pubs.title') }}{% endblock %}
+{% block plead %}{{ t('pubs.intro') }}{% endblock %}
+
+{% block content %}
+<div class="wrap">{{ x.pub_tabs('publications') }}</div>
+<div class="wrap archive">
+  <aside class="archive-side"><div class="years-fade">{{ m.year_index(pubs_by_year) }}</div></aside>
+  <div class="archive-main">
+    {# 검색창: 짧은 안내문(모바일에서 잘리지 않게), 전체 안내는 aria-label #}
+    <div class="pub-tools">
+      <input type="search" class="pub-search" data-pub-search placeholder="{{ t('pubs.search_short') }}…" aria-label="{{ t('pubs.search') }}">
+      <span class="pub-count"><span data-pub-count>{{ pubs|length }}</span> {{ t('pubs.total') }}</span>
+    </div>
+    <p class="pub-hint">{{ t('pubs.search') }}</p>
+    <p class="pub-empty" data-pub-empty hidden>{{ t('pubs.no_results') }}</p>
+    {{ m.pub_list(pubs_by_year, search=False) }}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">{{ t('contact.title') }}</h1>
+  <p class="page-desc">{{ t('contact.directions') }}</p>
+</header>
+
+<div class="contact-card">
+  <dl class="contact-dl">
+    <div><dt>{{ ui.icon('contact') }}{{ t('contact.address') }}</dt><dd>{{ tr(site.contact.address) }}</dd></div>
+    <div><dt>{{ ui.icon('building') }}{{ t('contact.pi_office') }}</dt><dd>{{ tr(site.contact.pi_office.room) }} · <a href="tel:{{ site.contact.pi_office.phone|replace('-', '') }}">{{ site.contact.pi_office.phone }}</a></dd></div>
+    <div><dt>{{ ui.icon('people') }}{{ t('contact.lab_room') }}</dt><dd>{{ tr(site.contact.lab_room.room) }} · <a href="tel:{{ site.contact.lab_room.phone|replace('-', '') }}">{{ site.contact.lab_room.phone }}</a></dd></div>
+    <div><dt>{{ ui.icon('mail') }}{{ t('contact.email') }}</dt><dd><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></dd></div>
+  </dl>
+  <p class="contact-actions"><a class="btn" href="{{ site.contact.map_url }}" target="_blank" rel="noopener">{{ ui.icon('map') }} {{ t('contact.map') }}</a></p>
+</div>
+
+<aside class="callout" id="join">
+  <h2 class="callout-title">{{ t('home.join') }}</h2>
+  <p>{{ t('home.join_text') }}</p>
+  <a class="btn btn--outline" href="mailto:{{ site.contact.email }}">{{ ui.icon('mail') }} {{ site.contact.email }}</a>
+</aside>
+{% endblock %}

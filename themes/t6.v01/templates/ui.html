@@ -1,0 +1,199 @@
+{# t6_sidebar 전용 UI 매크로. base.html에서 {% import 'ui.html' as ui with context %} 로 불러 쓴다. #}
+
+{# ---------- 학술지 약칭 배지 ---------- #}
+{% set JABBR = {
+  'nature': 'Nature', 'science': 'Science',
+  'nature communications': 'Nat. Commun.', 'nature climate change': 'Nat. Clim. Change',
+  'nature geoscience': 'Nat. Geosci.', 'nature reviews earth & environment': 'Nat. Rev. Earth Env.',
+  'npj climate and atmospheric science': 'npj Clim. Atmos.', 'communications earth & environment': 'Commun. Earth Env.',
+  'scientific reports': 'Sci. Rep.', 'science advances': 'Sci. Adv.',
+  'proceedings of the national academy of sciences': 'PNAS',
+  'proceedings of the national academy of sciences of the united states of america': 'PNAS',
+  "earth's future": "Earth's Future", 'geophysical research letters': 'GRL',
+  'journal of geophysical research: oceans': 'JGR Oceans', 'journal of geophysical research: atmospheres': 'JGR Atmos.',
+  'journal of geophysical research: biogeosciences': 'JGR Biogeosci.', 'global biogeochemical cycles': 'GBC',
+  'agu advances': 'AGU Adv.', 'reviews of geophysics': 'Rev. Geophys.',
+  'journal of climate': 'J. Climate', 'journal of the atmospheric sciences': 'J. Atmos. Sci.',
+  'journal of physical oceanography': 'J. Phys. Oceanogr.', 'monthly weather review': 'Mon. Wea. Rev.',
+  'bulletin of the american meteorological society': 'BAMS', 'journal of hydrometeorology': 'J. Hydromet.',
+  'climate dynamics': 'Clim. Dyn.', 'environmental research letters': 'ERL', 'global change biology': 'GCB',
+  'biogeosciences': 'Biogeosci.', 'the cryosphere': 'Cryosphere', 'earth system dynamics': 'ESD',
+  'geoscientific model development': 'GMD', 'climate of the past': 'Clim. Past', 'ocean science': 'Ocean Sci.',
+  'atmospheric chemistry and physics': 'ACP', 'asia-pacific journal of atmospheric sciences': 'APJAS',
+  'international journal of climatology': 'Int. J. Climatol.', 'quarterly journal of the royal meteorological society': 'QJRMS',
+  'climatic change': 'Clim. Change', 'weather and climate extremes': 'WACE', 'ocean modelling': 'Ocean Model.',
+  'journal of the meteorological society of japan': 'JMSJ', 'theoretical and applied climatology': 'Theor. Appl. Clim.',
+  'dynamics of atmospheres and oceans': 'Dyn. Atmos. Oceans', 'tellus a': 'Tellus A', 'tellus b': 'Tellus B',
+  'tellus a: dynamic meteorology and oceanography': 'Tellus A', 'tellus b: chemical and physical meteorology': 'Tellus B',
+  'journal of geophysical research': 'JGR', 'progress in oceanography': 'Prog. Oceanogr.',
+  'science of the total environment': 'Sci. Total Environ.', 'atmosphere': 'Atmosphere', 'atmospheric research': 'Atmos. Res.',
+  'ocean and polar research': 'Ocean Polar Res.', 'journal of environmental management': 'J. Environ. Manage.',
+  'international journal of digital earth': 'Int. J. Digit. Earth', 'journal of hazard literacy': 'J. Hazard Lit.',
+  'environmental research communications': 'ERC', 'frontiers in marine science': 'Front. Mar. Sci.',
+  'artificial intelligence for the earth systems': 'AIES', 'advances in climate change research': 'Adv. Clim. Change Res.',
+  'science bulletin': 'Sci. Bull.', 'journal of climate change research': 'J. Clim. Change Res.',
+  'deep sea research part i: oceanographic research papers': 'Deep-Sea Res. I',
+  'deep sea research part ii: topical studies in oceanography': 'Deep-Sea Res. II', 'ocean dynamics': 'Ocean Dyn.'
+} %}
+{% set AGU = ["earth's future", 'geophysical research letters', 'global biogeochemical cycles', 'agu advances',
+              'reviews of geophysics', 'paleoceanography and paleoclimatology', 'water resources research'] %}
+{% set AMS = ['journal of climate', 'journal of the atmospheric sciences', 'journal of physical oceanography',
+              'monthly weather review', 'bulletin of the american meteorological society', 'journal of hydrometeorology',
+              'weather and forecasting', 'journal of applied meteorology and climatology', 'earth interactions',
+              'artificial intelligence for the earth systems'] %}
+{# 출판사 계열 → 배지 색. 목록에 없으면 'other' #}
+{% set SCIENCE = ['science', 'science advances', 'proceedings of the national academy of sciences',
+                  'proceedings of the national academy of sciences of the united states of america'] %}
+{% set SPRINGER = ['climate dynamics', 'asia-pacific journal of atmospheric sciences', 'theoretical and applied climatology',
+                   'climatic change', 'ocean dynamics'] %}
+{% set IOP = ['environmental research letters', 'environmental research communications'] %}
+{% set ELSEVIER = ['progress in oceanography', 'science of the total environment', 'journal of environmental management',
+                   'atmospheric research', 'advances in climate change research', 'science bulletin', 'ocean modelling',
+                   'weather and climate extremes', 'dynamics of atmospheres and oceans'] %}
+
+{% macro jabbr(j) %}{% set jl = (j or '')|lower|trim %}{% if jl in JABBR %}{{ JABBR[jl] }}{% else %}{% set words = (j or '').replace('&', ' ').replace(':', ' ').replace('-', ' ').split() %}{% if words|length <= 1 %}{{ (j or '?')|truncate(14, True, '…', 0) }}{% else %}{% set ns = namespace(s='') %}{% for w in words %}{% if w[0].isupper() %}{% set ns.s = ns.s ~ w[0] %}{% endif %}{% endfor %}{{ ns.s or (j|truncate(14, True, '…', 0)) }}{% endif %}{% endif %}{% endmacro %}
+
+{% macro jfamily(j) %}{% set jl = (j or '')|lower|trim %}{% if jl.startswith('nature') or jl.startswith('npj') or jl.startswith('communications ') or jl == 'scientific reports' %}nature{% elif jl in SCIENCE %}science{% elif jl in AGU or jl.startswith('journal of geophysical research') %}agu{% elif jl in AMS %}ams{% elif jl in SPRINGER %}springer{% elif jl in IOP %}iop{% elif jl in ELSEVIER or jl.startswith('deep sea research') %}elsevier{% else %}other{% endif %}{% endmacro %}
+
+{% macro jbadge(j) %}<abbr class="jb jb--{{ jfamily(j) }}" title="{{ j }}">{{ jabbr(j) }}</abbr>{% endmacro %}
+
+{# ---------- 논문 한 편 (al-folio bibliography) ---------- #}
+{% macro pub(p, anchor=True, num=True) %}
+<li class="bib"{% if anchor %} id="pub-{{ p.num }}" data-pub-item data-search="{{ search_text(p) }}"{% endif %}>
+  <div class="bib-side">
+    {{ jbadge(p.journal) }}
+    {% if num %}{% if anchor %}<span class="bib-num">[{{ p.num }}]</span>{% else %}<a class="bib-num" href="{{ pub_url(p) }}">[{{ p.num }}]</a>{% endif %}{% endif %}
+  </div>
+  <div class="bib-main">
+    <div class="bib-title">{% if p.doi %}<a href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ rich(p.title) }}</a>{% else %}{{ rich(p.title) }}{% endif %}</div>
+    <div class="bib-authors">{{ authors(p) }}</div>
+    <div class="bib-venue">{{ cite(p) }}{% if p.year %}, {{ p.year }}{% endif %}</div>
+    <div class="bib-links">
+      {% if p.doi %}<a class="chip-btn" href="{{ doi_url(p) }}" target="_blank" rel="noopener">DOI</a>{% endif %}
+      {% for k, v in (p.links or {}).items() %}<a class="chip-btn" href="{{ static(v) if not v.startswith('http') else v }}" target="_blank" rel="noopener">{{ k|upper }}</a>{% endfor %}
+      {% if p.corresponding %}<span class="flag" title="{{ t('pubs.corresponding') }}">{{ t('pubs.ca') }}</span>{% endif %}
+      {% if p.featured %}<span class="flag flag--star">★ {{ t('pubs.featured') }}</span>{% endif %}
+    </div>
+  </div>
+</li>
+{% endmacro %}
+
+{# ---------- 아이콘(인라인 SVG, stroke=currentColor) ---------- #}
+{% set ICONS = {
+  'index': '<path d="M3 11l9-7 9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/>',
+  'research': '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/>',
+  'people': '<circle cx="9" cy="8" r="3.3"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M15.5 4.9a3.3 3.3 0 0 1 0 6.3"/><path d="M17.6 14.2A6.2 6.2 0 0 1 21.2 20"/>',
+  'publications': '<path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v16H7.5A2.5 2.5 0 0 0 5 20.5z"/><path d="M5 20.5A1.5 1.5 0 0 0 6.5 22H19v-4"/><path d="M9 6.5h6M9 10h4"/>',
+  'presentations': '<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4"/><path d="M8 20h8"/><path d="M7.5 9.5h9M7.5 12.5h5"/>',
+  'news': '<path d="M4 5.5h12.5V18a2.5 2.5 0 0 0 2.5 2.5H6.5A2.5 2.5 0 0 1 4 18z"/><path d="M16.5 9H20v9a2.5 2.5 0 0 1-2.5 2.5"/><path d="M7.5 9h5.5M7.5 12.5h5.5M7.5 16h3.5"/>',
+  'videos': '<rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z"/>',
+  'contact': '<path d="M12 21s-7-6.1-7-11.8A7 7 0 0 1 19 9.2C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.5"/>',
+  'mail': '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.2 8.5-6.2"/>',
+  'phone': '<path d="M6.5 3.5h3l1.6 4.3-2.1 1.4a11.5 11.5 0 0 0 5.8 5.8l1.4-2.1 4.3 1.6v3A2 2 0 0 1 18.5 20 15 15 0 0 1 4.5 6 2 2 0 0 1 6.5 3.5z"/>',
+  'building': '<path d="M3 21h18"/><path d="M5 21V9.5L12 5l7 4.5V21"/><path d="M9.5 21v-5h5v5"/><path d="M9 11.5h1.5M13.5 11.5H15"/>',
+  'orcid': '<circle cx="12" cy="12" r="9"/><path d="M9 10v7"/><circle cx="9" cy="7.5" r=".6" fill="currentColor"/><path d="M12.5 17V8h2a4.5 4.5 0 0 1 0 9z"/>',
+  'youtube': '<rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.2 9.4v5.2l4.4-2.6z" fill="currentColor"/>',
+  'external': '<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+  'search': '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
+  'arrow': '<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',
+  'back': '<path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/>',
+  'map': '<path d="M9 4L3.5 6v14L9 18l6 2 5.5-2V4L15 6z"/><path d="M9 4v14M15 6v14"/>',
+  'gallery': '<rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="9.5" r="1.8"/><path d="M21 15.5l-5-5-9 9"/>',
+  'photo': '<rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="9.5" r="1.8"/><path d="M21 15.5l-5-5-9 9"/>',
+  'user': '<circle cx="12" cy="8" r="3.6"/><path d="M4.8 20.5a7.2 7.2 0 0 1 14.4 0"/>',
+  'link': '<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"/>',
+  'pin': '<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8.5"/>'
+} %}
+{% macro icon(name, cls='ic') %}<svg class="{{ cls }}" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">{{ ICONS.get(name, '')|safe }}</svg>{% endmacro %}
+
+{# ---------- 그래픽 대체물 ---------- #}
+{% macro ini(name) %}{{ m.initials_of(name.en if name is mapping else name) }}{% endmacro %}
+
+{# 등압선 느낌의 동심 타원 + 이니셜. 사진이 생기면 사진으로 바뀐다. #}
+{% macro portrait(person, cls='portrait') %}
+<div class="{{ cls }}">
+  {% if person.photo %}<img src="{{ static(person.photo) }}" alt="{{ tr(person.name) }}">
+  {% else %}
+  <svg class="portrait-art" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="#fff" stroke-width="1.2">
+      {% for i in range(1, 12) %}<ellipse cx="236" cy="54" rx="{{ i * 26 }}" ry="{{ i * 19 }}" stroke-opacity="{{ '%.2f'|format(0.34 - i * 0.022) }}"/>{% endfor %}
+      {% for i in range(1, 7) %}<ellipse cx="40" cy="282" rx="{{ i * 24 }}" ry="{{ i * 17 }}" stroke-opacity="{{ '%.2f'|format(0.26 - i * 0.03) }}"/>{% endfor %}
+    </g>
+  </svg>
+  <span class="portrait-ini" aria-hidden="true">{{ ini(person.name) }}</span>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{# 연구 주제 타일: 그라디언트 + 위경도 격자 + research.regions 점(실제 데이터) #}
+{% macro topic_art(r, i) %}
+<div class="art art--{{ (i % 5) + 1 }}">
+  <svg viewBox="0 0 360 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+    <g class="art-grid">
+      {% for x in range(30, 360, 30) %}<line x1="{{ x }}" y1="0" x2="{{ x }}" y2="180"/>{% endfor %}
+      {% for y in range(30, 180, 30) %}<line x1="0" y1="{{ y }}" x2="360" y2="{{ y }}"/>{% endfor %}
+    </g>
+    <g class="art-waves">
+      {% for k in range(3) %}<path d="M-10 {{ 128 + k * 14 }} C 50 {{ 108 + k * 14 }}, 110 {{ 148 + k * 14 }}, 180 {{ 128 + k * 14 }} S 310 {{ 108 + k * 14 }}, 370 {{ 128 + k * 14 }}"/>{% endfor %}
+    </g>
+    {% for lat, lon in r.regions or [] %}
+    <circle class="art-ring" cx="{{ lon + 180 }}" cy="{{ 90 - lat }}" r="11"/>
+    <circle class="art-pt" cx="{{ lon + 180 }}" cy="{{ 90 - lat }}" r="4"/>
+    {% endfor %}
+  </svg>
+</div>
+{% endmacro %}
+
+{# ---------- 연구 그림 액자: 원본 그림(가로세로비가 제각각)을 자르지 않고 흰 바탕에 맞춰 넣는다 ---------- #}
+{% macro figframe(src, alt='', cls='figframe', lazy=True) %}
+<div class="{{ cls }}"><img src="{{ src }}" alt="{{ alt }}"{% if lazy %} loading="lazy"{% endif %}></div>
+{% endmacro %}
+
+{# ---------- 구성원·졸업생 카드(이름 링크가 카드 전체를 덮는다) ---------- #}
+{% macro avatar(mm, cls='avatar') %}
+{% set nm = mm.name.en if mm.name is mapping else mm.name %}
+<div class="{{ cls }} avatar--{{ ((nm or '')|length % 5) + 1 }}">{% if mm.photo %}<img src="{{ static(mm.photo) }}" alt="{{ tr(mm.name) }}" loading="lazy">{% else %}<span aria-hidden="true">{{ ini(mm.name) }}</span>{% endif %}</div>
+{% endmacro %}
+
+{% macro person(mm, alum=False, extra='') %}
+{% set u = member_url(mm) %}
+<article class="person{% if alum %} person--alum{% endif %}{% if u %} person--link{% endif %}">
+  {{ avatar(mm) }}
+  <div class="person-text">
+    <h3 class="person-name">{% if u %}<a href="{{ u }}">{{ tr(mm.name) }}</a>{% else %}{{ tr(mm.name) }}{% endif %} {{ m.sample_badge(mm) }}</h3>
+    {% if alum %}
+      {% set deg = [mm.degree, mm.year]|select|join(', ') %}
+      {% if deg %}<p class="person-pos">{{ deg }}</p>{% endif %}
+      {% if mm.current %}<p class="person-int">{{ tr(mm.current) }}</p>{% endif %}
+    {% else %}
+      {% if mm.position %}<p class="person-pos">{{ tr(mm.position) }}</p>{% endif %}
+      {% if mm.interests %}<p class="person-int">{{ tr(mm.interests) }}</p>{% endif %}
+      {% if mm.email %}<a class="person-mail" href="mailto:{{ mm.email }}">{{ m.email_wbr(mm.email) }}</a>{% endif %}
+    {% endif %}
+    {{ extra }}
+  </div>
+</article>
+{% endmacro %}
+
+{# ---------- 경력 목록(교수·구성원 개인 페이지) ---------- #}
+{% macro cv_card(title, items, key) %}
+{% if items %}
+<section class="cv-card">
+  <h2 class="cv-title">{{ title }}</h2>
+  <ul class="cv-list">{% for e in items %}<li>{% if e[key] %}<span class="cv-when">{{ e[key] }}</span>{% endif %}<span class="cv-what">{{ tr(e) }}</span></li>{% endfor %}</ul>
+</section>
+{% endif %}
+{% endmacro %}
+
+{# ---------- 앨범 카드(갤러리·홈) ---------- #}
+{% macro album_card(p) %}
+{% set c = cover_url(p) %}
+{% set ti = tr(p.title) %}
+<a class="album-card" href="{{ news_url(p) }}">
+  <span class="album-img">{% if c %}<img src="{{ c }}" alt="" loading="lazy">{% else %}{{ icon('photo', 'album-ic') }}{% endif %}{% if p.gallery %}<span class="album-n">{{ icon('photo', 'ic ic--sm') }}{{ p.gallery|length }}<span class="visually-hidden"> {{ t('gallery.photos') }}</span></span>{% endif %}</span>
+  <span class="album-body">
+    <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time>
+    <span class="album-title" lang="{{ text_lang(ti) }}">{{ ti }}</span>
+  </span>
+</a>
+{% endmacro %}

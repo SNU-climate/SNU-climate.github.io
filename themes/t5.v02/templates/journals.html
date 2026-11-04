@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{% set page_title = x.L('desk')|trim ~ ' | ' ~ lab_name %}
+{% block ptitle %}{{ x.L('desk') }}{% endblock %}
+{% block plead %}{{ x.L('desk_lead') }}{% endblock %}
+
+{% block content %}
+{% set top = stats.top_journals %}
+{% set top_names = top|map(attribute=0)|list %}
+<div class="wrap">
+  {{ x.pub_tabs('journals') }}
+
+  <div class="desk">
+    {% for j, n in top %}
+    {% set items = pubs|selectattr('journal', 'equalto', j)|list %}
+    <section class="desk-card" id="j{{ loop.index }}" aria-labelledby="j{{ loop.index }}-h">
+      <header class="desk-head">
+        <span class="desk-rank">{{ x.no(loop.index) }}</span>
+        <h2 class="desk-name" id="j{{ loop.index }}-h">{{ j }}</h2>
+        <p class="desk-n"><b>{{ n }}</b> {{ t('pubs.total') }}</p>
+      </header>
+      <div class="desk-bars">
+        {{ x.journal_bars(items) }}
+        <div class="desk-axis"><span>{{ stats.first_year }}</span><span>{{ x.L('first_paper') }} {{ items[-1].year }}</span><span>{{ stats.last_year }}</span></div>
+      </div>
+      <p class="rule-h">{{ x.L('latest_papers') }}</p>
+      <ol class="desk-list">
+        {% for p in items[:3] %}
+        <li><span class="desk-y">{{ p.year }}</span><span class="desk-t">{% if p.doi %}<a href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ rich(p.title) }}</a>{% else %}{{ rich(p.title) }}{% endif %}</span><a class="desk-num" href="{{ pub_url(p) }}" aria-label="№ {{ p.num }}">№ {{ p.num }}</a></li>
+        {% endfor %}
+      </ol>
+      {% if items|length > 3 %}
+      <details class="desk-more">
+        <summary>{{ x.L('all_n') }} ({{ items|length }})</summary>
+        <ol class="desk-list desk-list--all">
+          {% for p in items[3:] %}
+          <li><span class="desk-y">{{ p.year }}</span><span class="desk-t">{% if p.doi %}<a href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ rich(p.title) }}</a>{% else %}{{ rich(p.title) }}{% endif %}</span><a class="desk-num" href="{{ pub_url(p) }}">№ {{ p.num }}</a></li>
+          {% endfor %}
+        </ol>
+      </details>
+      {% endif %}
+    </section>
+    {% endfor %}
+  </div>
+
+  {# 전체 학술지(건수 순) #}
+  {% set ranked = [] %}
+  {% for grp in pubs|groupby('journal') %}{% set _ = ranked.append({'j': grp.grouper, 'n': grp.list|length, 'first': (grp.list|map(attribute='year')|min)}) %}{% endfor %}
+  <section class="desk-all" aria-labelledby="alljn-h">
+    {{ x.sec_head(x.L('other_journals') ~ ' · ' ~ ranked|length, hid='alljn-h') }}
+    <ol class="jn-list">
+      {% for r in ranked|sort(attribute='n', reverse=True) %}
+      <li{% if r.j in top_names %} class="is-top"{% endif %}><span class="jn-name">{{ r.j }}</span><span class="jn-first">{{ r.first }}–</span><b class="jn-n">{{ r.n }}</b></li>
+      {% endfor %}
+    </ol>
+  </section>
+</div>
+{% endblock %}

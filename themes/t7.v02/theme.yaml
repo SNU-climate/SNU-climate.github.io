@@ -1,0 +1,7 @@
+title: "One-page Scroll v02"
+concept:
+  en: "One-page Scroll pushed further: the hero table of contents becomes a live lab dashboard (papers-per-year bars, top journals, latest date per section), every paper with a video is paired with it in a 'Watch the paper' strip, and the research page tells each topic as a scroll story whose figure panel changes step by step."
+  ko: "원페이지 확장판. 히어로 목차가 연구실 현황판이 되어 연도별 논문 막대·주요 학술지·섹션별 최근 날짜를 보여 주고, 영상이 있는 논문은 'Watch the paper' 띠로 영상과 한 쌍이 된다. 연구 페이지는 스크롤에 따라 그림판이 단계별로 바뀌는 스크롤 스토리로 주제를 설명한다."
+palette: ["#15171c", "#f7f5f0", "#2340c8", "#ffb43d", "#e62117"]
+extra_pages: [gallery]
+pi_page: true

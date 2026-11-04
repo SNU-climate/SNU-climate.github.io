@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% set p = person %}
+{% set back = 'pi' if p.is_pi else ('alumni' if p.alumnus else p.role) %}
+
+{% block hero_inner %}
+<p class="post-back"><a href="{{ page_url('people') }}#{{ back }}"><span aria-hidden="true">←</span> {{ t('people.back') }}</a></p>
+<p class="eyebrow">{% if p.is_pi %}{{ t('people.pi') }}{% elif p.alumnus %}{{ t('people.alumni') }}{% else %}{{ t('people.role.' ~ p.role) }}{% endif %}</p>
+<h1 class="person-title">{{ tr(p.name) }}</h1>
+{% if p.name is mapping and p.name[other_lang] and p.name[other_lang] != tr(p.name) %}<p class="phero-lead person-alt" lang="{{ other_lang }}">{{ p.name[other_lang] }}</p>{% endif %}
+{% endblock %}
+
+{% block content %}
+<article class="profile">
+  <div class="glass profile-card">
+    {{ o.avatar(p.photo, tr(p.name), o.ini(tr(p.name)), 'avatar avatar--xl') }}
+    <div class="profile-text">
+      <dl class="facts">
+        {% if p.is_pi %}
+          <div><dt>{{ t('people.position') }}</dt><dd>{% for r in p.roles %}{{ tr(r) }}{% if not loop.last %}<br>{% endif %}{% endfor %}</dd></div>
+          {% if p.office %}<div><dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(p.office) }}{% if p.phone %} · <a href="tel:{{ p.phone|replace('-', '') }}">{{ p.phone }}</a>{% endif %}</dd></div>{% endif %}
+        {% elif p.alumnus %}
+          {% if p.degree or p.year %}<div><dt>{{ t('people.alumni') }}</dt><dd>{{ [p.degree, p.year]|select|join(', ') }}</dd></div>{% endif %}
+          {% if p.current %}<div><dt>{{ t('people.current') }}</dt><dd>{{ tr(p.current) }}</dd></div>{% endif %}
+        {% else %}
+          <div><dt>{{ t('people.position') }}</dt><dd>{{ tr(p.position) if p.position else t('people.role.' ~ p.role) }}</dd></div>
+        {% endif %}
+        {% if p.email %}<div><dt>{{ t('people.email') }}</dt><dd><a href="mailto:{{ p.email }}">{{ m.email_wbr(p.email) }}</a></dd></div>{% endif %}
+        {% if p.homepage %}<div><dt>{{ t('people.homepage') }}</dt><dd><a href="{{ p.homepage }}" target="_blank" rel="noopener">{{ p.homepage|replace('https://', '')|replace('http://', '')|truncate(44) }}</a></dd></div>{% endif %}
+      </dl>
+      {% if p.bio %}<p class="pi-bio">{{ tr(p.bio) }}</p>{% endif %}
+      {% set its = tr_list(p.interests) %}
+      {% if its %}
+      <h2 class="sub-h">{{ t('people.interests') }}</h2>
+      <p class="pi-interests">{% for x in its %}<span class="chip chip--accent">{{ tr(x) }}</span>{% endfor %}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {# 이력: CSS 다단(columns)으로 패널 높이가 자동으로 균형을 이룬다 #}
+  {% set panels = [] %}
+  {% if p.education %}{% set _ = panels.append((t('people.education'), p.education, 'year')) %}{% endif %}
+  {% if p.career %}{% set _ = panels.append((t('people.career') if p.is_pi else t('people.experience'), p.career, 'period')) %}{% endif %}
+  {% if p.memberships %}{% set _ = panels.append((t('people.memberships'), p.memberships, 'year')) %}{% endif %}
+  {% if p.awards %}{% set _ = panels.append((t('people.awards'), p.awards, 'year')) %}{% endif %}
+  {% if p.service %}{% set _ = panels.append((t('people.service'), p.service, 'period')) %}{% endif %}
+  {% if panels %}
+  <div class="cv-cols{% if panels|length == 1 %} cv-cols--one{% endif %}">
+    {% for title, items, key in panels %}
+    <section class="glass panel cv-panel"><h2 class="sub-h">{{ title }}</h2>{{ o.cv(items, key) }}</section>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if p.pubs %}
+  <section class="glass panel sel-pubs" aria-labelledby="h-ppubs">
+    <h2 class="sub-h" id="h-ppubs">{{ t('people.selected') if p.is_pi else t('people.pubs') }} <span class="pub-year-n">({{ p.pubs|length }})</span></h2>
+    {% if not p.is_pi %}<p class="muted-note">{{ t('people.pubs_note') }}</p>{% endif %}
+    <ul class="pub-ul">{% for x in p.pubs %}
+      <li class="pub"><a class="pub-num" href="{{ pub_url(x) }}">{{ x.num }}.</a><div class="pub-body">
+        <div class="pub-authors">{{ authors(x) }} ({{ x.year }})</div>
+        <div class="pub-title">{% if x.doi %}<a href="{{ doi_url(x) }}" target="_blank" rel="noopener">{{ rich(x.title) }}</a>{% else %}{{ rich(x.title) }}{% endif %}</div>
+        <div class="pub-cite">{{ cite(x) }}{% if x.corresponding %} <span class="pub-badge pub-ca" title="{{ t('pubs.corresponding') }}">{{ t('pubs.ca') }}</span>{% endif %}</div>
+      </div></li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

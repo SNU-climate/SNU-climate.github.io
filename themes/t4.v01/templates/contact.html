@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ ui.page_head(t('contact.title'), t('contact.directions'), [(t('nav.contact'), none)]) }}
+<div class="dash">
+  <section class="panel span-7" aria-labelledby="ct-h">
+    {{ ui.panel_head(t('contact.title'), id='ct-h') }}
+    <dl class="contact">
+      <div><dt>{{ t('contact.address') }}</dt><dd>{{ tr(site.contact.address) }}</dd></div>
+      <div><dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(site.contact.pi_office.room) }} · <a class="mono" href="tel:{{ site.contact.pi_office.phone|replace('-', '') }}">{{ site.contact.pi_office.phone }}</a></dd></div>
+      <div><dt>{{ t('contact.lab_room') }}</dt><dd>{{ tr(site.contact.lab_room.room) }} · <a class="mono" href="tel:{{ site.contact.lab_room.phone|replace('-', '') }}">{{ site.contact.lab_room.phone }}</a></dd></div>
+      <div><dt>{{ t('contact.email') }}</dt><dd><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></dd></div>
+    </dl>
+    <p class="btn-row"><a class="btn btn-primary" href="{{ site.contact.map_url }}" target="_blank" rel="noopener">{{ t('contact.map') }} <span aria-hidden="true">↗</span></a></p>
+  </section>
+  <section class="panel span-5 join" aria-labelledby="jn-h">
+    {{ ui.panel_head(t('home.join'), id='jn-h') }}
+    <p>{{ t('home.join_text') }}</p>
+    <p class="btn-row"><a class="btn" href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
+  </section>
+</div>
+{% endblock %}

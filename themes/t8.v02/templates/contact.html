@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block hero %}{{ ui.page_hero(t('contact.title'), t('contact.directions')) }}{% endblock %}
+{% block content %}
+<div class="wrap sec contact-grid">
+  <section class="glass contact-box" aria-labelledby="ct-h">
+    <h2 class="visually-hidden" id="ct-h">{{ t('contact.title') }}</h2>
+    <a class="big-mail" href="mailto:{{ site.contact.email }}">{{ m.email_wbr(site.contact.email) }}</a>
+    <dl class="contact">
+      <div><dt>{{ t('contact.address') }}</dt><dd>{{ tr(site.contact.address) }}</dd></div>
+      <div><dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(site.contact.pi_office.room) }} · <a href="tel:{{ site.contact.pi_office.phone|replace('-', '') }}">{{ site.contact.pi_office.phone }}</a></dd></div>
+      <div><dt>{{ t('contact.lab_room') }}</dt><dd>{{ tr(site.contact.lab_room.room) }} · <a href="tel:{{ site.contact.lab_room.phone|replace('-', '') }}">{{ site.contact.lab_room.phone }}</a></dd></div>
+    </dl>
+    <p class="hero-cta"><a class="btn btn-neon" href="{{ site.contact.map_url }}" target="_blank" rel="noopener">{{ t('contact.map') }} <span aria-hidden="true">↗</span></a></p>
+  </section>
+  <section class="join-band join-col" aria-labelledby="jn-h">
+    <div>
+      <h2 class="join-title" id="jn-h">{{ t('home.join') }}</h2>
+      <p>{{ t('home.join_text') }}</p>
+    </div>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{% block ptitle %}{{ t('research.title') }}{% endblock %}
+{% block plead %}{{ t('research.intro') }}{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <nav class="toc" aria-label="{{ t('home.research') }}">
+    {% for r in research %}<a href="#{{ r.key }}"><span class="toc-no">{{ x.no(loop.index) }}</span>{{ tr(r.title) }}</a>{% endfor %}
+  </nav>
+
+  {% for r in research %}
+  <section class="rtopic{% if loop.index is even %} rtopic--flip{% endif %}" id="{{ r.key }}">
+    <div class="rtopic-head">
+      <a class="rtopic-media" href="{{ topic_url(r) }}" tabindex="-1" aria-hidden="true">
+        {% if r.image %}<div class="loc loc--img"><img src="{{ static(r.image) }}" alt="" loading="lazy"></div>{% else %}{{ x.locator(r, loop.index0, 'loc loc--lg') }}{% endif %}
+      </a>
+      <div class="rtopic-text">
+        <p class="kicker"><span class="kicker-cat">{{ x.L('feature') }} {{ x.no(loop.index) }}</span>{% if r.pubs %}<span>{{ r.pubs|length }} {{ t('research.papers') }}</span>{% endif %}</p>
+        <h2 class="rtopic-title"><a href="{{ topic_url(r) }}">{{ tr(r.title) }}</a></h2>
+        <p class="rtopic-dek">{{ tr(r.summary)|truncate(420) }}</p>
+        {{ m.topic_themes(r, 'topic-themes') }}
+        {% if r.region_names %}<p class="rtopic-regions"><span class="rtopic-regions-h">{{ t('research.regions') }}</span> {% for n in r.region_names %}{{ tr(n) }}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+        <a class="story-more" href="{{ topic_url(r) }}">{{ x.L('read_feature') }} <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+  {% else %}
+  <p class="empty">{{ t('common.empty') }}</p>
+  {% endfor %}
+</div>
+{% endblock %}

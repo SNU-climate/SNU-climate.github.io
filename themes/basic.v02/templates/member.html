@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% import 'ui.html' as ui with context %}
+{% macro cv(items, key) %}<ul class="cv">{% for e in items %}<li><span>{{ e[key] }}</span><div>{{ tr(e) }}</div></li>{% endfor %}</ul>{% endmacro %}
+{% block content %}
+{% set p = person %}
+{% set back = 'pi' if p.is_pi else ('alumni' if p.alumnus else ('researchers' if p.role in ['postdoc', 'researcher', 'staff'] else 'students')) %}
+<p class="crumb"><a href="{{ page_url('people') }}#{{ back }}">← {{ t('people.back') }}</a></p>
+<article class="profile{% if p.is_pi %} profile--pi{% endif %}">
+  <div class="profile-head">
+    <div class="member-photo profile-photo">{% if p.photo %}<img src="{{ static(p.photo) }}" alt="{{ tr(p.name) }}">{% else %}<span class="member-initials">{{ m.initials_of(tr(p.name)) }}</span>{% endif %}</div>
+    <div class="profile-id">
+      <h1>{{ tr(p.name) }}</h1>
+      {% if p.name is mapping and p.name[other_lang] and p.name[other_lang] != tr(p.name) %}<p class="muted" lang="{{ other_lang }}">{{ p.name[other_lang] }}</p>{% endif %}
+      <dl class="profile-facts">
+        {% if p.is_pi %}
+          <dt>{{ t('people.position') }}</dt><dd>{% for r in p.roles %}<div>{{ tr(r) }}</div>{% endfor %}</dd>
+          {% if p.office %}<dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(p.office) }}{% if p.phone %} · {{ p.phone }}{% endif %}</dd>{% endif %}
+        {% elif p.alumnus %}
+          {% set dg = [p.degree, p.year]|select|join(', ') %}{% if dg %}<dt>{{ t('menu.alumni') }}</dt><dd>{{ dg }}</dd>{% endif %}
+          {% if p.current %}<dt>{{ t('people.current') }}</dt><dd>{{ tr(p.current) }}</dd>{% endif %}
+        {% else %}
+          <dt>{{ t('people.position') }}</dt><dd>{{ tr(p.position) if p.position else t('people.role.' ~ p.role) }}</dd>
+        {% endif %}
+        {% if p.email %}<dt>{{ t('people.email') }}</dt><dd><a href="mailto:{{ p.email }}">{{ m.email_wbr(p.email) }}</a></dd>{% endif %}
+        {% if p.homepage %}<dt>{{ t('people.homepage') }}</dt><dd><a href="{{ p.homepage }}" target="_blank" rel="noopener">{{ p.homepage|replace('https://', '')|replace('http://', '')|truncate(48) }}</a></dd>{% endif %}
+      </dl>
+    </div>
+  </div>
+
+  {% if p.is_pi and p.bio %}<p class="profile-bio">{{ tr(p.bio) }}</p>{% endif %}
+  {# 교수 interests는 [{en,ko}, …], 구성원은 {en:[…], ko:[…]} #}
+  {% set it = [] %}
+  {% if p.is_pi %}{% for i in p.interests or [] %}{% set _ = it.append(tr(i)) %}{% endfor %}{% else %}{% set it = tr_list(p.interests) %}{% endif %}
+  {% if it %}<section class="sec"><h2>{{ t('people.interests') }}</h2><ul class="chips">{% for x in it %}<li>{{ x }}</li>{% endfor %}</ul></section>{% endif %}
+
+  {% if p.is_pi %}
+  {# 교수 이력: 학력+경력+학회 회원 / 학술 활동+수상 두 단(행 수가 비슷하게) #}
+  <div class="profile-cv profile-cv--2">
+    <div>
+      {% if p.education %}<section class="sec"><h2>{{ t('people.education') }}</h2>{{ cv(p.education, 'year') }}</section>{% endif %}
+      {% if p.career %}<section class="sec"><h2>{{ t('people.career') }}</h2>{{ cv(p.career, 'period') }}</section>{% endif %}
+      {% if p.memberships %}<section class="sec"><h2>{{ t('people.memberships') }}</h2>{{ cv(p.memberships, 'year') }}</section>{% endif %}
+    </div>
+    <div>
+      {% if p.service %}<section class="sec"><h2>{{ t('people.service') }}</h2>{{ cv(p.service, 'period') }}</section>{% endif %}
+      {% if p.awards %}<section class="sec"><h2>{{ t('people.awards') }}</h2>{{ cv(p.awards, 'year') }}</section>{% endif %}
+    </div>
+  </div>
+  {% else %}
+  <div class="profile-cv">
+    {% if p.education %}<section class="sec"><h2>{{ t('people.education') }}</h2>{{ cv(p.education, 'year') }}</section>{% endif %}
+    {% if p.career %}<section class="sec"><h2>{{ t('people.experience') }}</h2>{{ cv(p.career, 'period') }}</section>{% endif %}
+    {% if p.awards %}<section class="sec"><h2>{{ t('people.awards') }}</h2>{{ cv(p.awards, 'year') }}</section>{% endif %}
+  </div>
+  {% endif %}
+
+  {% macro pub_row(x) %}<li class="pub"><span class="pub-num"><a href="{{ pub_url(x) }}">{{ x.num }}.</a></span><div class="pub-body">
+      <div class="pub-authors">{{ authors(x) }} ({{ x.year }})</div>
+      <div class="pub-title">{% if x.doi %}<a href="{{ doi_url(x) }}" target="_blank" rel="noopener">{{ rich(x.title) }}</a>{% else %}{{ rich(x.title) }}{% endif %}</div>
+      <div class="pub-cite">{{ cite(x) }}</div></div></li>{% endmacro %}
+
+  {% if p.is_pi %}
+  {# 교수 페이지: 연구실 전체 논문의 연도별 막대(막대 → 논문 목록의 그 해) + 대표 논문 #}
+  <section class="sec"><h2>{{ tr(ui.TX.lab_per_year) }} <span class="pub-year-n">({{ stats.pubs }})</span></h2>
+    {{ ui.year_bars(stats.per_year_full, page_url('publications') ~ '#y', tr(ui.TX.lab_per_year)) }}
+    <p class="muted">{{ tr(ui.TX.per_year_note) }}</p>
+  </section>
+  {% if p.pubs %}
+  <section class="sec"><h2>{{ t('people.selected') }} <span class="pub-year-n">({{ p.pubs|length }})</span></h2>
+    <ul class="pub-ul">{% for x in p.pubs %}{{ pub_row(x) }}{% endfor %}</ul>
+    <p><a href="{{ page_url('publications') }}">{{ t('home.view_all') }} ({{ stats.pubs }}) →</a></p>
+  </section>
+  {% endif %}
+
+  {% elif p.pubs %}
+  {# 구성원 페이지: 참여 논문 연도별 막대 + 연구실 내 공저자 + 연도별 논문 목록 #}
+  {% set yrs = p.pubs|map(attribute='year')|list %}
+  {% set series = [] %}{% for y in range([yrs|min, (yrs|max) - 4]|min, (yrs|max) + 1) %}{% set _ = series.append((y, yrs|select('equalto', y)|list|length)) %}{% endfor %}
+  {% set co = [] %}
+  {% for o in members_all + alumni if o.pub_name and o.id != p.id %}
+    {% set k = namespace(c=0) %}
+    {% for x in p.pubs %}{% if o.pub_name in (x.authors or []) and is_me(o.pub_name, x) %}{% set k.c = k.c + 1 %}{% endif %}{% endfor %}
+    {% if k.c %}{% set _ = co.append({'m': o, 'n': k.c}) %}{% endif %}
+  {% endfor %}
+  <section class="sec"><h2>{{ t('people.pubs') }} <span class="pub-year-n">({{ p.pubs|length }})</span></h2>
+    <p class="muted">{{ t('people.pubs_note') }}</p>
+    <div class="pubviz{% if not co %} pubviz--solo{% endif %}">
+      {% if p.pubs|length > 1 %}
+      <div class="pubviz-chart"><h3>{{ tr(ui.TX.per_year) }}</h3>
+        {{ ui.year_bars(series, '#py', tr(ui.TX.per_year)) }}
+        <p class="muted">{{ tr(ui.TX.per_year_note) }}</p>
+      </div>
+      {% endif %}
+      {% if co %}
+      <div class="pubviz-co"><h3>{{ tr(ui.TX.coauthors) }}</h3>
+        <ul class="coauthors">
+          {% for c in co|sort(attribute='n', reverse=True) %}{% set o = c.m %}{% set u = member_url(o) %}
+          <li><a href="{{ u }}"><span class="co-photo">{% if o.photo %}<img src="{{ static(o.photo) }}" alt="" loading="lazy">{% else %}<span class="member-initials">{{ m.initials_of(tr(o.name)) }}</span>{% endif %}</span>
+            <span class="co-text"><strong>{{ tr(o.name) }}</strong><span>{{ tr(ui.TX.paper_1) if c.n == 1 else tr(ui.TX.papers_n)|replace('{n}', c.n) }}</span></span></a></li>
+          {% endfor %}
+        </ul>
+        <p class="muted">{{ tr(ui.TX.coauthors_note) }}</p>
+      </div>
+      {% endif %}
+    </div>
+    {% for y, xs in p.pubs|groupby('year')|reverse %}
+    <h3 class="py-title" id="py{{ y }}">{{ y }} <span class="pub-year-n">({{ xs|length }})</span></h3>
+    <ul class="pub-ul">{% for x in xs %}{{ pub_row(x) }}{% endfor %}</ul>
+    {% endfor %}
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

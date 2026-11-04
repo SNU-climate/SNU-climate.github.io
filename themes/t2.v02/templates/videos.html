@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+{% call ui.phead('videos', t('videos.title'), t('videos.intro')) %}
+<p class="phead-cta"><a class="big-link big-link--sm" href="{{ channel.url or site.links.youtube }}" target="_blank" rel="noopener">{{ t('videos.channel') }} <span aria-hidden="true">↗</span></a></p>
+{% endcall %}
+
+{# v02 논문 ↔ 영상 2단 목록: 왼쪽 서지(영상 설명의 DOI로 연결된 논문, research.yaml에서 이 영상을 쓰는 연구 주제), 오른쪽 클릭형 영상 #}
+<div class="wrap">
+  <ol class="vrows">
+    {% for v in videos %}
+    <li class="vrow" id="v-{{ v.id }}">
+      <div class="vrow-text">
+        <p class="vrow-meta"><span class="vrow-idx">{{ '%02d'|format(loop.index) }}</span><time datetime="{{ v.published }}">{{ fmt_date(v.published) }}</time></p>
+        <h2 class="vrow-title" lang="{{ text_lang(v.title) }}"><a href="{{ youtube_url(v.id) }}" target="_blank" rel="noopener">{{ v.title }}</a></h2>
+        {% if v.pub %}
+        <div class="vrow-pub">
+          <p class="vrow-k">{{ t('news.paper') }} <a class="vrow-num" href="{{ pub_url(v.pub) }}">#{{ v.pub.num }}</a></p>
+          <p class="vrow-ptitle"><a href="{{ pub_url(v.pub) }}">{{ rich(v.pub.title) }}</a></p>
+          <p class="vrow-cite">{{ cite(v.pub) }} ({{ v.pub.year }})</p>
+        </div>
+        {% endif %}
+        {% set rel = [] %}{% for r in research if v.id in (r.videos or []) %}{% set _ = rel.append(r) %}{% endfor %}
+        {% if rel %}
+        <p class="vrow-k vrow-k--topics">{{ t('nav.research') }}</p>
+        <ul class="vrow-topics">{% for r in rel %}<li><a href="{{ topic_url(r) }}">{{ tr(r.title) }} <span aria-hidden="true">→</span></a></li>{% endfor %}</ul>
+        {% endif %}
+      </div>
+      <div class="vrow-video">{{ yt_html(v.id, v.title) }}</div>
+    </li>
+    {% else %}
+    <li class="empty">{{ t('common.empty') }}</li>
+    {% endfor %}
+  </ol>
+</div>
+{% endblock %}

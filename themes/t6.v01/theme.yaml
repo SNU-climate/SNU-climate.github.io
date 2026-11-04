@@ -1,0 +1,17 @@
+title: "Sidebar Portfolio v01"
+concept:
+  en: >-
+    The al-folio sidebar portfolio, re-centred on the lab: the home page now opens with the lab name,
+    introduction and five research areas, with the PI as a card that links to a full profile page.
+    News is split from the 89-album photo gallery and grouped by year with category filters;
+    members, alumni and research topics each get their own detail pages.
+  ko: >-
+    al-folio 사이드바 포트폴리오를 연구실 중심으로 다시 짰다. 홈은 연구실 이름·소개·연구 분야 5개로 시작하고,
+    교수는 개인 페이지로 이어지는 카드로 옮겼다. 뉴스는 앨범 89편(갤러리)과 분리해 연도별 묶음과 분류 필터를 달았고,
+    구성원·졸업생·연구 주제마다 상세 페이지가 생겼다.
+palette: ["#0b6a8a", "#ffffff", "#212529", "#f6f7f9", "#9c1d3b"]
+fonts: ["Roboto", "Roboto Slab", "Pretendard"]
+# 공통 8페이지 외 추가 페이지(갤러리: 앨범 89편을 뉴스에서 분리)
+extra_pages: [gallery]
+# member.html로 교수 개인 페이지 people/jong-seong-kug.html 생성
+pi_page: true

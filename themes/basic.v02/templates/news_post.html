@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{# 공지 상세: 본문 + 오른쪽 '다른 소식' 사이드(데스크톱), 아래 이전/다음 글. 앨범은 사진 격자를 넓게 쓴다 #}
+{% set seq = albums if post.album else news_items %}
+{% set nb = namespace(prev=None, next=None) %}
+{% for x in seq %}{% if x.slug == post.slug %}
+  {% if not loop.last %}{% set nb.prev = seq[loop.index0 + 1] %}{% endif %}
+  {% if not loop.first %}{% set nb.next = seq[loop.index0 - 1] %}{% endif %}
+{% endif %}{% endfor %}
+{% block content %}
+<div class="post-layout{% if post.album %} post-layout--album{% endif %}">
+<article class="post{% if post.album %} post--album{% endif %}">
+  {% if post.album %}<p class="crumb"><a href="{{ page_url('gallery') }}">← {{ t('gallery.back') }}</a></p>
+  {% else %}<p class="crumb"><a href="{{ page_url('news') }}">← {{ t('news.back') }}</a></p>{% endif %}
+  <div class="news-card-meta"><span class="news-cat news-cat--{{ post.category }}">{{ t('news.category.' ~ post.category) }}</span> <time datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time></div>
+  <h1 lang="{{ text_lang(tr(post.title)) }}">{{ tr(post.title) }}</h1>
+  {% if post.summary %}<p class="lead">{{ tr(post.summary) }}</p>{% endif %}
+  {{ m.post_cover(post) }}
+  {{ m.news_body(post) }}
+  {% if post.link %}<p class="post-link"><a class="btn btn--ghost" href="{{ post.link }}" target="_blank" rel="noopener">{{ t('news.link') }} →</a></p>{% endif %}
+  <nav class="post-pager" aria-label="{{ t('common.prev') }} / {{ t('common.next') }}">
+    {% if nb.prev %}<a class="post-pager-prev" href="{{ news_url(nb.prev) }}"><span>← {{ t('common.prev') }}</span><strong>{{ tr(nb.prev.title) }}</strong></a>{% else %}<span></span>{% endif %}
+    {% if nb.next %}<a class="post-pager-next" href="{{ news_url(nb.next) }}"><span>{{ t('common.next') }} →</span><strong>{{ tr(nb.next.title) }}</strong></a>{% endif %}
+  </nav>
+</article>
+{% if not post.album %}
+<aside class="post-side" aria-label="{{ t('common.more_news') }}">
+  <h2>{{ t('common.more_news') }}</h2>
+  <ul class="board board--side">
+    {% for x in news_items if x.slug != post.slug %}{% if loop.index <= 6 %}
+    <li><a href="{{ news_url(x) }}">{{ tr(x.title) }}</a><time datetime="{{ x.date }}">{{ fmt_date(x.date) }}</time></li>
+    {% endif %}{% endfor %}
+  </ul>
+  <p><a href="{{ page_url('news') }}">{{ t('home.view_all') }} →</a></p>
+</aside>
+{% endif %}
+</div>
+{% endblock %}

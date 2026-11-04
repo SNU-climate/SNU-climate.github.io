@@ -1,0 +1,264 @@
+{# Ocean–Atmosphere v01 전용 그래픽·카드 매크로. {% import '_ocean.html' as o with context %} #}
+{% import 'macros.html' as m with context %}
+
+{# 로고 마크: 원 안의 세 줄 파도 #}
+{% macro logo(size=36) %}
+<svg class="logo" width="{{ size }}" height="{{ size }}" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+  <defs><linearGradient id="lg-logo-{{ size }}" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#0f6e8c"/><stop offset=".6" stop-color="#25b3a6"/><stop offset="1" stop-color="#f39a4b"/></linearGradient></defs>
+  <circle cx="20" cy="20" r="19" fill="url(#lg-logo-{{ size }})"/>
+  <path d="M7 15 q3.25 -3 6.5 0 t6.5 0 t6.5 0 t6.5 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+  <path d="M7 21 q3.25 -3 6.5 0 t6.5 0 t6.5 0 t6.5 0" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M7 27 q3.25 -3 6.5 0 t6.5 0 t6.5 0 t6.5 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+</svg>
+{% endmacro %}
+
+{# 히어로 배경의 등온선(주기적 곡선, 두 겹이 서로 다른 속도로 흐른다). 폭 200% SVG를 -50% 이동 → 이음매 없음 #}
+{% macro isotherms() %}
+<div class="iso" aria-hidden="true">
+  <svg class="iso-layer iso-a" viewBox="0 0 2880 600" preserveAspectRatio="none" focusable="false">
+    <path class="iso-c" d="M0 70 Q360 26 720 70 T1440 70 T2160 70 T2880 70"/>
+    <path class="iso-c" d="M0 200 Q360 132 720 200 T1440 200 T2160 200 T2880 200"/>
+    <path class="iso-t" d="M0 330 Q180 278 360 330 T720 330 T1080 330 T1440 330 T1800 330 T2160 330 T2520 330 T2880 330"/>
+    <path class="iso-w" d="M0 455 Q120 427 240 455 T480 455 T720 455 T960 455 T1200 455 T1440 455 T1680 455 T1920 455 T2160 455 T2400 455 T2640 455 T2880 455"/>
+    <path class="iso-w" d="M0 570 Q360 510 720 570 T1440 570 T2160 570 T2880 570"/>
+  </svg>
+  <svg class="iso-layer iso-b" viewBox="0 0 2880 600" preserveAspectRatio="none" focusable="false">
+    <path class="iso-c" d="M0 130 Q180 98 360 130 T720 130 T1080 130 T1440 130 T1800 130 T2160 130 T2520 130 T2880 130"/>
+    <path class="iso-t" d="M0 265 Q120 241 240 265 T480 265 T720 265 T960 265 T1200 265 T1440 265 T1680 265 T1920 265 T2160 265 T2400 265 T2640 265 T2880 265"/>
+    <path class="iso-t" d="M0 395 Q360 315 720 395 T1440 395 T2160 395 T2880 395"/>
+    <path class="iso-w" d="M0 515 Q180 467 360 515 T720 515 T1080 515 T1440 515 T1800 515 T2160 515 T2520 515 T2880 515"/>
+  </svg>
+</div>
+{% endmacro %}
+
+{# 히어로 아래쪽 파도: 맨 앞 파도가 페이지 배경색이라 본문과 자연스럽게 이어진다 #}
+{% macro waves() %}
+<div class="waves" aria-hidden="true">
+  <svg class="wave-layer wave-1" viewBox="0 0 2880 120" preserveAspectRatio="none" focusable="false"><path d="M0 48 Q360 20 720 48 T1440 48 T2160 48 T2880 48 L2880 120 L0 120Z"/></svg>
+  <svg class="wave-layer wave-2" viewBox="0 0 2880 120" preserveAspectRatio="none" focusable="false"><path d="M0 60 Q180 40 360 60 T720 60 T1080 60 T1440 60 T1800 60 T2160 60 T2520 60 T2880 60 L2880 120 L0 120Z"/></svg>
+  <svg class="wave-layer wave-3" viewBox="0 0 2880 120" preserveAspectRatio="none" focusable="false"><path d="M0 74 Q240 58 480 74 T960 74 T1440 74 T1920 74 T2400 74 T2880 74 L2880 120 L0 120Z"/></svg>
+</div>
+{% endmacro %}
+
+{# 연구 주제 그림: r.image가 있으면 원본 그림, 없으면 등장방형 미니 지도(위도별 수온 그라디언트 + 등온선 + regions) #}
+{% set ART = [
+  ['#0b2f57', '#1a7f9a', '#ef6a3a'],
+  ['#073763', '#0f8aa0', '#f5b14a'],
+  ['#0c3340', '#1f8a70', '#c9c25a'],
+  ['#d7eefa', '#4f9fd0', '#0d3b66'],
+  ['#1b1f5c', '#2f6fb0', '#2bb3a6'],
+] %}
+{% macro topic_art(r, i, cls='topic-art') %}
+{% if r.image %}
+<div class="{{ cls }}"><img src="{{ static(r.image) }}" alt="{{ tr(r.title) }}" loading="lazy"></div>
+{% else %}
+{% set c = ART[i % (ART|length)] %}
+{% set gid = 'ta-' ~ r.key ~ '-' ~ (cls|replace(' ', '_')) %}
+<div class="{{ cls }}">
+<svg viewBox="0 0 360 180" preserveAspectRatio="xMidYMid slice" role="img" aria-label="{{ tr(r.title) }}" focusable="false">
+  <defs>
+    <linearGradient id="{{ gid }}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="{{ c[0] }}"/><stop offset=".32" stop-color="{{ c[1] }}"/>
+      <stop offset=".5" stop-color="{{ c[2] }}"/><stop offset=".68" stop-color="{{ c[1] }}"/><stop offset="1" stop-color="{{ c[0] }}"/>
+    </linearGradient>
+  </defs>
+  <rect width="360" height="180" fill="url(#{{ gid }})"/>
+  <g class="ta-grid">
+    {% for x in range(30, 360, 30) %}<line x1="{{ x }}" y1="0" x2="{{ x }}" y2="180"/>{% endfor %}
+    {% for y in range(30, 180, 30) %}<line x1="0" y1="{{ y }}" x2="360" y2="{{ y }}"/>{% endfor %}
+  </g>
+  {% for pt in r.regions or [] %}
+  <g class="ta-pt" transform="translate({{ ((pt[1] + 20) % 360)|round(1) }} {{ (90 - pt[0])|round(1) }})">
+    <circle class="ta-ring" r="11"/><circle class="ta-dot" r="4.5"/>
+  </g>
+  {% endfor %}
+</svg>
+</div>
+{% endif %}
+{% endmacro %}
+
+{# 주제 색(연구 지역 지점·범례) #}
+{% set TOPIC_C = ['#ff8a3d', '#2fd6c3', '#b9e769', '#ffd166', '#8cc8ff'] %}
+{% macro topic_color(i) %}{{ TOPIC_C[i % (TOPIC_C|length)] }}{% endmacro %}
+
+{# 연구 지역 띠: 태평양 중심(서쪽 끝 20°W) 등장방형 띠에 위도별 수온 그라디언트 + 육지 윤곽 + research.regions 지점.
+   보이는 위도 범위 85°N–65°S. 지점은 HTML로 얹어 띠가 가로로 늘어나도 동그랗게 유지된다. #}
+{% macro region_band(r, i, cls='region-band') %}
+{% set names = r.region_names or [] %}
+<div class="{{ cls }}" role="img" aria-label="{{ t('research.regions') }}: {% for n in names %}{{ tr(n) }}{% if not loop.last %}, {% endif %}{% endfor %}" style="--pin: {{ topic_color(i) }}">
+  <img class="rb-land" src="{{ asset('land-110m.svg') }}" alt="" loading="lazy">
+  <span class="rb-eq" aria-hidden="true"></span>
+  {% for pt in r.regions or [] %}<span class="rb-pin" style="left: {{ ((pt[1] + 20) % 360 / 3.6)|round(2) }}%; top: clamp(7px, {{ ((85 - pt[0]) / 1.5)|round(2) }}%, calc(100% - 7px))"></span>{% endfor %}
+</div>
+{% endmacro %}
+
+{# 연구 지역 이름 칩 #}
+{% macro region_chips(r, i) %}
+{% if r.region_names %}<p class="region-chips"><span class="region-chips-label">{{ t('research.regions') }}</span>{% for n in r.region_names %}<span class="chip chip--region" style="--pin: {{ topic_color(i) }}">{{ tr(n) }}</span>{% endfor %}</p>{% endif %}
+{% endmacro %}
+
+{# 사진이 없을 때의 아바타(이니셜 + 그라디언트) #}
+{% macro avatar(img, name, initials, cls='avatar') %}
+<div class="{{ cls }}">{% if img %}<img src="{{ static(img) }}" alt="{{ name }}" loading="lazy">{% else %}<span aria-hidden="true">{{ initials }}</span>{% endif %}</div>
+{% endmacro %}
+
+{# 이니셜: 한글 이름이면 첫 글자(성), 아니면 단어 머리글자 2개 #}
+{% macro ini(name) %}{% set s = (name or '')|trim %}{% if s[:1] >= '가' and s[:1] <= '힣' %}{{ s[:1] }}{% else %}{{ (s.split(' ')|map('first')|join)[:2]|upper }}{% endif %}{% endmacro %}
+
+{# 뉴스 카드: 표지가 없으면 그림 자리 없이 글자 카드 #}
+{% macro news_card(p, cls='news-card glass') %}
+{% set c = cover_url(p) %}
+<article class="{{ cls }}{% if not c %} news-card--text{% endif %}">
+  <a class="news-card-link" href="{{ news_url(p) }}">
+    {% if c %}<div class="news-card-img"><img src="{{ c }}" alt="" loading="lazy"></div>{% endif %}
+    <div class="news-card-text">
+      <div class="news-card-meta"><span class="news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span> <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></div>
+      <h3 class="news-card-title" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</h3>
+      {% if p.summary %}<p class="news-card-summary" lang="{{ text_lang(tr(p.summary)) }}">{{ tr(p.summary) }}</p>{% endif %}
+    </div>
+  </a>
+</article>
+{% endmacro %}
+
+{# 앨범 카드(갤러리) #}
+{% macro album_card(p, cls='album glass') %}
+{% set c = cover_url(p) %}
+<a class="{{ cls }}" href="{{ news_url(p) }}">
+  <span class="album-img">{% if c %}<img src="{{ c }}" alt="" loading="lazy">{% endif %}{% if p.gallery %}<span class="album-count"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 3 5.6 5H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2.6L13 3H7zm3 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>{{ p.gallery|length }}<span class="visually-hidden"> {{ t('gallery.photos') }}</span></span>{% endif %}</span>
+  <span class="album-text">
+    <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time>
+    <strong lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</strong>
+  </span>
+</a>
+{% endmacro %}
+
+{# 이력 목록(학력·경력·수상 …) #}
+{% macro cv(items, key) %}<ul class="cv">{% for e in items %}<li><span class="cv-when">{{ e[key] }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ul>{% endmacro %}
+
+{# ================================================================ v02 #}
+{# 연도별 값 → 매끄러운 곡선(Catmull-Rom → 3차 베지어) path. 폭 W, 높이 H, 최댓값이 top, 0이 base.
+   closed=True면 아래를 닫아 면으로 채운다. 값은 실제 stats.per_year_full에서만 온다. #}
+{% macro swell_d(vals, W=1000, H=200, top=20, base=176, closed=False, mx=0) %}
+{%- set n = vals|length -%}
+{%- set peak = mx if mx else ((vals|max) if vals and vals|max > 0 else 1) -%}
+{%- set cw = W / n -%}
+{%- set pts = [] -%}
+{%- for v in vals %}{% set _ = pts.append([cw * (loop.index0 + 0.5), base - (v / peak) * (base - top)]) %}{% endfor -%}
+M0 {{ pts[0][1]|round(1) }} L{{ pts[0][0]|round(1) }} {{ pts[0][1]|round(1) }}
+{%- for i in range(n - 1) %}{% set p0 = pts[i - 1] if i > 0 else pts[i] %}{% set p1 = pts[i] %}{% set p2 = pts[i + 1] %}{% set p3 = pts[i + 2] if i + 2 < n else pts[i + 1] %} C{{ (p1[0] + (p2[0] - p0[0]) / 6)|round(1) }} {{ [(p1[1] + (p2[1] - p0[1]) / 6), base]|min|round(1) }} {{ (p2[0] - (p3[0] - p1[0]) / 6)|round(1) }} {{ [(p2[1] - (p3[1] - p1[1]) / 6), base]|min|round(1) }} {{ p2[0]|round(1) }} {{ p2[1]|round(1) }}{% endfor %} L{{ W }} {{ pts[-1][1]|round(1) }}{% if closed %} L{{ W }} {{ H }} L0 {{ H }}Z{% endif %}
+{%- endmacro %}
+
+{# 논문 해류 타임라인: stats.per_year_full을 물결 높이로. 마루(연도 칸)를 누르면 그 연도 섹션으로 간다.
+   검색하면 ocean.js가 [data-tl]의 결과 물결(.tl-q)을 다시 그린다. #}
+{% macro pub_swell(cls='glass tl') %}
+{% set series = stats.per_year_full %}
+{% set vals = [] %}{% for y, n in series %}{% set _ = vals.append(n) %}{% endfor %}
+{% set have = pubs_by_year|map(attribute='0')|list %}
+{% set peak = vals|max if vals else 1 %}
+<section class="{{ cls }}" aria-labelledby="tl-h">
+  <div class="tl-head">
+    <h2 class="tl-title" id="tl-h"><span class="kicker">{{ t('common.years') }}</span>{{ stats.first_year }}–{{ stats.last_year }}</h2>
+    <p class="tl-sum"><strong data-tl-count>{{ stats.pubs }}</strong> {{ t('pubs.total') }}</p>
+  </div>
+  <div class="tl-box" data-tl data-tl-max="{{ peak }}" data-tl-years="{% for y, n in series %}{{ y }}{% if not loop.last %},{% endif %}{% endfor %}">
+    <svg class="tl-svg" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="tl-sst" x1="0" y1="20" x2="0" y2="200" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#f4a259"/><stop offset=".35" stop-color="#2bb3a6"/><stop offset=".75" stop-color="#0d6688"/><stop offset="1" stop-color="#0a4673"/>
+        </linearGradient>
+      </defs>
+      {% for k in [5, 10, 15, 20, 25, 30] if k <= peak %}<line class="tl-grid" x1="0" x2="1000" y1="{{ (176 - k / peak * 156)|round(1) }}" y2="{{ (176 - k / peak * 156)|round(1) }}"/>{% endfor %}
+      <path class="tl-area" d="{{ swell_d(vals, closed=True) }}" fill="url(#tl-sst)"/>
+      <path class="tl-line" d="{{ swell_d(vals) }}"/>
+      <path class="tl-q" d="" hidden/>
+    </svg>
+    <ol class="tl-cols" style="--n: {{ vals|length }}">
+      {% for y, n in series %}
+      {% set top = ((176 - n / peak * 156) / 2)|round(2) %}
+      <li class="tl-col{% if loop.first or loop.last or y % 5 == 0 %} tl-col--tick{% endif %}">
+        {% if y in have %}<a class="tl-hit" href="#y{{ y }}" style="--top: {{ top }}%"><span class="tl-dot" aria-hidden="true"></span><span class="tl-tip">{{ y }} · {{ n }} {{ t('pubs.total') }}</span></a>
+        {% else %}<span class="tl-hit tl-hit--empty" style="--top: {{ top }}%"><span class="tl-tip">{{ y }} · 0</span></span>{% endif %}
+        <span class="tl-year" aria-hidden="true">{{ y }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+{% endmacro %}
+
+{% macro p_name(r, i) %}{{ tr(r.region_names[i]) if r.region_names and i < r.region_names|length else (r.regions[i][0] ~ ', ' ~ r.regions[i][1]) }}{% endmacro %}
+{# 연구 지역 해도: 태평양 중심(서쪽 끝 20°W) 등장방형 지도, 보이는 위도 87°N–60°S.
+   research.regions 지점에 번호 표지를 찍고 같은 좌표는 옆으로 벌린다. 표지를 누르면 해당 주제로 간다. #}
+{% macro sea_chart(cls='glass sea-chart', link_page=False) %}
+{% set pts = [] %}
+{% for r in research %}{% set ti = loop.index0 %}{% for pt in r.regions or [] %}
+{% set _ = pts.append({'lat': pt[0], 'lon': pt[1], 'name': (tr(r.region_names[loop.index0]) if r.region_names and loop.index0 < r.region_names|length else (pt[0] ~ ', ' ~ pt[1])), 'ti': ti, 'r': r}) %}
+{% endfor %}{% endfor %}
+<figure class="{{ cls }}" aria-labelledby="sc-cap">
+  <div class="sc-scroll" data-sc-scroll tabindex="0" role="region" aria-label="{{ t('common.regions') }}">
+  <svg class="sc-svg" viewBox="0 3 360 147" role="group" aria-labelledby="sc-cap">
+    <defs>
+      <linearGradient id="sc-sst" x1="0" y1="3" x2="0" y2="150" gradientUnits="userSpaceOnUse">
+        <stop offset="0" style="stop-color: var(--sc-c0)"/><stop offset=".3" style="stop-color: var(--sc-c1)"/><stop offset=".5" style="stop-color: var(--sc-c2)"/>
+        <stop offset=".58" style="stop-color: var(--sc-c3)"/><stop offset=".72" style="stop-color: var(--sc-c2)"/><stop offset=".86" style="stop-color: var(--sc-c1)"/><stop offset="1" style="stop-color: var(--sc-c0)"/>
+      </linearGradient>
+    </defs>
+    <rect x="0" y="3" width="360" height="147" fill="url(#sc-sst)"/>
+    <g class="sc-grat" aria-hidden="true">
+      {% for x in range(10, 360, 30) %}<line x1="{{ x }}" y1="3" x2="{{ x }}" y2="150"/>{% endfor %}
+      {% for y in [30, 60, 120] %}<line x1="0" y1="{{ y }}" x2="360" y2="{{ y }}"/>{% endfor %}
+      <line class="sc-eq" x1="0" y1="90" x2="360" y2="90"/>
+      <line class="sc-trop" x1="0" y1="66.6" x2="360" y2="66.6"/><line class="sc-trop" x1="0" y1="113.4" x2="360" y2="113.4"/>
+    </g>
+    <image class="sc-land" href="{{ asset('land-110m.svg') }}" x="0" y="0" width="360" height="180" preserveAspectRatio="none"/>
+    <g class="sc-ticks" aria-hidden="true">
+      {% for lon, lab in [(60, '60°E'), (120, '120°E'), (180, '180°'), (-120, '120°W'), (-60, '60°W')] %}<text x="{{ (lon + 20) % 360 }}" y="147.5">{{ lab }}</text>{% endfor %}
+      <text class="sc-tick-eq" x="2.5" y="88.6">0°</text><text x="2.5" y="28.6">60°N</text><text x="2.5" y="118.6">30°S</text>
+    </g>
+    {% for p in pts %}
+    {% set same = pts|selectattr('lat', 'equalto', p.lat)|selectattr('lon', 'equalto', p.lon)|list %}
+    {% set ns = namespace(k=0) %}{% for q in same %}{% if q is sameas p %}{% set ns.k = loop.index0 %}{% endif %}{% endfor %}
+    {% set x = ((p.lon + 20) % 360 + (ns.k - (same|length - 1) / 2) * 9.5)|round(2) %}
+    {% set y = (90 - p.lat)|round(2) %}
+    {% set href = (page_url('research') if link_page else '') ~ '#' ~ p.r.key %}
+    <a class="sc-pin" href="{{ href }}" style="--pin: {{ topic_color(p.ti) }}" aria-label="{{ loop.index }}. {{ p.name }} — {{ tr(p.r.title) }}">
+      <circle class="sc-ring" cx="{{ x }}" cy="{{ y }}" r="4.4"/>
+      <circle class="sc-dot" cx="{{ x }}" cy="{{ y }}" r="4.4"/>
+      <text class="sc-num" x="{{ x }}" y="{{ y }}" dy="1.75">{{ loop.index }}</text>
+      <g class="sc-label"><text x="{{ x }}" y="{{ y - 7 }}" text-anchor="{{ 'start' if x < 40 else ('end' if x > 320 else 'middle') }}">{{ p.name }}</text></g>
+    </a>
+    {% endfor %}
+  </svg>
+  </div>
+  <figcaption class="sc-legend" id="sc-cap">
+    <span class="sc-legend-title">{{ t('common.regions') }}</span>
+    <ol class="sc-topics">
+      {% set ns2 = namespace(i=0) %}
+      {% for r in research %}{% set ti = loop.index0 %}
+      <li style="--pin: {{ topic_color(ti) }}"><a class="sc-topic" href="{{ (page_url('research') if link_page else '') ~ '#' ~ r.key }}">{{ tr(r.title) }}</a>
+        <span class="sc-regs">{% for n in (r.regions or []) %}{% set ns2.i = ns2.i + 1 %}<span class="sc-reg"><b>{{ ns2.i }}</b> {{ p_name(r, loop.index0) }}</span>{% endfor %}</span></li>
+      {% endfor %}
+    </ol>
+  </figcaption>
+</figure>
+{% endmacro %}
+
+{# 영상·논문 쌍 카드: v.pub로 이미 연결된 영상과 논문을 한 줄로 묶는다 #}
+{% macro pair_card(v, cls='glass pair') %}
+{% set p = v.pub %}
+<article class="{{ cls }}">
+  <div class="pair-video">{{ yt_html(v.id, v.title) }}</div>
+  <div class="pair-link" aria-hidden="true"><span></span></div>
+  <div class="pair-paper">
+    <p class="pair-kicker"><span class="news-cat">{{ t('news.video') }}</span> <time datetime="{{ v.published }}">{{ fmt_date(v.published) }}</time></p>
+    <h3 class="pair-vtitle" lang="{{ text_lang(v.title) }}"><a href="{{ youtube_url(v.id) }}" target="_blank" rel="noopener">{{ v.title }}</a></h3>
+    <div class="pair-pub">
+      <p class="pair-kicker"><span class="news-cat news-cat--paper">{{ t('news.paper') }}</span> <a class="pair-num" href="{{ pub_url(p) }}">#{{ p.num }}</a></p>
+      <p class="pair-ptitle">{% if p.doi %}<a href="{{ doi_url(p) }}" target="_blank" rel="noopener">{{ rich(p.title) }}</a>{% else %}{{ rich(p.title) }}{% endif %}</p>
+      <p class="pub-authors">{{ authors(p, 8) }} ({{ p.year }})</p>
+      <p class="pub-cite">{{ cite(p) }}{% if p.corresponding %} <span class="pub-badge pub-ca" title="{{ t('pubs.corresponding') }}">{{ t('pubs.ca') }}</span>{% endif %}</p>
+    </div>
+  </div>
+</article>
+{% endmacro %}

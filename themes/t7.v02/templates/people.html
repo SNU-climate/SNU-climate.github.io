@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block head %}
+<h1 id="page-title">{{ t('nav.people') }}</h1>
+<nav class="jump" aria-label="{{ t('nav.people') }}">
+  <a href="#pi">{{ t('people.pi') }}</a>
+  {% for role, ms in member_groups %}<a href="#{{ role }}">{{ t('people.role.' ~ role) }} <span>{{ ms|length }}</span></a>{% endfor %}
+  {% if alumni %}<a href="#alumni">{{ t('people.alumni') }} <span>{{ alumni|length }}</span></a>{% endif %}
+</nav>
+{% endblock %}
+
+{% block content %}
+{% set pu = member_url(pi) %}
+<section class="block" id="pi" aria-labelledby="h-pi">
+  <h2 class="block-title" id="h-pi">{{ t('people.pi') }}</h2>
+  <article class="card pi-card pi-card--full">
+    {{ op.avatar(pi.photo, tr(pi.name), op.ini(tr(pi.name)), 'avatar avatar--pi') }}
+    <div class="pi-text">
+      <h3 class="pi-name">{% if pu %}<a href="{{ pu }}">{{ tr(pi.name) }}</a>{% else %}{{ tr(pi.name) }}{% endif %} <small>{{ tr(pi.title) }}</small></h3>
+      <ul class="pi-roles">{% for r in pi.roles %}<li>{{ tr(r) }}</li>{% endfor %}</ul>
+      <div class="pi-actions">
+        <a class="btn btn-primary btn-sm" href="mailto:{{ pi.email }}">{{ pi.email }}</a>
+        <a class="btn btn-ghost btn-sm" href="tel:{{ pi.phone|replace('-', '') }}">{{ pi.phone }}</a>
+        <span class="btn btn-ghost btn-sm btn-static">{{ tr(pi.office) }}</span>
+      </div>
+      <p class="pi-bio">{{ tr(pi.bio) }}</p>
+      <h4 class="sub-h">{{ t('people.interests') }}</h4>
+      <p class="pi-tags">{% for it in pi.interests %}<span class="tag">{{ tr(it) }}</span>{% endfor %}</p>
+      {% if pu %}<a class="btn btn-ghost pi-more" href="{{ pu }}">{{ t('people.full_profile') }} · {{ t('people.education') }} / {{ t('people.career') }} / {{ t('people.awards') }} <span aria-hidden="true">→</span></a>{% endif %}
+    </div>
+  </article>
+</section>
+
+{% for role, ms in member_groups %}
+<section class="block" id="{{ role }}" aria-labelledby="h-{{ role }}">
+  <h2 class="block-title" id="h-{{ role }}">{{ t('people.role.' ~ role) }} <span class="block-n">{{ ms|length }}</span></h2>
+  <div class="mgrid">{% for mm in ms %}{{ op.member_card(mm) }}{% endfor %}</div>
+</section>
+{% else %}
+<section class="block"><h2 class="block-title">{{ t('people.members') }}</h2><p class="empty">{{ t('common.empty') }}</p></section>
+{% endfor %}
+
+{% if alumni %}
+<section class="block" id="alumni" aria-labelledby="h-alumni">
+  <h2 class="block-title" id="h-alumni">{{ t('people.alumni') }} <span class="block-n">{{ alumni|length }}</span></h2>
+  <div class="card alumni-card">{{ m.alumni_list(alumni, photos=True) }}</div>
+</section>
+{% endif %}
+{% endblock %}

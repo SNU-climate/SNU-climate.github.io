@@ -1,0 +1,7 @@
+title: "Ocean–Atmosphere v02"
+concept:
+  en: "v01 pushed further into the ocean concept, using only real lab data: a Pacific-centred sea chart of the 12 study regions on the Research page, a publication 'swell' timeline (papers per year, 2000–2026) that redraws for search results, a home hero whose front wave is the publication record, and video × paper pairs."
+  ko: "v01을 바탕으로 연구실 실제 데이터만 써서 바다 콘셉트를 밀어붙였습니다. 연구 페이지 머리에 12개 연구 지역을 찍은 태평양 중심 해도, 검색 결과에 따라 다시 그려지는 연도별 논문 '해류' 타임라인(2000–2026), 맨 앞 파도가 논문 기록인 홈 히어로, 영상·논문 쌍 카드를 넣었습니다."
+palette: ["#04213f", "#0f6e8c", "#25b3a6", "#f39a4b", "#eaf5fc"]
+extra_pages: [about, gallery]
+pi_page: true

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set ln = lab_name %}
+<header class="hero">
+  <p class="eyebrow">{{ tr(site.lab.affiliation) }}</p>
+  <h1 class="page-title hero-name">{% if ' ' in ln %}{% set parts = ln.rsplit(' ', 1) %}<strong>{{ parts[0] }}</strong> {{ parts[1] }}{% else %}<strong>{{ ln }}</strong>{% endif %}</h1>
+  <p class="hero-tag">{{ tr(site.lab.tagline) }}</p>
+</header>
+
+<article class="about">
+  {% if site.lab.photo %}
+  <figure class="lab-photo">
+    <img src="{{ static(site.lab.photo) }}" alt="{{ lab_name }}">
+  </figure>
+  {% endif %}
+  <div class="about-text">
+    {% for para in tr(site.lab.intro).split('\n\n') %}<p>{{ para }}</p>{% endfor %}
+  </div>
+  <ul class="facts">
+    <li><a href="{{ page_url('publications') }}"><strong>{{ stats.pubs }}</strong><span>{{ t('pubs.title') }} · {{ stats.first_year }}–{{ stats.last_year }}</span></a></li>
+    <li><a href="{{ page_url('people') }}"><strong>{{ stats.members }}</strong><span>{{ t('people.members') }}</span></a></li>
+    <li><a href="{{ page_url('people') }}#alumni"><strong>{{ stats.alumni }}</strong><span>{{ t('people.alumni') }}</span></a></li>
+    <li><a href="{{ page_url('videos') }}"><strong>{{ stats.videos }}</strong><span>{{ t('videos.title') }}</span></a></li>
+  </ul>
+</article>
+
+<section class="sec" aria-labelledby="h-res">
+  <div class="sec-head">
+    <h2 class="sec-title" id="h-res"><a href="{{ page_url('research') }}">{{ t('home.research') }}</a></h2>
+    <a class="sec-more" href="{{ page_url('research') }}">{{ t('home.view_all') }} {{ ui.icon('arrow', 'ic ic--sm') }}</a>
+  </div>
+  <div class="topic-grid">
+    {% for r in research %}
+    <a class="topic-card" href="{{ topic_url(r) }}">
+      {% if r.image %}{{ ui.figframe(static(r.image)) }}{% else %}{{ ui.topic_art(r, loop.index0) }}{% endif %}
+      <span class="topic-card-body">
+        <span class="topic-card-idx">{{ '%02d'|format(loop.index) }}</span>
+        <span class="topic-card-title">{{ tr(r.title) }}</span>
+        <span class="topic-card-sum">{{ tr(r.summary)|truncate(120, False, '…', 0) }}</span>
+      </span>
+    </a>
+    {% else %}<p class="empty">{{ t('common.empty') }}</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="h-pi">
+  <div class="sec-head">
+    <h2 class="sec-title" id="h-pi">{{ t('people.pi') }}</h2>
+    {% if member_url(pi) %}<a class="sec-more" href="{{ member_url(pi) }}">{{ t('people.full_profile') }} {{ ui.icon('arrow', 'ic ic--sm') }}</a>{% endif %}
+  </div>
+  <div class="pi-card pi-card--home">
+    {{ ui.portrait(pi, 'portrait portrait--card') }}
+    <div class="pi-card-text">
+      <p class="pi-name">{% if member_url(pi) %}<a href="{{ member_url(pi) }}">{{ tr(pi.name) }}</a>{% else %}{{ tr(pi.name) }}{% endif %}</p>
+      <ul class="pi-roles">{% for r in pi.roles %}<li>{{ tr(r) }}</li>{% endfor %}</ul>
+      {% if pi.interests %}<ul class="chips chips--sm">{% for i in pi.interests %}<li>{{ tr(i) }}</li>{% endfor %}</ul>{% endif %}
+      <ul class="pi-contact">
+        <li>{{ ui.icon('mail') }}<a href="mailto:{{ pi.email }}">{{ pi.email }}</a></li>
+        <li>{{ ui.icon('contact') }}<span>{{ tr(pi.office) }}</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="h-news">
+  <div class="sec-head">
+    <h2 class="sec-title" id="h-news"><a href="{{ page_url('news') }}">{{ t('home.news') }}</a></h2>
+    <a class="sec-more" href="{{ page_url('news') }}">{{ t('home.view_all') }} ({{ stats.news_items }}) {{ ui.icon('arrow', 'ic ic--sm') }}</a>
+  </div>
+  {% if news_items %}
+  <table class="news-table">
+    <tbody>
+      {% for p in news_items[:site.home.news] %}
+      <tr>
+        <th scope="row"><time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></th>
+        <td><a href="{{ news_url(p) }}" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</a> <span class="cat cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="empty">{{ t('common.empty') }}</p>{% endif %}
+</section>
+
+<section class="sec" aria-labelledby="h-sel">
+  <div class="sec-head">
+    <h2 class="sec-title" id="h-sel"><a href="{{ page_url('publications') }}">{{ t('people.selected') }}</a></h2>
+    <a class="sec-more" href="{{ page_url('publications') }}">{{ t('home.view_all') }} ({{ stats.pubs }}) {{ ui.icon('arrow', 'ic ic--sm') }}</a>
+  </div>
+  {% set sel = selected_pubs or featured_pubs or pubs[:site.home.publications] %}
+  <ol class="bib-list">{% for p in sel %}{{ ui.pub(p, anchor=False) }}{% else %}<li class="empty">{{ t('common.empty') }}</li>{% endfor %}</ol>
+</section>
+
+{% if albums %}
+<section class="sec" aria-labelledby="h-gal">
+  <div class="sec-head">
+    <h2 class="sec-title" id="h-gal"><a href="{{ page_url('gallery') }}">{{ t('gallery.title') }}</a></h2>
+    <a class="sec-more" href="{{ page_url('gallery') }}">{{ t('home.view_all') }} ({{ stats.albums }}) {{ ui.icon('arrow', 'ic ic--sm') }}</a>
+  </div>
+  <div class="album-grid album-grid--home">
+    {% for p in albums[:4] %}{{ ui.album_card(p) }}{% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="sec" aria-labelledby="h-vid">
+  <div class="sec-head">
+    <h2 class="sec-title" id="h-vid"><a href="{{ page_url('videos') }}">{{ t('home.videos') }}</a></h2>
+    <a class="sec-more" href="{{ page_url('videos') }}">{{ t('home.view_all') }} {{ ui.icon('arrow', 'ic ic--sm') }}</a>
+  </div>
+  <div class="vgrid vgrid--3">{% for v in videos[:site.home.videos] %}{{ m.video_card(v) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}</div>
+</section>
+
+<aside class="callout">
+  <h2 class="callout-title">{{ t('home.join') }}</h2>
+  <p>{{ t('home.join_text') }}</p>
+  <a class="btn" href="mailto:{{ site.contact.email }}">{{ ui.icon('mail') }} {{ site.contact.email }}</a>
+</aside>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% import '_t1.html' as x with context %}
+{# 연혁: 논문(연도별 수·번호 이정표·대표 논문), 교수 학력·경력·수상, 졸업생, 소식을 한 연표에. 연도마다 연간 기록(논문·소식·앨범·영상)을 펼친다. #}
+{% set page_title = tr(theme.strings.history) ~ ' | ' ~ lab_name %}
+{% block crumb %}{{ x.s('history') }}{% endblock %}
+{% block ptitle %}{{ x.s('history') }}{% endblock %}
+{% block plead %}{{ x.s('history_lead') }}{% endblock %}
+
+{% block content %}
+{% set pby = dict(pubs_by_year) %}
+{% set nby = dict(news_by_year) %}
+{% set aby = dict(albums_by_year) %}
+{% set sel = selected_pubs|map(attribute='num')|list %}
+{% set ns = namespace(y0=stats.first_year, peak=0, peak_y=0) %}
+{% for e in pi.education %}{% if (e.year|string)[:4]|int < ns.y0 %}{% set ns.y0 = (e.year|string)[:4]|int %}{% endif %}{% endfor %}
+{% for e in pi.career %}{% if (e.period|string)[:4]|int < ns.y0 %}{% set ns.y0 = (e.period|string)[:4]|int %}{% endif %}{% endfor %}
+{% for y, n in stats.per_year %}{% if n > ns.peak %}{% set ns.peak = n %}{% set ns.peak_y = y %}{% endif %}{% endfor %}
+{% set years = range(stats.last_year, ns.y0 - 1, -1)|list %}
+
+<div class="wrap with-side history-page">
+  <aside class="side">
+    <nav class="side-nav side-years" aria-label="{{ x.s('chronicle') }}">
+      <div class="side-h">{{ x.s('chronicle') }}</div>
+      <div class="pub-years">{% for y in years %}<a href="#yr{{ y }}">{{ y }}</a>{% endfor %}</div>
+    </nav>
+    <div class="yr-all">
+      <button type="button" data-yr-all="open">{{ x.s('open_all') }}</button>
+      <button type="button" data-yr-all="close">{{ x.s('close_all') }}</button>
+    </div>
+  </aside>
+
+  <div class="side-main">
+    <section class="glance">
+      {{ x.sec_head(x.s('at_a_glance'), tag='h2') }}
+      <ul class="facts">
+        <li><strong>{{ stats.pubs }}</strong><span>{{ t('pubs.title') }}</span></li>
+        <li><strong>{{ stats.first_year }}–{{ stats.last_year }}</strong><span>{{ x.s('span') }}</span></li>
+        <li><strong>{{ ns.peak_y }}</strong><span>{{ x.s('peak') }} · {{ ns.peak }}</span></li>
+        <li><strong>{{ stats.alumni }}</strong><span>{{ t('people.alumni') }}</span></li>
+        <li><strong>{{ stats.news_items }}</strong><span>{{ t('nav.news') }}</span></li>
+        <li><strong>{{ stats.albums }}</strong><span>{{ x.s('albums') }}</span></li>
+      </ul>
+      <h3 class="sub-title">{{ x.s('per_year') }}</h3>
+      {{ x.year_chart() }}
+      <p class="ychart-note">{{ x.s('per_year_note') }}</p>
+    </section>
+
+    <section class="chronicle">
+      {{ x.sec_head(x.s('chronicle')) }}
+      {% for y in years %}
+      {% set yp = pby.get(y, []) %}
+      {% set yn = nby.get(y, []) %}
+      {% set ya = aby.get(y, []) %}
+      {% set yv = [] %}{% for v in videos %}{% if (v.published|string)[:4] == y|string %}{% set _ = yv.append(v) %}{% endif %}{% endfor %}
+      {% set yg = alumni|selectattr('year', 'equalto', y)|list %}
+      {# 이정표 #}
+      {% set ms = [] %}
+      {% for e in pi.career if (e.period|string)[:4] == y|string %}{% set _ = ms.append(('career', x.s('career'), tr(e), '')) %}{% endfor %}
+      {% for e in pi.education if (e.year|string)[:4] == y|string %}{% set _ = ms.append(('edu', x.s('education'), tr(e), '')) %}{% endfor %}
+      {% for e in pi.awards if (e.year|string)[:4] == y|string %}{% set _ = ms.append(('award', x.s('award'), tr(e), '')) %}{% endfor %}
+      <section class="yr" id="yr{{ y }}">
+        <div class="yr-head">
+          <h3 class="yr-title">{{ y }}</h3>
+          {% if yp %}<div class="yr-np"><span class="yr-bar" style="--w: {{ (yp|length / ns.peak * 100)|round(1) }}%"></span>{{ yp|length }} {{ t('pubs.total') }}</div>{% endif %}
+        </div>
+        <div class="yr-body">
+          <ul class="ms">
+            {% for k, label, text, url in ms %}<li class="ms-{{ k }}"><span class="ms-k">{{ label }}</span><span class="ms-t">{{ text }}</span></li>{% endfor %}
+            {% if yg %}
+            <li class="ms-grad"><span class="ms-k">{{ x.s('graduates') }}</span><span class="ms-t">
+              {% for d, group in yg|groupby('degree', default='') %}<span class="ms-deg">{{ d or x.s('unrecorded') }}</span> {% for a in group %}{% set u = member_url(a) %}{% if u %}<a href="{{ u }}">{{ tr(a.name) }}</a>{% else %}{{ tr(a.name) }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}{% if not loop.last %} · {% endif %}{% endfor %}
+            </span></li>
+            {% endif %}
+            {% for p in yp if p.num in [1, 100, 200, 300, 400, 500] %}<li class="ms-mile"><span class="ms-k">{{ x.s('milestone') }}</span><span class="ms-t"><a href="{{ pub_url(p) }}">{{ x.s('paper_no') }} {{ p.num }}</a> — {{ rich(p.title) }} <i>{{ p.journal }}</i></span></li>{% endfor %}
+            {% for p in yp if p.num in sel %}<li class="ms-sel"><span class="ms-k">{{ x.s('selected') }}</span><span class="ms-t"><a href="{{ pub_url(p) }}">{{ rich(p.title) }}</a> <i>{{ p.journal }}</i></span></li>{% endfor %}
+            {% for p in yn if p.category in ['award', 'paper', 'event', 'lab'] %}<li class="ms-news ms-{{ p.category }}"><span class="ms-k">{{ t('news.category.' ~ p.category) }}</span><span class="ms-t"><a href="{{ news_url(p) }}" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</a></span></li>{% endfor %}
+          </ul>
+
+          {% if yp or yn or ya or yv %}
+          <details class="yr-rec"{% if loop.first %} open{% endif %}>
+            <summary><span class="yr-rec-h">{{ x.s('annual') }}</span>
+              <span class="yr-rec-n">{% set parts = [] %}{% if yp %}{% set _ = parts.append(t('pubs.title') ~ ' ' ~ yp|length) %}{% endif %}{% if yn %}{% set _ = parts.append(t('nav.news') ~ ' ' ~ yn|length) %}{% endif %}{% if ya %}{% set _ = parts.append(x.s('albums') ~ ' ' ~ ya|length) %}{% endif %}{% if yv %}{% set _ = parts.append(t('nav.videos') ~ ' ' ~ yv|length) %}{% endif %}{{ parts|join(' · ') }}</span></summary>
+            <div class="yr-rec-body">
+              {% if yp %}
+              <div class="rec-block">
+                <h4 class="rec-h">{{ t('pubs.title') }}</h4>
+                <ol class="rec-pubs">{% for p in yp %}<li><a class="rec-num" href="{{ pub_url(p) }}">{{ p.num }}.</a> <span>{{ rich(p.title) }} <i>{{ p.journal }}</i></span></li>{% endfor %}</ol>
+              </div>
+              {% endif %}
+              {% if yn %}
+              <div class="rec-block">
+                <h4 class="rec-h">{{ t('nav.news') }}</h4>
+                <ul class="rec-list">{% for p in yn %}<li><time datetime="{{ p.date }}">{{ fmt_date(p.date, 'month') }}</time> <a href="{{ news_url(p) }}" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</a></li>{% endfor %}</ul>
+              </div>
+              {% endif %}
+              {% if yv %}
+              <div class="rec-block">
+                <h4 class="rec-h">{{ t('nav.videos') }}</h4>
+                <ul class="rec-list">{% for v in yv %}<li><time datetime="{{ v.published }}">{{ fmt_date(v.published, 'month') }}</time> <a href="{{ youtube_url(v.id) }}" target="_blank" rel="noopener" lang="{{ text_lang(v.title) }}">{{ v.title }}</a></li>{% endfor %}</ul>
+              </div>
+              {% endif %}
+              {% if ya %}
+              <div class="rec-block rec-block--wide">
+                <h4 class="rec-h">{{ x.s('albums') }}</h4>
+                <ul class="rec-albums">{% for p in ya %}{% set c = cover_url(p) %}<li><a href="{{ news_url(p) }}" title="{{ tr(p.title) }}"><span class="rec-thumb">{% if c %}<img src="{{ c }}" alt="" loading="lazy">{% endif %}</span><span class="rec-cap" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</span></a></li>{% endfor %}</ul>
+              </div>
+              {% endif %}
+            </div>
+          </details>
+          {% endif %}
+        </div>
+      </section>
+      {% endfor %}
+    </section>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts_extra %}<script src="{{ asset('t1.js') }}" defer></script>{% endblock %}

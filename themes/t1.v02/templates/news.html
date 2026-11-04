@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% import '_t1.html' as x with context %}
+{% block ptitle %}{{ t('news.title') }}{% endblock %}
+{% block plead %}{{ t('news.intro') }}{% endblock %}
+
+{% block content %}
+<div class="wrap with-side news-page">
+  <aside class="side">
+    {% if news_by_year|length > 1 %}
+    <div class="side-nav side-years">
+      <div class="side-h">{{ t('common.years') }}</div>
+      <nav class="pub-years" aria-label="{{ t('common.years') }}">{% for y, items in news_by_year %}<a href="#n{{ y }}">{{ y }}</a>{% endfor %}</nav>
+    </div>
+    {% endif %}
+    {% if news_cats|length > 1 %}
+    <div class="side-nav side-cats">
+      <div class="side-h">{{ t('news.filter') }}</div>
+      {{ m.news_filter('news-filter') }}
+    </div>
+    {% endif %}
+    {% if albums %}
+    <a class="side-card" href="{{ page_url('gallery') }}">
+      <span class="side-card-h">{{ t('gallery.title') }}</span>
+      <span class="side-card-n">{{ albums|length }}</span>
+      <span class="side-card-t">{{ t('gallery.intro') }}</span>
+    </a>
+    {% endif %}
+  </aside>
+
+  <div class="side-main">
+    {% for y, items in news_by_year %}
+    <section class="news-year" id="n{{ y }}" data-news-year>
+      <h2 class="news-year-title">{{ y }} <span class="pub-year-n">({{ items|length }})</span></h2>
+      <ul class="news-rows">
+        {% for p in items %}
+        {% set c = cover_url(p) %}
+        <li class="news-row{% if not c %} news-row--text{% endif %}" data-news-item data-cat="{{ p.category }}">
+          <time class="news-row-date" datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time>
+          <div class="news-row-text">
+            <span class="cat">{{ t('news.category.' ~ p.category) }}</span>
+            <h3 class="news-row-title" lang="{{ text_lang(tr(p.title)) }}"><a href="{{ news_url(p) }}">{{ tr(p.title) }}</a></h3>
+            {% if p.summary %}<p class="news-row-summary">{{ tr(p.summary) }}</p>{% endif %}
+          </div>
+          {% if c %}<a class="news-row-img" href="{{ news_url(p) }}" tabindex="-1" aria-hidden="true"><img src="{{ c }}" alt="" loading="lazy"></a>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% else %}
+    <p class="empty">{{ t('common.empty') }}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

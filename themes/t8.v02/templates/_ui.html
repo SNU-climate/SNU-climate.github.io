@@ -1,0 +1,115 @@
+{# t8.v02 전용 매크로 #}
+
+{# 테마 고유 문구(i18n.yaml에 없는 지구본·지도 관련 문구만). 화면 문구는 이 사전을 tr()로 꺼내 쓴다 #}
+{% set S = {
+  'aff_short': {'en': 'SNU', 'ko': '서울대학교'},
+  'map_data': {'en': 'Map data', 'ko': '지도 자료'},
+  'globe_label': {'en': 'Interactive globe of research regions. Drag or use the arrow keys to rotate; select a glowing region to open its explorer card.',
+                  'ko': '연구 지역 지구본. 드래그하거나 방향키로 돌릴 수 있고, 빛나는 지역을 누르면 탐색 카드가 열립니다.'},
+  'globe_hint': {'en': 'Drag to rotate · tap a glowing region to explore', 'ko': '드래그해서 돌리기 · 빛나는 지역을 눌러 살펴보기'},
+  'night': {'en': 'Shaded side: where it is night right now', 'ko': '어두운 쪽: 지금 밤인 지역'},
+  'close': {'en': 'Close', 'ko': '닫기'},
+  'explorer': {'en': 'Region explorer', 'ko': '연구 지역 탐색'},
+  'play': {'en': 'Play', 'ko': '재생'},
+  'pause': {'en': 'Pause', 'ko': '정지'},
+  'tour': {'en': 'Tour all regions', 'ko': '지역 차례로 보기'},
+  'timeline': {'en': 'Papers per year, 2000–2026. Slide or play through the years.', 'ko': '연도별 논문 수(2000–2026). 연도를 밀거나 재생해 보세요.'},
+  'so_far': {'en': 'in total so far', 'ko': '누적'},
+  'journals': {'en': 'Top journals', 'ko': '주요 학술지'},
+  'all_year': {'en': 'All papers from', 'ko': '전체 논문 보기:'},
+  'topic_globe': {'en': 'Globe showing the study regions of this research area', 'ko': '이 연구 분야의 연구 지역을 보여 주는 지구본'},
+  'region_go': {'en': 'Turn the globe to', 'ko': '지구본을 이 지역으로 돌리기:'},
+} %}
+{% macro s(key) %}{{ tr(S[key]) }}{% endmacro %}
+
+{# 지구본 스크립트용 연구 주제 데이터(JSON). 색은 CSS 변수 --t0..--t4 순서 #}
+{% macro topics_json() %}
+{% set topics = [] %}
+{% for r in research %}{% set names = [] %}{% for c in r.regions or [] %}{% set _ = names.append(tr((r.region_names or [])[loop.index0]) if (r.region_names or [])|length > loop.index0 else '') %}{% endfor %}{% set _ = topics.append({'key': r.key, 'title': tr(r.title), 'url': topic_url(r), 'regions': r.regions or [], 'names': names, 'ci': loop.index0 % 5}) %}{% endfor %}
+<script>window.CSL_TOPICS = {{ topics|tojson }};</script>
+{% endmacro %}
+
+{# 지구본 스크립트 묶음(vendor + globe.js) #}
+{% macro globe_scripts() %}
+{{ topics_json() }}
+<script src="{{ asset('vendor/d3-array.min.js') }}" defer></script>
+<script src="{{ asset('vendor/d3-geo.min.js') }}" defer></script>
+<script src="{{ asset('vendor/topojson-client.min.js') }}" defer></script>
+<script src="{{ asset('vendor/world-110m.js') }}" defer></script>
+<script src="{{ asset('globe.js') }}" defer></script>
+{% endmacro %}
+
+{# 연구 지역 이름 칩(이름이 없으면 건너뜀). buttons=True면 지구본을 돌리는 버튼 #}
+{% macro region_chips(r, cls='region-chips', buttons=False) %}
+{% set names = r.region_names or [] %}
+{% if names %}<ul class="{{ cls }}" aria-label="{{ t('research.regions') }}">{% for n in names %}<li>{% if buttons %}<button type="button" data-region="{{ loop.index0 }}" aria-label="{{ s('region_go') }} {{ tr(n) }}">{{ tr(n) }}</button>{% else %}<span>{{ tr(n) }}</span>{% endif %}</li>{% endfor %}</ul>{% endif %}
+{% endmacro %}
+
+{# 하위 페이지 머리: 큰 제목 + 장식 행성. crumbs=[(이름, url)] #}
+{% macro page_hero(title, lead=None, kicker=None, crumbs=None) %}
+<header class="page-hero">
+  <div class="wrap page-hero-in">
+    <div class="page-hero-text">
+      {% if crumbs %}<nav class="crumb" aria-label="{{ t('common.breadcrumb') }}">{% for name, url in crumbs %}<a href="{{ url }}">{{ name }}</a><span aria-hidden="true"> / </span>{% endfor %}</nav>
+      {% else %}<p class="kicker">{{ kicker or lab_name }}</p>{% endif %}
+      <h1 class="display">{{ title }}</h1>
+      {% if lead %}<p class="lead">{{ lead }}</p>{% endif %}
+    </div>
+    <div class="planet" aria-hidden="true"><span class="planet-ring"></span><span class="planet-body"></span><span class="planet-moon"></span></div>
+  </div>
+</header>
+{% endmacro %}
+
+{# 섹션 제목 #}
+{% macro sec_head(title, link=None, idx=None, id=None, link_label=None) %}
+<div class="sec-head">
+  <h2 class="sec-title"{% if id %} id="{{ id }}"{% endif %}>{% if idx %}<span class="sec-idx" aria-hidden="true">{{ idx }}</span>{% endif %}{{ title }}</h2>
+  {% if link %}<a class="more" href="{{ link }}">{{ link_label or t('home.view_all') }} <span aria-hidden="true">→</span></a>{% endif %}
+</div>
+{% endmacro %}
+
+{# 논문 목록: 검색(모바일 짧은 placeholder) + 연도 레일 + 연도별 섹션. 번호·id·data-* 는 공통 규약 그대로 #}
+{% macro pub_page(groups) %}
+<div class="wrap pubs-layout">
+  <div class="pub-tools">
+    <input type="search" class="pub-search" data-pub-search placeholder="{{ t('pubs.search') }}" data-short="{{ t('pubs.search_short') }}" aria-label="{{ t('pubs.search') }}">
+    <span class="pub-count"><span data-pub-count>{{ pubs|length }}</span> {{ t('pubs.total') }}</span>
+  </div>
+  <aside class="pubs-side">
+    <nav class="year-rail" aria-label="{{ t('common.years') }}">
+      {% set mx = groups|map(attribute='1')|map('length')|max %}
+      {% for year, items in groups %}<a href="#y{{ year }}" style="--w: {{ (items|length / mx * 100)|round(1) }}"><span class="yr">{{ year }}</span><span class="yr-n">{{ items|length }}</span><span class="yr-bar" aria-hidden="true"></span></a>{% endfor %}
+    </nav>
+  </aside>
+  <div class="pubs-main">
+    <p class="pub-empty" data-pub-empty hidden>{{ t('pubs.no_results') }}</p>
+    {% for year, items in groups %}
+    <section class="pub-year" data-pub-year id="y{{ year }}">
+      <h2 class="pub-year-title">{{ year }} <span class="pub-year-n">({{ items|length }})</span></h2>
+      <ol class="pub-ol">{% for p in items %}{{ m.pub_item(p) }}{% endfor %}</ol>
+    </section>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}
+
+{# 뉴스 목록 행: 표지가 있으면 썸네일, 없으면 글자 행(.feed-row 스타일) #}
+{% macro news_rows(items, cat_attr=True) %}
+<ul class="nrows">{% for p in items %}{% set c = cover_url(p) %}
+  <li class="nrow{% if not c %} nrow--text{% endif %}"{% if cat_attr %} data-news-item data-cat="{{ p.category }}"{% endif %}>
+    {% if c %}<a class="nrow-img" href="{{ news_url(p) }}" tabindex="-1" aria-hidden="true"><img src="{{ c }}" alt="" loading="lazy"></a>{% endif %}
+    <time class="nrow-date" datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time>
+    <span class="nrow-cat news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span>
+    <div class="nrow-text">
+      <h3 class="nrow-title" lang="{{ text_lang(tr(p.title)) }}"><a href="{{ news_url(p) }}">{{ tr(p.title) }}</a></h3>
+      {% if p.summary %}<p class="nrow-sum">{{ tr(p.summary) }}</p>{% endif %}
+    </div>
+  </li>{% endfor %}
+</ul>
+{% endmacro %}
+
+{# 이력 목록(궤도선) #}
+{% macro orbit(items, key, cls='orbit-list') %}<ol class="{{ cls }}">{% for e in items %}<li><span class="ol-when">{{ e[key] }}</span><span>{{ tr(e) }}</span></li>{% endfor %}</ol>{% endmacro %}
+
+{# 구성원 원형 사진 #}
+{% macro avatar(p, cls='member-photo') %}<div class="{{ cls }}">{% if p.photo %}<img src="{{ static(p.photo) }}" alt="{{ tr(p.name) }}" loading="lazy">{% else %}<span class="member-initials" aria-hidden="true">{{ m.initials_of(tr(p.name)) }}</span>{% endif %}</div>{% endmacro %}

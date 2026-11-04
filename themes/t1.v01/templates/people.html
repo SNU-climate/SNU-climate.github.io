@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% import '_t1.html' as x with context %}
+{% block plead_wrap %}{% endblock %}
+
+{% block content %}
+{% set pu = member_url(pi) %}
+<div class="wrap with-side">
+  <aside class="side">
+    <nav class="side-nav side-jump" aria-label="{{ t('common.sections') }}">
+      <div class="side-h">{{ t('common.sections') }}</div>
+      <ol>
+        <li><a href="#pi">{{ t('people.pi') }}</a></li>
+        {% for role, ms in member_groups %}<li><a href="#{{ role }}">{{ t('people.role.' ~ role) }} <span class="side-n">{{ ms|length }}</span></a></li>{% endfor %}
+        {% if alumni %}<li><a href="#alumni">{{ t('people.alumni') }} <span class="side-n">{{ alumni|length }}</span></a></li>{% endif %}
+      </ol>
+    </nav>
+  </aside>
+
+  <div class="side-main">
+    <section class="pi-profile" id="pi">
+      {{ x.sec_head(t('people.pi')) }}
+      <div class="pi-box">
+        <div class="pi-portrait">
+          {% if pi.photo %}<img src="{{ static(pi.photo) }}" alt="{{ tr(pi.name) }}">{% else %}<span class="pi-mono" aria-hidden="true">{{ m.initials_of(pi.name.en) }}</span>{% endif %}
+        </div>
+        <div class="pi-info">
+          <h3 class="pi-name pi-name--lg">{% if pu %}<a href="{{ pu }}">{{ tr(pi.name) }}</a>{% else %}{{ tr(pi.name) }}{% endif %} <span class="pi-name-alt" lang="{{ other_lang }}">{{ pi.name[other_lang] }}</span></h3>
+          <div class="pi-title">{{ tr(pi.title) }} · {{ tr(pi.major) }}</div>
+          <ul class="pi-roles">{% for r in pi.roles %}<li>{{ tr(r) }}</li>{% endfor %}</ul>
+          <dl class="pi-contact pi-contact--row">
+            <dt>{{ t('contact.email') }}</dt><dd><a href="mailto:{{ pi.email }}">{{ pi.email }}</a></dd>
+            <dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(pi.office) }}</dd>
+            <dt>{{ t('contact.phone') }}</dt><dd><a href="tel:{{ pi.phone }}">{{ pi.phone }}</a></dd>
+          </dl>
+          <p class="pi-bio">{{ tr(pi.bio) }}</p>
+          {% if pi.interests %}<ul class="tags">{% for i in pi.interests %}<li>{{ tr(i) }}</li>{% endfor %}</ul>{% endif %}
+          {% if pu %}<p class="pi-more"><a class="btn btn-navy" href="{{ pu }}">{{ t('people.full_profile') }} <span aria-hidden="true">→</span></a></p>{% endif %}
+        </div>
+      </div>
+    </section>
+
+    {% for role, ms in member_groups %}
+    <section class="people-sec" id="{{ role }}">
+      {{ x.sec_head(t('people.role.' ~ role), n=ms|length) }}
+      <div class="grid grid-members">{% for mm in ms %}{{ x.member_card(mm) }}{% endfor %}</div>
+    </section>
+    {% else %}
+    <section class="people-sec">
+      {{ x.sec_head(t('people.members')) }}
+      <p class="empty">{{ t('common.empty') }}</p>
+    </section>
+    {% endfor %}
+
+    {% if alumni %}
+    <section class="people-sec" id="alumni">
+      {{ x.sec_head(t('people.alumni'), n=alumni|length) }}
+      {{ x.alumni_cards(alumni) }}
+    </section>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

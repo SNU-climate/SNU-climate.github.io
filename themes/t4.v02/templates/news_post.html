@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set seq = albums if post.album else news_items %}
+{% set ns = namespace(prev=none, next=none) %}
+{% for x in seq %}{% if x.slug == post.slug %}{% if not loop.first %}{% set ns.next = seq[loop.index0 - 1] %}{% endif %}{% if not loop.last %}{% set ns.prev = seq[loop.index0 + 1] %}{% endif %}{% endif %}{% endfor %}
+<article class="post{% if post.album %} post--album{% endif %}">
+  {% if post.album %}
+  <nav class="crumb" aria-label="{{ t('common.breadcrumb') }}"><span class="crumb-scheme" aria-hidden="true">csl://</span><a href="{{ page_url('index') }}">{{ ui.s('home') }}</a><span class="crumb-sep" aria-hidden="true">/</span><a href="{{ page_url('gallery') }}">{{ t('nav.gallery') }}</a><span class="crumb-sep" aria-hidden="true">/</span><span class="mono" aria-current="page">{{ post.year }}</span></nav>
+  {% else %}
+  <nav class="crumb" aria-label="{{ t('common.breadcrumb') }}"><span class="crumb-scheme" aria-hidden="true">csl://</span><a href="{{ page_url('index') }}">{{ ui.s('home') }}</a><span class="crumb-sep" aria-hidden="true">/</span><a href="{{ page_url('news') }}">{{ t('nav.news') }}</a><span class="crumb-sep" aria-hidden="true">/</span><a class="mono" href="{{ page_url('news') }}#n{{ post.year }}">{{ post.year }}</a></nav>
+  {% endif %}
+  <div class="post-meta"><span class="news-cat news-cat--{{ post.category }}">{{ t('news.category.' ~ post.category) }}</span> <time class="mono" datetime="{{ post.date }}">{{ fmt_date(post.date) }}</time>{% if post.gallery %} · <span class="mono">{{ post.gallery|length }}</span> {{ ui.s('photos') }}{% endif %}</div>
+  <h1 lang="{{ text_lang(tr(post.title)) }}">{{ tr(post.title) }}</h1>
+  {% if post.summary %}<p class="lead">{{ tr(post.summary) }}</p>{% endif %}
+  {{ m.post_cover(post) }}
+  <div class="panel post-body">
+    {{ m.news_body(post) }}
+    {% if post.link %}<p class="btn-row"><a class="btn" href="{{ post.link }}" target="_blank" rel="noopener">{{ t('news.link') }} <span aria-hidden="true">↗</span></a></p>{% endif %}
+  </div>
+  <nav class="pager" aria-label="{{ t('common.more_news') }}">
+    {% if ns.prev %}<a class="pager-prev" href="{{ news_url(ns.prev) }}"><span class="pager-k">← {{ t('common.prev') }}</span><span class="pager-t">{{ tr(ns.prev.title) }}</span></a>{% else %}<span></span>{% endif %}
+    {% if ns.next %}<a class="pager-next" href="{{ news_url(ns.next) }}"><span class="pager-k">{{ t('common.next') }} →</span><span class="pager-t">{{ tr(ns.next.title) }}</span></a>{% endif %}
+  </nav>
+</article>
+{% endblock %}

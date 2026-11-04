@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ ui.page_head(t('pubs.title'), t('pubs.intro'), [(t('nav.publications'), none)]) }}
+
+<div class="pubs-layout">
+  <div class="pubs-tools">{{ ui.pub_tools() }}</div>
+  <aside class="pubs-side">
+    <div class="panel year-panel">
+      {{ ui.panel_head(t('common.years') ~ ' · ' ~ pubs_by_year|length, tag='p') }}
+      {% set ymax = (pubs_by_year|map(attribute=1)|map('length')|max) if pubs_by_year else 1 %}
+      <nav class="year-bars" aria-label="{{ t('common.years') }}">
+        {% for year, items in pubs_by_year %}
+        <a href="#y{{ year }}"><span class="mono">{{ year }}</span><span class="yr-track" aria-hidden="true"><span style="width: {{ (items|length / ymax * 100)|round(1) }}%"></span></span><span class="mono yr-n">{{ items|length }}</span></a>
+        {% endfor %}
+      </nav>
+    </div>
+  </aside>
+  <div class="pubs-main">
+    {{ ui.pub_sections(pubs_by_year) }}
+  </div>
+</div>
+{% endblock %}

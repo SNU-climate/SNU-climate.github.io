@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block hero %}{{ ui.page_hero(t('nav.people'), None, t('people.members')) }}{% endblock %}
+{% block content %}
+<nav class="wrap role-jump" aria-label="{{ t('common.sections') }}">
+  <a href="#pi">{{ t('people.role.pi') }}</a>
+  {% for role, ms in member_groups %}<a href="#{{ role }}">{{ t('people.role.' ~ role) }} <span>{{ ms|length }}</span></a>{% endfor %}
+  {% if alumni %}<a href="#alumni">{{ t('people.alumni') }} <span>{{ alumni|length }}</span></a>{% endif %}
+</nav>
+
+<section class="wrap sec pi" id="pi" aria-labelledby="pi-h">
+  {% set pu = member_url(pi) %}
+  <div class="pi-card glass">
+    <div class="pi-orb">{% if pi.photo %}<img src="{{ static(pi.photo) }}" alt="{{ tr(pi.name) }}">{% else %}<span aria-hidden="true">{{ m.initials_of(pi.name.en) }}</span>{% endif %}</div>
+    <div class="pi-main">
+      <p class="kicker">{{ t('people.pi') }}</p>
+      <h2 class="pi-name" id="pi-h">{{ tr(pi.name) }} <small>{{ tr(pi.title) }}</small></h2>
+      <ul class="pi-roles">{% for r in pi.roles %}<li>{{ tr(r) }}</li>{% endfor %}</ul>
+      <p class="pi-contact"><a href="mailto:{{ pi.email }}">{{ m.email_wbr(pi.email) }}</a><span>{{ tr(pi.office) }}</span><span>{{ pi.phone }}</span></p>
+      <p class="pi-bio">{{ tr(pi.bio) }}</p>
+      <ul class="tags" aria-label="{{ t('people.interests') }}">{% for i in pi.interests %}<li>{{ tr(i) }}</li>{% endfor %}</ul>
+      {% if pu %}<p class="pi-more"><a class="btn btn-ghost btn-sm" href="{{ pu }}">{{ t('people.full_profile') }} <span aria-hidden="true">→</span></a></p>{% endif %}
+    </div>
+  </div>
+</section>
+
+{% for role, ms in member_groups %}
+<section class="wrap sec sec-tight" id="{{ role }}" aria-labelledby="{{ role }}-h">
+  {{ ui.sec_head(t('people.role.' ~ role), None, '%02d'|format(loop.index), id=role ~ '-h') }}
+  <div class="grid grid-4">{% for mm in ms %}{{ m.member_card(mm) }}{% endfor %}</div>
+</section>
+{% else %}
+<section class="wrap sec" aria-labelledby="mb-h">
+  {{ ui.sec_head(t('people.members'), id='mb-h') }}
+  <p class="empty">{{ t('common.empty') }}</p>
+</section>
+{% endfor %}
+
+{% if alumni %}
+<section class="wrap sec sec-tight" id="alumni" aria-labelledby="al-h">
+  {{ ui.sec_head(t('people.alumni'), id='al-h') }}
+  <ul class="alumni-grid">
+    {% for a in alumni %}{% set u = member_url(a) %}
+    <li class="alum">
+      {{ ui.avatar(a, 'member-photo alum-photo') }}
+      <div class="alum-text">
+        <strong class="alum-name">{% if u %}<a href="{{ u }}">{{ tr(a.name) }}</a>{% else %}{{ tr(a.name) }}{% endif %}</strong>
+        {% set deg = [a.degree, a.year]|select|join(', ') %}{% if deg %}<span class="alumni-degree">{{ deg }}</span>{% endif %}
+        {% if a.current %}<span class="alumni-current">{{ tr(a.current) }}</span>{% endif %}
+        {{ m.sample_badge(a) }}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endblock %}
