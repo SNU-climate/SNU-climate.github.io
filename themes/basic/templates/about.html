@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<p class="crumb">{{ t('menu.introduction') }}</p>
+<h1>{{ t('about.title') }}</h1>
+
+<section class="welcome welcome--page">
+  {% if site.lab.photo %}<img class="welcome-img" src="{{ static(site.lab.photo) }}" alt="">{% endif %}
+  <div>
+    <h2>Welcome</h2>
+    {% for para in tr(site.lab.intro).split('\n\n') %}<p>{{ para }}</p>{% endfor %}
+  </div>
+</section>
+
+<section class="sec stats">
+  <div class="stat"><strong>{{ stats.pubs }}</strong><span>{{ t('pubs.title') }}</span></div>
+  <div class="stat"><strong>{{ stats.first_year }}–</strong><span>{{ t('common.years') }}</span></div>
+  <div class="stat"><strong>{{ stats.members }}</strong><span>{{ t('people.members') }}</span></div>
+  <div class="stat"><strong>{{ stats.videos }}</strong><span>{{ t('videos.title') }}</span></div>
+</section>
+
+<section class="sec">
+  <h2>{{ t('home.research') }}</h2>
+  <ul class="topic-list">
+    {% for r in research %}<li><a href="{{ topic_url(r) }}">{{ tr(r.title) }}</a> <span class="muted" lang="{{ other_lang }}">{{ r.title[other_lang] }}</span></li>{% endfor %}
+  </ul>
+</section>
+
+<section class="sec pi-mini">
+  <div class="member-photo">{% if pi.photo %}<img src="{{ static(pi.photo) }}" alt="{{ tr(pi.name) }}">{% else %}<span class="member-initials">{{ m.initials_of(pi.name.en) }}</span>{% endif %}</div>
+  <div>
+    <h2>{{ tr(pi.name) }} <small>{{ tr(pi.title) }}</small></h2>
+    {% for r in pi.roles %}<div class="muted">{{ tr(r) }}</div>{% endfor %}
+    <a href="{{ page_url('people') }}#pi">{{ t('research.more') }} →</a>
+  </div>
+</section>
+
+<section class="sec">
+  <h2>{{ t('menu.location') }}</h2>
+  <p>{{ tr(site.contact.address) }}</p>
+  <a href="{{ page_url('contact') }}">{{ t('contact.map') }} →</a>
+</section>
+{% endblock %}

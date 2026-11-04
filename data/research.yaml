@@ -1,78 +1,147 @@
-# 연구 주제. 백업 자료가 오면 원본 연구실 소개 문구로 교체한다.
-# image: static/ 기준 경로(없으면 테마가 기본 그래픽 사용)
-# dois: 관련 논문(publications.yaml과 연결) / videos: 관련 유튜브 영상 ID
-# regions: 지도·지구본 테마용 대표 지역 [위도, 경도]
+# 연구 주제 — 원본 홈페이지 RESEARCH 메뉴 5개 주제(캐시 /research-*/ 페이지, 2022-01 갱신본)에서 옮김.
+# title·summary·figures 설명은 원본 문구(영·국). themes.ko와 figures caption.ko는 번역(reports/backup_mapping_content.md 참고).
+# image: static/ 기준 대표 그림 / figures: 원본 페이지 그림(+설명, 인용 논문이 목록에 있으면 doi)
+# dois: 관련 논문(publications.yaml과 연결) / videos: 관련 유튜브 영상 ID / regions: 지도·지구본 테마용 [위도, 경도]
 topics:
-  - key: climate-change
-    title: {en: "Climate Change Mechanisms", ko: "기후변화 메커니즘"}
+  - key: mechanism
+    title: {en: "Mechanism for Climate Changes", ko: "기후변화 메커니즘"}
     summary:
       en: >-
-        How does the climate system respond to rising — and later declining — CO2? We study
-        reversibility and hysteresis of the climate system, including the delayed response of the
-        deep ocean and shifts in tropical rainfall under mitigation scenarios.
-      ko: >-
-        이산화탄소가 증가했다가 다시 감소할 때 기후시스템은 어떻게 반응할까요? 심층 해양의 지연된 반응,
-        완화 시나리오에서 열대 강수대의 이동 등 기후시스템의 가역성과 이력현상을 연구합니다.
-    image: null
-    dois: ["10.1038/s41558-024-01928-0", "10.1038/s41558-021-01211-6"]
-    videos: ["Hue-7jhfw5E", "X-Uq1stg17g"]
-    regions: [[5, -30], [0, 150]]
+        Climate System Laboratory (CSL) explores mechanisms of the global/regional climate changes, which are
+        caused by both anthropogenic forcing and natural variability. In particular, we focus on various climate
+        feedbacks, which are resulted from complex interactions among climate system components, since it is a key
+        to determine intensity and pattern of the global/regional climate changes. In addition, we pursue to
+        understand the various characteristics of regional climate change and investigate their governing
+        mechanisms through theory, big data analysis, and numerical modeling approaches. Recently, we are also
+        challenging to understand the dynamics of abrupt and irreversible climate changes, which may bring about the
+        most critical crisis in our future life.
+      ko: |-
+        기후변화는 21세기 인류가 직면한 가장 중요한 과제이며, 과학적 난제입니다.
 
-  - key: enso
-    title: {en: "Ocean–Atmosphere Interaction & ENSO", ko: "해양-대기 상호작용과 엘니뇨"}
+        CSL에서는 온실 가스 증가에 의한 인위적 강제력과 자연변동에 의한 기후변화의 메커니즘을 연구하고 있습니다. 또한, 기후변화의 강도를 결정할 수 있는, 다양한 기후 피드백에 의한 기후 민감도를 연구한다. 특히, 다양한 양상으로 진행되는 지역기후변화의 특성을 이해하고 그 메커니즘을 이론, 자료분석, 모델링을 통하여 규명한다. 해양, 대기, 해빙, 지면, 생지화학과정 등 다양한 기후시스템 요소들과의 상호작용 및 그 변화가 연구된다.
+    themes:
+      en: ["Anthropogenic climate changes and natural climate variation", "Climate susceptibility", "Regional climate changes and their mechanisms", "Arctic climate changes", "Changes in dominant climate modes", "Paleoclimate"]
+      ko: ["인위적 기후변화와 자연 기후변동", "기후 민감도", "지역 기후변화와 그 메커니즘", "북극 기후변화", "주요 기후 모드의 변화", "고기후"]
+    image: research/mechanism-arctic-climate-recovery.jpg
+    figures:
+      - {image: research/mechanism-arctic-climate-recovery.jpg, caption: {en: "Arctic climate recovery", ko: "북극 기후 회복"}}
+      - {image: research/mechanism-itcz-irreversible.jpg, caption: {en: "Irreversible changes of ITCZ", ko: "열대수렴대(ITCZ)의 비가역적 변화"}, doi: "10.1038/s41558-021-01211-6"}
+    dois: ["10.1038/s41558-021-01211-6", "10.1038/s41558-024-01928-0"]
+    videos: ["Hue-7jhfw5E", "X-Uq1stg17g", "br6dk9cHB8w"]
+    regions: [[80, 0], [5, -30], [0, 150]]
+
+  - key: ocean-atmosphere
+    title: {en: "Ocean-Atmosphere Interaction and El Niño", ko: "해양-대기 상호 작용 및 엘니뇨"}
     summary:
       en: >-
-        El Niño–Southern Oscillation (ENSO) is the strongest year-to-year climate signal on Earth.
-        We investigate the dynamics of ENSO diversity, its interaction with other climate modes, and
-        how ENSO may change in a warming world.
+        Ocean-atmosphere interaction plays a critical role in climate events and their changes. Climate System
+        Laboratory (CSL) pursues to understand how ocean and atmosphere interact under various time/spatial scales and
+        background flow, and how the interaction impacts on development, maintainance, and decay of the climate
+        phenomena in tropics, mid-latitudes, and polar regions, with a special interest in their predictability. In
+        particular, we are doing in-depth research on El Niño/Southern Oscillation, which is the most dominant climate
+        phenomenon affecting global climate.
       ko: >-
-        엘니뇨-남방진동(ENSO)은 지구에서 가장 강한 경년 기후 변동입니다. ENSO의 다양성과 역학,
-        다른 기후 모드와의 상호작용, 그리고 온난화에 따른 ENSO의 변화를 연구합니다.
-    image: null
-    dois: []
+        해양-대기 상호작용은 기후 현상 및 그 변화에 가장 중요한 역할을 하고 있습니다. 기후 시스템 연구실 (CSL) 에서는 열대 및
+        중위도에서 진행되는 다양한 해양-대기 상호작용의 역학과정을 이해하고, 이와 관련된 주요 기후 현상들의 발생/유지 역학,
+        예측성을 연구하고 있습니다. 특히, 전지구적으로 가장 큰 기후 변동인 엘니뇨 현상의 역학, 전지구적인 영향, 다른 현상과의
+        상호작용, 예측성 등을 심도 있게 연구하고 있습니다.
+    themes:
+      en: ["El Niño dynamics", "El Niño teleconnection and impacts", "Tropical-Extratropical interaction", "Indian Ocean Dipole and Indian Ocean variability", "Pacific Decadal Oscillation and North Pacific variability", "Inter-basin interaction", "Nonlinear scale interaction"]
+      ko: ["엘니뇨 역학", "엘니뇨 원격상관과 영향", "열대-중위도 상호작용", "인도양 쌍극자와 인도양 변동", "태평양 십년 진동과 북태평양 변동", "해양 분지 간 상호작용", "비선형 규모 간 상호작용"]
+    image: research/ocean-atmosphere-mjo-east-asia.jpg
+    figures:
+      - {image: research/ocean-atmosphere-el-nino-diversity.jpg, caption: {en: "El Niño diversity (Shin et al. 2021, J. Climate)", ko: "엘니뇨 다양성 (Shin et al. 2021, J. Climate)"}, doi: "10.1175/jcli-d-20-0402.1"}
+      - {image: research/ocean-atmosphere-mjo-east-asia.jpg, caption: {en: "MJO teleconnection to East Asia (Kim et al. 2020, J. Climate)", ko: "MJO의 동아시아 원격상관 (Kim et al. 2020, J. Climate)"}, doi: "10.1175/jcli-d-20-0302.1"}
+      - {image: research/ocean-atmosphere-deep-learning.jpg, caption: {en: "Deep learning to Climate Dynamics", ko: "기후역학에 딥러닝 적용"}}
+    dois: ["10.1175/jcli-d-20-0402.1", "10.1175/jcli-d-20-0302.1"]
     videos: ["n8xFW4A_Oc8", "rLo8Va_ZyGA"]
     regions: [[0, -140], [0, 170]]
 
-  - key: carbon-cycle
-    title: {en: "Carbon Cycle & Biogeochemistry", ko: "탄소순환과 생지화학 과정"}
+  - key: biogeochemical
+    title: {en: "Bio-Geochemical Processes", ko: "지구 생지화학 과정"}
     summary:
       en: >-
-        Land and ocean ecosystems absorb about half of human CO2 emissions. We study how climate
-        variability and change affect terrestrial productivity, permafrost carbon, wildfires, and
-        the feedbacks between the biosphere and the physical climate.
+        Earth's climate system consists of vegetation, ocean biogeochemistry, and carbon cycle as well as ocean,
+        atmosphere, land, and cryosphere, and their mutual interactions play a pivotal role in climate change.
+        Recently, the importance of the biogeochemical processes has been recognized increasingly as it has been
+        reported that the biogeochemical feedbacks have significant contributions to global/regional climate change.
+        Nevertheless, our understanding of the biogeochemical processes is very limited, and it is one of the most
+        uncertain components for predicting future climate. Climate System Laboratory (CSL) conducts a pioneering
+        research in the global carbon cycle, marine biogeochemical processes, vegetation processes, and their climate
+        feedback based on big data analysis and numerical modeling.
       ko: >-
-        육상과 해양 생태계는 인간이 배출한 이산화탄소의 약 절반을 흡수합니다. 기후 변동과 변화가
-        육상 생산성, 영구동토층 탄소, 산불에 미치는 영향과 생물권-기후 되먹임을 연구합니다.
-    image: null
-    dois: ["10.1038/ngeo2986", "10.1126/sciadv.aax3308"]
+        지구 기후를 구성하고 있는 식생, 에어로졸, 해양생지화학, 탄소 순환 등은 기후시스템과 상호작용하고, 기후변화에 중요한
+        역학을 합니다. 최근 들어, 기후변화에 있어 이러한 생지화학 과정 피드백의 역할이 조금씩 보고되면서 과거에 간과되어 왔던
+        지구생지화학 과정의 중요성이 강조되고 있습니다. 하지만 여전히 이 분야에 대한 이해 수준은 매우 낮은 실정이며,
+        미래기후예측에 가장 불확실한 부분중의 하나이기 때문에, CSL에서는 자료 분석 및 모델링을 통해, 전지구 탄소순환,
+        해양생지화학 과정, 식생 변화 과정이 연구되며, 이들의 다양한 기후 피드백을 연구하고 있습니다.
+    themes:
+      en: ["Global carbon cycle", "Modeling on ocean and terrestrial bio-geochemical process", "Ocean and terrestrial biological (geophysical and geochemical) feedback", "Earth system interaction"]
+      ko: ["전지구 탄소순환", "해양·육상 생지화학 과정 모델링", "해양·육상 생물 (생물지구물리·생지화학) 되먹임", "지구시스템 상호작용"]
+    image: research/biogeochemical-climate-system.jpg
+    figures:
+      - {image: research/biogeochemical-climate-system.jpg, caption: {en: "Dunne et al. 2020a", ko: "Dunne et al. 2020a"}}
+      - {image: research/biogeochemical-arctic-feedbacks.jpg}
+      - {image: research/biogeochemical-arctic-productivity.jpg, caption: {en: "Future Projection in Arctic Productivity", ko: "북극 생산성의 미래 전망"}}
+    dois: ["10.1038/ngeo2986", "10.1126/sciadv.aax3308", "10.1038/s41467-020-15924-3"]
     videos: ["ULbrjMLw9GE", "B0oD8gfmKDI"]
     regions: [[45, -100], [52, 128], [-5, -60]]
 
-  - key: polar
-    title: {en: "Polar Climate & Arctic Amplification", ko: "극지 기후와 북극 증폭"}
+  - key: extremes
+    title: {en: "High-Impacts Climate Event", ko: "극한 기후 현상"}
     summary:
       en: >-
-        The Arctic is warming much faster than the global mean. We study the processes behind Arctic
-        amplification — including the physiological effect of CO2 on vegetation — and its links to
-        mid-latitude weather and ecosystems.
+        Recently, extreme weather/climate events such as heatwave, cold surge, drought, flood, typhoon, and other
+        extreme events occur more frequently over the globe. It is a challenging question of how much climate changes
+        contribute to the frequent occurrence of extreme events these days. Since extreme climate events have a very
+        strong social and economic impact, it is very important to understand the underlying mechanism and to secure
+        predictability based on physical understanding. Climate System Laboratory (CSL) investigates mechanisms of the
+        various extreme climate events and looks for precursors, which will be used for predicting the events. In
+        addition, we examine future changes in extreme events, with a special interest in relative contributions of
+        the climate changes and natural long-term climate variability.
       ko: >-
-        북극은 전 지구 평균보다 훨씬 빠르게 따뜻해지고 있습니다. 식생에 대한 이산화탄소의 생리적 효과를
-        포함해 북극 증폭의 원인과 중위도 날씨·생태계와의 연결을 연구합니다.
-    image: null
-    dois: ["10.1038/s41467-020-15924-3"]
-    videos: ["br6dk9cHB8w"]
-    regions: [[80, 0], [-78, 175]]
+        최근 들어, 전지구적으로 극한기후현상 (한파, 열파, 가뭄, 홍수 등)이 빈번하게 발생하고 있습니다. 하지만, 이러한 빈번한
+        극한 기후 발생이 온실가스 증가에 의한 기후변화에 의한 것인지는 아직까지 명확하지 않으며, 극한기후 현상은 사회적,
+        경제적으로 매우 강한 영향을 가지기 때문에 현상의 발생 메커니즘 이해하고, 이에 기반한 예측성을 확보 하는 것이 매우
+        중요합니다. CSL에서는 극한기후를 발생시키는 장주기 대기 내부역학을 이해하며 극한 기후 현상에 대한 예측인자를 추출하고
+        예측가능성을 연구합니다. 또한 기후변화와 이상기후 발생과의 연관성을 연구하고, 지구온난화의 영향을 평가합니다.
+    themes:
+      en: ["Low-frequency atmospheric dynamics", "Polar-Extratropical Interaction", "Tropospheric-stratospheric interaction", "Mechanisms for high-impacts climate events", "Predictability of high-impacts climate events"]
+      ko: ["저주파 대기 역학", "극지-중위도 상호작용", "대류권-성층권 상호작용", "극한 기후 현상의 메커니즘", "극한 기후 현상의 예측성"]
+    image: research/extremes-arctic-east-asia-summer.jpg
+    figures:
+      - {image: research/extremes-arctic-east-asia-summer.jpg, caption: {en: "A significant relation between the Arctic warming and East Asia hot summer", ko: "북극 온난화와 동아시아 여름 폭염의 유의한 관계"}}
+      - {image: research/extremes-polar-midlatitude.jpg, caption: {en: "Two distinct influences of Arctic warming on cold winters over North America and East Asia (Kug et al. 2015)", ko: "북극 온난화가 북미와 동아시아의 추운 겨울에 미치는 두 가지 다른 영향 (Kug et al. 2015)"}, doi: "10.1038/ngeo2517"}
+    dois: ["10.1038/ngeo2517"]
+    videos: ["XKp5Iix2eUY"]
+    regions: [[37.5, 127], [45, -100]]
 
-  - key: prediction
-    title: {en: "Climate Prediction", ko: "기후 예측"}
+  - key: modeling
+    title: {en: "Climate Modeling and Prediction", ko: "기후모델링 및 기후예측"}
     summary:
       en: >-
-        From seasonal forecasts to decadal and centennial projections, we work to improve how
-        models predict climate and to understand the sources of predictability.
+        The climate model, which virtually simulates our climate system, is a useful tool to understand and predict
+        climate phenomena and climate changes. A hypothesis from the data analysis can be proved and supported by
+        climate modeling. Climate System Laboratory (CSL) conducts research for improving climate models to
+        accurately represent climate phenomena and increase climate predictability. In addition, we are interested in
+        predicting multi-decadal climate variability, which mutually interacts with biogeochemical processes, carbon
+        cycle, and other factors. Practically, we have contributed to having better climate predictability over the
+        Korean Peninsula, collaborating with Korea Meteorological Administration.
       ko: >-
-        계절 예측부터 수십 년·백 년 규모의 전망까지, 기후 예측 성능을 높이고 예측 가능성의 근원을
-        이해하기 위한 연구를 합니다.
-    image: null
-    dois: []
+        기후 현상 및 기후 변화를 이해하기 위해 가상의 지구 기후시스템을 수치화한 기후모형을 이용합니다. 관측데이터를 분석한
+        결과에서 제시된 가설은 기후 모형을 통해 보완되고 증명되며 CSL은 기후시스템 모형의 해양, 대기 등의 물리화과정을 개선하여
+        기후모의 성능 향상을 위한 연구를 진행하고 있습니다. 뿐만 아니라 에어로졸, 생지화학과정, 탄소순환 등을 포괄하는
+        지구시스템 모형을 개발하고, 이를 활용한 미래 기후변화를 예측하고 있습니다. 기후모형에 초기화 과정을 결합하여 계절내
+        진동에서 수십년 예측 시스템을 구축하고, 그 예측률을 평가하며 기후예측 분야에 대한 기상청과의 긴밀한 협력을 통해 우리나라
+        기후예측 능력을 향상시키는데 기여하고 있습니다.
+    themes:
+      en: ["Climate system modeling and physical Parameterizations", "Earth system model with bio-geochemical processes", "Seamless climate prediction system from intraseasonal to interdecadal", "Optimal perturbation and climate prediction", "Climate Predictability", "Model Output Statistics"]
+      ko: ["기후시스템 모델링과 물리 모수화", "생지화학 과정을 포함한 지구시스템 모델", "계절내~수십 년 규모의 끊김 없는(seamless) 기후예측 시스템", "최적 섭동과 기후예측", "기후 예측성", "모델 출력 통계(MOS)"]
+    image: research/modeling-climate-model.jpg
+    figures:
+      - {image: research/modeling-climate-model.jpg}
+      - {image: research/modeling-growth-of-climate-modeling.jpg}
+      - {image: research/modeling-seamless-prediction.jpg}
+    dois: ["10.1038/s41598-018-33191-7"]
     videos: ["DaqKSaZQapQ"]
     regions: [[37.5, 127], [0, -110]]

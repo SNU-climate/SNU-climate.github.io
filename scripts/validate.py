@@ -109,19 +109,28 @@ def check_data(R):
 
     # 구성원
     roles = set(D['members'].get('roles') or [])
-    for m in D['members'].get('members') or []:
-        tag = f"members: {(m.get('name') or {}).get('en', '?')}"
-        if m.get('role') not in roles:
-            R.err(f"{tag} — role '{m.get('role')}' 가 roles 목록에 없음")
-        if m.get('photo') and not (L.STATIC / m['photo']).exists():
-            R.err(f"{tag} — 사진 없음 static/{m['photo']}")
+    ids = set()
+    for alum, group in ((False, D['members'].get('members') or []), (True, D['members'].get('alumni') or [])):
+        for m in group:
+            tag = f"{'alumni' if alum else 'members'}: {(m.get('name') or {}).get('en', '?')}"
+            if not alum and m.get('role') not in roles:
+                R.err(f"{tag} — role '{m.get('role')}' 가 roles 목록에 없음")
+            if m.get('photo') and not (L.STATIC / m['photo']).exists():
+                R.err(f"{tag} — 사진 없음 static/{m['photo']}")
+            if m.get('id'):                  # 상세 페이지 people/<id>.html 파일명
+                if not re.match(r'^[a-z0-9]+(-[a-z0-9]+)*$', str(m['id'])):
+                    R.err(f"{tag} — id '{m['id']}' 는 영문 소문자·숫자·하이픈만")
+                if m['id'] in ids:
+                    R.err(f"{tag} — id '{m['id']}' 중복")
+                ids.add(m['id'])
     if D['pi'].get('photo') and not (L.STATIC / D['pi']['photo']).exists():
         R.err(f"pi: 사진 없음 static/{D['pi']['photo']}")
 
     # 연구
     for t in D['research']:
-        if t.get('image') and not (L.STATIC / t['image']).exists():
-            R.err(f"research/{t.get('key')}: 그림 없음 static/{t['image']}")
+        for img in [t.get('image')] + [f.get('image') for f in t.get('figures') or []]:
+            if img and not (L.STATIC / img).exists():
+                R.err(f"research/{t.get('key')}: 그림 없음 static/{img}")
         for doi in t.get('dois') or []:
             if doi.lower() not in seen:
                 R.warn(f"research/{t.get('key')}: doi {doi} 가 논문 목록에 없음")
@@ -187,9 +196,10 @@ def check_site(R, theme_dir, D):
     want_news = {f"{p['slug']}.html" for p in D['news']}
     en_news_set = {f.name for f in (theme_dir / 'news').glob('*.html')}
     ko_news_set = {f.name for f in (theme_dir / 'ko' / 'news').glob('*.html')}
-    en_news, ko_news = len(en_news_set), len(ko_news_set)
-    if set(en) != set(ko):
-        R.err(f'[{name}] EN/KO 페이지 집합 불일치 {sorted(map(str, set(en) ^ set(ko)))}')
+    en_all = {p.relative_to(theme_dir) for p in theme_dir.rglob('*.html') if p.relative_to(theme_dir).parts[0] != 'ko'}
+    ko_all = {p.relative_to(theme_dir / 'ko') for p in (theme_dir / 'ko').rglob('*.html')} if (theme_dir / 'ko').exists() else set()
+    if en_all != ko_all:                    # 하위 폴더(news/, people/, research/)까지 EN/KO 짝이 맞는지
+        R.err(f'[{name}] EN/KO 페이지 집합 불일치 {sorted(map(str, en_all ^ ko_all))[:10]}')
     for label, got in (('news', en_news_set), ('ko/news', ko_news_set)):
         if got != want_news:
             R.err(f'[{name}] {label} 상세 페이지가 뉴스 목록과 다름: 없음 {sorted(want_news - got)} / 남는 것 {sorted(got - want_news)}')
@@ -248,7 +258,7 @@ def check_site(R, theme_dir, D):
         if bad > 50:
             R.err(f'[{name}] 링크 오류가 너무 많아 중단')
             break
-    return len(en) + en_news + len(ko) + ko_news
+    return len(en_all) + len(ko_all)
 
 
 def main():

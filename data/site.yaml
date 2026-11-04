@@ -5,19 +5,29 @@ lab:
   affiliation:
     en: "School of Earth and Environmental Sciences, Seoul National University"
     ko: "서울대학교 지구환경과학부"
+  # tagline·intro: 원본 홈 히어로 문구와 /introduction/ 'Welcome' 원문(영문). ko는 번역.
   tagline:
-    en: "Understanding how the climate system works — and how it is changing"
-    ko: "기후시스템의 작동 원리와 변화를 이해합니다"
+    en: "Struggle for pushing edge of the human knowledge"
+    ko: "인류 지식의 경계를 넓히기 위한 도전"
+  lead:                          # 원본 홈 히어로의 부제(basic 테마 히어로)
+    en: "Climate change is the most important issue being faced by humanity and the most challenging scientific subject."
+    ko: "기후변화는 인류가 직면한 가장 중요한 문제이자 가장 도전적인 과학 주제입니다."
   intro:
     en: >-
-      The Climate System Laboratory at Seoul National University studies the physical and
-      biogeochemical processes that shape Earth's climate. Our research spans the mechanisms of
-      climate change, ocean–atmosphere interaction and El Niño dynamics, the carbon cycle, and
-      climate prediction, using observations, Earth system models, and theory.
+      Climate change is the most important issue being faced by humanity and the most challenging
+      scientific subject. Climate System Laboratory (CSL) has studied broad topics related to the
+      global/local climate changes to understand our climate system and predict future changes in the
+      climate system on various time scales. The goal of our research is to explore and accumulate all
+      scientific knowledge related to climate prediction by using big-data analysis, AI techniques, and
+      numerical modeling. We have always aimed for the best research in the world and will continue to
+      do so in the future.
     ko: >-
-      서울대학교 기후시스템연구실은 지구 기후를 결정하는 물리·생지화학 과정을 연구합니다.
-      관측 자료, 지구시스템모델, 이론을 활용해 기후변화 메커니즘, 해양-대기 상호작용과 엘니뇨 역학,
-      탄소순환, 기후 예측을 연구합니다.
+      기후변화는 인류가 직면한 가장 중요한 문제이자 가장 도전적인 과학 주제입니다. 기후시스템연구실(CSL)은
+      기후시스템을 이해하고 다양한 시간 규모에서 기후시스템의 미래 변화를 예측하기 위해 전 지구 및 지역
+      기후변화와 관련된 폭넓은 주제를 연구해 왔습니다. 우리 연구의 목표는 빅데이터 분석, 인공지능(AI) 기법,
+      수치 모델링을 활용해 기후 예측과 관련된 모든 과학적 지식을 탐구하고 축적하는 것입니다. 우리는 언제나
+      세계 최고의 연구를 지향해 왔으며, 앞으로도 그럴 것입니다.
+  photo: img/lab-intro.jpg      # 원본 /introduction/ 사진(F7A2039)
 
 url: "https://climate.snu.ac.kr/"
 

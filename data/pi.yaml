@@ -1,11 +1,13 @@
 # 연구책임자(PI). 출처: 서울대 지구환경과학부 교수 소개 페이지(2026-11-03 확인)
+#   + 원본 연구실 홈페이지 Professor 페이지(people-jong-seong-kug, 캐시 2026-09)에만 있던 경력·학회활동·수상·학회 회원 보완.
+#   두 출처가 다른 항목과 선택 근거: reports/backup_mapping_people.md. 원본에만 있던 항목의 ko는 번역.
 name: {en: "Jong-Seong Kug", ko: "국종성"}
 title: {en: "Professor", ko: "교수"}
 roles:
   - {en: "Professor, School of Earth and Environmental Sciences, Seoul National University", ko: "서울대학교 지구환경과학부 교수"}
   - {en: "Vice Chair, School of Earth and Environmental Sciences", ko: "지구환경과학부 부학부장"}
 major: {en: "Climate Change and Prediction", ko: "기후 변화 및 예측"}
-photo: null          # 예: members/kug.jpg (static/ 기준)
+photo: members/kug.jpg   # 원본 People-Professor_seonghug.png(376×484), 비율 유지·긴 변 600px
 email: "jskug@snu.ac.kr"
 office: {en: "Bldg. 501, Rm. 522", ko: "501동 522호"}
 phone: "+82-2-880-6725"
@@ -38,9 +40,18 @@ career:
   - {period: "2024.03–", en: "Professor, Seoul National University", ko: "교수, 서울대학교"}
   - {period: "2019–2024.02", en: "Full Professor, Pohang University of Science and Technology", ko: "정교수, 포항공과대학교"}
   - {period: "2014–2019", en: "Associate Professor, Pohang University of Science and Technology", ko: "부교수, 포항공과대학교"}
-  - {period: "2009–2014", en: "Senior Research Scientist, Korea Institute of Ocean Science and Technology", ko: "선임연구원, 한국해양과학기술원"}
+  - {period: "2013–2014", en: "Principal Research Scientist, Korea Institute of Ocean Science and Technology", ko: "책임연구원, 한국해양과학기술원"}
+  - {period: "2013–2014", en: "Professor, Ocean Science and Technology, Korea Maritime and Ocean University", ko: "교수, 한국해양대학교 해양과학기술(OST)"}
+  - {period: "2013–2014", en: "Director, Center for Earth Climate Changes", ko: "센터장, 지구기후변화연구센터(Center for Earth Climate Changes)"}
+  - {period: "2010–2014", en: "Associate Professor, University of Science & Technology (UST)", ko: "부교수, 과학기술연합대학원대학교(UST)"}
+  - {period: "2009–2013", en: "Senior Research Scientist, Korea Institute of Ocean Science and Technology", ko: "선임연구원, 한국해양과학기술원"}
+  - {period: "2013", en: "Lecturer, Ewha Womans University (“Basic Climate Dynamics”, “Ocean–Atmosphere Interaction”)", ko: "강사, 이화여자대학교 (기초기후역학, 해양-대기 상호작용)"}
   - {period: "2007–2009", en: "Research Scholar, Department of Meteorology, SOEST, University of Hawaii", ko: "연구원, 하와이대학교 SOEST 기상학과"}
+  - {period: "2007", en: "Visiting Professor, Center for Climate System Research, University of Tokyo", ko: "방문교수, 도쿄대학교 기후시스템연구센터"}
+  - {period: "2006", en: "Lecturer, School of Earth and Environmental Sciences, Seoul National University (“Climate Analysis and Prediction”)", ko: "강사, 서울대학교 지구환경과학부 (기후 분석 및 예측)"}
+  - {period: "2005", en: "Lecturer, School of Earth and Environmental Sciences, Seoul National University (“ENSO Dynamics”)", ko: "강사, 서울대학교 지구환경과학부 (ENSO 역학)"}
   - {period: "2003–2007", en: "Postdoctoral Researcher, Climate Environment System Research Center, Seoul National University", ko: "박사후연구원, 서울대학교 기후환경시스템연구센터"}
+  - {period: "1999–2001", en: "Teaching Assistant, School of Earth and Environmental Sciences, Seoul National University", ko: "조교, 서울대학교 지구환경과학부"}
 
 service:
   - {period: "2023.01–2024.12", en: "Advisory Board, Division of Natural Sciences, National Research Foundation of Korea", ko: "한국연구재단 자연과학단 자문위원"}
@@ -48,7 +59,36 @@ service:
   - {period: "2016–2020", en: "Member, CLIVAR Pacific Region Panel, WCRP", ko: "WCRP CLIVAR 태평양 패널 위원"}
   - {period: "2014–2019", en: "Associate Member, The Korean Academy of Science and Technology", ko: "한국과학기술한림원 준회원"}
   - {period: "2012–", en: "Associate Editor, Asia-Pacific Journal of Atmospheric Sciences", ko: "Asia-Pacific Journal of Atmospheric Sciences 부편집장"}
+  - {period: "2012–", en: "Editorial Board Member, Regional Economies and Policies", ko: "Regional Economies and Policies 편집위원"}
   - {period: "2010–", en: "Advisory Board, KMA Climate Prediction", ko: "기상청 기후예측 자문위원"}
+  - {period: "2005–", en: "Member, East Asia Climate (EAC)", ko: "East Asia Climate(EAC) 회원"}
+
+# 수상(원본 연구실 홈페이지에만 있음)
+awards:
+  - {year: "2019.07", en: "Muenjae Distinguished Professor, POSTECH", ko: "POSTECH 무은재 교수"}
+  - {year: "2019", en: "Distinguished Young Professor, POSTECH", ko: "POSTECH 젊은 석학교수"}
+  - {year: "2018.12", en: "Presidential Award, Ministry of Science and ICT", ko: "대통령 표창, 과학기술정보통신부"}
+  - {year: "2016.11", en: "Promising 30 Young Scientists in Korea, POSTECH–Dong-A Ilbo", ko: "한국을 이끌 젊은 과학자 30인, POSTECH·동아일보"}
+  - {year: "2016.01", en: "Scientist of the Month (Minister's Prize), Ministry of Science, ICT and Future Planning", ko: "이달의 과학기술자상(장관상), 미래창조과학부"}
+  - {year: "2015", en: "APEC Science Prize for Innovation, Research and Education (ASPIRE)", ko: "APEC 과학상(ASPIRE)"}
+  - {year: "2014", en: "Young Scientist Award, Korea Climate Change Society", ko: "한국기후변화학회 젊은 과학자상"}
+  - {year: "2011–2014", en: "Lead Scientist, Korea Institute of Ocean Science and Technology", ko: "한국해양과학기술원 선도연구원"}
+  - {year: "2012", en: "Grand Prize for Best Presentation, 2012 Fall Meeting of the Korea Climate Change Society", ko: "한국기후변화학회 2012 추계학술대회 최우수 발표상(대상)"}
+  - {year: "2012", en: "Best Paper, Korea Institute of Ocean Science and Technology", ko: "한국해양과학기술원 우수논문상"}
+  - {year: "2011", en: "Best Paper, Korea Ocean Research and Development Institute", ko: "한국해양연구원 우수논문상"}
+  - {year: "2010", en: "Minister's Prize, Ministry of Education, Science and Technology", ko: "교육과학기술부 장관상"}
+  - {year: "2010", en: "Best Paper, 2010 Spring Meeting of the Korean Society of Oceanography", ko: "한국해양학회 2010 춘계학술대회 우수논문상"}
+  - {year: "2010", en: "Young Atmospheric Scientist Award, Korean Meteorological Society", ko: "한국기상학회 젊은 대기과학자상"}
+  - {year: "2009", en: "Best Paper, 2009 Spring Meeting of the Korean Society of Oceanography", ko: "한국해양학회 2009 춘계학술대회 우수논문상"}
+
+# 학회 회원(원본 연구실 홈페이지에만 있음, 연도 = 가입 연도)
+memberships:
+  - {year: "2011", en: "American Meteorological Society", ko: "미국기상학회(AMS)"}
+  - {year: "2009", en: "Korea Climate Change Society", ko: "한국기후변화학회"}
+  - {year: "2005", en: "Korean Society of Oceanography", ko: "한국해양학회"}
+  - {year: "2004", en: "Korean Atmospheric Scientists in America", ko: "재미한인대기과학자회"}
+  - {year: "2003", en: "Korean Meteorological Society", ko: "한국기상학회"}
+  - {year: "2001", en: "American Geophysical Union", ko: "미국지구물리학회(AGU)"}
 
 # 대표 논문(학과 페이지 기준). publications.yaml의 DOI와 연결된다.
 selected_dois:

@@ -8,6 +8,25 @@ nav:
   news: {en: "News", ko: "뉴스"}
   videos: {en: "Videos", ko: "영상"}
   contact: {en: "Contact", ko: "오시는 길"}
+  gallery: {en: "Gallery", ko: "갤러리"}
+  about: {en: "Introduction", ko: "연구실 소개"}
+
+# 원본 사이트 메뉴 구조를 따르는 드롭다운 메뉴(basic 테마)
+menu:
+  introduction: {en: "Introduction", ko: "소개"}
+  lab: {en: "Introduction of Laboratory", ko: "연구실 소개"}
+  location: {en: "Location", ko: "연구실 위치"}
+  professor: {en: "Professor", ko: "교수"}
+  researchers: {en: "Researchers", ko: "연구원"}
+  students: {en: "Students", ko: "학생"}
+  alumni: {en: "Alumni", ko: "졸업생"}
+  publication: {en: "Publication", ko: "논문·발표"}
+  articles: {en: "Journal Articles", ko: "학술지 논문"}
+  presentations: {en: "Presentations", ko: "학회 발표"}
+  notice: {en: "Notice", ko: "소식"}
+  announcement: {en: "Announcement", ko: "공지·뉴스"}
+  gallery: {en: "Gallery", ko: "갤러리"}
+  videos: {en: "YouTube", ko: "유튜브"}
 
 lang:
   name: {en: "English", ko: "한국어"}
@@ -31,6 +50,16 @@ feed:
   publication: {en: "Paper", ko: "논문"}
   presentation: {en: "Talk", ko: "발표"}
   video: {en: "Video", ko: "영상"}
+  link: {en: "Original article", ko: "원문 보기"}
+
+gallery:
+  title: {en: "Gallery", ko: "갤러리"}
+  intro: {en: "Photos from conferences, workshops, and lab life.", ko: "학회·워크숍·연구실 행사 사진입니다."}
+  photos: {en: "photos", ko: "장"}
+  back: {en: "Back to gallery", ko: "갤러리 목록"}
+
+about:
+  title: {en: "Introduction of Laboratory", ko: "연구실 소개"}
 
 people:
   pi: {en: "Principal Investigator", ko: "연구책임자"}
@@ -43,6 +72,18 @@ people:
   since: {en: "Since", ko: "합류"}
   current: {en: "Current position", ko: "현재"}
   selected: {en: "Selected Publications", ko: "대표 논문"}
+  position: {en: "Position", ko: "직위"}
+  email: {en: "E-mail", ko: "이메일"}
+  homepage: {en: "Homepage", ko: "홈페이지"}
+  awards: {en: "Awards", ko: "수상"}
+  memberships: {en: "Memberships", ko: "학회 회원"}
+  experience: {en: "Research Experience", ko: "연구 경력"}
+  pubs: {en: "Publications in the lab list", ko: "연구실 논문 목록 중 참여 논문"}
+  pubs_note: {en: "Matched automatically by author name.", ko: "저자 이름으로 자동 연결한 목록입니다."}
+  back: {en: "Back to People", ko: "구성원 목록"}
+  profile: {en: "Profile", ko: "프로필"}
+  students: {en: "Students", ko: "학생"}
+  researchers: {en: "Researchers", ko: "연구원"}
   role:
     pi: {en: "Professor", ko: "교수"}
     postdoc: {en: "Postdoctoral Researchers", ko: "박사후연구원"}
@@ -75,6 +116,9 @@ pres:
     oral: {en: "Oral", ko: "구두"}
     poster: {en: "Poster", ko: "포스터"}
     seminar: {en: "Seminar", ko: "세미나"}
+  empty:
+    en: "No presentations have been registered yet. New talks and posters will be listed here."
+    ko: "아직 등록된 발표가 없습니다. 학회 발표가 생기면 이곳에 올라갑니다."
 
 news:
   title: {en: "News", ko: "뉴스"}
@@ -101,6 +145,10 @@ research:
   intro: {en: "We study the climate system across scales, from interannual variability to centennial change.", ko: "경년 변동부터 백 년 규모의 변화까지, 다양한 시간 규모에서 기후시스템을 연구합니다."}
   papers: {en: "Key papers", ko: "주요 논문"}
   videos: {en: "Related videos", ko: "관련 영상"}
+  themes: {en: "Research Themes", ko: "주요 연구 주제"}
+  figures: {en: "Highlights", ko: "연구 하이라이트"}
+  more: {en: "Learn more", ko: "자세히 보기"}
+  back: {en: "All research areas", ko: "연구 분야 전체"}
 
 contact:
   title: {en: "Contact", ko: "오시는 길"}

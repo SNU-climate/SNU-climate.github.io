@@ -38,7 +38,7 @@ CACHE = L.ROOT / '.cache' / 'pubs'
 REPORT = L.ROOT / 'reports' / 'pubs_reconciliation.md'
 LIST_TTL = 86400            # 출처 목록 캐시 1일
 WORK_TTL = 30 * 86400       # DOI별 Crossref 캐시 30일
-MANUAL_FIELDS = ('corresponding', 'featured', 'image', 'links', 'hidden')
+MANUAL_FIELDS = ('corresponding', 'corr_authors', 'featured', 'image', 'links', 'hidden', 'note', 'url', 'source')
 COUNT_RANGE = (250, 450)
 
 # ---------------------------------------------------------------- 제외·검토 규칙

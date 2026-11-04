@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ t('contact.title') }}</h1>
+<p class="crumb">{{ t('menu.introduction') }}</p>
+<h1>{{ t('menu.location') }}</h1>
 <dl class="contact">
   <dt>{{ t('contact.address') }}</dt><dd>{{ tr(site.contact.address) }}</dd>
-  <dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(site.contact.pi_office.room) }} · {{ site.contact.pi_office.phone }}</dd>
   <dt>{{ t('contact.lab_room') }}</dt><dd>{{ tr(site.contact.lab_room.room) }} · {{ site.contact.lab_room.phone }}</dd>
+  <dt>{{ t('contact.pi_office') }}</dt><dd>{{ tr(site.contact.pi_office.room) }} · {{ site.contact.pi_office.phone }}</dd>
   <dt>{{ t('contact.email') }}</dt><dd><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></dd>
 </dl>
 <p>{{ t('contact.directions') }} <a href="{{ site.contact.map_url }}" target="_blank" rel="noopener">{{ t('contact.map') }} →</a></p>
+{% if site.contact.directions %}
+<section class="sec prose">{% for para in tr(site.contact.directions).split('\n\n') %}<p>{{ para }}</p>{% endfor %}</section>
+{% endif %}
 <section class="sec"><h2>{{ t('home.join') }}</h2><p>{{ t('home.join_text') }}</p></section>
 {% endblock %}

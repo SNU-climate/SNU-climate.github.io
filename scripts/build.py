@@ -34,9 +34,18 @@ BUILD_MARK = '.csl-build'      # build.py가 만든 출력 폴더 표시(이 파
 
 # ---------------------------------------------------------------- 언어 독립 헬퍼
 def tr(v, lang):
-    if isinstance(v, dict):
-        return v.get(lang) or v.get('en') or next((x for x in v.values() if x), '')
+    """{en, ko} → 해당 언어 값(없으면 en). 목록 값은 ', '로 이어 문자열로 돌려준다(목록 그대로는 tr_list)."""
+    v = tr_list(v, lang) if isinstance(v, dict) else v
+    if isinstance(v, list):
+        return ', '.join(str(x) for x in v)
     return '' if v is None else v
+
+
+def tr_list(v, lang):
+    """{en: [...], ko: [...]} 또는 [...] → 해당 언어 목록."""
+    if isinstance(v, dict):
+        v = v.get(lang) or v.get('en') or next((x for x in v.values() if x), [])
+    return v if isinstance(v, list) else ([v] if v else [])
 
 
 def i18n_get(tree, key, lang):
@@ -95,6 +104,7 @@ def derive(data):
     news = []
     for p in data['news']:
         p = dict(p)
+        p['year'] = L.to_date(p.get('date')).year
         if p.get('doi'):
             p['pub'] = by_doi.get(str(p['doi']).lower())
         if p.get('youtube'):
@@ -106,6 +116,7 @@ def derive(data):
         t = dict(t)
         t['pubs'] = [by_doi[d.lower()] for d in t.get('dois') or [] if d.lower() in by_doi]
         t['video_items'] = [by_vid[v] for v in t.get('videos') or [] if v in by_vid]
+        t['figures'] = [{**f, 'pub': by_doi.get(str(f.get('doi', '')).lower())} for f in t.get('figures') or []]
         research.append(t)
 
     roles = members.get('roles') or ['postdoc', 'researcher', 'integrated', 'phd', 'ms', 'undergrad', 'staff']
@@ -114,8 +125,26 @@ def derive(data):
     member_groups = [(r, ms) for r, ms in member_groups if ms]
     alumni = sorted(members.get('alumni') or [], key=lambda a: a.get('year') or 0, reverse=True)
 
-    hl = {L.name_key(n) for n in site.get('highlight_names') or []}
-    hl |= {L.name_key(m['pub_name']) for m in mlist if m.get('pub_name')}
+    # 구성원 굵게 표시 규칙: pub_name과 저자 표기가 정확히 같을 때만(흔한 성·이니셜의 접두 매칭은 오표시가 많다).
+    # 동명이인이 섞이면 members.yaml에 pub_since/pub_until(연도)·pub_exclude[DOI]로 범위를 좁힌다.
+    member_rules = [{'key': L.name_key(m['pub_name']), 'since': m.get('pub_since'), 'until': m.get('pub_until'),
+                     'exclude': {str(d).lower() for d in m.get('pub_exclude') or []}}
+                    for m in mlist + alumni if m.get('pub_name')]
+
+    def rule_ok(r, p):
+        y = p.get('year') or 0
+        return ((not r['since'] or y >= r['since']) and (not r['until'] or y <= r['until'])
+                and str(p.get('doi', '')).lower() not in r['exclude'])
+
+    def own_pubs(m):   # 구성원 상세 페이지용 참여 논문
+        if not m.get('pub_name'):
+            return []
+        r = next(x for x in member_rules if x['key'] == L.name_key(m['pub_name']))
+        return [p for p in pubs if rule_ok(r, p) and any(L.name_key(a) == r['key'] for a in p.get('authors') or [])]
+    people_pages = [{**m, 'pubs': own_pubs(m), 'alumnus': alum}
+                    for alum, group in ((False, mlist), (True, alumni)) for m in group if m.get('id')]
+
+    hl = {L.name_key(n) for n in site.get('highlight_names') or []}     # 교수: 이니셜 접두 매칭 허용('Kug, J.')
 
     years = sorted({p['year'] for p in pubs})
     per_year = [(y, sum(1 for p in pubs if p['year'] == y)) for y in years]
@@ -131,9 +160,11 @@ def derive(data):
         'featured_pubs': [p for p in pubs if p.get('featured')],
         'selected_pubs': [by_doi[d.lower()] for d in pi.get('selected_dois') or [] if d.lower() in by_doi],
         'presentations': pres, 'pres_by_year': L.group_by_year(pres),
-        'news': news, 'videos': videos, 'channel': vids_cfg.get('channel') or {},
+        'news': news, 'news_all': news, 'albums': [p for p in news if p.get('album')],
+        'videos': videos, 'channel': vids_cfg.get('channel') or {},
         'research': research, 'member_groups': member_groups, 'members_all': mlist, 'alumni': alumni,
-        'highlight_keys': hl,
+        'people_pages': people_pages,
+        'highlight_keys': hl, 'member_rules': member_rules, 'rule_ok': rule_ok,
         'stats': {
             'pubs': len(pubs), 'first_year': years[0] if years else None, 'last_year': years[-1] if years else None,
             'per_year': per_year, 'top_journals': top_journals, 'journals': len(journals),
@@ -147,10 +178,13 @@ def derive(data):
 
 
 # ---------------------------------------------------------------- 언어·페이지별 컨텍스트
-def make_ctx(D, theme_meta, lang, page, depth, post=None):
+def make_ctx(D, theme_meta, lang, page, depth, post=None, person=None, topic=None):
     other = 'ko' if lang == 'en' else 'en'
     root = '../' * depth
     site = D['site']
+    tpl = theme_meta.get('_tpl', set())       # 이 테마에 있는 템플릿 파일 이름(선택 페이지 판단용)
+    # Gallery 페이지가 있는 테마는 앨범 글(album: true)을 뉴스 목록·최신 소식에서 빼고 Gallery에만 보인다
+    news_list = [p for p in D['news'] if not p.get('album')] if 'gallery.html' in tpl else D['news']
 
     def lang_prefix(lg):
         return 'ko/' if lg == 'ko' else ''
@@ -160,6 +194,18 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None):
 
     def news_url(p, lg=None):
         return f"{root}{lang_prefix(lg or lang)}news/{p['slug']}.html"
+
+    def member_url(m, lg=None):
+        """구성원 상세 페이지(테마에 member.html이 있고 id가 있을 때). 없으면 ''."""
+        if 'member.html' in tpl and m.get('id'):
+            return f"{root}{lang_prefix(lg or lang)}people/{m['id']}.html"
+        return ''
+
+    def topic_url(r, lg=None):
+        """연구 주제 상세 페이지(테마에 research_topic.html이 있을 때), 없으면 research.html#key."""
+        if 'research_topic.html' in tpl:
+            return f"{root}{lang_prefix(lg or lang)}research/{r['key']}.html"
+        return page_url('research', lg) + f"#{r['key']}"
 
     def asset(path):
         return f'{root}assets/{path}'
@@ -222,20 +268,26 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None):
             return video_thumb(p['youtube'])
         return ''
 
-    def is_me(name):
-        return L.same_person(L.name_key(name), D['highlight_keys'])
+    def is_me(name, p=None):
+        """교수(접두 매칭) 또는 구성원(정확히 일치 + 논문 p가 주어지면 기간·제외 규칙)이면 True."""
+        key = L.name_key(name)
+        if L.same_person(key, D['highlight_keys']):
+            return True
+        return any(r['key'] == key and (p is None or D['rule_ok'](r, p)) for r in D['member_rules'])
 
     def authors(p, limit=12):
-        """저자 목록. 연구실 구성원은 <strong class="au-me">, 너무 길면 앞부분 + … + 구성원 이름."""
+        """저자 목록. 연구실 구성원은 <strong class="au-me">, 교신저자는 *, 너무 길면 앞부분 + … + 구성원 이름."""
         names = list(p.get('authors') or [])
+        corr = set(p.get('corr_authors') or [])
 
         def one(n):   # 이름 중간(하이픈)에서 줄바꿈되지 않도록 이름마다 감싼다
-            return (f'<strong class="au au-me">{escape(n)}</strong>' if is_me(n)
-                    else f'<span class="au">{escape(n)}</span>')
+            star = '<span class="au-corr" title="Corresponding author">*</span>' if n in corr else ''
+            return (f'<strong class="au au-me">{escape(n)}{star}</strong>' if is_me(n, p)
+                    else f'<span class="au">{escape(n)}{star}</span>')
         if len(names) <= limit:
             return Markup(', '.join(one(n) for n in names))
         s = ', '.join(one(n) for n in names[:limit - 2]) + ', …'
-        rest_me = [n for n in names[limit - 2:] if is_me(n)]
+        rest_me = [n for n in names[limit - 2:] if is_me(n, p)]
         if rest_me:
             s += ' ' + ', '.join(one(n) for n in rest_me)
         return Markup(s)
@@ -263,7 +315,7 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None):
 
     def latest(n=None):
         items = []
-        for p in D['news']:
+        for p in news_list:
             items.append({'kind': 'news', 'date': p.get('date'), 'title': _tr(p.get('title')),
                           'url': news_url(p), 'meta': t('news.category.' + str(p.get('category', 'lab'))),
                           'image': cover_url(p), 'obj': p})
@@ -282,14 +334,23 @@ def make_ctx(D, theme_meta, lang, page, depth, post=None):
     if post is not None:
         page_title = f"{_tr(post.get('title'))} | {lab_name}"
         alt_url = news_url(post, other)
+    elif person is not None:
+        page_title = f"{_tr(person.get('name'))} | {lab_name}"
+        alt_url = member_url(person, other)
+    elif topic is not None:
+        page_title = f"{_tr(topic.get('title'))} | {lab_name}"
+        alt_url = topic_url(topic, other)
     else:
         page_title = lab_name if page == 'index' else f"{t('nav.' + page)} | {lab_name}"
         alt_url = page_url(page, other)
 
     ctx = dict(D)
+    ctx['news'] = news_list
     ctx.update({
         'lang': lang, 'other_lang': other, 'root': root, 'page': page, 'nav': nav, 'alt_url': alt_url,
         'page_title': page_title, 'lab_name': lab_name, 'theme': theme_meta, 'post': post,
+        'person': person, 'topic': topic, 'tr_list': lambda v: tr_list(v, lang),
+        'member_url': member_url, 'topic_url': topic_url,
         't': t, 'tr': _tr, 'fmt_date': _fmt_date, 'md': md, 'rich': rich, 'strip_tags': strip_tags,
         'page_url': page_url, 'news_url': news_url, 'asset': asset, 'static': static,
         'video_thumb': video_thumb, 'youtube_url': youtube_url, 'yt_html': lambda v, ti='': Markup(yt_html(v, ti)),
@@ -345,16 +406,30 @@ def build_theme(theme, D, out):
         loader=jinja2.FileSystemLoader([str(tdir / 'templates'), str(L.THEMES / '_shared')]),
         autoescape=jinja2.select_autoescape(['html']), trim_blocks=True, lstrip_blocks=True,
         undefined=jinja2.ChainableUndefined)
+    # 선택 페이지: theme.yaml의 extra_pages(예: gallery, about)와 상세 템플릿(member.html, research_topic.html)
+    meta['_tpl'] = {f.name for f in (tdir / 'templates').glob('*.html')}
+    extra = [pg for pg in meta.get('extra_pages') or [] if f'{pg}.html' in meta['_tpl']]
     n = 0
     for lang in L.LANGS:
         base, depth = (out, 0) if lang == 'en' else (out / 'ko', 1)
-        for page in L.PAGES:
+        for page in list(L.PAGES) + extra:
             render(env, f'{page}.html', base / f'{page}.html', make_ctx(D, meta, lang, page, depth))
             n += 1
         for p in D['news']:
             render(env, 'news_post.html', base / 'news' / f"{p['slug']}.html",
-                   make_ctx(D, meta, lang, 'news', depth + 1, post=p))
+                   make_ctx(D, meta, lang, 'gallery' if p.get('album') and 'gallery' in extra else 'news',
+                            depth + 1, post=p))
             n += 1
+        if 'member.html' in meta['_tpl']:
+            for m in D['people_pages']:
+                render(env, 'member.html', base / 'people' / f"{m['id']}.html",
+                       make_ctx(D, meta, lang, 'people', depth + 1, person=m))
+                n += 1
+        if 'research_topic.html' in meta['_tpl']:
+            for r in D['research']:
+                render(env, 'research_topic.html', base / 'research' / f"{r['key']}.html",
+                       make_ctx(D, meta, lang, 'research', depth + 1, topic=r))
+                n += 1
     return n
 
 

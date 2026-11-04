@@ -69,7 +69,7 @@
   <table class="table">
     <tbody>
       {% for a in alumni %}
-      <tr><th scope="row">{{ tr(a.name) }} {{ m.sample_badge(a) }}</th><td>{{ a.degree }}, {{ a.year }}</td><td>{% if a.current %}{{ tr(a.current) }}{% endif %}</td></tr>
+      <tr><th scope="row">{{ tr(a.name) }} {{ m.sample_badge(a) }}</th><td>{{ [a.degree, a.year]|select|join(", ") }}</td><td>{% if a.current %}{{ tr(a.current) }}{% endif %}</td></tr>
       {% endfor %}
     </tbody>
   </table>

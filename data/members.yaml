@@ -1,42 +1,736 @@
-# 구성원. 백업 자료를 받으면 실제 명단으로 교체한다.
-# placeholder: true 항목은 템플릿 미리보기용 예시이며 화면에 SAMPLE 표시가 붙고 validate.py가 경고한다.
+# 구성원·졸업생. 출처: 원본 연구실 홈페이지 캐시(2026-09~10) people-researcher, student, alumni 목록과 portfolio/<slug>/ 상세 페이지.
+# 대응표·확인 필요 목록: reports/backup_mapping_people.md
 # role 키: postdoc / researcher / phd / integrated / ms / undergrad / staff (표시 순서 = roles)
-# pub_name: 논문 저자 표기(예: "Shin, J.-S.") — 넣으면 논문 목록에서 굵게 표시된다.
+# pub_name: 논문 저자 표기(publications.yaml에 실제로 나오는 표기) — 넣으면 논문 목록에서 굵게 표시되고 개인 페이지에 논문이 붙는다.
+# 상세 항목의 ko는 원본(영문)을 번역한 것이다. 졸업생의 education/career/awards는 영문만 넣었다(화면은 en으로 대체).
 roles: [postdoc, researcher, integrated, phd, ms, undergrad, staff]
 
 members:
-  - name: {en: "Sample Member A", ko: "예시 구성원 A"}
+  # ---------------------------------------------------------------- Researcher 페이지
+  - id: hyunju-lee
+    name: {en: "Hyunju Lee", ko: "이현주"}
+    role: researcher
+    position: {en: "Researcher", ko: "연구원"}
+    photo: members/hyunju-lee.jpg
+    email: "hjlee84@snu.ac.kr"
+    interests:
+      en: ["Climate change", "Teleconnection and Rossby wave dynamics", "Stratospheric aerosol injection (SAI)"]
+      ko: ["기후변화", "원격상관과 로스비파 역학", "성층권 에어로졸 주입(SAI)"]
+    education:
+      - {year: "2019", en: "Ph.D., Department of Atmospheric Sciences, Pusan National University, Busan, South Korea", ko: "박사, 부산대학교 대기과학과"}
+      - {year: "2013", en: "M.S., Department of Atmospheric Sciences, Pusan National University, Busan, South Korea", ko: "석사, 부산대학교 대기과학과"}
+      - {year: "2011", en: "B.S., Department of Atmospheric Sciences, Pusan National University, Busan, South Korea", ko: "학사, 부산대학교 대기과학과"}
+    career:
+      - {period: "2020–2025", en: "Korea Polar Research Institute (KOPRI), Incheon", ko: "극지연구소(KOPRI), 인천"}
+      - {period: "2019–2022", en: "Research Center for Climate Sciences (RCCS), Pusan National University, Busan", ko: "부산대학교 기후과학연구소(RCCS)"}
+    awards:
+      - {year: "2019", en: "Academic Research Award of Natural Sciences, Pusan National University", ko: "부산대학교 자연과학 학술연구상"}
+      - {year: "2016", en: "Outstanding Research Award (Oral Presentation), Korean Meteorological Society Fall Meeting", ko: "한국기상학회 추계학술대회 우수연구상(구두발표)"}
+      - {year: "2015", en: "Outstanding Research Award (Poster), Korean Meteorological Society Spring Meeting", ko: "한국기상학회 춘계학술대회 우수연구상(포스터)"}
+
+  - id: chao-liu
+    name: {en: "Chao Liu"}
+    role: researcher
+    position: {en: "Ph.D. Researcher", ko: "박사 연구원"}
+    photo: members/chao-liu.jpg
+    pub_name: "Liu, C."
+    email: "chaoliu@snu.ac.kr"
+    interests:
+      en: ["El Niño–Southern Oscillation", "Climate change", "Decadal variability"]
+      ko: ["엘니뇨-남방진동(ENSO)", "기후변화", "십년 변동성"]
+    education:
+      - {year: "2022", en: "Ph.D., School of Atmospheric Science, Nanjing University of Information Science & Technology, Nanjing, China", ko: "박사, 중국 난징정보공정대학교(NUIST) 대기과학대학"}
+      - {year: "2017", en: "B.S., School of Atmospheric Science, Nanjing University of Information Science & Technology, Nanjing, China", ko: "학사, 중국 난징정보공정대학교(NUIST) 대기과학대학"}
+    career:
+      - {period: "2022–2025", en: "Irreversible Climate Change Research Center, Yonsei University, Seoul, Republic of Korea", ko: "연세대학교 비가역기후변화연구센터"}
+    awards:
+      - {year: "2024", en: "Top 100 National R&D Excellence Achievements of South Korea (Rank: 2/9)", ko: "국가연구개발 우수성과 100선 (순위 2/9)"}
+
+  - id: jaeheung-park
+    name: {en: "Jaeheung Park", ko: "박재형"}
+    role: researcher
+    position: {en: "Research Professor", ko: "연구교수"}
+    photo: members/jaeheung-park.jpg
+    pub_name: "Park, J.-H."
+    email: "jhp11010@gmail.com"
+    interests:
+      en: ["Decadal to multidecadal climate variability", "Pacific climate variability", "Inter-basin teleconnection"]
+      ko: ["십년-수십년 기후 변동성", "태평양 기후 변동성", "해양 간 원격상관"]
+    education:
+      - {year: "2016", en: "Ph.D., Atmospheric Sciences, Yonsei University, Seoul, South Korea", ko: "박사, 연세대학교 대기과학과"}
+      - {year: "2011", en: "M.S., Atmospheric Sciences, Yonsei University, Seoul, South Korea", ko: "석사, 연세대학교 대기과학과"}
+      - {year: "2009", en: "B.S., Atmospheric Sciences, Yonsei University, Seoul, South Korea", ko: "학사, 연세대학교 대기과학과"}
+    career:
+      - {period: "2024–", en: "Research Professor, School of Earth and Environmental Sciences, Seoul National University", ko: "연구교수, 서울대학교 지구환경과학부"}
+      - {period: "2019–2024", en: "Research Professor, Division of Environmental Science and Engineering, Pohang University of Science and Technology (POSTECH)", ko: "연구교수, 포항공과대학교(POSTECH) 환경공학부"}
+      - {period: "2017–2019", en: "Postdoctoral Fellow, International Pacific Research Center, SOEST, University of Hawaii", ko: "박사후연구원, 하와이대학교 SOEST 국제태평양연구센터(IPRC)"}
+      - {period: "2016–2017", en: "Postdoctoral Fellow, Division of Environmental Science and Engineering, Pohang University of Science and Technology (POSTECH)", ko: "박사후연구원, 포항공과대학교(POSTECH) 환경공학부"}
+    awards:
+      - {year: "2019", en: "Young Scientist Award, Korean Meteorological Society", ko: "한국기상학회 젊은대기과학자상"}
+      - {year: "2016", en: "Best Dissertation Award, Korean Meteorological Society", ko: "한국기상학회 우수학위논문상"}
+
+  - id: manuel-tobias-blau
+    name: {en: "Manuel Tobias Blau"}
     role: postdoc
-    photo: null
-    email: null
-    interests: {en: "ENSO dynamics", ko: "엘니뇨 역학"}
-    since: 2024
-    placeholder: true
-  - name: {en: "Sample Member B", ko: "예시 구성원 B"}
+    position: {en: "Postdoctoral Fellow", ko: "박사후연구원"}
+    photo: members/manuel-tobias-blau.jpg
+    email: "manuel.blau@snu.ac.kr"
+    homepage: "https://scholar.google.com/citations?user=I1BHNmIAAAAJ&hl=en"
+    interests:
+      en: ["Climate dynamics and climate change", "Land–atmosphere interaction"]
+      ko: ["기후역학과 기후변화", "지면-대기 상호작용"]
+    education:
+      - {year: "2025", en: "Ph.D., Department of Climate System, Pusan National University, South Korea", ko: "박사, 부산대학교 기후시스템학과"}
+      - {year: "2020", en: "M.Sc., Climate & Environmental Sciences, Friedrich-Alexander University Erlangen-Nuremberg, Germany", ko: "석사, 독일 프리드리히-알렉산더 대학교 에를랑겐-뉘른베르크 기후·환경과학"}
+      - {year: "2017", en: "B.Sc., Physical Geography, Friedrich-Alexander University Erlangen-Nuremberg, Germany", ko: "학사, 독일 프리드리히-알렉산더 대학교 에를랑겐-뉘른베르크 자연지리학"}
+    awards:
+      - {year: "2023", en: "Outstanding Poster Presentation, World Climate Research Programme (WCRP) Open Conference, Kigali, Rwanda", ko: "세계기후연구계획(WCRP) 공개학술대회 우수 포스터 발표, 르완다 키갈리"}
+
+  - id: yu-liang
+    name: {en: "Yu Liang"}
+    role: postdoc
+    position: {en: "Postdoctoral Fellow", ko: "박사후연구원"}
+    photo: members/yu-liang.jpg
+    email: "yl954yale@snu.ac.kr"
+    interests:
+      en: ["Climate dynamics", "Air–sea interaction", "Subseasonal-to-seasonal prediction", "Machine learning"]
+      ko: ["기후역학", "대기-해양 상호작용", "아계절-계절 예측", "기계학습"]
+    education:
+      - {year: "2022", en: "Ph.D., Department of Earth & Planetary Sciences, Yale University, U.S.A.", ko: "박사, 미국 예일대학교 지구행성과학과"}
+      - {year: "2017", en: "B.S., Department of Atmospheric and Oceanic Sciences, School of Physics, Peking University, China", ko: "학사, 중국 베이징대학교 물리학원 대기해양과학과"}
+    career:
+      - {period: "2025.10–", en: "Postdoctoral Fellow, Research Institute for Basic Sciences", ko: "박사후연구원, Research Institute for Basic Sciences"}
+      - {period: "2023.10–2025.09", en: "Schmidt AI in Science Postdoctoral Fellow, Scripps Institution of Oceanography, UC San Diego, U.S.A.", ko: "Schmidt AI in Science 박사후연구원, 미국 UC 샌디에이고 스크립스 해양연구소"}
+      - {period: "2023.01–2023.09", en: "Postdoctoral Fellow, Scripps Institution of Oceanography, UC San Diego, U.S.A.", ko: "박사후연구원, 미국 UC 샌디에이고 스크립스 해양연구소"}
+
+  - id: yechul-shin
+    name: {en: "Yechul Shin", ko: "신예철"}
+    role: researcher
+    position: {en: "Researcher", ko: "연구원"}
+    photo: members/yechul-shin.jpg
+    pub_name: "Shin, Y."
+    email: "yechul.ycshin@gmail.com"
+    homepage: "https://sites.google.com/view/yechul/home"
+    interests:
+      en: ["Hadley cell and atmospheric energetic framework", "Extratropics-originated teleconnection", "Hierarchy of climate models", "Resilience of the climate system", "Abrupt climate change and its attribution"]
+      ko: ["해들리 순환과 대기 에너지 관점", "중위도 기원 원격상관", "기후모델 위계", "기후시스템의 회복력", "급격한 기후변화와 원인 규명"]
+    education:
+      - {year: "2022", en: "Ph.D., Earth Science and Engineering, Ulsan National Institute of Science and Technology (UNIST), South Korea", ko: "박사, 울산과학기술원(UNIST) 지구과학·공학"}
+      - {year: "2016", en: "B.S., Earth Science / Disaster and Risk Management Engineering, Ulsan National Institute of Science and Technology (UNIST), South Korea", ko: "학사, 울산과학기술원(UNIST) 지구과학·재난관리공학"}
+    career:
+      - {period: "2022–2024", en: "PIURI Postdoctoral Fellow, Division of Environmental Science and Technology, POSTECH, South Korea", ko: "PIURI 박사후연구원, 포항공과대학교(POSTECH) 환경공학부"}
+      - {period: "2016–2022", en: "Research Assistant, Department of Urban and Environmental Engineering, UNIST, South Korea", ko: "연구조교, 울산과학기술원(UNIST) 도시환경공학과"}
+    awards:
+      - {year: "2023", en: "Solicited speaker, IUGG 2023", ko: "IUGG 2023 초청 연사(solicited)"}
+      - {year: "2022", en: "PIURI Postdoctoral Fellowship", ko: "PIURI 박사후연구원 펠로십"}
+      - {year: "2020", en: "KMS Best Paper Award", ko: "한국기상학회 우수논문상"}
+      - {year: "2017–2022", en: "Global Ph.D. Fellowship", ko: "글로벌박사양성사업(GPF) 장학생"}
+      - {year: "2012–2022", en: "UNIST President Fellowship", ko: "UNIST 총장 장학생"}
+
+  - id: jonghwa-lee
+    name: {en: "Jonghwa Lee", ko: "이종화"}
+    role: researcher
+    position: {en: "Researcher", ko: "연구원"}
+    photo: members/jonghwa-lee.jpg
+    email: "jhlee20@postech.ac.kr"
+    education:
+      - {year: "2001", en: "M.S., School of Earth and Environmental Science, Konkuk University, Seoul, South Korea", ko: "석사, 건국대학교 지구환경과학과"}
+      - {year: "1998", en: "B.S., School of Earth and Environmental Science, Konkuk University, Seoul, South Korea", ko: "학사, 건국대학교 지구환경과학과"}
+
+  - id: minseo-cho
+    name: {en: "Minseo Cho", ko: "조민서"}
+    role: researcher
+    position: {en: "Researcher", ko: "연구원"}
+    photo: members/minseo-cho.jpg
+    pub_name: "Cho, M."
+    email: "min0320@snu.ac.kr"
+
+  - id: yeonjun-suh
+    name: {en: "Yeonjun Suh", ko: "서연준"}
+    role: researcher
+    position: {en: "Researcher", ko: "연구원"}
+    photo: members/yeonjun-suh.jpg
+    email: "yjsuh0615@snu.ac.kr"
+
+  - id: kyungna-kim
+    name: {en: "Kyungna Kim", ko: "김경나"}
+    role: researcher
+    position: {en: "Researcher", ko: "연구원"}
+    photo: members/kyungna-kim.jpg
+    pub_name: "Kim, K."
+    email: "knakim@postech.ac.kr"
+    interests:
+      en: ["Seasonal forecast", "Probabilistic forecasting", "Carbon cycle"]
+      ko: ["계절 예측", "확률 예측", "탄소순환"]
+    education:
+      - {year: "2009", en: "M.S., Atmospheric Science Program in Earth and Environmental Sciences, Seoul National University, Seoul, South Korea", ko: "석사, 서울대학교 지구환경과학부 대기과학전공"}
+      - {year: "2007", en: "B.S., Earth & Environmental Science and Physics (double major), Korea University, Seoul, South Korea", ko: "학사, 고려대학교 지구환경과학·물리학(복수전공)"}
+    career:
+      - {period: "2019–", en: "Pohang University of Science and Technology (POSTECH), South Korea", ko: "포항공과대학교(POSTECH)"}
+      - {period: "2017–2019", en: "Bomin Science Consulting, South Korea", ko: "Bomin Science Consulting"}
+      - {period: "2010–2013", en: "Climate Research Lab, National Institute of Meteorological Research, South Korea", ko: "국립기상연구소 기후연구과"}
+
+  # ---------------------------------------------------------------- Student: Ph.D. Candidates
+  - id: huiji-lee
+    name: {en: "Huiji Lee", ko: "이희지"}
     role: phd
-    photo: null
-    email: null
-    interests: {en: "Carbon cycle–climate feedback", ko: "탄소순환-기후 되먹임"}
-    since: 2024
-    placeholder: true
-  - name: {en: "Sample Member C", ko: "예시 구성원 C"}
-    role: integrated
-    photo: null
-    email: null
-    interests: {en: "Climate reversibility", ko: "기후 가역성"}
-    since: 2025
-    placeholder: true
-  - name: {en: "Sample Member D", ko: "예시 구성원 D"}
+    position: {en: "Ph.D. Candidate", ko: "박사과정"}
+    photo: members/huiji-lee.jpg
+    pub_name: "Lee, H."
+    pub_since: 2024                       # 동명이인 "Lee, H." 구분(2017·2018 논문은 다른 사람). 확인 필요
+    pub_exclude: ["10.1029/2024ef005787"]   # Steinert et al. 2025 — 다른 Lee, H.로 추정
+    email: "huiji1129@snu.ac.kr"
+    interests:
+      en: ["Biogeochemical circulation"]
+      ko: ["생지화학 순환"]
+    education:
+      - {year: "2024", en: "M.S., Pohang University of Science and Technology (POSTECH), South Korea", ko: "석사, 포항공과대학교(POSTECH)"}
+      - {year: "2022", en: "B.S., Urban Administration & Geoinformatics, University of Seoul, South Korea", ko: "학사, 서울시립대학교 도시행정학·공간정보공학"}
+
+  - id: sunhee-wang
+    name: {en: "Sunhee Wang", ko: "왕선희"}
+    role: phd
+    position: {en: "Ph.D. Candidate", ko: "박사과정"}
+    photo: members/sunhee-wang.jpg
+    pub_name: "Wang, S."
+    email: "shwang1@postech.ac.kr"
+    interests:
+      en: ["Sea level", "Polar climate"]
+      ko: ["해수면", "극지 기후"]
+    education:
+      - {year: "2024", en: "M.S., Pohang University of Science and Technology (POSTECH), South Korea", ko: "석사, 포항공과대학교(POSTECH)"}
+      - {year: "2022", en: "B.S., Department of Environment & Energy Engineering, Sungshin Women's University, South Korea", ko: "학사, 성신여자대학교 환경에너지공학과"}
+    awards:
+      - {year: "2024", en: "Best Oral Presentation Award, Korea Geoscience Union", ko: "한국지구과학연합회 우수 구두발표상"}
+      - {year: "2024", en: "Best Student Poster Award in Physical Oceanography, The Korean Society of Oceanography (KSO) Spring Conference", ko: "한국해양학회 춘계학술대회 물리해양 분야 학생 우수포스터상"}
+      - {year: "2022", en: "Best Poster Award in Climate Session, Korean Meteorological Society Fall Conference", ko: "한국기상학회 추계학술대회 기후 세션 우수포스터상"}
+
+  - id: hyungjeon-kang
+    name: {en: "Hyungjeon Kang", ko: "강형전"}
+    role: phd
+    position: {en: "Ph.D. Candidate", ko: "박사과정"}
+    photo: members/hyungjeon-kang.jpg
+    pub_name: "Kang, H.-J."
+    email: "godwjs2@snu.ac.kr"
+    interests:
+      en: ["Geoengineering", "Climate modeling"]
+      ko: ["지구공학", "기후 모델링"]
+    education:
+      - {year: "2017", en: "M.S., Environmental and Atmospheric Science, Pukyong National University, South Korea", ko: "석사, 부경대학교 환경대기과학과"}
+      - {year: "2015", en: "B.S., Environmental and Atmospheric Science, Pukyong National University, South Korea", ko: "학사, 부경대학교 환경대기과학과"}
+    career:
+      - {period: "2017–2021", en: "ROKAF (Republic of Korea Air Force) Weather Group, Gyeryong", ko: "공군 기상단, 계룡"}
+    awards:
+      - {year: "2016", en: "Best Paper Award, Korean Water Resources Society", ko: "한국수자원학회 우수논문상"}
+
+  - id: jiho-ko
+    name: {en: "Jiho Ko", ko: "고지호"}
+    role: phd
+    position: {en: "Ph.D. Candidate", ko: "박사과정"}
+    photo: members/jiho-ko.jpg
+    pub_name: "Ko, J."
+    email: "jhko38@snu.ac.kr"
+    interests:
+      en: ["El Niño–Southern Oscillation", "Air–sea interaction", "Deep learning", "AI climate modeling"]
+      ko: ["엘니뇨-남방진동(ENSO)", "대기-해양 상호작용", "딥러닝", "AI 기후 모델링"]
+    education:
+      - {year: "2024", en: "M.S., Pohang University of Science and Technology (POSTECH), South Korea", ko: "석사, 포항공과대학교(POSTECH)"}
+      - {year: "2022", en: "B.S., Atmospheric Science, Pusan National University, South Korea", ko: "학사, 부산대학교 대기과학과"}
+    awards:
+      - {year: "2024", en: "Best Poster Award in Climate Session, Korean Meteorological Society Fall Conference", ko: "한국기상학회 추계학술대회 기후 세션 우수포스터상"}
+      - {year: "2023", en: "Best Award, Weather-AI Boost Camp Hackathon project", ko: "날씨-AI 부스트캠프 해커톤 프로젝트 최우수상"}
+
+  # ---------------------------------------------------------------- Student: Master Candidates
+  - id: junseong-moon
+    name: {en: "Junseong Moon", ko: "문준성"}
     role: ms
-    photo: null
-    email: null
-    interests: {en: "Arctic amplification", ko: "북극 증폭"}
-    since: 2025
-    placeholder: true
+    position: {en: "M.S. Candidate", ko: "석사과정"}
+    photo: members/junseong-moon.jpg
+    email: "jslatent@snu.ac.kr"
+    interests:
+      en: ["Carbon cycle", "Vegetation dynamics", "Land model"]
+      ko: ["탄소순환", "식생 역학", "지면 모델"]
+    education:
+      - {year: "2025", en: "B.S., Atmospheric Sciences, Pusan National University, South Korea", ko: "학사, 부산대학교 대기과학과"}
+
+  - id: seungjae-hong
+    name: {en: "Seungjae Hong", ko: "홍승재"}
+    role: ms
+    position: {en: "M.S. Candidate", ko: "석사과정"}
+    photo: members/seungjae-hong.jpg
+    pub_name: "Hong, S.-J."
+    email: "sjhong1115@snu.ac.kr"
+    interests:
+      en: ["Ocean–atmosphere interaction and El Niño"]
+      ko: ["해양-대기 상호작용과 엘니뇨"]
+    education:
+      - {year: "2023", en: "B.S., Department of Environmental Engineering, Kyungpook National University, South Korea", ko: "학사, 경북대학교 환경공학과"}
+    awards:
+      - {year: "2024", en: "Best Oral Presentation Award, Korea Geoscience Union", ko: "한국지구과학연합회 우수 구두발표상"}
+      - {year: "2024", en: "Best Poster Award in Climate Session, Korean Meteorological Society Spring Conference", ko: "한국기상학회 춘계학술대회 기후 세션 우수포스터상"}
+
+  - id: jinhyuk-mun
+    name: {en: "Jinhyuk Mun", ko: "문진혁"}
+    role: ms
+    position: {en: "M.S. Candidate", ko: "석사과정"}
+    photo: members/jinhyuk-mun.jpg
+    pub_name: "Mun, J.-H."
+    email: "jhm8004@snu.ac.kr"
+    education:
+      - {year: "2024", en: "B.S., Civil and Environmental Engineering, Yonsei University, South Korea", ko: "학사, 연세대학교 건설환경공학과"}
+
+  - id: gyeongmin-baek
+    name: {en: "Gyeongmin Baek", ko: "백경민"}
+    role: ms
+    position: {en: "M.S. Candidate", ko: "석사과정"}
+    photo: members/gyeongmin-baek.jpg
+    email: "rudals92430@snu.ac.kr"
+    education:
+      - {year: "2024", en: "B.S., Department of Earth and Environmental Sciences, Jeonbuk National University, South Korea", ko: "학사, 전북대학교 지구환경과학과"}
+
+  - id: seongho-park
+    name: {en: "Seongho Park", ko: "박성호"}
+    role: ms
+    position: {en: "M.S. Candidate", ko: "석사과정"}
+    photo: members/seongho-park.jpg
+    email: "park03267@snu.ac.kr"
+    education:
+      - {year: "2024", en: "B.S., School of Earth and Environmental Sciences, Seoul National University, South Korea", ko: "학사, 서울대학교 지구환경과학부"}
+
+  - id: jaeyeong-lee
+    name: {en: "Jaeyeong Lee", ko: "이재영"}
+    role: ms
+    position: {en: "M.S. Candidate", ko: "석사과정"}
+    photo: members/jaeyeong-lee.jpg
+    email: "jaeyeong.lee@snu.ac.kr"
+    interests:
+      en: ["ENSO dynamics"]
+      ko: ["ENSO 역학"]
+    education:
+      - {year: "2025", en: "B.S., School of Earth and Environmental Sciences, Seoul National University, South Korea", ko: "학사, 서울대학교 지구환경과학부"}
+
+  - id: jiwoo-kim
+    name: {en: "Jiwoo Kim", ko: "김지우"}
+    role: ms
+    position: {en: "M.S. Candidate", ko: "석사과정"}
+    photo: members/jiwoo-kim.jpg
+    email: "kimjiwoo@snu.ac.kr"
+    interests:
+      en: ["Artificial intelligence", "Atmospheric dynamics"]
+      ko: ["인공지능", "대기역학"]
+    education:
+      - {year: "2025", en: "B.S., Computer Science & Engineering, Pohang University of Science and Technology (POSTECH), South Korea", ko: "학사, 포항공과대학교(POSTECH) 컴퓨터공학과"}
+
+  - id: jeonghyeon-lee
+    name: {en: "Jeonghyeon Lee", ko: "이정현"}
+    role: ms
+    position: {en: "M.S. Candidate", ko: "석사과정"}
+    photo: members/jeonghyeon-lee.jpg
+    email: "jhlee12@snu.ac.kr"
+    interests:
+      en: ["High-impact climate events", "Relationship between tropical phenomena and East Asian weather patterns"]
+      ko: ["고영향 기후 현상", "열대 현상과 동아시아 날씨 패턴의 관계"]
+    education:
+      - {year: "2025", en: "B.S., Astronomy & Space Science, Chungnam National University, South Korea", ko: "학사, 충남대학교 천문우주과학과"}
 
 alumni:
-  - name: {en: "Sample Alumnus", ko: "예시 졸업생"}
+  # 원본 alumni 목록(1~3쪽) 순서. degree·year·current는 원본 근거가 있는 것만(빌드 때 year 내림차순 정렬).
+  - id: yeon-soo-jang
+    name: {en: "Yeon-Soo Jang", ko: "장연수"}
     degree: "Ph.D."
     year: 2023
-    current: {en: "Postdoctoral researcher", ko: "박사후연구원"}
-    placeholder: true
+    photo: members/yeon-soo-jang.jpg
+    pub_name: "Jang, Y.-S."
+    homepage: "https://www.researchgate.net/profile/Yeon-Soo-Jang"
+    interests:
+      en: ["Arctic–midlatitude connection", "Polar climate", "ENSO sensitivity", "Climate dynamics"]
+      ko: ["북극-중위도 연결", "극지 기후", "ENSO 민감도", "기후역학"]
+    education:
+      - {year: "2023", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {year: "2008", en: "M.S., Atmospheric Sciences, Pusan National University, South Korea"}
+      - {year: "2006", en: "B.S., Atmospheric Sciences, Pusan National University, South Korea"}
+    career:
+      - {period: "2014–2015", en: "Researcher, Environmental Research Lab, POSTECH, South Korea"}
+      - {period: "2010–2014", en: "Researcher, Ocean Circulation·Climate Research, KIOST, South Korea"}
+      - {period: "2009–2010", en: "Researcher, Climate Prediction Division, KMA, South Korea"}
+    awards:
+      - {year: "2018", en: "Best Poster Award in Climate Session, Korean Meteorological Society Conference"}
+
+  - id: kyung-min-noh
+    name: {en: "Kyung Min Noh", ko: "노경민"}
+    degree: "Ph.D."
+    year: 2023
+    photo: members/kyung-min-noh.jpg
+    pub_name: "Noh, K.-M."
+    homepage: "https://scholar.google.com/citations?user=Jv9-T0kAAAAJ&hl=en"
+    interests:
+      en: ["Biogeochemical circulation", "Earth system modeling", "Polar climate", "Climate dynamics", "Carbon cycle"]
+      ko: ["생지화학 순환", "지구시스템 모델링", "극지 기후", "기후역학", "탄소순환"]
+    education:
+      - {year: "2023", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {year: "2018", en: "M.S., Computational Science and Engineering, Yonsei University, South Korea"}
+      - {year: "2016", en: "B.S., Atmospheric Science, Yonsei University, South Korea"}
+    awards:
+      - {year: "2022", en: "Best Poster Award in Climate Session, Korean Meteorological Society Spring Conference"}
+      - {year: "2020", en: "Best Presentation, Ocean and Atmosphere Science Interdisciplinary Studies (OASIS), Korea Hydrographic and Oceanographic Agency"}
+      - {year: "2019", en: "Best Poster Award in Climate Session, Korean Meteorological Society Fall Conference"}
+
+  - id: so-won-park
+    name: {en: "So-Won Park", ko: "박소원"}
+    degree: "Ph.D."
+    year: 2023
+    photo: members/so-won-park.jpg
+    pub_name: "Park, S.-W."
+    interests:
+      en: ["Vegetation, land surface and climate interactions", "Carbon cycle", "Climate feedback and sensitivity", "Earth system modeling", "Arctic fires and permafrost thaw", "Carbon neutrality"]
+      ko: ["식생·지면-기후 상호작용", "탄소순환", "기후 되먹임과 민감도", "지구시스템 모델링", "북극 산불과 영구동토 융해", "탄소중립"]
+    education:
+      - {year: "2023", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {year: "2020", en: "M.S., Environmental Science and Engineering, Pohang University of Science and Technology, South Korea"}
+      - {year: "2018", en: "B.S., Department of Oceanography, Pusan National University, South Korea"}
+    awards:
+      - {year: "2021", en: "The 1st POSTECH Research Performance Contest, Participation Prize"}
+      - {year: "2020", en: "Best Poster Award in Climate Session, Korean Meteorological Society Fall Conference"}
+      - {year: "2020–", en: "SBS Foundation Scholarship"}
+      - {year: "2018–2019", en: "Kwanjeong Educational Foundation Scholarship"}
+      - {year: "2018", en: "Dean's Award, Department of Oceanography, Pusan National University"}
+      - {year: "2017", en: "Future Ocean Science and Technology Special Award (KIOST Director's Award), The Korean Association of Ocean Science and Technology Societies (KAOSTS)"}
+
+  - id: na-yeon-shin
+    name: {en: "Na-Yeon Shin", ko: "신나연"}
+    degree: "Ph.D."
+    year: 2024
+    photo: members/na-yeon-shin.jpg
+    pub_name: "Shin, N.-Y."
+    interests:
+      en: ["El Niño–Southern Oscillation", "Air–sea interaction", "Climate dynamics", "Deep learning"]
+      ko: ["엘니뇨-남방진동(ENSO)", "대기-해양 상호작용", "기후역학", "딥러닝"]
+    education:
+      - {year: "2024", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {year: "2019", en: "B.S., Atmospheric Science, Pusan National University, South Korea"}
+    awards:
+      - {year: "2022", en: "Best Poster Award in Climate Session, Korean Meteorological Society Spring Conference"}
+      - {year: "2022", en: "Encouragement Prize for the Best Graduate Student, BK21 FOUR"}
+      - {year: "2021", en: "Best Oral Presentation, Ocean and Atmosphere Science Interdisciplinary Studies (OASIS), Korea Hydrographic and Oceanographic Agency"}
+      - {year: "2020", en: "Best Poster Award in Climate Session, Korean Meteorological Society Fall Conference"}
+      - {year: "2019–2020", en: "Kwanjeong Educational Foundation Scholarship"}
+
+  - id: ullala-pathiranage-gayan-pathirana
+    name: {en: "Ullala Pathiranage Gayan Pathirana"}
+    degree: "Ph.D."
+    year: 2024
+    photo: members/ullala-pathiranage-gayan-pathirana.jpg
+    pub_name: "Pathirana, G."
+    interests:
+      en: ["Indian Ocean warming", "Air–sea interactions", "Extreme weather"]
+      ko: ["인도양 온난화", "대기-해양 상호작용", "극한 기상"]
+    education:
+      - {year: "2024", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {year: "2019", en: "M.Sc., Physical Oceanography, South China Sea Institute of Oceanology, University of Chinese Academy of Sciences, China"}
+      - {year: "2014", en: "B.Sc., Oceanography and Marine Geology, University of Ruhuna, Sri Lanka"}
+    career:
+      - {period: "2020", en: "Joint Advanced Marine and Ecological Studies (JAMES) in the Bay of Bengal and the Eastern Equatorial Indian Ocean 2020 – R/V Xiang Yang Hong 6, SIO, China"}
+      - {period: "2018", en: "Indian Ocean Expedition cruise 2018 – R/V Shi Yan 3, China"}
+      - {period: "2015", en: "Bay of Bengal Monsoon Expedition 2015 – R/V Roger Revelle, NRL, USA"}
+      - {period: "2015", en: "Researcher, National Aquatic Resources Research and Development Agency (NARA), Sri Lanka"}
+    awards:
+      - {year: "2022", en: "Best Poster Award in Climate Session, Korean Meteorological Society Fall Conference"}
+      - {year: "2018", en: "Training program: Ocean Forecasting, IOC/UNESCO, FIO, China"}
+      - {year: "2017", en: "'The Silk Road' Scholarship for international students, South China Sea Institute of Oceanology (SCSIO), China"}
+      - {year: "2016", en: "Training program: Ocean Data Analysis, POGO, INCOIS, India"}
+      - {year: "2016", en: "Training program: Earth System Models, ICTP, IITM, India"}
+      - {year: "2016", en: "University of Chinese Academy of Sciences Scholarship for master's degree, China"}
+      - {year: "2016", en: "Training program: NWP Models, CSSTEAP, IIRS, India"}
+
+  - id: danbi-lee
+    name: {en: "Danbi Lee", ko: "이단비"}
+    photo: members/danbi-lee.jpg
+    pub_name: "Lee, D."
+    pub_since: 2023                       # 2015 BAMS(Weller et al.)의 "Lee, D."는 다른 사람
+    homepage: "https://www.researchgate.net/profile/Danbi-Lee-7"
+    interests:
+      en: ["Land–atmosphere interaction", "Land use change, deforestation", "Terrestrial carbon cycle"]
+      ko: ["지면-대기 상호작용", "토지이용 변화·산림 벌채", "육상 탄소순환"]
+    education:
+      - {year: "2019", en: "M.S., Ulsan National Institute of Science and Technology (UNIST), South Korea"}
+      - {year: "2017", en: "B.S., Chemistry, Chungbuk National University, South Korea"}
+    career:
+      - {period: "2019–2020", en: "Korea Environment Institute, Sejong City"}
+    awards:
+      - {year: "2024", en: "Best Poster Award, Korea Geoscience Union"}
+      - {year: "2023", en: "Best Poster Award, Korean Meteorological Society"}
+
+  - id: daseul-kim
+    name: {en: "Daseul Kim", ko: "김다슬"}
+    degree: "M.S."
+    year: 2022
+    photo: members/daseul-kim.jpg
+    pub_name: "Kim, D.-S."
+    interests:
+      en: ["Arctic–midlatitude connection", "Polar climate", "Climate dynamics", "Teleconnection"]
+      ko: ["북극-중위도 연결", "극지 기후", "기후역학", "원격상관"]
+    education:
+      - {year: "2022", en: "M.S., Division of Environmental Science and Engineering, Pohang University of Science and Technology (POSTECH)"}
+      - {year: "2020", en: "B.S., Astronomy and Atmospheric Sciences, Kyungpook National University, South Korea"}
+    awards:
+      - {year: "2021", en: "Best Poster Award in Atmospheric Dynamics Session, Korean Meteorological Society Spring Conference"}
+
+  - id: donggeon-lee
+    name: {en: "Donggeon Lee", ko: "이동건"}
+    photo: members/donggeon-lee.jpg
+    pub_name: "Lee, D.-G."
+    homepage: "https://www.researchgate.net/profile/Dong-Geon-Lee-2"
+    interests:
+      en: ["Marine biogeochemistry", "Climate change", "Carbon cycle", "Nutrient cycle", "El Niño–Southern Oscillation"]
+      ko: ["해양 생지화학", "기후변화", "탄소순환", "영양염 순환", "엘니뇨-남방진동(ENSO)"]
+    education:
+      - {year: "2021", en: "B.S., Astronomy & Space Science, Chungnam National University, South Korea"}
+    career:
+      - {period: "2023", en: "Araon summer expedition (ARA14B, Arctic)"}
+
+  - id: haechan-kimm
+    name: {en: "Haechan Kimm", ko: "김해찬"}
+    photo: members/haechan-kimm.jpg
+    pub_name: "Kimm, H."
+    interests:
+      en: ["Vegetation feedback", "Climate dynamics"]
+      ko: ["식생 되먹임", "기후역학"]
+    education:
+      - {year: "2022", en: "B.S., Climate & Energy System Engineering, Ewha Womans University, South Korea"}
+    awards:
+      - {year: "2024", en: "Best Poster Award, Korea Geoscience Union"}
+
+  - id: geonil-kim
+    name: {en: "Geonil Kim", ko: "김건일"}
+    degree: "Ph.D."
+    year: 2024
+    photo: members/geonil-kim.jpg
+    pub_name: "Kim, G.-I."
+    homepage: "https://www.researchgate.net/profile/Geon-Il-Kim"
+    interests:
+      en: ["El Niño–Southern Oscillation", "Air–sea interaction", "Climate dynamics", "Modeling"]
+      ko: ["엘니뇨-남방진동(ENSO)", "대기-해양 상호작용", "기후역학", "모델링"]
+    education:
+      - {year: "2024", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {year: "2015", en: "B.S., Atmospheric Sciences, Pusan National University, South Korea"}
+
+  - id: ji-hoon-oh
+    name: {en: "Ji-Hoon Oh", ko: "오지훈"}
+    degree: "Ph.D."
+    year: 2024
+    photo: members/ji-hoon-oh.jpg
+    pub_name: "Oh, J.-H."
+    homepage: "https://scholar.google.com/citations?user=GkoNooMAAAAJ&hl=ko"
+    interests:
+      en: ["Climate dynamics", "Climate reversibility", "Carbon dioxide removal", "Earth system modeling", "Polar climate", "Marine biogeochemical circulation"]
+      ko: ["기후역학", "기후 가역성", "이산화탄소 제거", "지구시스템 모델링", "극지 기후", "해양 생지화학 순환"]
+    education:
+      - {year: "2024", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {year: "2021", en: "M.S., Division of Environmental Science and Technology, POSTECH, South Korea"}
+      - {year: "2019", en: "B.S., Atmospheric Science, Pusan National University, South Korea"}
+    awards:
+      - {year: "2022", en: "BK21 POSTECHIAN Fellowship"}
+      - {year: "2019", en: "Best Poster, Ocean and Atmosphere Science Interdisciplinary Studies (OASIS), Korea Hydrographic and Oceanographic Agency"}
+
+  - id: yi-kai-wu
+    name: {en: "Yi Kai Wu"}
+    degree: "Postdoc"
+    photo: members/yi-kai-wu.jpg
+    pub_name: "Wu, Y.-K."
+    interests:
+      en: ["Climate dynamics and coupled atmosphere–ocean system", "ENSO, IOD, and air–sea interaction", "Global warming and climate change"]
+      ko: ["기후역학과 대기-해양 결합 시스템", "ENSO·IOD와 대기-해양 상호작용", "지구온난화와 기후변화"]
+    education:
+      - {year: "2019", en: "Ph.D., Earth Sciences (Atmospheric Science), National Taiwan Normal University, Taipei, Taiwan"}
+      - {year: "2012", en: "B.S., Nature Science, Taipei Municipal University of Education, Taipei, Taiwan"}
+    career:
+      - {period: "2021–", en: "Post-Doctoral Research Fellow, Division of Environmental Science and Engineering, Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {period: "2019–2020", en: "Post-Doctoral Research Fellow, Department of Earth and Life Science, University of Taipei, Taipei, Taiwan"}
+      - {period: "2018–2019", en: "Exchange Visitor, International Pacific Research Center/SOEST, Honolulu, Hawaii"}
+      - {period: "2012–2014", en: "Research Assistant, Department of Earth and Life Science, University of Taipei, Taipei, Taiwan"}
+
+  - id: hyunggyu-lim
+    # 원본에 상세 페이지가 2개(portfolio/hyunggy-lim 2023, portfolio/hyung-gyu-lim 2022) — 같은 사람으로 보고 합쳤다(최신 페이지 우선).
+    name: {en: "Hyunggyu Lim", ko: "임형규"}
+    degree: "Ph.D."
+    year: 2019
+    current: {en: "Distinguished Senior Research Scientist (tenure-track), Korea Institute of Ocean Science and Technology (KIOST)", ko: "한국해양과학기술원(KIOST) 선임연구원(테뉴어트랙)"}
+    photo: members/hyunggyu-lim.jpg
+    pub_name: "Lim, H.-G."
+    homepage: "https://www.researchgate.net/profile/Hyung-Gyu-Lim"
+    interests:
+      en: ["Earth system modeling", "Tropical and polar climate", "Marine biogeochemical processes", "Air–sea–biological interaction", "Paleoclimate"]
+      ko: ["지구시스템 모델링", "열대·극지 기후", "해양 생지화학 과정", "대기-해양-생물 상호작용", "고기후"]
+    education:
+      - {year: "2019", en: "Ph.D., Division of Environmental Science and Technology, POSTECH, South Korea"}
+      - {year: "2013", en: "M.S., Environmental Marine Science, Hanyang University, South Korea"}
+      - {year: "2011", en: "B.S., Environmental Marine Science, Hanyang University (ERICA), South Korea"}
+    career:
+      - {period: "2023–", en: "Distinguished Senior Research Scientist (tenure-track), Korea Institute of Ocean Science and Technology, South Korea"}
+      - {period: "2022–2023", en: "Postdoctoral Research Associate, Integrative Oceanography Division, Scripps Institution of Oceanography"}
+      - {period: "2019–2022", en: "Postdoctoral Research Associate, Atmospheric and Oceanic Sciences (AOS) Program, Princeton University / NOAA-GFDL"}
+      - {period: "2019", en: "Postdoctoral Research Associate, Pohang University of Science and Technology"}
+      - {period: "2014–2015", en: "Researcher, Environmental Research Lab, POSTECH, South Korea"}
+      - {period: "2013–2014", en: "Researcher, Ocean Circulation·Climate Research, KIOST, South Korea"}
+    awards:
+      - {year: "2022", en: "Best Oral Presentation Award, PICES Annual Meeting 2022 (\"Attribution and predictability of climate-driven variability in global ocean color\")"}
+      - {year: "2022", en: "Best Poster Presentation Award, PICES Annual Meeting 2022 (\"Oceanic and Atmospheric Drivers of Post-El-Niño Chlorophyll Rebound in the Equatorial Pacific\")"}
+      - {year: "2020", en: "Outstanding Ph.D. Thesis Award, The Korean Society of Oceanography"}
+      - {year: "2018", en: "Globally Outstanding Student Award, Hyundai Motor Chung Mong-Koo Foundation"}
+      - {year: "2017", en: "Globally Outstanding Student Award, Hyundai Motor Chung Mong-Koo Foundation"}
+      - {year: "2015–2019", en: "Hyundai Motor Chung Mong-Koo Foundation Scholarship (full Ph.D. tuition, 4 years)"}
+
+  - id: jinsoo-kim
+    name: {en: "Jinsoo Kim", ko: "김진수"}
+    degree: "Ph.D."
+    year: 2019
+    current: {en: "Senior Researcher, Department of Evolutionary Biology and Environmental Studies, University of Zurich, Switzerland", ko: "스위스 취리히대학교 진화생물학·환경연구학과 선임연구원"}
+    photo: members/jinsoo-kim.jpg
+    pub_name: "Kim, J.-S."
+    homepage: "https://www.researchgate.net/profile/Jin-Soo-Kim-2"
+    interests:
+      en: ["Terrestrial carbon cycle", "Earth system modelling", "Fire variability"]
+      ko: ["육상 탄소순환", "지구시스템 모델링", "산불 변동성"]
+    education:
+      - {year: "2019", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {year: "2013", en: "M.S., Earth and Environmental Science, Seoul National University, South Korea"}
+      - {year: "2010", en: "B.S., Seoul National University, Seoul, South Korea"}
+    career:
+      - {period: "2020–", en: "Senior Researcher, Department of Evolutionary Biology and Environmental Studies, University of Zurich, Switzerland"}
+      - {period: "2019", en: "Post-Doctoral Research Associate, School of GeoSciences, University of Edinburgh, UK"}
+      - {period: "2014–2016", en: "Researcher, Institute of Environmental and Energy Technology, POSTECH, South Korea"}
+      - {period: "2013–2014", en: "Project Based Researcher, Ocean Circulation·Climate Research, KIOST, South Korea"}
+    awards:
+      - {year: "2020–2021", en: "Personal research grant of Fostering the Next Generation of Researchers (Post-Doctoral Overseas Training), National Research Foundation of Korea"}
+      - {year: "2019", en: "Best Doctoral Dissertation Award, Korean Meteorological Society"}
+      - {year: "2018", en: "Best Thesis Award in the field of Natural Science, 2018 Sung-Kee Chung Thesis Award, POSTECH"}
+      - {year: "2018", en: "Excellence and outstanding performance under the Brain Korea 21+ project, Deputy Prime Minister for Society and Education"}
+      - {year: "2017", en: "Young Researchers Exchange Program between Korea and Switzerland, State Secretariat for Education, Research and Innovation (SERI), Switzerland"}
+      - {year: "2015", en: "Best Poster Award in Climate Session, Korean Meteorological Society Conference"}
+      - {year: "2013", en: "Research Training Program between Korea and Japan"}
+      - {year: "2011", en: "Best Student Poster Award in Physical Oceanography, Korean Society of Oceanography Autumn Conference"}
+
+  - id: dayeong-kim
+    name: {en: "Dayeong Kim", ko: "김다영"}
+    degree: "M.S."
+    year: 2019
+    photo: members/dayeong-kim.jpg
+    education:
+      - {year: "2019", en: "M.S., Division of Environmental Science and Engineering, Pohang University of Science and Technology (POSTECH)"}
+      - {year: "2017", en: "B.S., Spatial Environment System Engineering, Handong Global University, South Korea"}
+
+  - id: mihyun-jo
+    name: {en: "Mihyun Jo", ko: "조미현"}
+    photo: members/mihyun-jo.jpg
+    education:
+      - {year: "2015", en: "Ph.D., School of Earth and Environmental Science, Seoul National University"}
+      - {year: "2003", en: "M.S., Seoul National University, Seoul, South Korea"}
+      - {year: "2001", en: "B.S., Seoul National University, Seoul, South Korea"}
+
+  - id: jiuwei-zhao
+    name: {en: "Jiuwei Zhao"}
+    degree: "Postdoc"
+    year: 2021
+    photo: members/jiuwei-zhao.jpg
+    pub_name: "Zhao, J."
+    interests:
+      en: ["Tropical cyclone dynamics", "Intraseasonal oscillation", "Pacific Meridional Mode and ENSO dynamics", "Modelling"]
+      ko: ["열대저기압 역학", "계절내 진동", "태평양 남북모드와 ENSO 역학", "모델링"]
+    education:
+      - {year: "2019", en: "Ph.D., Meteorology (Supervisors: Haiming Xu, Yuqing Wang and Ruifen Zhan), Nanjing University of Information Science and Technology, Nanjing, China"}
+      - {year: "2012", en: "B.S., Atmospheric Science, Nanjing University of Information Science and Technology, Binjiang College, Nanjing, China"}
+    career:
+      - {period: "2019–2021", en: "Post-Doc, Pohang University of Science and Technology"}
+      - {period: "2016–2018", en: "J-1 Visiting Scholar, University of Hawaii at Manoa"}
+
+  - id: sunyong-kim
+    name: {en: "Sunyong Kim", ko: "김선용"}
+    degree: "Ph.D."
+    year: 2021
+    photo: members/sunyong-kim.jpg
+    interests:
+      en: ["Ocean–atmosphere interaction and ENSO", "Inter-basin interaction", "Climate sensitivity and feedbacks", "Climate changes"]
+      ko: ["해양-대기 상호작용과 ENSO", "해양 간 상호작용", "기후 민감도와 되먹임", "기후변화"]
+    education:
+      - {year: "2021", en: "Ph.D., Environmental Science and Engineering, Pohang University of Science and Technology, South Korea"}
+      - {year: "2015", en: "M.S., Convergence Study on the Ocean Science and Technology, Ocean Science and Technology School, South Korea"}
+      - {year: "2013", en: "B.S., Oceanography, Pukyong National University, South Korea"}
+    awards:
+      - {year: "2021", en: "Best Doctoral Dissertation Award, Korean Meteorological Society"}
+      - {year: "2019", en: "Best Poster Award in Climate Session, Korean Meteorological Society Spring Conference"}
+      - {year: "2017", en: "Best Poster Award in Climate Session, Korean Meteorological Society Spring Conference"}
+
+  - id: i-gusti-ayu-diah-valentina-lestari
+    name: {en: "I Gusti Ayu Diah Valentina Lestari"}
+    degree: "M.S."
+    year: 2017
+    photo: members/i-gusti-ayu-diah-valentina-lestari.jpg
+    education:
+      - {year: "2017", en: "M.S., Pohang University of Science and Technology (POSTECH)"}
+      - {year: "2014", en: "B.S., Physics and Applied Physics, Udayana University"}
+    career:
+      - {en: "Research: Sea surface temperature variability analysis in Java and Lesser Sunda using remote sensing data"}
+      - {en: "Research: Relation between rainfall and tropical cyclone analysis using remote sensing data"}
+      - {en: "Research: Chlorophyll-a distribution analysis in Java and Lesser Sunda using remote sensing data"}
+      - {en: "Research: Geostrophic current analysis using multi-satellite altimetry and mooring buoy data"}
+      - {en: "Research: LIBS (Laser Induced Breakdown Spectroscopy) experiment"}
+      - {period: "2014", en: "Lecturer Assistant in Calculus for undergraduate students of Fishery (Faculty of Oceanography and Fishery, Udayana University, Indonesia)"}
+      - {period: "2012–2013", en: "Lab Assistant in Electronics I and II Labs for undergraduate students of Physics (Faculty of Mathematics and Natural Science, Udayana University, Indonesia)"}
+      - {period: "2013", en: "National Science Olympiad (Astronomy) teaching assistant for high school students (SMAN 3 Denpasar)"}
+      - {period: "2011–", en: "Physics and Mathematics tutor for high school students"}
+    awards:
+      - {year: "2010–2014", en: "Bidik Misi Scholarship for Undergraduate Students, Indonesian Ministry of Education"}
+      - {year: "2009", en: "1st place, National Science Olympiad (Astronomy) Province Selection"}
+
+  - id: woohyun-yang
+    name: {en: "Woohyun Yang", ko: "양우현"}
+    degree: "M.S."
+    year: 2018
+    photo: members/woohyun-yang.jpg
+    pub_name: "Yang, W.-H."
+    education:
+      - {year: "2018", en: "M.S., Division of Environmental Science and Engineering, Pohang University of Science and Technology (POSTECH)"}
+      - {year: "2015", en: "B.S., Atmospheric Environmental Sciences, Pusan National University"}
+
+  - id: changeun-kim
+    name: {en: "Changeun Kim", ko: "김창은"}
+    degree: "M.S."
+    year: 2020
+    photo: members/changeun-kim.jpg
+    pub_name: "Kim, C.-E."
+    education:
+      - {year: "2020", en: "M.S., Environmental Science and Engineering, Pohang University of Science and Technology (POSTECH), South Korea"}
+      - {year: "2017", en: "B.S., Atmospheric Sciences, Pusan National University, South Korea"}
+
+  - id: jianying-li
+    name: {en: "Jianying Li"}
+    degree: "Postdoc"
+    year: 2019
+    current: {en: "Postdoctoral Researcher, Chinese Academy of Meteorological Sciences", ko: "중국기상과학원 박사후연구원"}
+    photo: members/jianying-li.jpg
+    pub_name: "LI, J.-Y."
+    interests:
+      en: ["Tropical intraseasonal oscillation", "Global warming", "Tropical–extratropical interaction", "Interaction between atmosphere and ecosystem", "Air–sea interaction"]
+      ko: ["열대 계절내 진동", "지구온난화", "열대-온대 상호작용", "대기-생태계 상호작용", "대기-해양 상호작용"]
+    education:
+      - {year: "2016", en: "Ph.D., Meteorology, Institute of Atmospheric Physics, Chinese Academy of Sciences, China"}
+      - {year: "2011", en: "B.S., Meteorology, Nanjing University of Information Science & Technology, China"}
+    career:
+      - {period: "2020–", en: "Postdoctoral Researcher, Chinese Academy of Meteorological Sciences"}
+      - {period: "2018–2019", en: "Postdoctoral Researcher, Pohang University of Science and Technology, Korea"}
+      - {period: "2016–2019", en: "Associate Professor, China University of Geosciences (Wuhan)"}
+    awards:
+      - {en: "UCAS Outstanding Student"}
+      - {en: "1st Prize, American Mathematical Contest in Modeling"}
+      - {en: "National Scholarship (twice)"}
+
+  - id: jaehwi-yoo
+    name: {en: "Jaehwi Yoo"}
+    degree: "Researcher"
+    photo: members/jaehwi-yoo.jpg
+    education:
+      - {year: "2017", en: "M.S., Atmospheric Science, Pusan National University, Busan, South Korea"}
+      - {year: "2015", en: "B.S., Atmospheric Environmental Sciences, Pusan National University, Busan, South Korea"}
+    career:
+      - {period: "2017–2020", en: "Air Force Officer, Republic of Korea Air Force, South Korea"}
+      - {period: "2017", en: "Researcher, Korea Polar Research Institute, South Korea"}

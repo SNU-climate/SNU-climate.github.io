@@ -86,7 +86,7 @@
 <div class="prose">{{ body_html }}</div>
 {% if p.youtube %}<div class="news-video">{{ yt_html(p.youtube, tr(p.title)) }}</div>{% endif %}
 {% if p.gallery %}
-<div class="news-gallery">{% for g in p.gallery %}<figure><img src="{{ static('news/' ~ p.slug ~ '/' ~ (g.file if g is mapping else g)) }}" alt="" loading="lazy">{% if g is mapping and g.caption %}<figcaption>{{ tr(g.caption) }}</figcaption>{% endif %}</figure>{% endfor %}</div>
+<div class="news-gallery">{% for g in p.gallery %}{% set gsrc = static('news/' ~ p.slug ~ '/' ~ (g.file if g is mapping else g)) %}<figure><a href="{{ gsrc }}" target="_blank" rel="noopener"><img src="{{ gsrc }}" alt="" loading="lazy"></a>{% if g is mapping and g.caption %}<figcaption>{{ tr(g.caption) }}</figcaption>{% endif %}</figure>{% endfor %}</div>
 {% endif %}
 {% if p.pub %}
 <aside class="news-paper">
@@ -130,7 +130,7 @@
   <h3 class="pres-year-title">{{ year }}</h3>
   <ul class="pres-ul">{% for p in items %}{{ pres_item(p) }}{% endfor %}</ul>
 </section>
-{% else %}<p class="empty">{{ t('common.empty') }}</p>
+{% else %}<p class="empty">{{ t('pres.empty') }}</p>
 {% endfor %}
 {% endmacro %}
 
@@ -139,10 +139,12 @@
 {% macro initials_of(name) %}{% set w = (name or '?').split() %}{% if w[0][0] >= '가' and w[0][0] <= '힣' %}{{ w[0][0] }}{% elif w|length > 1 %}{{ (w[0][0] ~ w[-1][0])|upper }}{% else %}{{ w[0][:2]|upper }}{% endif %}{% endmacro %}
 
 {% macro member_card(mm, cls='member-card') %}
+{% set u = member_url(mm) %}
 <article class="{{ cls }}">
   <div class="member-photo">{% if mm.photo %}<img src="{{ static(mm.photo) }}" alt="{{ tr(mm.name) }}" loading="lazy">{% else %}<span class="member-initials" aria-hidden="true">{{ initials_of(tr(mm.name)) }}</span>{% endif %}</div>
   <div class="member-text">
-    <h4 class="member-name">{{ tr(mm.name) }} {{ sample_badge(mm) }}</h4>
+    <h4 class="member-name">{% if u %}<a href="{{ u }}">{{ tr(mm.name) }}</a>{% else %}{{ tr(mm.name) }}{% endif %} {{ sample_badge(mm) }}</h4>
+    {% if mm.position %}<p class="member-position">{{ tr(mm.position) }}</p>{% endif %}
     {% if mm.interests %}<p class="member-interests">{{ tr(mm.interests) }}</p>{% endif %}
     {% if mm.email %}<a class="member-email" href="mailto:{{ mm.email }}">{{ mm.email }}</a>{% endif %}
   </div>
@@ -151,6 +153,6 @@
 
 {% macro alumni_list(items) %}
 <ul class="alumni-ul">
-{% for a in items %}<li><span class="alumni-name">{{ tr(a.name) }}</span> <span class="alumni-degree">{{ a.degree }}, {{ a.year }}</span>{% if a.current %} — <span class="alumni-current">{{ tr(a.current) }}</span>{% endif %} {{ sample_badge(a) }}</li>{% endfor %}
+{% for a in items %}{% set u = member_url(a) %}<li><span class="alumni-name">{% if u %}<a href="{{ u }}">{{ tr(a.name) }}</a>{% else %}{{ tr(a.name) }}{% endif %}</span> <span class="alumni-degree">{{ [a.degree, a.year]|select|join(', ') }}</span>{% if a.current %} — <span class="alumni-current">{{ tr(a.current) }}</span>{% endif %} {{ sample_badge(a) }}</li>{% endfor %}
 </ul>
 {% endmacro %}

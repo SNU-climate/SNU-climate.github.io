@@ -1,5 +1,7 @@
 title: "Basic"
 concept:
-  en: "Reference layout. Will follow the original site's structure once the backup arrives."
-  ko: "기본(참조) 레이아웃. 백업 자료를 받으면 원본 사이트의 메뉴·배치를 따르도록 다듬는다."
+  en: "The original climate.snu.ac.kr structure, modernized: Introduction · Research · People · Publication · Notice drop-down menus, member profile pages, per-topic research pages, and a photo gallery."
+  ko: "원본 climate.snu.ac.kr의 메뉴 구조(소개·연구·구성원·논문·소식 드롭다운)를 그대로 따르면서 현대적으로 정돈. 구성원 개인 페이지, 연구 주제별 페이지, 사진 갤러리 포함."
 palette: ["#1d3b6e", "#ffffff", "#e8eef7"]
+# 공통 8페이지 외에 이 테마만 만드는 페이지(템플릿이 있어야 함)
+extra_pages: [about, gallery]

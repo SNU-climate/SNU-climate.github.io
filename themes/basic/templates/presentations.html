@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<p class="crumb">{{ t('menu.publication') }}</p>
 <h1>{{ t('pres.title') }}</h1>
 <p class="lead">{{ t('pres.intro') }}</p>
 {{ m.pres_list(pres_by_year) }}

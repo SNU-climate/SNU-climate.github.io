@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ t('news.title') }}</h1>
+<p class="crumb">{{ t('menu.notice') }}</p>
+<h1>{{ t('menu.announcement') }}</h1>
 <p class="lead">{{ t('news.intro') }}</p>
-<div class="grid grid-3">{% for p in news %}{{ m.news_card(p) }}{% else %}<p>{{ t('common.empty') }}</p>{% endfor %}</div>
+{% set years = news|map(attribute='year')|unique|list %}
+{% if years|length > 1 %}<nav class="pub-years" aria-label="{{ t('common.years') }}">{% for y in years %}<a href="#n{{ y }}">{{ y }}</a>{% endfor %}</nav>{% endif %}
+{% for y in years %}
+<section class="news-year" id="n{{ y }}">
+  <h2 class="pub-year-title">{{ y }}</h2>
+  <ul class="news-rows">
+    {% for p in news if p.year == y %}
+    {% set c = cover_url(p) %}
+    <li class="news-row{% if not c %} news-row--text{% endif %}">
+      {% if c %}<a class="news-row-img" href="{{ news_url(p) }}" tabindex="-1" aria-hidden="true"><img src="{{ c }}" alt="" loading="lazy"></a>{% endif %}
+      <div>
+        <div class="news-card-meta"><span class="news-cat news-cat--{{ p.category }}">{{ t('news.category.' ~ p.category) }}</span> <time datetime="{{ p.date }}">{{ fmt_date(p.date) }}</time></div>
+        <h3 class="news-row-title"><a href="{{ news_url(p) }}">{{ tr(p.title) }}</a></h3>
+        {% if p.summary %}<p class="news-card-summary">{{ tr(p.summary) }}</p>{% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% else %}<p>{{ t('common.empty') }}</p>
+{% endfor %}
 {% endblock %}

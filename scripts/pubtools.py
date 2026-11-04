@@ -15,6 +15,7 @@ PUB_HEADER = (
     '# 논문 목록. 번호는 빌드할 때 자동으로 매긴다(가장 오래된 논문 = 1).\n'
     '# 새 논문은 `python scripts/add_publication.py <DOI>`로 추가한다.\n'
     '# 수동 필드: corresponding(교신저자 여부), featured(주요 논문), image(static/ 기준 그림), links{pdf,data,code},\n'
+    '#           corr_authors(* 표시할 교신저자, authors와 같은 표기), note, source(backup 등 출처),\n'
     '#           needs_review(true면 화면에서 숨김), hidden(true면 숨김)\n'
 )
 KEEP_TAGS = re.compile(r'</?(sub|sup|i|em)>', re.I)

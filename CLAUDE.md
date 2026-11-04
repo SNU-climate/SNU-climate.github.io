@@ -24,7 +24,7 @@ git add -A && git commit -m "<무엇을 바꿨는지 한 줄>"                  
 ```bash
 python scripts/add_publication.py <DOI> [--corresponding] [--featured]
 ```
-- 교수님이 교신저자면 `--corresponding`, 대표 논문이면 `--featured`.
+- 교수님이 교신저자면 `--corresponding`, 대표 논문이면 `--featured`. 저자 이름 뒤 `*`(교신저자) 표시는 해당 항목에 `corr_authors: ["Kug, J.-S.", ...]`(authors와 같은 표기)를 넣는다.
 - 번호(가장 오래된 논문 = 1)와 연도 섹션은 빌드할 때 자동으로 정해지니 손대지 않는다.
 - DOI가 없으면 `data/publications.yaml`에 직접 넣는다: `title, authors["Family, I.-I."], journal, year, date, volume, issue, pages, type: article`.
 - 논문 그림을 넣으려면 `static/research/<파일>`에 두고 해당 항목에 `image: research/<파일>`을 쓴다.
@@ -41,6 +41,8 @@ python scripts/new_news.py --slug <영문-짧은-이름> --category paper --doi 
 - 본문 중간에 영상을 넣으려면 `[[youtube:영상ID]]`, 그림은 `![설명](fig1.png)`.
 - category: `paper`(논문) / `award`(수상) / `event`(행사) / `media`(언론·영상) / `lab`(연구실 소식).
 - 그림은 가로 1600px 이하로 줄여 넣는다(Pillow: `Image.thumbnail((1600,1600))`, JPEG 품질 85).
+- 언론 기사·방송은 `category: media`와 원문 주소 `link: "https://..."`(상세 페이지에 "원문 보기" 버튼).
+- **갤러리(학회·워크숍·행사 사진)**: 뉴스와 같은 형식에 `album: true`, `gallery: [사진 파일들]`, `cover: <대표 사진>`. Gallery 메뉴에 나오고 공지 목록에서는 빠진다. 사진은 긴 변 1600px, EXIF(위치정보) 제거.
 
 ### 3) 학회 발표
 `data/presentations.yaml`의 `presentations:` 맨 위에 추가한다.
@@ -57,9 +59,11 @@ python scripts/new_news.py --slug <영문-짧은-이름> --category paper --doi 
 
 ### 4) 구성원(입학·졸업)
 - `data/members.yaml`의 `members:`에 추가. `role`: postdoc / researcher / integrated / phd / ms / undergrad / staff.
-- 사진: `static/members/<영문이름>.jpg`(정사각형, 600px, JPEG 85) → `photo: members/<영문이름>.jpg`.
-- `pub_name: "Family, I.-I."`를 넣으면 논문·발표 목록에서 이름이 굵게 표시된다.
-- 졸업하면 `members:`에서 빼고 `alumni:`에 `name, degree, year, current`로 옮긴다.
+- `id: <영문-이름>`(소문자-하이픈)을 넣으면 개인 페이지 `people/<id>.html`이 생긴다(basic 테마). 개인 페이지 항목:
+  `position{en,ko}`, `email`, `homepage`, `interests{en:[...], ko:[...]}`, `education`·`career`·`awards`(`[{year 또는 period, en, ko}]`).
+- 사진: `static/members/<id>.jpg`(정사각형, 600px, JPEG 85) → `photo: members/<id>.jpg`.
+- `pub_name: "Family, I.-I."`를 넣으면 논문·발표 목록에서 이름이 굵게 표시되고, 개인 페이지에 참여 논문이 자동으로 붙는다.
+- 졸업하면 `members:`에서 빼고 `alumni:`로 옮긴다(`id, name, degree, year, current, photo` + 개인 페이지 항목 유지 가능, email은 뺀다).
 
 ### 5) 유튜브 영상
 - `python scripts/fetch_youtube.py` → 채널의 최신 영상과 썸네일이 `data/videos.yaml`, `static/videos/`에 반영된다.

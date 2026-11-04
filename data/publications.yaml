@@ -3,9 +3,9 @@
 # 수동 필드: corresponding(교신저자 여부), featured(주요 논문), image(static/ 기준 그림), links{pdf,data,code},
 #           needs_review(true면 화면에서 숨김), hidden(true면 숨김)
 meta:
-  updated: '2026-11-03'
-  count_visible: 317
-  count_total: 318
+  updated: '2026-11-04'
+  count_visible: 318
+  count_total: 319
 publications:
 - doi: 10.1088/1748-9326/aeba9f
   title: Victoria mode drives the strengthening of tropical Atlantic SST influence on El Niño-Southern oscillation since the mid-20th century
@@ -151,6 +151,10 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kim, S.
+  - Kug, J.-S.
 - doi: 10.1038/s41467-026-74381-6
   title: Changes in El Niño–Southern Oscillation and global frequency entrainment
   authors:
@@ -168,6 +172,10 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Iwakiri, T.
+  - Kug, J.-S.
 - doi: 10.1029/2026ef008209
   title: Soil Moisture Controls on Permafrost Carbon Cycle Under Greenhouse Warming and Zero Emission Pathways
   authors:
@@ -188,6 +196,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-026-08202-3
   title: Changes in ENSO and high-latitude SST relationship with varying CO2 concentration
   authors:
@@ -208,6 +219,8 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corr_authors:
+  - Yeh, S.-W.
 - doi: 10.1038/s41467-026-73838-y
   title: AMOC slowdown amplifies North Atlantic salinity variability to unprecedented levels
   authors:
@@ -229,6 +242,10 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Iwakiri, T.
+  - Kug, J.-S.
 - doi: 10.1126/sciadv.aeb2316
   title: Distinct impacts of tropical North Atlantic warming flavors on cross-basin tropical cyclone activity
   authors:
@@ -257,6 +274,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corr_authors:
+  - Zhan, R.
+  - Liu, Y.
 - doi: 10.1038/s41467-026-72898-4
   title: Critical role of low cloud feedback in irreversible sea level rise
   authors:
@@ -277,6 +297,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1029/2025ef007636
   title: Background Atmospheric CO<sub>2</sub> Regulates the Local and Non‐Local Climate Impacts of Amazon Deforestation
   authors:
@@ -296,6 +319,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1038/s43247-026-03548-2
   title: Hemispheric contrast in summer season duration responses to CO2 removal
   authors:
@@ -321,6 +347,8 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corr_authors:
+  - Min, S.-K.
 - doi: 10.1038/s41467-026-70945-8
   title: Negative CO2 emissions for long-term mitigation of extremes in land hydrological cycle
   authors:
@@ -347,6 +375,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1038/s41467-026-70140-9
   title: Stronger ENSO-induced global SST variability in a warming climate
   authors:
@@ -367,6 +398,10 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kim, G.-I.
+  - Kug, J.-S.
 - doi: 10.1038/s41612-026-01355-2
   title: Precessional modulation of ENSO strength and spatial structure in a transient CGCM simulation of the past 3 million years
   authors:
@@ -388,6 +423,10 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - An, S.-I.
+  - Kug, J.-S.
 - doi: 10.1016/j.jenvman.2025.128446
   title: Biophysical impacts of urbanization on climate change and vegetation in Borneo Island
   authors:
@@ -407,6 +446,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1038/s41467-025-66494-1
   title: Noise-induced tipping of Atlantic Meridional Overturning Circulation under climate mitigation scenarios
   authors:
@@ -431,6 +473,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1038/s41467-025-66143-7
   title: Super El Niño events drive climate regime shifts with enhanced risks under global warming
   authors:
@@ -452,6 +497,10 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Geng, X.
+  - Kug, J.-S.
 - doi: 10.5194/esd-16-2101-2025
   title: Irreversible phytoplankton community shifts over Subpolar North Atlantic in response to CO<sub>2</sub> forcing
   authors:
@@ -471,6 +520,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1175/jcli-d-24-0437.1
   title: Nonmonotonic Future Changes in the North Atlantic Warming Hole under a Fast CO2 Emission Scenario
   authors:
@@ -493,6 +545,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1038/s41612-025-01220-8
   title: Arctic stratospheric ozone as a precursor of ENSO events since 2000s
   authors:
@@ -520,6 +575,11 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Park, J.-H.
+  - Koo, J.-H.
+  - Kug, J.-S.
 - doi: 10.1038/s43247-025-02742-y
   title: Land aridification persists in vulnerable drylands under climate mitigation scenarios
   authors:
@@ -542,6 +602,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1080/17538947.2025.2487058
   title: Evaluation and prediction of the effects of planetary orbital variations to earth’s temperature changes
   authors:
@@ -3907,6 +3970,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1002/2015gl066864
   title: 'ENSO amplitude changes due to greenhouse warming in CMIP5: Role of mean tropical precipitation in the twentieth century'
   authors:
@@ -3997,8 +4063,8 @@ publications:
   sources:
   - crossref
   added: '2026-11-03'
-  needs_review: true
-  review_reason: 같은 제목의 다른 DOI 존재(10.1175/bams-d-15-00055.1)
+  hidden: true
+  note: 같은 논문의 BAMS EEE 보고서(2014년 사례) 장 DOI. 원본 사이트와 이 목록은 10.1175/bams-d-15-00055.1 로 표시하므로 중복이라 숨김(2026-11-04 백업 대조)
 - doi: 10.1175/bams-d-15-00055.1
   title: Human Contribution to the 2014 Record High Sea Surface Temperatures Over the Western Tropical And Northeast Pacific Ocean
   authors:
@@ -4039,6 +4105,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-015-2527-z
   title: Role of north tropical atlantic SST on the ENSO simulated using CMIP3 and CMIP5 models
   authors:
@@ -4074,6 +4143,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1038/ngeo2517
   title: Two distinct influences of Arctic warming on cold winters over North America and East Asia
   authors:
@@ -4146,6 +4218,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1002/2015gl064381
   title: Asymmetric impact of Atlantic Multidecadal Oscillation on El Niño and La Niña characteristics
   authors:
@@ -4203,6 +4278,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s13143-015-0066-5
   title: 'Changes in weather and climate extremes over Korea and possible causes: A review'
   authors:
@@ -4230,6 +4308,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-014-2349-4
   title: Pacific Decadal Oscillation and its relation to the extratropical atmospheric variation in CMIP5
   authors:
@@ -4249,6 +4330,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1175/jcli-d-14-00376.1
   title: Improvement of ENSO Simulation Based on Intermodel Diversity
   authors:
@@ -4266,6 +4350,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s13143-014-0059-9
   title: Intra-winter atmospheric circulation changes over East Asia and North Pacific associated with ENSO in a seasonal prediction model
   authors:
@@ -4288,6 +4375,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00704-013-1045-3
   title: 'Antecedent mid-tropospheric frontogenesis caused by the interaction between a tropical cyclone and midlatitude trough: a case study of Typhoon Rusa (2002)'
   authors:
@@ -4326,6 +4416,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1088/1748-9326/9/9/094007
   title: Intensified Arctic warming under greenhouse warming by vegetation–atmosphere–sea ice interaction
   authors:
@@ -4382,6 +4475,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-013-2008-1
   title: Winter precipitation variability over Korean Peninsula associated with ENSO
   authors:
@@ -4402,6 +4498,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1175/jcli-d-13-00261.1
   title: Future Change of Northern Hemisphere Summer Tropical–Extratropical Teleconnection in CMIP5 Models*
   authors:
@@ -4458,6 +4557,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s13143-014-0013-x
   title: Role of tropical atlantic SST variability as a modulator of El Niño teleconnections
   authors:
@@ -4478,6 +4580,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.14191/atmos.2014.24.1.089
   title: Relation between Climate Variability in Korea and Two Types of El Niño, and Their Sensitivity to Definition of Two Types of El Niño
   authors:
@@ -4569,6 +4674,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.3402/tellusa.v65i0.19863
   title: An alterative effect by the tropical North Atlantic SST in intraseasonally varying El Niño teleconnection over the North Atlantic
   authors:
@@ -4650,6 +4758,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-012-1630-7
   title: Ocean mixed layer processes in the Pacific Decadal Oscillation in coupled general circulation models
   authors:
@@ -4689,6 +4800,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1038/nclimate1785
   title: The role of mineral-dust aerosols in polar temperature amplification
   authors:
@@ -4713,6 +4827,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s13143-013-0032-z
   title: 'Favorable versus unfavorable synoptic backgrounds for indirect precipitation events ahead of tropical cyclones approaching the Korean Peninsula: A comparison of two cases'
   authors:
@@ -4751,6 +4868,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-012-1477-y
   title: Favorable connections between seasonal footprinting mechanism and El Niño
   authors:
@@ -4790,6 +4910,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1038/ngeo1686
   title: Sea surface temperature in the north tropical Atlantic as a trigger for El Niño/Southern Oscillation events
   authors:
@@ -4809,6 +4932,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s13143-013-0020-3
   title: Simulation of two types of El Niño from different convective parameters
   authors:
@@ -4831,6 +4957,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s13143-013-0016-z
   title: Impact of urbanization on recent temperature and precipitation trends in the Korean peninsula
   authors:
@@ -4910,6 +5039,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1175/jcli-d-12-00078.1
   title: Indian Ocean Feedback to the ENSO Transition in a Multimodel Ensemble
   authors:
@@ -4963,6 +5095,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1088/1748-9326/7/3/034002
   title: Improved simulation of two types of El Niño in CMIP5 models
   authors:
@@ -5044,6 +5179,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-011-1157-3
   title: How well do current climate models simulate two types of El Nino?
   authors:
@@ -5061,6 +5199,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1002/joc.2329
   title: Eastward shift of the Pacific/North American pattern on an interdecadal time scale and an associated synoptic eddy feedback
   authors:
@@ -5080,6 +5221,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-011-1171-5
   title: El-Nino Southern Oscillation simulated and predicted in SNU coupled GCMs
   authors:
@@ -5123,6 +5267,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.4217/opr.2012.34.1.029
   title: Relationship between Interannual Variability of Phytoplankton and Tropical Cyclones in the Western North Pacific
   authors:
@@ -5142,6 +5289,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1029/2011gl050005
   title: Revisited relationship between tropical and North Pacific sea surface temperature variations
   authors:
@@ -5204,6 +5354,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1029/2011jd015645
   title: The central Pacific as the export region of the El Niño-Southern Oscillation sea surface temperature anomaly to Antarctic sea ice
   authors:
@@ -5359,6 +5512,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1002/joc.2163
   title: A possible mechanism for El Niño‐like warming in response to the future greenhouse warming
   authors:
@@ -5576,6 +5732,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-010-0857-4
   title: How are seasonal prediction skills related to models’ performance on mean state and annual cycle?
   authors:
@@ -5645,6 +5804,21 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+- title: Ocean Dynamic Processes Responsible for the Interannual Variability of the Tropical Indian Ocean SST Associated with ENSO
+  authors:
+  - Kug, J.-S.
+  - An, S.-I.
+  journal: Atmosphere
+  year: 2010
+  date: 2010-06
+  volume: '20'
+  issue: '2'
+  pages: 211-219
+  type: article
+  url: https://www.koreascience.or.kr/article/JAKO201028839764956.page
+  source: backup
+  note: 원본 사이트 DB(2024-04) 항목 "Dae-Gi, 20, 211-219". DOI 없음(Crossref 미등록). 권·호·쪽·발행월은 OpenAlex W1916742489
+  added: '2026-11-04'
 - doi: 10.1029/2009jd013153
   title: Phase asymmetric downstream development of the North Atlantic Oscillation and its impact on the East Asian winter monsoon
   authors:
@@ -5681,6 +5855,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00704-009-0183-0
   title: Changes in El Niño and La Niña teleconnections over North Pacific–America in the global warming simulations
   authors:
@@ -5720,6 +5897,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1029/2009jd012861
   title: Precursors of the El Niño/La Niña onset and their interrelationship
   authors:
@@ -5838,6 +6018,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1038/nature08316
   title: El Niño in a changing climate
   authors:
@@ -5900,6 +6083,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-008-0460-0
   title: 'Advance and prospectus of seasonal prediction: assessment of the APCC/CliPAS 14-model ensemble retrospective seasonal prediction (1980–2004)'
   authors:
@@ -5982,6 +6168,9 @@ publications:
   - openalex
   - crossref
   added: '2026-11-03'
+  corresponding: true
+  corr_authors:
+  - Kug, J.-S.
 - doi: 10.1007/s00382-008-0434-2
   title: Simulation of state-dependent high-frequency atmospheric variability associated with ENSO
   authors:
@@ -6228,7 +6417,7 @@ publications:
   authors:
   - Kug, J.-S.
   - Lee, J.-Y.
-  - Kang, I.-K.
+  - Kang, I.-S.
   - Wang, B.
   - Park, C.-K.
   journal: Asia-Pacific Journal of Atmospheric Sciences
@@ -6242,6 +6431,7 @@ publications:
   - orcid
   - openalex
   added: '2026-11-03'
+  url: https://hdl.handle.net/10371/20243
 - doi: 10.1029/2007jd008744
   title: Role of moist energy advection in formulating anomalous Walker Circulation associated with El Niño
   authors:

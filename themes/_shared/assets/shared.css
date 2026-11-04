@@ -12,6 +12,7 @@
 .yt-play:hover .yt-icon { background: #e62117; }
 
 .au { white-space: nowrap; }
+.au-corr { font-weight: 700; margin-left: .05em; }
 .pub-ol, .pub-ul, .pres-ul, .alumni-ul { list-style: none; padding: 0; margin: 0; }
 .sample-badge { display: inline-block; font-size: .68em; font-weight: 700; letter-spacing: .06em; padding: .1em .45em;
   border-radius: 3px; background: #f5c542; color: #3a2a00; vertical-align: middle; text-transform: uppercase; }
@@ -21,4 +22,8 @@
 [hidden] { display: none !important; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .prose img, .news-gallery img { max-width: 100%; height: auto; }
+.prose { overflow-wrap: anywhere; }          /* 원본 공지의 긴 URL이 휴대폰 폭에서 넘치지 않게 */
+.prose pre, .prose table { display: block; max-width: 100%; overflow-x: auto; }
+.news-gallery { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
+.news-gallery figure { margin: 0; min-width: 0; }
 .lang-note { font-size: .85em; opacity: .7; }

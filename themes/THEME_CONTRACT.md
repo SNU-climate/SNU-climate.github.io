@@ -54,6 +54,18 @@ bash -lc "module load anaconda3/2023.03 && cd /data5/CSL_homepage/first_draft &&
 `youtube(id)`, `pres_item(p)`, `pres_list(pres_by_year)`, `member_card(m)`, `alumni_list(alumni)`, `initials_of(name)`.
 매크로가 내는 클래스 이름(`.pub`, `.pub-num`, `.news-card`, `.video-card` 등)에 테마 CSS를 입히면 된다. 직접 마크업해도 된다.
 
+### 3-1. 선택 기능 (Phase 2 추가, 테마에 템플릿이 있을 때만 동작)
+| 기능 | 켜는 방법 | 내용 |
+|---|---|---|
+| 추가 페이지 | `theme.yaml`의 `extra_pages: [about, gallery]` + 같은 이름 템플릿 | 공통 8페이지 외 페이지. EN/KO 둘 다 만든다 |
+| Gallery | `gallery.html` 템플릿 | `albums`(뉴스 중 `album: true`) 목록. 이 템플릿이 있으면 `news`와 `latest()`에서 앨범 글이 빠진다(`news_all`은 전체) |
+| 구성원 상세 | `member.html` 템플릿 | `people/<id>.html`(id 있는 구성원·졸업생). 컨텍스트 `person`(+ `pubs` 자동 연결, `alumnus`). `member_url(m)`은 템플릿이 없으면 `''` |
+| 연구 주제 상세 | `research_topic.html` 템플릿 | `research/<key>.html`. 컨텍스트 `topic`. `topic_url(r)`은 템플릿이 없으면 `research.html#key` |
+
+추가 데이터: 구성원 `id, position, homepage, interests{en:[...]}, education, career, awards`, 졸업생 `id, photo, degree, year, current`,
+연구 주제 `themes{en:[...]}`, `figures[{image, caption, doi, pub}]`, 논문 `corr_authors`(교신저자 → `authors()`가 `*` 표시), 뉴스 `album, link, year`.
+`tr(값)`은 목록 값을 `, `로 이어 준다. 목록이 필요하면 `tr_list(값)`.
+
 ## 4. 반드시 지킬 것
 1. `<head>`에 `{{ m.head_common() }}`, `</body>` 앞에 `{{ m.scripts_common() }}` (YouTube 클릭 로드·논문 검색·모바일 메뉴 JS).
 2. **모든 URL은 위 함수로 만든다**(상대경로). `/`로 시작하는 절대경로·하드코딩 금지 → file://로 열어도 동작해야 한다.

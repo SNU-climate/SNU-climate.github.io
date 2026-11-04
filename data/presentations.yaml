@@ -1,28 +1,5 @@
 # 학회 발표. 최신 항목을 위에 적는다(빌드 시 날짜순으로 다시 정렬된다).
 # type: invited / keynote / oral / poster / seminar
-# placeholder: true 항목은 미리보기용 예시(SAMPLE 표시). 실제 발표로 교체한다.
-presentations:
-  - date: 2026-12-14
-    event: "AGU Fall Meeting 2026"
-    location: "San Francisco, CA, USA"
-    title: "Sample presentation title (to be replaced with real data)"
-    presenters: ["Sample Member A", "Kug, J.-S."]
-    type: oral
-    link: null
-    placeholder: true
-  - date: 2026-10-22
-    event: "Korean Meteorological Society Fall Meeting"
-    location: "Korea"
-    title: "Sample poster title (to be replaced with real data)"
-    presenters: ["Sample Member B", "Kug, J.-S."]
-    type: poster
-    link: null
-    placeholder: true
-  - date: 2026-04-27
-    event: "EGU General Assembly 2026"
-    location: "Vienna, Austria"
-    title: "Sample invited talk (to be replaced with real data)"
-    presenters: ["Kug, J.-S."]
-    type: invited
-    link: null
-    placeholder: true
+# 원본 홈페이지에는 학회 발표 목록이 없어 비워 둔다(갤러리의 학회 참석 사진으로 발표 항목을 만들지 않음).
+# 새 발표는 CLAUDE.md "3) 학회 발표" 형식으로 아래 목록에 추가한다.
+presentations: []

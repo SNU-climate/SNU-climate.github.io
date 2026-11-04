@@ -3,18 +3,16 @@
 <h1>{{ t('research.title') }}</h1>
 <p class="lead">{{ t('research.intro') }}</p>
 {% for r in research %}
-<section class="sec topic" id="{{ r.key }}">
-  {% if r.image %}<img class="topic-img" src="{{ static(r.image) }}" alt="">{% endif %}
-  <h2>{{ tr(r.title) }}</h2>
-  <p>{{ tr(r.summary) }}</p>
-  {% if r.pubs %}
-  <h3>{{ t('research.papers') }}</h3>
-  <ul class="pub-ul">{% for p in r.pubs %}{{ m.pub_item(p, anchor=False) }}{% endfor %}</ul>
-  {% endif %}
-  {% if r.video_items %}
-  <h3>{{ t('research.videos') }}</h3>
-  <div class="grid grid-3">{% for v in r.video_items %}{{ m.video_card(v) }}{% endfor %}</div>
-  {% endif %}
+<section class="sec topic-row" id="{{ r.key }}">
+  <a class="topic-row-img" href="{{ topic_url(r) }}" tabindex="-1" aria-hidden="true">{% if r.image %}<img src="{{ static(r.image) }}" alt="" loading="lazy">{% endif %}</a>
+  <div>
+    <h2><a href="{{ topic_url(r) }}">{{ tr(r.title) }}</a></h2>
+    <p class="muted" lang="{{ other_lang }}">{{ r.title[other_lang] }}</p>
+    <p>{{ tr(r.summary)|truncate(360) }}</p>
+    {% set th = tr_list(r.themes) %}
+    {% if th %}<ul class="chips">{% for x in th[:6] %}<li>{{ x }}</li>{% endfor %}</ul>{% endif %}
+    <a href="{{ topic_url(r) }}">{{ t('research.more') }} →</a>
+  </div>
 </section>
 {% endfor %}
 {% endblock %}

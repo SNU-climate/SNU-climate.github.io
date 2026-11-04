@@ -76,7 +76,7 @@
     <div class="block-body">
       <ul class="alist">
         {% for a in alumni %}
-        <li><span class="alist-name">{{ tr(a.name) }} {{ m.sample_badge(a) }}</span><span class="alist-deg">{{ a.degree }}, {{ a.year }}</span>{% if a.current %}<span class="alist-now">{{ tr(a.current) }}</span>{% endif %}</li>
+        <li><span class="alist-name">{{ tr(a.name) }} {{ m.sample_badge(a) }}</span><span class="alist-deg">{{ [a.degree, a.year]|select|join(", ") }}</span>{% if a.current %}<span class="alist-now">{{ tr(a.current) }}</span>{% endif %}</li>
         {% endfor %}
       </ul>
     </div>
