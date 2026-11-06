@@ -122,6 +122,13 @@ else:
     lead = ('2차 리뷰를 반영한 정제판(v01)과 콘셉트를 확장한 확장판(v02)입니다. 카드를 누르면 사이트가 열리고, '
             '아래쪽 막대에서 버전을 바꾸면 같은 페이지를 다른 버전으로 볼 수 있습니다.')
 
+# 미리보기 용량 제한(파일 511개) 안내: 공지를 모두 넣었으면 앨범만 줄였다고 쓴다
+if len(news) == n_news_all:
+    limit_note = f'미리보기 용량 제한(파일 511개) 때문에 공지·뉴스 {n_news_all}편은 모두 넣고, 갤러리는 최근 {len(albums)}개만 넣었습니다(실제 사이트: 앨범 {n_album_all}개).'
+else:
+    limit_note = (f'미리보기 용량 제한(파일 511개) 때문에 공지·뉴스는 최근 {len(news)}편, 갤러리는 최근 {len(albums)}개만 넣었습니다'
+                  f'(실제 사이트: 공지 {n_news_all}편, 앨범 {n_album_all}개).')
+
 INDEX = f'''<title>CSL 시안 {H.escape(family)}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
@@ -166,7 +173,7 @@ h2 {{ margin:0; font-size:1.2rem; }} .body p {{ margin:0; color:var(--muted); fo
   <div class="grid{' grid--one' if one else ''}">
 {chr(10).join(cards)}
   </div>
-  <p class="note">미리보기 용량 제한(파일 511개) 때문에 공지·뉴스는 최근 {len(news)}편, 갤러리는 최근 {len(albums)}개만 넣었습니다(실제 사이트: 공지 {n_news_all}편, 앨범 {n_album_all}개). 이 미리보기 안에서는 유튜브 영상을 삽입할 수 없어, 재생 버튼을 누르면 YouTube가 새 탭으로 열립니다(실제 사이트에서는 페이지 안에서 재생됩니다).</p>
+  <p class="note">{limit_note} 이 미리보기 안에서는 유튜브 영상을 삽입할 수 없어, 재생 버튼을 누르면 YouTube가 새 탭으로 열립니다(실제 사이트에서는 페이지 안에서 재생됩니다).</p>
 </div></main>
 '''
 (out / 'index.html').write_text(INDEX, encoding='utf-8')
