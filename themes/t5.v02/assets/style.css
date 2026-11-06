@@ -145,7 +145,10 @@ html[lang="ko"] .ednote-more a { letter-spacing: .02em; }
 .cover-story { min-width: 0; scroll-snap-align: start; }
 .cover-track .cover-link:focus-visible { outline-offset: -3px; }
 .cover-link { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 44px; align-items: center; }
-.cover-story--text .cover-link { grid-template-columns: minmax(0, 1fr); max-width: 860px; }
+.cover-img.cover-img--type { display: grid; align-content: space-between; gap: 12px; padding: clamp(18px, 3vw, 34px); background: var(--band); color: var(--band-fg); border-top: 4px solid var(--band-red); }
+.cover-type-k { font: 800 .74rem var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--band-red); }
+.cover-type-src { font-family: var(--display); font-weight: 900; font-size: clamp(1.9rem, 1rem + 3.2vw, 3.6rem); line-height: 1.04; text-transform: uppercase; overflow-wrap: anywhere; }
+.cover-type-date { font: 600 .8rem var(--sans); letter-spacing: .1em; color: var(--band-muted); }
 .cover-nav { display: flex; align-items: center; justify-content: flex-end; gap: 14px; margin-top: 22px; }
 .cover-nav[hidden] { display: none; }
 .cover-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); background: transparent; color: var(--ink); display: grid; place-items: center; padding: 0; cursor: pointer; }

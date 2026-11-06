@@ -3,11 +3,10 @@
 {% block pagehead %}{% endblock %}
 
 {% block content %}
-{# 커버 기사: 표지(그림 또는 영상)가 있는 논문·수상 소식을 최신순으로 최대 10편, 좌우로 넘겨 본다. 없으면 최신 소식 1편 #}
-{% set cands = news_items|selectattr('category', 'in', ['paper', 'award'])|list %}
+{# 커버 기사: 최신 소식 8편을 좌우로 넘겨 본다. 가장 최근 해의 소식부터, 8편이 안 되면 전년도까지만(그보다 오래된 글은 넣지 않음) #}
 {% set ns = namespace(covers=[], pics=[], briefs=[]) %}
-{% for p in cands if (p.cover or p.youtube) and ns.covers|length < 10 %}{% set ns.covers = ns.covers + [p] %}{% endfor %}
-{% if not ns.covers and news_items %}{% set ns.covers = [news_items[0]] %}{% endif %}
+{% set top_year = news_items[0].year if news_items else 0 %}
+{% for p in news_items if p.year >= top_year - 1 and ns.covers|length < 8 %}{% set ns.covers = ns.covers + [p] %}{% endfor %}
 {% set covers = ns.covers %}
 {% set cover_slugs = covers|map(attribute='slug')|list %}
 {% for p in news_items if p.slug not in cover_slugs %}
@@ -37,9 +36,12 @@
   <section class="cover" aria-label="{{ x.L('cover') }}"{% if n > 1 %} aria-roledescription="carousel" data-cover{% endif %}>
     <div class="cover-track"{% if n > 1 %} data-cover-track tabindex="0" role="group" aria-label="{{ x.L('cover') }} 1–{{ n }}"{% endif %}>
       {% for p in covers %}{% set c = cover_url(p) %}
-      <article class="cover-story{% if not c %} cover-story--text{% endif %}"{% if n > 1 %} aria-roledescription="slide" aria-label="{{ loop.index }} / {{ n }}: {{ tr(p.title) }}"{% endif %}>
+      <article class="cover-story"{% if n > 1 %} aria-roledescription="slide" aria-label="{{ loop.index }} / {{ n }}: {{ tr(p.title) }}"{% endif %}>
         <a class="cover-link" href="{{ news_url(p) }}">
-          {% if c %}<div class="cover-img"><img src="{{ c }}" alt=""{% if not loop.first %} loading="lazy"{% endif %}></div>{% endif %}
+          {% if c %}<div class="cover-img"><img src="{{ c }}" alt=""{% if not loop.first %} loading="lazy"{% endif %}></div>
+          {% else %}{# 그림이 없는 소식: 제목 앞 [언론사]를 크게 쓴 글자 표지(없으면 분류) #}
+          {% set t0 = tr(p.title) %}{% set src = t0.split(']')[0][1:] if t0.startswith('[') and ']' in t0 else t('news.category.' ~ p.category) %}
+          <div class="cover-img cover-img--type" aria-hidden="true"><span class="cover-type-k">{{ t('news.category.' ~ p.category) }}</span><span class="cover-type-src" lang="{{ text_lang(src) }}">{{ src }}</span><span class="cover-type-date">{{ fmt_date(p.date) }}</span></div>{% endif %}
           <div class="cover-text">
             <p class="cover-label">{{ x.L('cover') }}</p>
             {{ x.kicker(p) }}
