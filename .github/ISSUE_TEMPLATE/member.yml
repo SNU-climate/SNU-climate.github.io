@@ -1,0 +1,45 @@
+name: 구성원 추가·변경·졸업
+description: 신입 구성원 등록, 정보 수정, 졸업(Alumni 이동)을 요청합니다.
+title: "[구성원] "
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 요청 종류
+      options:
+        - 새 구성원
+        - 정보 수정
+        - 졸업
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: 이름 (국문 / 영문)
+      placeholder: 홍길동 / Gil-Dong Hong
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: 과정·직위
+      options:
+        - 박사후연구원
+        - 연구원
+        - 통합과정
+        - 박사과정
+        - 석사과정
+        - 학부연구생
+        - 행정직원
+  - type: textarea
+    id: details
+    attributes:
+      label: 내용
+      description: 연구 관심사, 학력·경력, 졸업 후 소속 등. 사진(정사각형 권장)은 이 칸에 끌어다 놓으세요.
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 공개 동의
+      options:
+        - label: 위 정보(이메일·사진 포함)를 홈페이지에 공개하는 데 본인이 동의했습니다.
+          required: true

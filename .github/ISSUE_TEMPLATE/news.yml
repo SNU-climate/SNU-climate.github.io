@@ -1,0 +1,36 @@
+name: 뉴스·행사·수상 소식
+description: 공지, 행사 사진, 수상, 언론 보도를 올려 달라고 요청합니다.
+title: "[뉴스] "
+body:
+  - type: dropdown
+    id: category
+    attributes:
+      label: 종류
+      options:
+        - 논문 소개
+        - 수상
+        - 행사·워크숍(사진 앨범)
+        - 언론·방송
+        - 연구실 소식
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: 날짜
+      placeholder: 2026-12-14
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: 제목 (국문 또는 영문)
+    validations:
+      required: true
+  - type: textarea
+    id: body
+    attributes:
+      label: 내용
+      description: 소개 글, 원문 기사 링크. 사진은 이 칸에 끌어다 놓으세요(위치정보가 있는 원본도 괜찮습니다 — 올릴 때 지웁니다).
+    validations:
+      required: true

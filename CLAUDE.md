@@ -14,10 +14,11 @@
 cd /data5/CSL_homepage/first_draft
 bash -lc "module load anaconda3/2023.03 && python scripts/build.py --theme all"      # 전체 빌드
 bash -lc "module load anaconda3/2023.03 && python scripts/validate.py"               # 검증(오류 0이어야 함)
-git add -A && git commit -m "<무엇을 바꿨는지 한 줄>"                                   # 기록(push 안 함)
+git add -A && git commit -m "<무엇을 바꿨는지 한 줄>"                                   # 기록
+git push                                                                                 # 배포(학생이 바뀐 화면을 확인한 뒤)
 ```
 **확정 테마: `t5.v02`**(Science Magazine v02, 2026-11-06). 바뀐 화면은 이 테마로 확인한다: `node scripts/shot.mjs t5.v02 [page]`.
-배포용 폴더는 `python scripts/build.py --theme t5.v02 --out dist`로 만든다(배포 절차는 추후 결정).
+**배포**: GitHub `SNU-climate/SNU-climate.github.io`의 `main`에 push하면 GitHub Actions(`.github/workflows/pages.yml`)가 t5.v02를 빌드·검증해 https://snu-climate.github.io 로 1~2분 안에 배포한다. 테마를 바꾸려면 workflow의 `THEME` 한 줄만 고친다. 다른 구성원의 수정은 이슈 양식이나 Pull Request로 받는다(`CONTRIBUTING.md`). 공개 저장소이므로 비밀번호·원본 백업·개인 이메일은 커밋하지 않는다.
 
 ## 요청 유형별 절차
 
@@ -78,7 +79,7 @@ python scripts/new_news.py --slug <영문-짧은-이름> --category paper --doi 
 ## 마무리 체크리스트
 - [ ] validate 오류 0 (경고는 내용 확인)
 - [ ] 바뀐 페이지를 EN/KO 둘 다 확인 (`site/<테마>/...html`, `site/<테마>/ko/...html`)
-- [ ] git commit
+- [ ] git commit → (학생 확인 후) git push
 - [ ] 학생에게 바뀐 내용과, 번역·추정한 부분이 있으면 그 사실을 알린다
 
 ## 폴더 요약

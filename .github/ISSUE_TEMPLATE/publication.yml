@@ -1,0 +1,23 @@
+name: 논문 추가
+description: 새로 출판된 논문을 홈페이지에 올려 달라고 요청합니다.
+title: "[논문] "
+body:
+  - type: input
+    id: doi
+    attributes:
+      label: DOI
+      placeholder: 10.1038/s41586-0xx-xxxxx-x
+    validations:
+      required: true
+  - type: checkboxes
+    id: flags
+    attributes:
+      label: 표시
+      options:
+        - label: 국종성 교수님이 교신저자
+        - label: 대표 논문(홈 화면에 강조)
+  - type: textarea
+    id: news
+    attributes:
+      label: 뉴스로도 소개할 내용 (선택)
+      description: 한두 문단 소개 글, 보도자료 링크, 유튜브 링크. 대표 그림은 이 칸에 끌어다 놓으세요.
