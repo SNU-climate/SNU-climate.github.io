@@ -193,12 +193,17 @@
 
 {# 역할 묶음 페이지 본문(Researchers / Ph.D. / M.S.). 역할이 둘 이상 섞이면 역할별 소제목 #}
 {% macro people_page(key) %}
-{% set ns = namespace(present=0) %}
-{% for role, ms in member_groups if _ROLE_PAGE.get(role, 'people-researchers') == key %}{% set ns.present = ns.present + 1 %}{% endfor %}
+{% set ns = namespace(present=0, groups=[], merged=[], roles=[]) %}
+{% for role, ms in member_groups if _ROLE_PAGE.get(role, 'people-researchers') == key %}{% set ns.present = ns.present + 1 %}{% set ns.groups = ns.groups + [(role, ms)] %}{% set ns.merged = ns.merged + ms %}{% set ns.roles = ns.roles + [role] %}{% endfor %}
+{# Researchers 페이지: 박사후연구원·연구원·직원을 구분 없이 한 칸(Researchers)으로 모은다.
+   개인 페이지의 "#postdoc" 같은 역할 앵커는 빈 표식으로 남겨 둔다 #}
+{% set merge = key == 'people-researchers' and ns.groups %}
+{% if merge %}{% set ns.groups = [('researcher', ns.merged)] %}{% set ns.present = 1 %}{% endif %}
 <div class="wrap">
   {{ people_tabs(key) }}
   <section class="team">
-    {% for role, ms in member_groups if _ROLE_PAGE.get(role, 'people-researchers') == key %}
+    {% for role, ms in ns.groups %}
+    {% if merge %}{% for r in ns.roles if r != role %}<span id="{{ r }}"></span>{% endfor %}{% endif %}
     <div class="team-group" id="{{ role }}">
       {% if ns.present > 1 %}<h2 class="team-role">{{ t('people.role.' ~ role) }} <span>{{ ms|length }}</span></h2>{% endif %}
       <div class="member-grid">{% for mm in ms %}{{ m.member_card(mm) }}{% endfor %}</div>
