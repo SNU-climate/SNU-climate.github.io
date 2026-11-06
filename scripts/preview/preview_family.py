@@ -4,6 +4,7 @@
 - 모든 페이지 아래쪽에 전환 막대(계열 목록 · 전체 시안 목록 · 버전 바꾸기)
 - 루트 index.html: 두 버전 카드(캡처·설명·영문/국문 링크)
 - 테마가 1개(확정 시안)면 전환 막대·카드 없이 루트 index.html이 곧바로 그 테마의 홈으로 넘어간다(실제 사이트처럼 첫 화면이 홈)
+  대신 모든 페이지 오른쪽 아래에 "의견 남기기" 버튼(claude.ai 댓글 창을 연다. 게시할 때 capabilities {comments: {composer_only: true}})
 사용: python preview_family.py <소스 루트> <출력 폴더> <공지 수> <앨범 수> <전체 목록 URL> <계열 이름> <테마...>"""
 import html as H
 import json
@@ -43,6 +44,19 @@ BAR_CSS = ('#csl-pv{position:fixed;left:50%;transform:translateX(-50%);bottom:ca
            '#csl-pv label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}'
            '#csl-pv select{min-width:0;max-width:44vw;font:inherit;color:#10203a;background:#fff;border:0;border-radius:999px;padding:6px 10px}'
            '@media (max-width:480px){#csl-pv .pv-all{display:none}}@media print{#csl-pv{display:none}}')
+# 확정 시안 미리보기의 "의견 남기기": claude.ai 댓글 창(shell composer)을 지금 보고 있는 부분에 연다.
+# 댓글 기능을 쓸 수 없는 보기(claude.ai 밖, 권한 없음)에서는 버튼을 숨긴 채 둔다
+FEEDBACK = ('<style>#csl-fb{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));'
+            'z-index:2147483000;display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border:0;border-radius:999px;'
+            'background:#b5121b;color:#fff;font:700 14px/1.2 -apple-system,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;'
+            'box-shadow:0 6px 20px rgba(0,0,0,.25);cursor:pointer}#csl-fb[hidden]{display:none}'
+            '#csl-fb:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px #b5121b}@media print{#csl-fb{display:none}}</style>'
+            '<button id="csl-fb" type="button" hidden data-uncommentable>의견 남기기</button>'
+            '<script>(async function(){var b=document.getElementById("csl-fb");if(!window.claude||!window.claude.use)return;'
+            'var c=null;try{c=await window.claude.use("comments");}catch(e){}if(!c)return;b.hidden=false;'
+            'b.addEventListener("click",async function(){var el=document.elementFromPoint(innerWidth/2,innerHeight/3);'
+            'el=(el&&el.closest("section,article,header,figure,li,p"))||document.querySelector("main")||document.body;'
+            'try{await c.openComposer({element:el});}catch(e){if(e&&(e.code==="unavailable"||e.code==="not_granted"))b.hidden=true;}});})();</script>')
 
 
 def bar(theme, rel):
@@ -79,8 +93,8 @@ for theme in themes:
         # 테마 루트 기준 'static/…', 'assets/shared/…' → 미리보기 루트 기준(한 단계 위). 속성·인라인 JSON·url() 모두
         t = re.sub(r'(["\'(])((?:\.\./)*)static/', r'\1\2../static/', t)
         t = re.sub(r'(["\'(])((?:\.\./)*)assets/shared/', r'\1\2../shared/', t)
-        if one:                # 확정 시안: 유튜브 새 탭 표시만(전환 막대 없음)
-            snippet = '<script>window.CSL_NO_EMBED=true;</script>'
+        if one:                # 확정 시안: 유튜브 새 탭 표시 + 의견 남기기 버튼(전환 막대 없음)
+            snippet = '<script>window.CSL_NO_EMBED=true;</script>' + FEEDBACK
         else:
             snippet = f'<script>window.CSL_PAGES={json.dumps(pages)};window.CSL_NO_EMBED=true;</script>' + bar(theme, rel)
         t = t.replace('</body>', snippet + '</body>', 1) if '</body>' in t else t + snippet
