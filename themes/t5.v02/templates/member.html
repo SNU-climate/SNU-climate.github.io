@@ -4,9 +4,11 @@
 
 {% block content %}
 {% set p = person %}
-{% set back = 'pi' if p.is_pi else ('alumni' if p.alumnus else p.role) %}
+{% set back = x.people_key(p)|trim %}
 <div class="wrap">
-  <p class="article-back article-back--left"><a href="{{ page_url('people') }}#{{ back }}"><span aria-hidden="true">←</span> {{ t('people.back') }}</a></p>
+  {# 교수 페이지는 구성원 탭의 첫 페이지, 다른 사람은 소속 구성원 페이지로 돌아가는 링크 #}
+  {% if p.is_pi %}<div class="ptabs-wrap">{{ x.people_tabs('professor') }}</div>
+  {% else %}<p class="article-back article-back--left"><a href="{{ x.people_url(back)|trim }}{% if back != 'people-alumni' %}#{{ p.role }}{% endif %}"><span aria-hidden="true">←</span> {{ x.people_label(back) }}</a></p>{% endif %}
 
   <article class="profile profile--page">
     <div class="profile-portrait">

@@ -1,0 +1,4 @@
+{% extends 'base.html' %}
+{% import '_t5.html' as x with context %}
+{% block plead %}{{ x.people_lead('people-phd') }}{% endblock %}
+{% block content %}{{ x.people_page('people-phd') }}{% endblock %}

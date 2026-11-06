@@ -21,6 +21,8 @@ import build as B      # noqa: E402
 import sitelib as L    # noqa: E402
 
 data = L.load_all()
+n_news_all = sum(1 for p in data['news'] if not p.get('album'))
+n_album_all = sum(1 for p in data['news'] if p.get('album'))
 news = [p for p in data['news'] if not p.get('album')][:n_news]
 albums = [p for p in data['news'] if p.get('album')][:n_album]
 data['news'] = sorted(news + albums, key=lambda p: (L.to_date(p.get('date')), p['slug']), reverse=True)
@@ -45,9 +47,12 @@ def bar(theme, rel):
     up = '../' * len(Path(rel).parts)
     opts = ''.join(f'<option value="{t}"{" selected" if t == theme else ""}>{H.escape(metas[t].get("title") or t)}</option>'
                    for t in themes)
-    return (f'<style>{BAR_CSS}</style><nav id="csl-pv" aria-label="시안 전환">'
+    head = (f'<style>{BAR_CSS}</style><nav id="csl-pv" aria-label="시안 전환">'
             f'<a href="{up}index.html">← {H.escape(family)}</a>'
-            f'<a class="pv-all" href="{main_url}" target="_blank" rel="noopener">전체 시안 ↗</a>'
+            f'<a class="pv-all" href="{main_url}" target="_blank" rel="noopener">전체 시안 ↗</a>')
+    if len(themes) == 1:       # 버전이 하나면 바꾸기 목록 없음
+        return head + '</nav>'
+    return (head +
             f'<label for="csl-pv-s">다른 버전으로 보기</label><select id="csl-pv-s" data-up="{up}" data-rel="{rel}">{opts}</select></nav>'
             '<script>(function(){var s=document.getElementById("csl-pv-s");s.addEventListener("change",function(){'
             'var up=s.dataset.up,rel=s.dataset.rel,t=s.value,ok=window.CSL_PAGES[t]||[];'
@@ -75,7 +80,7 @@ for theme in themes:
         # 테마 루트 기준 'static/…', 'assets/shared/…' → 미리보기 루트 기준(한 단계 위). 속성·인라인 JSON·url() 모두
         t = re.sub(r'(["\'(])((?:\.\./)*)static/', r'\1\2../static/', t)
         t = re.sub(r'(["\'(])((?:\.\./)*)assets/shared/', r'\1\2../shared/', t)
-        snippet = f'<script>window.CSL_PAGES={json.dumps(pages)};</script>' + bar(theme, rel)
+        snippet = f'<script>window.CSL_PAGES={json.dumps(pages)};window.CSL_NO_EMBED=true;</script>' + bar(theme, rel)
         t = t.replace('</body>', snippet + '</body>', 1) if '</body>' in t else t + snippet
         f.write_text(t, encoding='utf-8')
 
@@ -107,6 +112,15 @@ for theme in themes:
         </div>
       </article>''')
 
+one = len(themes) == 1      # 테마 1개(확정 시안): 카드 1장을 가로로 넓게, 안내 문구도 확정 시안용
+if one:
+    eyebrow, heading = '기후시스템연구실 홈페이지 · 확정 시안', H.escape(family)
+    lead = '최종 확정한 시안입니다. 카드를 누르면 사이트가 열리고, 사이트 안의 메뉴로 모든 페이지를 볼 수 있습니다.'
+else:
+    eyebrow, heading = '기후시스템연구실 홈페이지 시안 · 확장 버전', f'{H.escape(family)} — v01 · v02'
+    lead = ('2차 리뷰를 반영한 정제판(v01)과 콘셉트를 확장한 확장판(v02)입니다. 카드를 누르면 사이트가 열리고, '
+            '아래쪽 막대에서 버전을 바꾸면 같은 페이지를 다른 버전으로 볼 수 있습니다.')
+
 INDEX = f'''<title>CSL 시안 {H.escape(family)}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
@@ -135,18 +149,22 @@ h2 {{ margin:0; font-size:1.2rem; }} .body p {{ margin:0; color:var(--muted); fo
 .btn--ghost {{ background:transparent; color:var(--accent); border:1px solid var(--accent); }}
 .btn:focus-visible, .thumb:focus-visible {{ outline:3px solid var(--accent-2); outline-offset:2px; }}
 .note {{ margin:0; color:var(--muted); font-size:.88rem; }}
-@media (max-width:720px) {{ .grid {{ grid-template-columns:1fr; }} }}
+.grid--one {{ grid-template-columns:1fr; }}
+.grid--one .card {{ grid-template-columns:minmax(0, 1.5fr) minmax(0, 1fr); }}
+.grid--one .thumb {{ border-bottom:0; border-right:1px solid var(--line); }}
+.grid--one .body {{ align-content:center; padding:28px; }}
+@media (max-width:720px) {{ .grid {{ grid-template-columns:1fr; }} .grid--one .card {{ grid-template-columns:1fr; }} .grid--one .thumb {{ border-right:0; border-bottom:1px solid var(--line); }} }}
 </style>
 <header class="band"><div class="wrap">
-  <p class="eyebrow">기후시스템연구실 홈페이지 시안 · 확장 버전</p>
-  <h1>{H.escape(family)} — v01 · v02</h1>
-  <p class="lead">2차 리뷰를 반영한 정제판(v01)과 콘셉트를 확장한 확장판(v02)입니다. 카드를 누르면 사이트가 열리고, 아래쪽 막대에서 버전을 바꾸면 같은 페이지를 다른 버전으로 볼 수 있습니다. <a href="{main_url}" target="_blank" rel="noopener">전체 시안 목록 ↗</a></p>
+  <p class="eyebrow">{eyebrow}</p>
+  <h1>{heading}</h1>
+  <p class="lead">{lead} <a href="{main_url}" target="_blank" rel="noopener">전체 시안 목록 ↗</a></p>
 </div></header>
 <main><div class="wrap">
-  <div class="grid">
+  <div class="grid{' grid--one' if one else ''}">
 {chr(10).join(cards)}
   </div>
-  <p class="note">미리보기 용량 제한 때문에 공지·뉴스는 최근 {n_news}편, 갤러리는 최근 {n_album}개만 넣었습니다(실제 사이트: 공지 99편, 앨범 89개). 유튜브 영상은 이 미리보기에서 재생되지 않을 수 있습니다.</p>
+  <p class="note">미리보기 용량 제한(파일 511개) 때문에 공지·뉴스는 최근 {len(news)}편, 갤러리는 최근 {len(albums)}개만 넣었습니다(실제 사이트: 공지 {n_news_all}편, 앨범 {n_album_all}개). 이 미리보기 안에서는 유튜브 영상을 삽입할 수 없어, 재생 버튼을 누르면 YouTube가 새 탭으로 열립니다(실제 사이트에서는 페이지 안에서 재생됩니다).</p>
 </div></main>
 '''
 (out / 'index.html').write_text(INDEX, encoding='utf-8')

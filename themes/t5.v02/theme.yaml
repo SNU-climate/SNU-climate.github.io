@@ -11,6 +11,6 @@ concept:
     연도별 기록을 보여 주고, 영상 페이지는 해설 영상과 바탕 논문을 짝지어 보여 준다("Watch & Read").
 palette: ["#b5121b", "#161513", "#fbf9f4", "#1d3550", "#c8a24a"]
 # 공통 8페이지 외 페이지: 소개·갤러리 + 연간호·저널 데스크
-extra_pages: [about, gallery, issues, journals]
+extra_pages: [about, gallery, issues, journals, people-researchers, people-phd, people-ms, people-alumni]
 # 교수 개인 페이지 people/jong-seong-kug.html (member.html 재사용)
 pi_page: true

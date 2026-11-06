@@ -79,7 +79,7 @@ for theme, _ in THEMES:
         html = re.sub(r'((?:src|href|data-[\w-]+|content)=")((?:\.\./)*)static/', r'\1\2../static/', html)
         html = re.sub(r'((?:src|href)=")((?:\.\./)*)assets/shared/', r'\1\2../shared/', html)
         html = re.sub(r"url\((['\"]?)((?:\.\./)*)static/", r'url(\1\2../static/', html)
-        snippet = f'<script>window.CSL_PAGES={json.dumps(pages)};</script>' + bar(theme, rel)
+        snippet = f'<script>window.CSL_PAGES={json.dumps(pages)};window.CSL_NO_EMBED=true;</script>' + bar(theme, rel)
         html = html.replace('</body>', snippet + '</body>', 1) if '</body>' in html else html + snippet
         f.write_text(html, encoding='utf-8')
 

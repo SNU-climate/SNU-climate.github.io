@@ -110,5 +110,43 @@ first_draft/
 - Phase 2 변경: Gallery는 별도 콘텐츠 형식 대신 뉴스에 `album: true`. 선택 페이지 기능(`theme.yaml` extra_pages, `member.html`→`people/<id>.html`, `research_topic.html`→`research/<key>.html`)은 basic만 사용(다른 테마는 기존 8페이지). 구성원 굵게 표시는 정확 일치 + 기간·제외 규칙. 언론 PDF 6개는 저작권 확인 전까지 비공개 보류.
 - 2026-11-04 Phase 3: 2차 리뷰(`reports/review_round2.md`, Opus) → 공통 도우미(뉴스·앨범 분리·필터, 교수 페이지 `pi_page`, 발표 0건 메뉴 숨김 등) → 시안마다 v01(정제)·v02(확장) 18개(`themes/<prefix>.v01|v02`, 보고서 `reports/themes_v/`). 27개 테마 빌드·검증 오류 0, 표본 레이아웃 846쪽 문제 0. 갤러리(`site/index.html`)는 시안별 버전 묶음.
 
+### Phase 4 — 확정 시안 t5.v02 개선 (2026-11-06)
+
+**Context**: 사용자가 최종 시안을 **t5.v02(Science Magazine v02)**로 확정했다. 앞으로는 이 테마만 다듬는다. 이번 요청은 6가지다. ① 글꼴 상표권 점검 ② 홈에서 PI 소개 줄 삭제 ③ People을 역할별 독립 페이지 5개 + 드롭다운으로 바꾸기 ④ Cover story 좌우 넘기기 ⑤ 유튜브 "콘텐츠 차단" 원인과 대응 ⑥ Fable·Opus·Codex(gpt-6.1-sol) 3자 리뷰를 반영한 뒤 전용 artifact로 게시.
+
+**조사 결과(계획 근거)**
+- **글꼴**: 4종 모두 SIL OFL 1.1이다(원문 확인). Playfair Display와 Pretendard에는 예약 글꼴 이름(RFN)이 있고, Source Serif 4와 Noto Serif KR에는 없다. RFN은 **글꼴을 고친 파생본에 같은 이름을 쓰는 것**만 막는다. 원본을 웹에서 쓰거나 함께 배포하는 것은 허용된다. 따라서 교체는 필요 없다. 지켜야 할 것은 하나다: 나중에 글꼴 파일을 사이트에 직접 넣을 때 직접 서브셋하지 말고 공식 배포 파일과 OFL.txt를 그대로 넣는다. Georgia·Times New Roman·나눔명조는 이름만 지정하는 대체 글꼴(local)이라 배포하지 않는다.
+- **유튜브**: `themes/_shared/assets/shared.js`는 클릭하면 youtube-nocookie iframe을 넣는다. claude.ai artifact가 외부 iframe을 보안 정책(CSP)으로 막기 때문에 Chrome이 "콘텐츠가 차단됨" 화면을 띄운다. 사이트 결함이 아니고, 실제 웹서버(http/https)에서는 재생된다. 파일을 더블클릭해 연 경우(file://)에는 YouTube가 referrer 없는 요청을 거부해 오류 153이 난다.
+- **커버 후보**: 커버 규칙(표지나 영상이 있는 논문·수상 뉴스)에 맞는 글이 8편이다.
+- **구성원**: 박사후연구원 2, 연구원 8, 박사과정 4, 석사과정 8, 졸업생 약 23명. 교수 개인 페이지 `people/jong-seong-kug.html`이 이미 있다(`pi_page: true`).
+- **artifact 한도**: t5.v02 전체 빌드는 파일 1063개다(앨범 89개의 사진 457장 포함). 한 버전에 511개까지만 들어가므로 공지·뉴스 99편은 전부 넣고, 앨범은 한도 안에서 최근 것부터 넣는다(약 10개).
+
+**작업**(주 세션 직접. t5.v02 한 테마의 템플릿·CSS·JS 수정 수준이다)
+1. **확정 기록**: `project_plan.md`(이중 저장), `first_draft/CLAUDE.md`(배포 테마 t5.v02, 화면 확인은 t5.v02로), 메모리(project).
+2. **글꼴 보고서**: `reports/font_license.md`(글꼴·라이선스·저작권자·RFN·사용 방식·판정, 직접 넣을 때의 주의). 코드는 바꾸지 않는다.
+3. **홈 PI 삭제**: `themes/t5.v02/templates/index.html` ednote의 `.byline`(사진·직함·이름)을 지운다. "About the lab →" 링크만 본문 아래에 남긴다. 관련 CSS도 정리한다.
+4. **People 분리 + 드롭다운**
+   - 새 페이지(theme.yaml `extra_pages`에 추가): `people-researchers`(postdoc·researcher·staff, 역할별 소제목), `people-phd`(phd·integrated), `people-ms`(ms·undergrad), `people-alumni`. 각 페이지 위에는 5개 페이지를 오가는 탭(`x.people_tabs(active)`, `pub_tabs` 방식)을 둔다. 템플릿은 `_t5.html` 공통 매크로 하나를 쓴다.
+   - Professor는 기존 교수 페이지 `people/jong-seong-kug.html`로 연결한다(중복 페이지를 만들지 않는다).
+   - `base.html` 메뉴의 People을 `<button aria-expanded>`로 바꾸고, 하위 목록 5개(Professor / Researchers / Ph.D. Students / M.S. Students / Alumni)를 붙인다. 누르면 펼쳐지고, 마우스를 올려도 펼쳐진다(`@media (hover:hover)`). Esc·바깥 클릭·포커스 이탈 시 닫힌다. 모바일 메뉴 안에서는 아코디언으로 펼친다. People 하위 페이지와 개인 페이지에서는 People이 현재 구역으로 표시된다. JS는 새 `assets/t5.js`(base에서 defer로 로드).
+   - `people.html`: 교수 페이지로 즉시 이동하는 페이지(meta refresh)로 바꾸고, 이동이 안 될 때를 위해 5개 링크를 둔다. 개인 페이지의 "← People"은 그 사람의 역할 페이지로, about의 구성원·졸업생 링크와 푸터 People 링크도 새 페이지로 바꾼다.
+   - `data/i18n.yaml`: `nav.people-*`(페이지 제목), `menu.phd`·`menu.ms`를 추가한다(`menu.professor/researchers/alumni`는 재사용).
+5. **Cover story 넘기기**: 커버 후보 8편을 슬라이드로 만든다. 가로 scroll-snap 트랙과 ‹ › 버튼, "1 / 8" 표시(aria-live)를 두고, 키보드 ←→와 터치 스와이프를 지원한다. 자동 재생은 하지 않는다. 끝에 닿으면 버튼을 비활성화한다. 2번째 슬라이드부터 이미지는 lazy 로드. JS가 없으면 버튼을 숨기고 가로 스크롤로 동작한다. 아래 "News" 사진 기사 2편은 커버에 들어간 글을 뺀다. 코드는 `index.html`, `style.css`, `t5.js`.
+6. **유튜브 대응**: `shared.js` 재생 버튼이 `location.protocol === 'file:'`이거나 `window.CSL_NO_EMBED`이면 iframe 대신 `youtube.com/watch?v=<id>`를 새 탭으로 연다. 미리보기 빌드(`scripts/preview/preview_family.py`)가 페이지마다 `CSL_NO_EMBED=true`를 넣는다. 실제 서버에서는 지금처럼 페이지 안에서 재생된다.
+7. **빌드·검증 1차**(아래 검증 절차) 후 커밋.
+8. **3자 리뷰**: 지시서 `reports/briefs/review_t5v02_task.md`(범위: 이번 diff·캡처 경로·점검표[드롭다운 마우스·키보드·터치, 캐러셀 접근성과 JS 없을 때, 역할 분류·링크, 유튜브 대체 동작, 데스크톱·모바일·다크·국문, 코드 일관성], 출력: 심각도·파일:줄·수정안).
+   - Fable: Agent `model: fable`
+   - Opus: Agent `model: opus`
+   - Codex: `codex exec -m gpt-6.1-sol -s read-only -o reports/review_t5v02/codex.md`(백그라운드)
+   - 셋은 서로의 결과를 보지 않고 병렬로 돌린다. 결과는 각각 `reports/review_t5v02/{fable,opus,codex}.md`에 둔다.
+   - 주 세션이 지적을 하나씩 코드로 확인해 반영하거나 사유를 적어 기각하고, `reports/review_t5v02/summary.md`에 정리한다. 반영 후 다시 빌드·검증하고 커밋한다.
+9. **전용 artifact**: `preview_family.py`에 테마 1개일 때의 첫 화면 배치를 추가한다. 스냅숏에서 빌드하고(공지 99편, 앨범은 파일 수 505개 이하가 되도록), linkcheck 0을 확인한 뒤 새 artifact로 2~3회에 나눠 게시한다. 기존 전체 시안 목록 artifact 맨 위에는 "확정 시안 t5.v02 →" 링크 한 줄을 추가한다. README의 artifact 표를 갱신하고 Notion Working Note에 캡처와 함께 기록한다.
+
+**검증**
+- `build.py --theme all` 성공(shared.js·i18n이 모든 테마에 영향) → `validate.py` 오류 0 → `check_layout.mjs t5.v02`(전체 페이지) + `check_layout.mjs --sample`(모든 테마 JS 오류 0).
+- 캡처: `shot.mjs t5.v02`(홈, `--ko`, `--dark`), `people-researchers`, `people-alumni`. 임시 Playwright 스크립트로 드롭다운을 연 상태, 커버 다음 슬라이드, 키보드 조작, 모바일 메뉴 펼침을 캡처해 직접 확인한다.
+- 유튜브: file://에서는 재생 클릭 시 새 탭(popup) 이벤트가 생기는지, 로컬 http 서버에서는 iframe이 들어가는지 Playwright로 확인한다(외부망 접속 여부는 결과에 적는다).
+- artifact: 파일 수 511개 이하, linkcheck 0. 전환 막대와 유튜브 새 탭 동작은 사용자 브라우저에서 최종 확인한다(claude.ai 로그인이 필요해 내가 확인할 수 없다).
+
 ## 사용자 결정 대기(백업 이후)
 - 배포 방식(학교 웹호스팅 업로드 방식), 9종 중 최종 테마 선택, 구성원 사진·소개 문구 확정.

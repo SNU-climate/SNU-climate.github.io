@@ -3,13 +3,14 @@
 {% block pagehead %}{% endblock %}
 
 {% block content %}
-{# 커버 기사: 표지(그림 또는 영상)가 있는 최신 논문·수상 소식. 없으면 최신 소식 #}
+{# 커버 기사: 표지(그림 또는 영상)가 있는 논문·수상 소식을 최신순으로 최대 10편, 좌우로 넘겨 본다. 없으면 최신 소식 1편 #}
 {% set cands = news_items|selectattr('category', 'in', ['paper', 'award'])|list %}
-{% set ns = namespace(lead=None, pics=[], briefs=[]) %}
-{% for p in cands %}{% if (p.cover or p.youtube) and not ns.lead %}{% set ns.lead = p %}{% endif %}{% endfor %}
-{% if not ns.lead and news_items %}{% set ns.lead = news_items[0] %}{% endif %}
-{% set lead = ns.lead %}
-{% for p in news_items if not lead or p.slug != lead.slug %}
+{% set ns = namespace(covers=[], pics=[], briefs=[]) %}
+{% for p in cands if (p.cover or p.youtube) and ns.covers|length < 10 %}{% set ns.covers = ns.covers + [p] %}{% endfor %}
+{% if not ns.covers and news_items %}{% set ns.covers = [news_items[0]] %}{% endif %}
+{% set covers = ns.covers %}
+{% set cover_slugs = covers|map(attribute='slug')|list %}
+{% for p in news_items if p.slug not in cover_slugs %}
   {% if (p.cover or p.youtube) and ns.pics|length < 2 %}{% set ns.pics = ns.pics + [p] %}
   {% elif ns.briefs|length < 5 %}{% set ns.briefs = ns.briefs + [p] %}{% endif %}
 {% endfor %}
@@ -17,7 +18,7 @@
 <div class="wrap">
   <h1 class="visually-hidden">{{ lab_name }}</h1>
 
-  {# ---------- 여는 글: 연구실 소개(site.lab.intro) + 교수 바이라인 ---------- #}
+  {# ---------- 여는 글: 연구실 소개(site.lab.intro) ---------- #}
   {% set intro = tr(site.lab.intro) %}{% set lead_s = tr(site.lab.lead) %}
   {% set body = intro[lead_s|length:]|trim if lead_s and intro.startswith(lead_s) else intro %}
   <section class="ednote" aria-labelledby="ednote-h">
@@ -26,33 +27,37 @@
       <p class="cover-label">{{ x.L('editor') }}</p>
       <h2 class="ednote-title" id="ednote-h">{{ lead_s if body != intro else lab_name }}</h2>
       <div class="prose ednote-prose{% if lang == 'en' %} prose--dropcap{% endif %}"><p>{{ body }}</p></div>
-      {% set pu = member_url(pi) %}
-      <div class="byline">
-        <span class="byline-photo">{% if pi.photo %}<img src="{{ static(pi.photo) }}" alt="">{% else %}<span class="member-initials" aria-hidden="true">{{ m.initials_of(pi.name.en) }}</span>{% endif %}</span>
-        <span class="byline-text"><span class="byline-role">{{ t('people.pi') }}</span>
-          {% if pu %}<a class="byline-name" href="{{ pu }}">{{ tr(pi.name) }}</a>{% else %}<span class="byline-name">{{ tr(pi.name) }}</span>{% endif %}
-          <span class="byline-title">{{ tr(pi.title) }} · {{ tr(pi.major) }}</span></span>
-        <a class="byline-more" href="{{ page_url('about') }}">{{ x.L('about_lab') }} <span aria-hidden="true">→</span></a>
-      </div>
+      <p class="ednote-more"><a href="{{ page_url('about') }}">{{ x.L('about_lab') }} <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
 
-  {# ---------- 커버 기사 ---------- #}
-  {% if lead %}
-  {% set c = cover_url(lead) %}
-  <section class="cover{% if not c %} cover--text{% endif %}" aria-label="{{ x.L('cover') }}">
-    <article class="cover-story">
-      <a class="cover-link" href="{{ news_url(lead) }}">
-        {% if c %}<div class="cover-img"><img src="{{ c }}" alt=""></div>{% endif %}
-        <div class="cover-text">
-          <p class="cover-label">{{ x.L('cover') }}</p>
-          {{ x.kicker(lead) }}
-          <h2 class="cover-title" lang="{{ text_lang(tr(lead.title)) }}">{{ tr(lead.title) }}</h2>
-          {% if lead.summary %}<p class="cover-dek">{{ tr(lead.summary) }}</p>{% endif %}
-          <span class="story-more">{{ t('news.read_more') }} <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
-    </article>
+  {# ---------- 커버 기사: 가로 스크롤 트랙(scroll-snap). JS(t5.js)가 있으면 ‹ › 버튼·번호·키보드로 넘긴다 ---------- #}
+  {% if covers %}
+  {% set n = covers|length %}
+  <section class="cover" aria-label="{{ x.L('cover') }}"{% if n > 1 %} aria-roledescription="carousel" data-cover{% endif %}>
+    <div class="cover-track"{% if n > 1 %} data-cover-track tabindex="0"{% endif %}>
+      {% for p in covers %}{% set c = cover_url(p) %}
+      <article class="cover-story{% if not c %} cover-story--text{% endif %}"{% if n > 1 %} aria-roledescription="slide" aria-label="{{ loop.index }} / {{ n }}"{% endif %}>
+        <a class="cover-link" href="{{ news_url(p) }}">
+          {% if c %}<div class="cover-img"><img src="{{ c }}" alt=""{% if not loop.first %} loading="lazy"{% endif %}></div>{% endif %}
+          <div class="cover-text">
+            <p class="cover-label">{{ x.L('cover') }}</p>
+            {{ x.kicker(p) }}
+            <h2 class="cover-title" lang="{{ text_lang(tr(p.title)) }}">{{ tr(p.title) }}</h2>
+            {% if p.summary %}<p class="cover-dek">{{ tr(p.summary) }}</p>{% endif %}
+            <span class="story-more">{{ t('news.read_more') }} <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+    {% if n > 1 %}
+    <div class="cover-nav" data-cover-nav hidden>
+      <button class="cover-btn" type="button" data-cover-prev aria-label="{{ x.L('cover_prev') }}"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+      <span class="cover-count" aria-live="polite"><span data-cover-i>1</span> / {{ n }}</span>
+      <button class="cover-btn" type="button" data-cover-next aria-label="{{ x.L('cover_next') }}"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+    </div>
+    {% endif %}
   </section>
   {% endif %}
 

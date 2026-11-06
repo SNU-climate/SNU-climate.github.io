@@ -10,6 +10,11 @@ nav:
   contact: {en: "Contact", ko: "오시는 길"}
   gallery: {en: "Gallery", ko: "갤러리"}
   about: {en: "Introduction", ko: "연구실 소개"}
+  # 구성원 하위 페이지(t5.v02 People 드롭다운)
+  people-researchers: {en: "Researchers", ko: "연구원"}
+  people-phd: {en: "Ph.D. Students", ko: "박사과정"}
+  people-ms: {en: "M.S. Students", ko: "석사과정"}
+  people-alumni: {en: "Alumni", ko: "졸업생"}
 
 # 원본 사이트 메뉴 구조를 따르는 드롭다운 메뉴(basic 테마)
 menu:

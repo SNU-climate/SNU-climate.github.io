@@ -23,7 +23,7 @@
     <dl class="numbers-row">
       <div><dt>{{ t('pubs.title') }}</dt><dd><a href="{{ page_url('publications') }}">{{ stats.pubs }}</a></dd><dd class="numbers-sub">{{ stats.first_year }}–{{ stats.last_year }}</dd></div>
       <div><dt>{{ x.L('journals_t') }}</dt><dd>{{ stats.journals }}</dd>{% if stats.top_journals %}<dd class="numbers-sub">{{ x.L('top') }} {{ stats.top_journals[0][0] }} ({{ stats.top_journals[0][1] }})</dd>{% endif %}</div>
-      <div><dt>{{ t('people.members') }}</dt><dd><a href="{{ page_url('people') }}">{{ stats.members }}</a></dd><dd class="numbers-sub">+ {{ stats.alumni }} {{ t('people.alumni')|lower if lang == 'en' else '졸업생' }}</dd></div>
+      <div><dt>{{ t('people.members') }}</dt><dd><a href="{{ page_url('people-researchers') }}">{{ stats.members }}</a></dd><dd class="numbers-sub">+ {{ stats.alumni }} {{ t('people.alumni')|lower if lang == 'en' else '졸업생' }}</dd></div>
       <div><dt>{{ t('videos.title') }}</dt><dd><a href="{{ page_url('videos') }}">{{ stats.videos }}</a></dd><dd class="numbers-sub">YouTube</dd></div>
     </dl>
   </section>
@@ -37,7 +37,7 @@
         {% for role, ms in member_groups %}
         <div><dt>{{ t('people.role.' ~ role) }}</dt><dd>{% for mm in ms %}{% set u = member_url(mm) %}{% if u %}<a href="{{ u }}">{{ tr(mm.name) }}</a>{% else %}{{ tr(mm.name) }}{% endif %}{% if not loop.last %}<span class="staff-sep" aria-hidden="true"> · </span>{% endif %}{% endfor %}</dd></div>
         {% endfor %}
-        {% if alumni %}<div><dt>{{ t('people.alumni') }}</dt><dd><a href="{{ page_url('people') }}#alumni">{{ alumni|length }} {{ t('people.alumni')|lower if lang == 'en' else '명' }} <span aria-hidden="true">→</span></a></dd></div>{% endif %}
+        {% if alumni %}<div><dt>{{ t('people.alumni') }}</dt><dd><a href="{{ page_url('people-alumni') }}">{{ alumni|length }} {{ t('people.alumni')|lower if lang == 'en' else '명' }} <span aria-hidden="true">→</span></a></dd></div>{% endif %}
       </dl>
     </section>
 

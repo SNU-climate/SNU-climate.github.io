@@ -1,8 +1,11 @@
 {# t5 Science Magazine 전용 매크로. {% import '_t5.html' as x with context %} #}
+{% import 'macros.html' as m with context %}
 
 {# 테마 고유 장식 문구(잡지 용어). i18n.yaml에 없는 것만 여기 둔다. #}
 {% set _L = {
   'cover': ['Cover story', '커버 스토리'],
+  'cover_prev': ['Previous cover story', '이전 커버 스토리'],
+  'cover_next': ['Next cover story', '다음 커버 스토리'],
   'editor': ["Editor's note", '여는 글'],
   'brief': ['In brief', '짧은 소식'],
   'watch': ['Watch', '영상으로 보기'],
@@ -166,6 +169,71 @@
   <a href="{{ page_url('journals') }}"{% if active == 'journals' %} aria-current="page"{% endif %}>{{ L('desk') }} <span>{{ stats.journals }}</span></a>
   <a href="{{ page_url('issues') }}"{% if active == 'issues' %} aria-current="page"{% endif %}>{{ L('issues_t') }} <span>{{ pubs_by_year|length }}</span></a>
 </nav>
+{% endmacro %}
+
+{# 구성원 페이지 5개(People 드롭다운·탭 순서). professor = 교수 개인 페이지(people/<id>.html), 나머지는 extra_pages.
+   역할 묶음: 페이지 키 → 들어가는 역할(member_groups 순서대로 소제목). 페이지 제목은 i18n nav.<키> #}
+{% set people_keys = ['professor', 'people-researchers', 'people-phd', 'people-ms', 'people-alumni'] %}
+{% set people_groups = [
+  ('people-researchers', ['postdoc', 'researcher', 'staff']),
+  ('people-phd', ['phd', 'integrated']),
+  ('people-ms', ['ms', 'undergrad'])] %}
+{% macro people_label(k) %}{{ t('menu.professor') if k == 'professor' else t('nav.' ~ k) }}{% endmacro %}
+{% macro people_url(k) %}{{ member_url(pi) if k == 'professor' else page_url(k) }}{% endmacro %}
+{# 그 사람이 속한 구성원 페이지 키 #}
+{% macro people_key(p) %}{% if p.is_pi %}professor{% elif p.alumnus %}people-alumni{% else %}{% for k, roles in people_groups if p.role in roles %}{% if loop.first %}{{ k }}{% endif %}{% else %}people-researchers{% endfor %}{% endif %}{% endmacro %}
+{# 페이지별 인원(교수 페이지는 빈 문자열) #}
+{% macro people_n(k) %}{% if k == 'people-alumni' %}{{ alumni|length }}{% elif k != 'professor' %}{% set ns = namespace(n=0) %}{% for g, roles in people_groups if g == k %}{% for role, ms in member_groups if role in roles %}{% set ns.n = ns.n + ms|length %}{% endfor %}{% endfor %}{{ ns.n }}{% endif %}{% endmacro %}
+{% macro people_lead(k) %}{% set n = people_n(k)|trim|int %}{% if lang == 'en' %}{{ n }} {{ 'alumni' if k == 'people-alumni' else ('member' if n == 1 else 'members') }}{% else %}{{ n }}명{% endif %}{% endmacro %}
+
+{# 구성원 페이지 탭(5개 페이지 오가기) #}
+{% macro people_tabs(active) %}
+<nav class="ptabs" aria-label="{{ t('nav.people') }}">
+  {% for k in people_keys %}<a href="{{ people_url(k) }}"{% if k == active %} aria-current="page"{% endif %}>{{ people_label(k) }}{% if k != 'professor' %} <span>{{ people_n(k) }}</span>{% endif %}</a>{% endfor %}
+</nav>
+{% endmacro %}
+
+{# 역할 묶음 페이지 본문(Researchers / Ph.D. / M.S.). 역할이 둘 이상 섞이면 역할별 소제목 #}
+{% macro people_page(key) %}
+{% set ns = namespace(roles=[], present=0) %}
+{% for g, rs in people_groups if g == key %}{% set ns.roles = rs %}{% endfor %}
+{% for role, ms in member_groups if role in ns.roles %}{% set ns.present = ns.present + 1 %}{% endfor %}
+<div class="wrap">
+  {{ people_tabs(key) }}
+  <section class="team">
+    {% for role, ms in member_groups if role in ns.roles %}
+    <div class="team-group" id="{{ role }}">
+      {% if ns.present > 1 %}<h2 class="team-role">{{ t('people.role.' ~ role) }} <span>{{ ms|length }}</span></h2>{% endif %}
+      <div class="member-grid">{% for mm in ms %}{{ m.member_card(mm) }}{% endfor %}</div>
+    </div>
+    {% else %}
+    <p class="empty">{{ t('common.empty') }}</p>
+    {% endfor %}
+  </section>
+</div>
+{% endmacro %}
+
+{# 졸업생 페이지 본문 #}
+{% macro alumni_page() %}
+<div class="wrap">
+  {{ people_tabs('people-alumni') }}
+  {% if alumni %}
+  <div class="alumni-grid">
+    {% for a in alumni %}{% set u = member_url(a) %}
+    <article class="alum">
+      <span class="alum-photo">{% if a.photo %}<img src="{{ static(a.photo) }}" alt="" loading="lazy">{% else %}<span class="member-initials" aria-hidden="true">{{ m.initials_of(tr(a.name)) }}</span>{% endif %}</span>
+      <span class="alum-text">
+        <span class="alum-name">{% if u %}<a href="{{ u }}">{{ tr(a.name) }}</a>{% else %}{{ tr(a.name) }}{% endif %} {{ m.sample_badge(a) }}</span>
+        {% set dy = [a.degree, a.year]|select|join(', ') %}{% if dy %}<span class="alum-degree">{{ dy }}</span>{% endif %}
+        {% if a.current %}<span class="alum-current">{{ tr(a.current) }}</span>{% endif %}
+      </span>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">{{ t('common.empty') }}</p>
+  {% endif %}
+</div>
 {% endmacro %}
 
 {# 연간호 표지. 대표 논문 = 그해 featured 논문, 없으면 가장 최근 논문.

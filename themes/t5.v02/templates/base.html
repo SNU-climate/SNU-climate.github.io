@@ -43,7 +43,18 @@
   </div>
   <nav id="nav" class="nav" aria-label="{{ t('common.menu') }}">
     <div class="wrap nav-in">
-      {% for k in menu %}<a href="{{ page_url(k) }}"{% if k == page and not detail %} aria-current="page"{% elif k == section %} class="is-section"{% endif %}>{{ nav_label(k) }}</a>{% endfor %}
+      {% for k in menu %}
+      {% if k == 'people' %}
+      {# People: 누르면(마우스를 올려도) 구성원 페이지 5개가 펼쳐지는 드롭다운. 동작은 assets/t5.js #}
+      {% set in_people = page == 'people' or page.startswith('people-') or person %}
+      <div class="nav-dd" data-dd>
+        <button class="nav-dd-btn{% if in_people %} is-section{% endif %}" type="button" aria-expanded="false" aria-controls="nav-dd-people">{{ nav_label(k) }}<svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4.2 6 8l4-3.8" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        <ul class="nav-dd-menu" id="nav-dd-people">
+          {% for pk in x.people_keys %}<li><a href="{{ x.people_url(pk)|trim }}"{% if pk == page or (pk == 'professor' and person and person.is_pi) %} aria-current="page"{% endif %}>{{ x.people_label(pk) }}</a></li>{% endfor %}
+        </ul>
+      </div>
+      {% else %}<a href="{{ page_url(k) }}"{% if k == page and not detail %} aria-current="page"{% elif k == section %} class="is-section"{% endif %}>{{ nav_label(k) }}</a>{% endif %}
+      {% endfor %}
     </div>
   </nav>
 </header>
@@ -71,7 +82,7 @@
     <div class="ftr-grid">
       <div>
         <h2 class="ftr-h">{{ t('common.menu') }}</h2>
-        <ul class="ftr-menu"><li><a href="{{ page_url('index') }}">{{ t('nav.index') }}</a></li>{% for k in menu %}<li><a href="{{ page_url(k) }}">{{ nav_label(k) }}</a></li>{% endfor %}<li><a href="{{ page_url('journals') }}">{{ x.L('desk') }}</a></li></ul>
+        <ul class="ftr-menu"><li><a href="{{ page_url('index') }}">{{ t('nav.index') }}</a></li>{% for k in menu %}<li><a href="{{ x.people_url('professor')|trim if k == 'people' else page_url(k) }}">{{ nav_label(k) }}</a></li>{% endfor %}<li><a href="{{ page_url('journals') }}">{{ x.L('desk') }}</a></li></ul>
       </div>
       <div>
         <h2 class="ftr-h">{{ t('contact.title') }}</h2>
@@ -96,6 +107,7 @@
   </div>
 </footer>
 {{ m.scripts_common() }}
+<script src="{{ asset('t5.js') }}" defer></script>
 {% block scripts_extra %}{% endblock %}
 </body>
 </html>

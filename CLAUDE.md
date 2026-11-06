@@ -16,7 +16,8 @@ bash -lc "module load anaconda3/2023.03 && python scripts/build.py --theme all" 
 bash -lc "module load anaconda3/2023.03 && python scripts/validate.py"               # 검증(오류 0이어야 함)
 git add -A && git commit -m "<무엇을 바꿨는지 한 줄>"                                   # 기록(push 안 함)
 ```
-배포 테마가 정해지면 `python scripts/build.py --theme <테마> --out dist`로 배포용 폴더를 만든다(배포 절차는 추후 결정).
+**확정 테마: `t5.v02`**(Science Magazine v02, 2026-11-06). 바뀐 화면은 이 테마로 확인한다: `node scripts/shot.mjs t5.v02 [page]`.
+배포용 폴더는 `python scripts/build.py --theme t5.v02 --out dist`로 만든다(배포 절차는 추후 결정).
 
 ## 요청 유형별 절차
 
