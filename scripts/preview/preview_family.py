@@ -129,7 +129,7 @@ else:
     limit_note = (f'미리보기 용량 제한(파일 511개) 때문에 공지·뉴스는 최근 {len(news)}편, 갤러리는 최근 {len(albums)}개만 넣었습니다'
                   f'(실제 사이트: 공지 {n_news_all}편, 앨범 {n_album_all}개).')
 
-INDEX = f'''<title>CSL 시안 {H.escape(family)}</title>
+INDEX = f'''<title>{'CSL 확정 시안' if one else 'CSL 시안 ' + H.escape(family)}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 레이아웃: 상단 띠 → 버전 카드 2장(눌러서 사이트 열기) → 안내 */
