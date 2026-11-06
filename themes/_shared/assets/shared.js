@@ -4,17 +4,28 @@
 
   // YouTube facade: 클릭하기 전에는 썸네일만 보여주고, 클릭하면 youtube-nocookie iframe으로 바꾼다.
   // 파일로 연 경우(file://, YouTube가 referrer 없는 삽입을 거부)와 외부 iframe을 막는 미리보기(window.CSL_NO_EMBED)에서는
-  // YouTube를 새 탭으로 연다.
+  // 재생 버튼을 YouTube로 가는 새 탭 링크로 바꿔 둔다(initYtLinks).
+  function noEmbed() { return location.protocol === 'file:' || !!window.CSL_NO_EMBED; }
+  function initYtLinks() {
+    if (!noEmbed()) return;
+    document.querySelectorAll('.yt-facade[data-yt] button.yt-play').forEach(function (btn) {
+      var a = document.createElement('a');
+      a.className = btn.className;
+      a.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(btn.closest('.yt-facade').getAttribute('data-yt'));
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.setAttribute('aria-label', (btn.getAttribute('aria-label') || 'YouTube') + ' (YouTube ↗)');
+      while (btn.firstChild) a.appendChild(btn.firstChild);
+      btn.replaceWith(a);
+    });
+  }
   document.addEventListener('click', function (e) {
+    if (noEmbed()) return;
     var btn = e.target.closest('.yt-play');
     if (!btn) return;
     var box = btn.closest('.yt-facade');
     var id = box && box.getAttribute('data-yt');
     if (!id) return;
-    if (location.protocol === 'file:' || window.CSL_NO_EMBED) {
-      window.open('https://www.youtube.com/watch?v=' + encodeURIComponent(id), '_blank', 'noopener');
-      return;
-    }
     var f = document.createElement('iframe');
     f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
     f.title = btn.getAttribute('aria-label') || 'YouTube video';
@@ -89,6 +100,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    initYtLinks();
     initPubSearch();
     initNavToggle();
     initNewsFilter();

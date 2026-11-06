@@ -1,8 +1,16 @@
 {% extends 'base.html' %}
 {% import '_t5.html' as x with context %}
-{# People은 드롭다운 메뉴(구성원 페이지 5개)만 쓴다. 예전 주소 people.html로 들어오면 교수 페이지로 보낸다 #}
-{% block head_extra %}{% set to = member_url(pi) %}{% if to %}<meta http-equiv="refresh" content="0; url={{ to }}">{% endif %}<meta name="robots" content="noindex">{% endblock %}
-{% block plead %}{% endblock %}
+{# People은 드롭다운 메뉴(구성원 페이지 5개)만 쓴다. 예전 주소 people.html로 들어오면 교수 페이지로 보낸다.
+   예전 앵커(#phd, #alumni …)는 해당 구성원 페이지로 #}
+{% block head_extra %}{% set to = member_url(pi) %}
+<script>(function () {
+  var m = {alumni: 'people-alumni', phd: 'people-phd', integrated: 'people-phd', ms: 'people-ms', undergrad: 'people-ms',
+           postdoc: 'people-researchers', researcher: 'people-researchers', staff: 'people-researchers'};
+  var h = location.hash.slice(1);
+  if (m[h]) location.replace(m[h] + '.html' + (h === 'alumni' ? '' : '#' + h));
+})();</script>
+{% if to %}<meta http-equiv="refresh" content="0; url={{ to }}">{% endif %}<meta name="robots" content="noindex">{% endblock %}
+{% block plead_wrap %}{% endblock %}
 {% block content %}
 <div class="wrap">{{ x.people_tabs('') }}</div>
 {% endblock %}

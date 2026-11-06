@@ -86,7 +86,7 @@ bash -lc "module load anaconda3/2023.03 && cd /data5/CSL_homepage/first_draft &&
 2. **모든 URL은 위 함수로 만든다**(상대경로). `/`로 시작하는 절대경로·하드코딩 금지 → file://로 열어도 동작해야 한다.
 3. 논문: 최신이 맨 위, 연도별 섹션(내림차순), 번호는 `p.num`(오래된 것 = 1). 검색 기능 유지(`data-pub-search`, `data-pub-item`, `data-pub-year`, `data-pub-count`, `data-pub-empty` — `m.pub_list`가 넣어 준다). 각 논문 요소 `id="pub-{{p.num}}"`.
 4. 언어 토글(`m.lang_switch()` 또는 `alt_url` 링크)을 모든 페이지 헤더에 둔다. 화면 문구는 `t()`/`tr()`로만 쓰고 하드코딩하지 않는다(테마 고유 장식 문구는 예외).
-5. YouTube는 `yt_html()`/`m.video_card()`(클릭해야 iframe 로드). 페이지 로드 시 iframe 자동 삽입 금지.
+5. YouTube는 `yt_html()`/`m.video_card()`(클릭해야 iframe 로드). 페이지 로드 시 iframe 자동 삽입 금지. 파일로 연 경우(`file://`)와 외부 iframe을 막는 미리보기(`window.CSL_NO_EMBED = true`, `scripts/preview/`가 넣음)에서는 `shared.js`가 재생 버튼을 YouTube 새 탭 링크로 바꾼다.
 6. 모바일 메뉴: 버튼 `data-nav-toggle aria-controls="nav-id" aria-expanded="false"` → 대상에 `data-open` 속성이 토글된다.
 7. 반응형: 폭 360px에서 가로 스크롤 없음, 좌우 여백 ≥ 16px. 라이트/다크(`prefers-color-scheme`) 둘 다 읽기 좋게(다크 전용 테마는 그 자체로 대비 확보).
 8. 빈 데이터 대응: 구성원·발표·뉴스가 0개여도 깨지지 않게(`{% else %}` + `t('common.empty')`). `placeholder: true` 항목에는 `m.sample_badge(x)`.

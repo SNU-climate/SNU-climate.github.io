@@ -45,13 +45,13 @@ BAR_CSS = ('#csl-pv{position:fixed;left:50%;transform:translateX(-50%);bottom:ca
 
 def bar(theme, rel):
     up = '../' * len(Path(rel).parts)
-    opts = ''.join(f'<option value="{t}"{" selected" if t == theme else ""}>{H.escape(metas[t].get("title") or t)}</option>'
-                   for t in themes)
     head = (f'<style>{BAR_CSS}</style><nav id="csl-pv" aria-label="시안 전환">'
             f'<a href="{up}index.html">← {H.escape(family)}</a>'
             f'<a class="pv-all" href="{main_url}" target="_blank" rel="noopener">전체 시안 ↗</a>')
     if len(themes) == 1:       # 버전이 하나면 바꾸기 목록 없음
         return head + '</nav>'
+    opts = ''.join(f'<option value="{t}"{" selected" if t == theme else ""}>{H.escape(metas[t].get("title") or t)}</option>'
+                   for t in themes)
     return (head +
             f'<label for="csl-pv-s">다른 버전으로 보기</label><select id="csl-pv-s" data-up="{up}" data-rel="{rel}">{opts}</select></nav>'
             '<script>(function(){var s=document.getElementById("csl-pv-s");s.addEventListener("change",function(){'
@@ -80,7 +80,8 @@ for theme in themes:
         # 테마 루트 기준 'static/…', 'assets/shared/…' → 미리보기 루트 기준(한 단계 위). 속성·인라인 JSON·url() 모두
         t = re.sub(r'(["\'(])((?:\.\./)*)static/', r'\1\2../static/', t)
         t = re.sub(r'(["\'(])((?:\.\./)*)assets/shared/', r'\1\2../shared/', t)
-        snippet = f'<script>window.CSL_PAGES={json.dumps(pages)};window.CSL_NO_EMBED=true;</script>' + bar(theme, rel)
+        pages_js = f'window.CSL_PAGES={json.dumps(pages)};' if len(themes) > 1 else ''
+        snippet = f'<script>{pages_js}window.CSL_NO_EMBED=true;</script>' + bar(theme, rel)
         t = t.replace('</body>', snippet + '</body>', 1) if '</body>' in t else t + snippet
         f.write_text(t, encoding='utf-8')
 
@@ -99,7 +100,7 @@ cards = []
 for theme in themes:
     m = metas[theme]
     ver = theme.split('.', 1)[1] if '.' in theme else ''
-    kind = {'v01': '정제판', 'v02': '확장판'}.get(ver, '')
+    kind = '확정 시안' if len(themes) == 1 else {'v01': '정제판', 'v02': '확장판'}.get(ver, '')
     concept = m.get('concept') or {}
     desc = concept.get('ko') if isinstance(concept, dict) else concept
     cards.append(f'''      <article class="card">
@@ -153,6 +154,7 @@ h2 {{ margin:0; font-size:1.2rem; }} .body p {{ margin:0; color:var(--muted); fo
 .grid--one .card {{ grid-template-columns:minmax(0, 1.5fr) minmax(0, 1fr); }}
 .grid--one .thumb {{ border-bottom:0; border-right:1px solid var(--line); }}
 .grid--one .body {{ align-content:center; padding:28px; }}
+.grid--one .thumb .m {{ bottom:12px; }}
 @media (max-width:720px) {{ .grid {{ grid-template-columns:1fr; }} .grid--one .card {{ grid-template-columns:1fr; }} .grid--one .thumb {{ border-right:0; border-bottom:1px solid var(--line); }} }}
 </style>
 <header class="band"><div class="wrap">

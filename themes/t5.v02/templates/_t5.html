@@ -172,36 +172,33 @@
 {% endmacro %}
 
 {# 구성원 페이지 5개(People 드롭다운·탭 순서). professor = 교수 개인 페이지(people/<id>.html), 나머지는 extra_pages.
-   역할 묶음: 페이지 키 → 들어가는 역할(member_groups 순서대로 소제목). 페이지 제목은 i18n nav.<키> #}
+   역할 → 페이지: 학생 역할만 적고, 나머지 역할(postdoc·researcher·staff, 새로 생기는 역할)은 모두 people-researchers.
+   페이지 안에서는 member_groups 순서대로 역할별 소제목. 페이지 제목은 i18n nav.<키> #}
 {% set people_keys = ['professor', 'people-researchers', 'people-phd', 'people-ms', 'people-alumni'] %}
-{% set people_groups = [
-  ('people-researchers', ['postdoc', 'researcher', 'staff']),
-  ('people-phd', ['phd', 'integrated']),
-  ('people-ms', ['ms', 'undergrad'])] %}
+{% set _ROLE_PAGE = {'phd': 'people-phd', 'integrated': 'people-phd', 'ms': 'people-ms', 'undergrad': 'people-ms'} %}
 {% macro people_label(k) %}{{ t('menu.professor') if k == 'professor' else t('nav.' ~ k) }}{% endmacro %}
 {% macro people_url(k) %}{{ member_url(pi) if k == 'professor' else page_url(k) }}{% endmacro %}
 {# 그 사람이 속한 구성원 페이지 키 #}
-{% macro people_key(p) %}{% if p.is_pi %}professor{% elif p.alumnus %}people-alumni{% else %}{% for k, roles in people_groups if p.role in roles %}{% if loop.first %}{{ k }}{% endif %}{% else %}people-researchers{% endfor %}{% endif %}{% endmacro %}
+{% macro people_key(p) %}{% if p.is_pi %}professor{% elif p.alumnus %}people-alumni{% else %}{{ _ROLE_PAGE.get(p.role, 'people-researchers') }}{% endif %}{% endmacro %}
 {# 페이지별 인원(교수 페이지는 빈 문자열) #}
-{% macro people_n(k) %}{% if k == 'people-alumni' %}{{ alumni|length }}{% elif k != 'professor' %}{% set ns = namespace(n=0) %}{% for g, roles in people_groups if g == k %}{% for role, ms in member_groups if role in roles %}{% set ns.n = ns.n + ms|length %}{% endfor %}{% endfor %}{{ ns.n }}{% endif %}{% endmacro %}
-{% macro people_lead(k) %}{% set n = people_n(k)|trim|int %}{% if lang == 'en' %}{{ n }} {{ 'alumni' if k == 'people-alumni' else ('member' if n == 1 else 'members') }}{% else %}{{ n }}명{% endif %}{% endmacro %}
+{% macro people_n(k) %}{% if k == 'people-alumni' %}{{ alumni|length }}{% elif k != 'professor' %}{% set ns = namespace(n=0) %}{% for role, ms in member_groups if _ROLE_PAGE.get(role, 'people-researchers') == k %}{% set ns.n = ns.n + ms|length %}{% endfor %}{{ ns.n }}{% endif %}{% endmacro %}
+{% macro people_lead(k) %}{% set n = people_n(k)|trim|int %}{% set al = k == 'people-alumni' %}{% if lang == 'en' %}{{ n }} {{ ('alumnus' if al else 'member') if n == 1 else L('alumni_n' if al else 'members_n') }}{% else %}{{ n }}{{ L('members_n') }}{% endif %}{% endmacro %}
 
 {# 구성원 페이지 탭(5개 페이지 오가기) #}
 {% macro people_tabs(active) %}
-<nav class="ptabs" aria-label="{{ t('nav.people') }}">
+<nav class="ptabs ptabs--people" aria-label="{{ t('nav.people') }}">
   {% for k in people_keys %}<a href="{{ people_url(k) }}"{% if k == active %} aria-current="page"{% endif %}>{{ people_label(k) }}{% if k != 'professor' %} <span>{{ people_n(k) }}</span>{% endif %}</a>{% endfor %}
 </nav>
 {% endmacro %}
 
 {# 역할 묶음 페이지 본문(Researchers / Ph.D. / M.S.). 역할이 둘 이상 섞이면 역할별 소제목 #}
 {% macro people_page(key) %}
-{% set ns = namespace(roles=[], present=0) %}
-{% for g, rs in people_groups if g == key %}{% set ns.roles = rs %}{% endfor %}
-{% for role, ms in member_groups if role in ns.roles %}{% set ns.present = ns.present + 1 %}{% endfor %}
+{% set ns = namespace(present=0) %}
+{% for role, ms in member_groups if _ROLE_PAGE.get(role, 'people-researchers') == key %}{% set ns.present = ns.present + 1 %}{% endfor %}
 <div class="wrap">
   {{ people_tabs(key) }}
   <section class="team">
-    {% for role, ms in member_groups if role in ns.roles %}
+    {% for role, ms in member_groups if _ROLE_PAGE.get(role, 'people-researchers') == key %}
     <div class="team-group" id="{{ role }}">
       {% if ns.present > 1 %}<h2 class="team-role">{{ t('people.role.' ~ role) }} <span>{{ ms|length }}</span></h2>{% endif %}
       <div class="member-grid">{% for mm in ms %}{{ m.member_card(mm) }}{% endfor %}</div>

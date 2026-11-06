@@ -23,7 +23,7 @@
     <dl class="numbers-row">
       <div><dt>{{ t('pubs.title') }}</dt><dd><a href="{{ page_url('publications') }}">{{ stats.pubs }}</a></dd><dd class="numbers-sub">{{ stats.first_year }}–{{ stats.last_year }}</dd></div>
       <div><dt>{{ x.L('journals_t') }}</dt><dd>{{ stats.journals }}</dd>{% if stats.top_journals %}<dd class="numbers-sub">{{ x.L('top') }} {{ stats.top_journals[0][0] }} ({{ stats.top_journals[0][1] }})</dd>{% endif %}</div>
-      <div><dt>{{ t('people.members') }}</dt><dd><a href="{{ page_url('people-researchers') }}">{{ stats.members }}</a></dd><dd class="numbers-sub">+ {{ stats.alumni }} {{ t('people.alumni')|lower if lang == 'en' else '졸업생' }}</dd></div>
+      <div><dt>{{ t('people.members') }}</dt><dd><a href="{{ x.people_url('professor')|trim }}">{{ stats.members }}</a></dd><dd class="numbers-sub">+ {{ stats.alumni }} {{ t('people.alumni')|lower if lang == 'en' else '졸업생' }}</dd></div>
       <div><dt>{{ t('videos.title') }}</dt><dd><a href="{{ page_url('videos') }}">{{ stats.videos }}</a></dd><dd class="numbers-sub">YouTube</dd></div>
     </dl>
   </section>
