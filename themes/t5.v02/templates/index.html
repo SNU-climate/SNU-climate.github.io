@@ -3,12 +3,26 @@
 {% block pagehead %}{% endblock %}
 
 {% block content %}
-{# 커버 기사: 최신 소식 8편을 좌우로 넘겨 본다. 가장 최근 해의 소식부터, 8편이 안 되면 전년도까지만(그보다 오래된 글은 넣지 않음) #}
-{% set ns = namespace(covers=[], pics=[], briefs=[]) %}
+{# 커버 기사: 내용이 있는 최근 소식 8편을 좌우로 넘겨 본다(가장 최근 해와 전년도만, 날짜순).
+   ① 유튜브 영상이 있거나 논문 출판 소식인 뉴스 ② 해설 영상이 있는 논문(Watch & Read) ③ 8편이 안 되면 최근 논문으로 채운다.
+   같은 논문(DOI)은 한 번만. 항목: {k: 정렬용 날짜, news: 뉴스} 또는 {k, pub: 논문, video: 해설 영상} #}
 {% set top_year = news_items[0].year if news_items else 0 %}
-{% for p in news_items if p.year >= top_year - 1 and ns.covers|length < 8 %}{% set ns.covers = ns.covers + [p] %}{% endfor %}
-{% set covers = ns.covers %}
-{% set cover_slugs = covers|map(attribute='slug')|list %}
+{% set ns = namespace(items=[], dois=[], pics=[], briefs=[]) %}
+{% for p in news_items if p.year >= top_year - 1 and (p.youtube or p.category == 'paper') %}
+  {% set ns.items = ns.items + [{'k': p.date|string, 'news': p}] %}
+  {% if p.doi %}{% set ns.dois = ns.dois + [p.doi|lower] %}{% endif %}
+{% endfor %}
+{% for v in videos if v.pub and v.pub.year >= top_year - 1 and (v.pub.doi or '')|lower not in ns.dois %}
+  {% set ns.items = ns.items + [{'k': (v.pub.date or v.pub.year)|string, 'pub': v.pub, 'video': v}] %}
+  {% set ns.dois = ns.dois + [(v.pub.doi or '')|lower] %}
+{% endfor %}
+{% for q in pubs if ns.items|length < 8 and q.year >= top_year - 1 and (q.doi or '')|lower not in ns.dois %}
+  {% set ns.items = ns.items + [{'k': (q.date or q.year)|string, 'pub': q}] %}
+{% endfor %}
+{% set covers = (ns.items|sort(attribute='k', reverse=True))[:8] %}
+{% set cover_slugs = covers|selectattr('news')|map(attribute='news')|map(attribute='slug')|list %}
+{# 커버에 쓴 영상(뉴스의 youtube, 논문 해설 영상)은 아래 Watch 줄에서 뺀다 #}
+{% set cover_vids = (covers|selectattr('news')|map(attribute='news')|map(attribute='youtube')|select|list) + (covers|selectattr('video')|map(attribute='video')|map(attribute='id')|list) %}
 {% for p in news_items if p.slug not in cover_slugs %}
   {% if (p.cover or p.youtube) and ns.pics|length < 2 %}{% set ns.pics = ns.pics + [p] %}
   {% elif ns.briefs|length < 5 %}{% set ns.briefs = ns.briefs + [p] %}{% endif %}
@@ -35,7 +49,8 @@
   {% set n = covers|length %}
   <section class="cover" aria-label="{{ x.L('cover') }}"{% if n > 1 %} aria-roledescription="carousel" data-cover{% endif %}>
     <div class="cover-track"{% if n > 1 %} data-cover-track tabindex="0" role="group" aria-label="{{ x.L('cover') }} 1–{{ n }}"{% endif %}>
-      {% for p in covers %}{% set c = cover_url(p) %}
+      {% for it in covers %}
+      {% if it.news %}{% set p = it.news %}{% set c = cover_url(p) %}
       <article class="cover-story"{% if n > 1 %} aria-roledescription="slide" aria-label="{{ loop.index }} / {{ n }}: {{ tr(p.title) }}"{% endif %}>
         <a class="cover-link" href="{{ news_url(p) }}">
           {% if c %}<div class="cover-img"><img src="{{ c }}" alt=""{% if not loop.first %} loading="lazy"{% endif %}></div>
@@ -51,6 +66,22 @@
           </div>
         </a>
       </article>
+      {% else %}{% set q = it.pub %}{% set v = it.video %}
+      {# 논문 소개: 해설 영상이 있으면 영상 썸네일 + Watch & Read(영상 페이지), 없으면 학술지 글자 표지 + 논문 링크(새 탭) #}
+      <article class="cover-story"{% if n > 1 %} aria-roledescription="slide" aria-label="{{ loop.index }} / {{ n }}: {{ strip_tags(q.title) }}"{% endif %}>
+        <a class="cover-link" href="{{ page_url('videos') ~ '#v-' ~ v.id if v else doi_url(q) or pub_url(q) }}"{% if not v and q.doi %} target="_blank" rel="noopener"{% endif %}>
+          {% if v %}<div class="cover-img"><img src="{{ video_thumb(v) }}" alt=""{% if not loop.first %} loading="lazy"{% endif %}></div>
+          {% else %}<div class="cover-img cover-img--type" aria-hidden="true"><span class="cover-type-k">{{ t('news.category.paper') }}</span><span class="cover-type-src">{{ q.journal }}</span><span class="cover-type-date">{{ fmt_date((q.date or q.year)|string) }}</span></div>{% endif %}
+          <div class="cover-text">
+            <p class="cover-label">{{ x.L('cover') }}</p>
+            <div class="kicker"><span class="kicker-cat">{{ t('news.category.paper') }}</span><span>{{ q.journal }}</span>{% if q.date %}<time datetime="{{ q.date }}">{{ fmt_date(q.date) }}</time>{% endif %}</div>
+            <h2 class="cover-title cover-title--paper">{{ rich(q.title) }}</h2>
+            <p class="cover-dek cover-dek--authors">{{ authors(q, 6) }}</p>
+            <span class="story-more">{{ x.L('watch_read') if v else x.L('read_paper') }} <span aria-hidden="true">{{ '→' if v else '↗' }}</span></span>
+          </div>
+        </a>
+      </article>
+      {% endif %}
       {% endfor %}
     </div>
     {% if n > 1 %}
@@ -90,7 +121,7 @@
       <a class="sec-more" href="{{ page_url('videos') }}">{{ t('home.view_all') }} <span aria-hidden="true">→</span></a>
     </div>
     <div class="watch-row">
-      {% for v in videos[:site.home.videos] %}{{ m.video_card(v) }}{% endfor %}
+      {% for v in (videos|rejectattr('id', 'in', cover_vids)|list)[:site.home.videos] %}{{ m.video_card(v) }}{% endfor %}
       <a class="watch-channel" href="{{ channel.url or site.links.youtube }}" target="_blank" rel="noopener">
         <span class="watch-channel-icon" aria-hidden="true"></span>
         <span class="watch-channel-n">{{ stats.videos }}</span>

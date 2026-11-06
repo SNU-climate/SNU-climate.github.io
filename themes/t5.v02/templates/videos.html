@@ -15,7 +15,7 @@
     {{ x.sec_head(x.L('watch_read') ~ ' · ' ~ paired|length, hid='wr-h') }}
     <p class="wr-lead">{{ x.L('watch_read_lead') }}</p>
     {% for v in paired %}{% set p = v.pub %}
-    <article class="wr-pair">
+    <article class="wr-pair" id="v-{{ v.id }}">
       <div class="wr-video">
         {{ yt_html(v.id, v.title) }}
         <h3 class="video-card-title" lang="{{ text_lang(v.title) }}"><a href="{{ youtube_url(v.id) }}" target="_blank" rel="noopener">{{ v.title }}</a></h3>
