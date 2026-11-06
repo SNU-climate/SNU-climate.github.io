@@ -19,7 +19,7 @@
 
 ## 범위(이것만 본다)
 ```bash
-git -C /data5/CSL_homepage/first_draft diff 7584534..HEAD -- themes/t5.v02 themes/_shared/assets/shared.js data/i18n.yaml scripts/preview/preview_family.py
+git -C /data5/CSL_homepage/first_draft diff b54c80a..HEAD -- themes/t5.v02 themes/_shared/assets/shared.js data/i18n.yaml scripts/preview/preview_family.py
 ```
 - 핵심 파일:
   - `themes/t5.v02/templates/`: `base.html`, `index.html`, `_t5.html`(people_* 매크로), `people*.html`, `member.html`, `about.html`

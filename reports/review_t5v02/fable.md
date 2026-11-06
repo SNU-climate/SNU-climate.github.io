@@ -1,6 +1,6 @@
 # t5.v02 리뷰 — Fable
 
-범위: `git diff 7584534..148a7a8 -- themes/t5.v02 themes/_shared/assets/shared.js data/i18n.yaml scripts/preview/preview_family.py`
+범위: `git diff b54c80a..6b1e5f0 -- themes/t5.v02 themes/_shared/assets/shared.js data/i18n.yaml scripts/preview/preview_family.py`
 확인 방법: 스크래치 빌드(`build.py --theme t5.v02 --out …/review_fable/site`) + Playwright(chromium 1.48) 자동 점검 + 로컬 http 서버.
 점검 스크립트·캡처: `/tmp/claude-1500/-data5-CSL-homepage/3efc62de-b047-4116-9c2c-f3e7d402120c/scratchpad/review_fable/{check.mjs,check2.mjs,check3.mjs,shots/}`.
 저장소 파일은 이 보고서 외에 건드리지 않았다.

@@ -1,6 +1,6 @@
 # t5.v02 3자 리뷰 반영 요약 (2026-11-06)
 
-**리뷰 범위**: `7584534..148a7a8`. 지시서는 `reports/briefs/review_t5v02_task.md`다.
+**리뷰 범위**: `b54c80a..6b1e5f0`. 지시서는 `reports/briefs/review_t5v02_task.md`다.
 **리뷰어**: 세 명이 서로의 결과를 보지 않고 병렬로 검토했다.
 - Fable(`fable.md`): 10건
 - Opus(`opus.md`): 14건

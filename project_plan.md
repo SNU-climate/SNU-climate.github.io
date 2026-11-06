@@ -148,7 +148,7 @@ first_draft/
 - 유튜브: file://에서는 재생 클릭 시 새 탭(popup) 이벤트가 생기는지, 로컬 http 서버에서는 iframe이 들어가는지 Playwright로 확인한다(외부망 접속 여부는 결과에 적는다).
 - artifact: 파일 수 511개 이하, linkcheck 0. 전환 막대와 유튜브 새 탭 동작은 사용자 브라우저에서 최종 확인한다(claude.ai 로그인이 필요해 내가 확인할 수 없다).
 
-**진행 기록(2026-11-06)**: 1~9 완료(커밋 148a7a8 → 9812c9b → 5138d51).
+**진행 기록(2026-11-06)**: 1~9 완료(커밋 6b1e5f0 → 1020230 → a67dca0).
 - 계획 대비 변경:
   - 사용자 요청으로 홈 PI 줄은 옮기지 않고 삭제했다.
   - People 클릭 시 하위 목록만 펼치고, 마우스를 올려도 펼친다(올려서 연 메뉴를 누르면 고정).
@@ -156,5 +156,11 @@ first_draft/
 - 리뷰: Fable 10건, Opus 14건, Codex 2건 중 16항목 반영, 3항목 사유 기록. 정리는 `reports/review_t5v02/summary.md`
 - 전용 artifact: https://claude.ai/artifact/FqGJhpW2DekCscmREc2MW9 (공지 99편 전부, 앨범 9개, 파일 496개). 전체 시안 목록 맨 위에 링크를 걸었다.
 
-## 사용자 결정 대기(백업 이후)
-- 배포 방식(학교 웹호스팅 업로드 방식), 9종 중 최종 테마 선택, 구성원 사진·소개 문구 확정.
+### 배포 — GitHub Pages (2026-11-06)
+- 결정: 계산 서버 직접 운영은 하지 않는다(CentOS Linux 8 지원 종료, 방화벽 개방 부담). 연구실 무료 조직 `SNU-climate`(교수님 Owner 예정)의 공개 저장소 `SNU-climate.github.io`에 원본을 올리고, GitHub Actions(`.github/workflows/pages.yml`)가 t5.v02를 빌드·검증해 https://snu-climate.github.io 로 배포한다. PR은 빌드·검증만 한다.
+- 협업: 이슈 양식 4종(논문·뉴스·구성원·발표), `CONTRIBUTING.md`(웹 수정→PR, Claude Code 사용법).
+- 공개 전 정리: 커밋 작성자 이메일을 GitHub noreply로 바꿔 이력을 다시 썼다(문서 속 커밋 해시도 새 해시로 교체). `backup/`·`csl1234.zip`·`site/`는 제외.
+- 도메인: `climate.snu.ac.kr`은 2026-11-06 현재 학교 DNS에서 삭제된 상태다. 마이스누 "홈페이지 운영신청"(유효기간 1년, 매년 연장)으로 CNAME `climate.snu.ac.kr` → `snu-climate.github.io`와 GitHub 도메인 검증 TXT를 신청한다(임시 도메인명 `snu-climate.github.io`, 메일 구분 TXT, 서비스포트·SSL 체크 안 함).
+
+## 사용자 결정 대기
+- 교수님 Owner 초대, 도메인 검증 TXT 발급 후 학교 운영신청 제출, main 브랜치 보호 규칙, 구성원 사진·소개 문구 확정.

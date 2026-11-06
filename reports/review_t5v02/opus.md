@@ -1,6 +1,6 @@
 # t5.v02 리뷰 — Opus
 
-범위: `git diff 7584534..148a7a8 -- themes/t5.v02 themes/_shared/assets/shared.js data/i18n.yaml scripts/preview/preview_family.py`
+범위: `git diff b54c80a..6b1e5f0 -- themes/t5.v02 themes/_shared/assets/shared.js data/i18n.yaml scripts/preview/preview_family.py`
 확인 방법: 스크래치 폴더에 다시 빌드했고 결과가 `site/t5.v02`와 같았다. `validate.py --theme t5.v02`는 오류 0이다. Playwright(Chromium)로 1440·1180·1100·1000·900·861·860·390·360px, EN/KO, 다크, JS 끔, reduced-motion을 확인했다. `python -m http.server`로 실제 http 동작도 확인했다. 점검 스크립트와 캡처는 `/tmp/claude-1500/-data5-CSL-homepage/3efc62de-b047-4116-9c2c-f3e7d402120c/scratchpad/review_opus/`(`check1.mjs`, `stale.mjs`, `shots/`)에 있다.
 
 ## 지적 (심각도순, 15개 이내)
@@ -84,7 +84,7 @@
 ### 12. [낮음] 쓰이지 않게 된 CSS, 하드코딩 문구, 낡은 주석
 - 위치: `themes/t5.v02/assets/style.css:115`(`.jump a`), `:421-426`(`.jump*`), `:428`·`:672`·`:674`(`.profile--card`), `:445`(`.profile-more`), `:449-450`(`.interest-list--compact`), `:476`(`.team--alumni`), `:734`, `:93`; `templates/_t5.html:23-24, 187`
 - 문제: 옛 people.html에서만 쓰던 규칙이 남아 있다. `people_lead`는 'member/members/alumni/명'을 직접 쓴다. 그런데 같은 뜻의 `_L.members_n`·`_L.alumni_n`은 쓰이지 않고 남아 있다. `.ptabs` 앞 주석은 여전히 "/* 논문 탭 */"인데 이제 People 탭도 쓴다. `.ptabs-wrap` 규칙은 nav 절에 들어가 있다. 상태 클래스 이름도 `dd-js`와 `cover--js`로 서로 다르다.
-- 재현: `git grep -e jump -e profile--card -e team--alumni 148a7a8 -- themes/t5.v02/templates`의 결과가 없다.
+- 재현: `git grep -e jump -e profile--card -e team--alumni 6b1e5f0 -- themes/t5.v02/templates`의 결과가 없다.
 - 수정안: 위 규칙을 지운다. `people_lead`는 `L('members_n')`·`L('alumni_n')`을 쓴다. 주석은 "논문·구성원 탭"으로 바꾸고 `.ptabs-wrap`은 v02 탭 절로 옮긴다. `dd-js`는 `nav-dd--js`로 바꾼다.
 
 ### 13. [낮음] 미리보기 스크립트의 테마 1개 모드: 쓰지 않는 `CSL_PAGES`가 HTML의 22%를 차지하는 등
