@@ -162,7 +162,9 @@ first_draft/
 - 공개 전 정리: 커밋 작성자 이메일을 GitHub noreply로 바꿔 이력을 다시 썼다(문서 속 커밋 해시도 새 해시로 교체). `backup/`·`csl1234.zip`·`site/`는 제외.
 - 도메인: `climate.snu.ac.kr`은 2026-11-06 현재 학교 DNS에서 삭제된 상태다. 마이스누 "홈페이지 운영신청"(유효기간 1년, 매년 연장)으로 CNAME `climate.snu.ac.kr` → `snu-climate.github.io`와 GitHub 도메인 검증 TXT를 신청한다(임시 도메인명 `snu-climate.github.io`, 메일 구분 TXT, 서비스포트·SSL 체크 안 함).
 
-- main 보호(ruleset "main 보호", 2026-11-06): PR 필수(승인 1명, 새 push 시 승인 해제) + 자동 검사 `build` 통과 + 강제 push·삭제 금지. 조직 Owner·저장소 관리자는 우회(서버에서 바로 push 가능).
+- main 보호(2026-11-06), ruleset 2개.
+  - "main PR 규칙": PR 필수(승인 1명, 새 push 시 승인 해제) + 자동 검사 `build` 통과. 조직 Owner·저장소 관리자는 우회할 수 있다(서버에서 바로 push 가능).
+  - "main 이력 보호": 강제 push·삭제 금지. 우회할 수 있는 사람이 없다.
 
 ## 사용자 결정 대기
 - 교수님 Owner 초대, 도메인 검증 TXT 발급 후 학교 운영신청 제출, 구성원 사진·소개 문구 확정.
