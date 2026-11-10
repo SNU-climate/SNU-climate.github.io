@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% import '_t5.html' as x with context %}
 {% block ptitle %}{{ t('about.title') }}{% endblock %}
-{% block plead %}{{ tr(site.lab.tagline) }}{% endblock %}
+{# 슬로건은 맨 위 마스트헤드에 이미 있으므로 제목 아래 리드 문구는 두지 않는다 #}
+{% block plead_wrap %}{% endblock %}
 
 {% block content %}
 {% set pu = member_url(pi) %}
