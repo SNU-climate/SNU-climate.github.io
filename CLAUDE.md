@@ -86,3 +86,4 @@ python scripts/new_news.py --slug <영문-짧은-이름> --category paper --doi 
 `data/`(YAML) · `content/news/`(뉴스 글) · `static/`(사진·그림·썸네일) · `themes/`(디자인: 확정 테마 `t5.v02`와 공용 `_shared`만 둔다. 규약은 `themes/THEME_CONTRACT.md`) ·
 `scripts/`(빌드·검증·관리) · `site/`(빌드 결과, git 제외) · `project_plan.md`(계획)
 이전 시안 테마 26종·검토 보고서(`reports/`)·원본 백업(`backup/`)은 2026-11-11에 정리했다. 필요하면 `../first_draft_20261111`(정리 전 복사본)이나 git 이력에서 찾는다.
+**월 1회 백업**: 이 서버의 `.git/hooks/pre-push`가 push 직전에 이번 달 백업(`../first_draft_YYYYMMDD`)이 없으면 폴더 전체(`.git` 포함, `site/` 제외)를 복사한다. 실패해도 push는 막지 않는다. 훅은 git에 올라가지 않으므로 다른 곳에 clone하면 다시 만들어야 한다.
