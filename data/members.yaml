@@ -367,7 +367,7 @@ alumni:
       - {period: "2023.10–2025.09", en: "Schmidt AI in Science Postdoctoral Fellow, Scripps Institution of Oceanography, UC San Diego, U.S.A.", ko: "Schmidt AI in Science 박사후연구원, 미국 UC 샌디에이고 스크립스 해양연구소"}
       - {period: "2023.01–2023.09", en: "Postdoctoral Fellow, Scripps Institution of Oceanography, UC San Diego, U.S.A.", ko: "박사후연구원, 미국 UC 샌디에이고 스크립스 해양연구소"}
 
-  # 아래 두 명: 공개 자료 기준(2026-11-11 확인). Xin Geng은 NUIST 교수 페이지(사진 포함), Aoyun Xue는 UCSB Bren School 페이지·논문 소속(공개 사진 없음)
+  # 아래 두 명: 공개 자료 기준(2026-11-11 확인). Xin Geng은 NUIST 교수 페이지(사진 포함), Aoyun Xue는 UCSB Bren School 페이지·논문 소속(사진은 사용자 제공)
   - id: xin-geng
     name: {en: "Xin Geng"}
     degree: "Researcher"
@@ -394,8 +394,9 @@ alumni:
     name: {en: "Aoyun Xue"}
     degree: "Postdoc"
     year: 2023
-    current: {en: "Postdoctoral Researcher, Bren School of Environmental Science & Management, University of California, Santa Barbara, USA", ko: "미국 UC샌타바버라 Bren 환경과학·경영대학원 박사후연구원"}
-    homepage: "https://bren.ucsb.edu/people/aoyun-xue"
+    current: {en: "Nanjing University of Information Science & Technology (NUIST), China", ko: "중국 난징정보과학기술대학교(NUIST)"}   # 사용자 확인(2026-11-11)
+    photo: members/aoyun-xue.jpg   # 사진: 사용자 제공(2026-11-11)
+    homepage: "https://www.linkedin.com/in/aoyun-xue-olymp0822/"   # 사용자 제공(2026-11-11)
     interests:
       en: ["ENSO and its response to climate change", "Tropical instability waves", "Tropical Pacific air–sea interaction"]
       ko: ["ENSO와 기후변화에 대한 반응", "열대 불안정 파동", "열대 태평양 대기-해양 상호작용"]
