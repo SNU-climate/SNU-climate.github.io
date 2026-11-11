@@ -1,5 +1,0 @@
-title: "One-page Scroll"
-concept:
-  en: "Everything on a single scrolling page — hero, research, people, the ten latest papers, talks, news, videos and contact — with a sticky section bar that follows your position. Mobile-first with large touch targets; each section opens into a full detail page in the same style."
-  ko: "히어로·연구·구성원·최근 논문 10편·발표·뉴스·영상·연락처를 한 페이지에 담은 스크롤형 구성. 스티키 섹션 바가 현재 위치를 표시한다. 모바일 우선, 큰 터치 영역. 각 섹션은 같은 스타일의 상세 페이지로 이어진다."
-palette: ["#15171c", "#f7f5f0", "#2340c8", "#ffb43d", "#eceef6"]

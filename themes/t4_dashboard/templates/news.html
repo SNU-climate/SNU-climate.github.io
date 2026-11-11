@@ -1,5 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-{{ ui.page_head(t('news.title'), t('news.intro')) }}
-<div class="grid grid-3 news-grid">{% for p in news %}{{ m.news_card(p) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}</div>
-{% endblock %}

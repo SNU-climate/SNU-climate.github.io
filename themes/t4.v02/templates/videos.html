@@ -1,6 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-{{ ui.page_head(t('videos.title'), t('videos.intro'), [(t('nav.videos'), none)]) }}
-<p class="btn-row"><a class="btn btn-primary" href="{{ channel.url }}" target="_blank" rel="noopener">{{ t('videos.channel') }} <span aria-hidden="true">↗</span></a> <span class="muted"><span class="mono">{{ stats.videos }}</span> {{ ui.s('videos') }} · YouTube</span></p>
-<div class="grid grid-3">{% for v in videos %}{{ m.video_card(v) }}{% else %}<p class="empty">{{ t('common.empty') }}</p>{% endfor %}</div>
-{% endblock %}

@@ -1,7 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-{{ ui.page_head(t('pres.title'), t('pres.intro'), [(t('nav.presentations'), none)]) }}
-<div class="panel pres-panel">
-  {{ m.pres_list(pres_by_year) }}
-</div>
-{% endblock %}

@@ -1,7 +1,0 @@
-title: "Ocean–Atmosphere v01"
-concept:
-  en: "Refined Ocean–Atmosphere: news split from a separate photo Gallery and grouped by year with category filters, member cards with positions and profile pages (including the PI), and a Pacific-centred study-region band under every research topic. Shorter hero, a header that slides away while reading."
-  ko: "정제한 해양-대기 시안: 앨범을 갤러리로 분리하고 뉴스를 연도별 목록과 분류 필터로 정리했습니다. 구성원 카드에 직위와 개인 페이지(교수 포함)를 달고, 연구 주제마다 태평양 중심 연구 지역 띠를 넣었습니다. 히어로를 줄이고, 읽는 동안 헤더가 비켜나게 했습니다."
-palette: ["#04213f", "#0f6e8c", "#25b3a6", "#f39a4b", "#eaf5fc"]
-extra_pages: [about, gallery]
-pi_page: true

@@ -1,9 +1,0 @@
-title: "Interactive Globe v01"
-concept:
-  en: "Refined Interactive Globe on a light \"science map\" palette: a pale-blue globe with white land, navy coastlines and deep teal/orange accents on a white page; globe markers stay on the sphere and regions are named; news is grouped by year with category filters and albums move to a Gallery; each research area gets its own page with a large globe that turns to its study regions; members, alumni and the PI get profile pages; mobile publications open with the search box and a one-line year strip."
-  ko: "Interactive Globe 정제판(밝은 \"과학 지도\" 팔레트). 흰 바탕에 옅은 파랑 바다·흰 육지·남색 해안선의 지구본과 짙은 청록·주황 강조색을 쓴다. 지구본 마커가 구 안에만 보이고 지역 이름이 붙는다. 뉴스는 연도별·분류별로 묶고 앨범은 갤러리로 옮겼다. 연구 분야마다 큰 지구본이 해당 지역으로 도는 주제 페이지를 두고, 구성원·졸업생·교수 개인 페이지를 더했다. 모바일 논문 페이지는 검색창과 한 줄 연도 띠로 시작한다."
-palette: ["#ffffff", "#f5f8fb", "#00796b", "#c2410c", "#0b1a2e"]
-# 공통 8페이지 외 추가 페이지(템플릿이 있어야 함). 앨범 89편은 gallery로 분리된다.
-extra_pages: [gallery]
-# member.html이 있으므로 교수 개인 페이지 people/jong-seong-kug.html도 만든다(people 페이지에는 요약 카드만).
-pi_page: true

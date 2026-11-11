@@ -1,5 +1,0 @@
-title: "Interactive Globe"
-concept:
-  en: "Deep-space / deep-sea dark theme with a rotating orthographic globe hero (d3-geo + Natural Earth 110m). Each research area's regions glow on the globe and link to the topic; drag to rotate. Neon teal and orange accents, bold oversized type."
-  ko: "우주·심해 느낌의 어두운 테마. 회전하는 정사영 지구본 히어로(d3-geo + Natural Earth 110m)에 연구 분야별 대표 지역이 빛나는 점으로 표시되고 클릭하면 해당 연구로 이동, 드래그로 회전. 네온 청록·주황 포인트, 대담한 큰 타이포."
-palette: ["#03060f", "#0a1b33", "#2ef2d0", "#ff8a3d", "#eaf6ff"]

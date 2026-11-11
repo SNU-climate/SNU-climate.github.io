@@ -1,7 +1,0 @@
-title: "One-page Scroll v01"
-concept:
-  en: "Refined One-page Scroll for the real data: News (99) and Gallery (89) are separated with year groups and category filters, empty sections disappear, the home people list shows photos linked to new profile pages (including the PI), and the mobile header shrinks to one row while you scroll."
-  ko: "실제 데이터에 맞춘 원페이지 정제판. 뉴스 99건과 갤러리 89건을 나누고 연도 묶음·분류 필터를 달았으며, 빈 섹션은 숨긴다. 홈 구성원은 사진으로 바꿔 새 개인 페이지(교수 포함)로 연결하고, 모바일 상단 고정 영역은 스크롤할 때 한 줄로 줄어든다."
-palette: ["#15171c", "#f7f5f0", "#2340c8", "#ffb43d", "#eceef6"]
-extra_pages: [gallery]
-pi_page: true

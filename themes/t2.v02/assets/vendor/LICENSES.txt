@@ -1,5 +1,0 @@
-land-110m.svg
-  Natural Earth 1:110m land (public domain, https://www.naturalearthdata.com/)
-  via world-atlas@2.0.2 land-110m.json (TopoJSON by Mike Bostock, ISC License).
-  Converted to an equirectangular SVG path (viewBox 0 0 360 180: x = lon + 180, y = 90 - lat)
-  and simplified with themes/t2.v02/tools/land-110m.make.py (args: <world-110m.js> <out.txt> 1.4) (source: themes/t8_globe/assets/vendor/world-110m.js, read only).

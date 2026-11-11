@@ -12,8 +12,8 @@
 ## 명령 (항상 이 폴더에서)
 ```bash
 cd /data5/CSL_homepage/first_draft
-bash -lc "module load anaconda3/2023.03 && python scripts/build.py --theme all"      # 전체 빌드
-bash -lc "module load anaconda3/2023.03 && python scripts/validate.py"               # 검증(오류 0이어야 함)
+bash -lc "module load anaconda3/2023.03 && python scripts/build.py --theme t5.v02"   # 빌드(결과: site/t5.v02)
+bash -lc "module load anaconda3/2023.03 && python scripts/validate.py --theme t5.v02"  # 검증(오류 0이어야 함)
 git add -A && git commit -m "<무엇을 바꿨는지 한 줄>"                                   # 기록
 git push                                                                                 # 배포(학생이 바뀐 화면을 확인한 뒤)
 ```
@@ -61,7 +61,7 @@ python scripts/new_news.py --slug <영문-짧은-이름> --category paper --doi 
 
 ### 4) 구성원(입학·졸업)
 - `data/members.yaml`의 `members:`에 추가. `role`: postdoc / researcher / integrated / phd / ms / undergrad / staff.
-- `id: <영문-이름>`(소문자-하이픈)을 넣으면 개인 페이지 `people/<id>.html`이 생긴다(basic 테마). 개인 페이지 항목:
+- `id: <영문-이름>`(소문자-하이픈)을 넣으면 개인 페이지 `people/<id>.html`이 생긴다. 개인 페이지 항목:
   `position{en,ko}`, `email`, `homepage`, `interests{en:[...], ko:[...]}`, `education`·`career`·`awards`(`[{year 또는 period, en, ko}]`).
 - 사진: `static/members/<id>.jpg`(정사각형, 600px, JPEG 85) → `photo: members/<id>.jpg`.
 - `pub_name: "Family, I.-I."`를 넣으면 논문·발표 목록에서 이름이 굵게 표시되고, 개인 페이지에 참여 논문이 자동으로 붙는다.
@@ -78,10 +78,11 @@ python scripts/new_news.py --slug <영문-짧은-이름> --category paper --doi 
 
 ## 마무리 체크리스트
 - [ ] validate 오류 0 (경고는 내용 확인)
-- [ ] 바뀐 페이지를 EN/KO 둘 다 확인 (`site/<테마>/...html`, `site/<테마>/ko/...html`)
+- [ ] 바뀐 페이지를 EN/KO 둘 다 확인 (`site/t5.v02/...html`, `site/t5.v02/ko/...html`)
 - [ ] git commit → (학생 확인 후) git push
 - [ ] 학생에게 바뀐 내용과, 번역·추정한 부분이 있으면 그 사실을 알린다
 
 ## 폴더 요약
-`data/`(YAML) · `content/news/`(뉴스 글) · `static/`(사진·그림·썸네일) · `themes/`(디자인, 규약은 `themes/THEME_CONTRACT.md`) ·
-`scripts/`(빌드·검증·관리) · `site/`(빌드 결과, git 제외) · `reports/`(검증·대조 보고서) · `project_plan.md`(계획)
+`data/`(YAML) · `content/news/`(뉴스 글) · `static/`(사진·그림·썸네일) · `themes/`(디자인: 확정 테마 `t5.v02`와 공용 `_shared`만 둔다. 규약은 `themes/THEME_CONTRACT.md`) ·
+`scripts/`(빌드·검증·관리) · `site/`(빌드 결과, git 제외) · `project_plan.md`(계획)
+이전 시안 테마 26종·검토 보고서(`reports/`)·원본 백업(`backup/`)은 2026-11-11에 정리했다. 필요하면 `../first_draft_20261111`(정리 전 복사본)이나 git 이력에서 찾는다.

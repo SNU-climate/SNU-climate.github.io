@@ -1,6 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-<h1>{{ t('videos.title') }}</h1>
-<p class="lead">{{ t('videos.intro') }} <a href="{{ channel.url }}" target="_blank" rel="noopener">{{ t('videos.channel') }} →</a></p>
-<div class="grid grid-3">{% for v in videos %}{{ m.video_card(v) }}{% endfor %}</div>
-{% endblock %}
