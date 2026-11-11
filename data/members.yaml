@@ -88,6 +88,17 @@ members:
     interests:
       en: ["Climate change", "Climate dynamics", "Stratosphere–troposphere interaction"]
       ko: ["기후변화", "기후역학", "성층권-대류권 상호작용"]
+    # 학력·경력·과제 출처: 본인 홈페이지 https://www.me-lab.cn/caiqingyu (2026-11-11 확인)
+    education:
+      - {year: "2023", en: "Ph.D., Meteorology, Institute of Atmospheric Physics, Chinese Academy of Sciences, China", ko: "박사, 중국과학원 대기물리연구소 기상학"}
+      - {year: "2013", en: "B.S., Atmospheric Science, Nanjing University of Information Science & Technology, China", ko: "학사, 중국 난징정보과학기술대학교 대기과학"}
+    career:
+      - {period: "2023–", en: "Postdoctoral Researcher, School of Earth Sciences, Yunnan University, China", ko: "박사후연구원, 중국 윈난대학교 지구과학대학"}
+      - {period: "2013–2017", en: "Weather Forecaster, Inner Mongolia Meteorological Bureau, China", ko: "예보관, 중국 내몽골자치구 기상국"}
+    awards:
+      - {year: "2025–2027", en: "NSFC Young Scientists Fund: Trends and mechanisms of summer heatwaves in multiple regions of Eurasia", ko: "중국 국가자연과학기금 청년과학기금: 유라시아 여러 지역 여름 폭염의 추세와 메커니즘"}
+      - {year: "2024–2025", en: "Yunnan 'Caiyun' Postdoctoral Program (1st class): Climate attribution of spring biomass burning in Indochina", ko: "윈난성 '차이윈' 박사후 프로그램(1등급): 인도차이나 봄철 바이오매스 연소의 기후 원인 분석"}
+      - {year: "2024–2025", en: "Yunnan 'Caiyun' Postdoctoral Program (merit): Interaction between the stratospheric QBO and ENSO", ko: "윈난성 '차이윈' 박사후 프로그램(우수 지원): 성층권 준2년주기진동(QBO)과 ENSO의 상호작용"}
 
   - id: yechul-shin
     name: {en: "Yechul Shin", ko: "신예철"}
