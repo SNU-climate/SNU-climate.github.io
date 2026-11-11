@@ -78,6 +78,17 @@ members:
       - {year: "2017", en: "Best Paper Award, BK21 PLUS, Yonsei University", ko: "연세대학교 BK21 PLUS 우수논문상"}
       - {year: "2017", en: "Best Poster Award, Korean Society of Climate Change Research", ko: "한국기후변화학회 우수포스터상"}
 
+  - id: qingyu-cai
+    name: {en: "Qingyu Cai"}
+    role: researcher
+    position: {en: "Visiting Researcher (SNU) & Postdoctoral Researcher (Yunnan University)", ko: "방문연구원(서울대학교) · 박사후연구원(중국 윈난대학교)"}
+    photo: members/qingyu-cai.jpg
+    email: "caiqingyu@ynu.edu.cn"
+    homepage: "https://www.me-lab.cn/caiqingyu"
+    interests:
+      en: ["Climate change", "Climate dynamics", "Stratosphere–troposphere interaction"]
+      ko: ["기후변화", "기후역학", "성층권-대류권 상호작용"]
+
   - id: yechul-shin
     name: {en: "Yechul Shin", ko: "신예철"}
     role: researcher
