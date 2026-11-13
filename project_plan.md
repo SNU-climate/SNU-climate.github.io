@@ -161,11 +161,16 @@ first_draft/
 - 협업: 이슈 양식 4종(논문·뉴스·구성원·발표), `CONTRIBUTING.md`(웹 수정→PR, Claude Code 사용법).
 - 공개 전 정리: 커밋 작성자 이메일을 GitHub noreply로 바꿔 이력을 다시 썼다(문서 속 커밋 해시도 새 해시로 교체). `backup/`·`csl1234.zip`·`site/`는 제외.
 - 도메인: `climate.snu.ac.kr`은 2026-11-06 현재 학교 DNS에서 삭제된 상태다. 마이스누 "홈페이지 운영신청"(유효기간 1년, 매년 연장)으로 CNAME `climate.snu.ac.kr` → `snu-climate.github.io`와 GitHub 도메인 검증 TXT를 신청한다(임시 도메인명 `snu-climate.github.io`, 메일 구분 TXT, 서비스포트·SSL 체크 안 함).
+- 도메인 연결 완료(2026-11-13).
+  - 학교 DNS가 CNAME `climate.snu.ac.kr` → `snu-climate.github.io`와 TXT `_github-pages-challenge-snu-climate`를 반영했다.
+  - 저장소 Pages 설정: custom domain `climate.snu.ac.kr`. Let's Encrypt 인증서가 자동 발급됐다(만료 2027-02-11, GitHub이 자동 갱신). HTTPS 강제를 켰다.
+  - `snu-climate.github.io`는 새 도메인으로 301 이동한다.
+  - 학교 운영신청은 유효기간 1년이라 매년 연장해야 한다.
 
 - main 보호(2026-11-06), ruleset 2개.
   - "main PR 규칙": PR 필수(승인 1명, 새 push 시 승인 해제) + 자동 검사 `build` 통과. 조직 Owner·저장소 관리자는 우회할 수 있다(서버에서 바로 push 가능).
   - "main 이력 보호": 강제 push·삭제 금지. 우회할 수 있는 사람이 없다.
 
 ## 사용자 결정 대기
-- 교수님 Owner 초대, 도메인 검증 TXT 발급 후 학교 운영신청 제출, 구성원 사진·소개 문구 확정.
+- 교수님 Owner 초대, 조직 Settings → Pages에서 `climate.snu.ac.kr` 도메인 **Verify** 클릭(TXT는 이미 반영됨, 2026-11-13 기준 미검증), 구성원 사진·소개 문구 확정.
   - 운영신청은 학외 서버·IP 없음(GitHub Pages)이라 **직원만** 제출할 수 있다(shine.snu.ac.kr 안내, 2026-11-06). 학부 행정실 직원에게 대리 신청을 부탁하거나 ITSC(02-880-8282, itsc@snu.ac.kr)에 문의한다.

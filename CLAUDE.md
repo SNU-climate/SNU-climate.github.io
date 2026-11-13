@@ -18,7 +18,7 @@ git add -A && git commit -m "<무엇을 바꿨는지 한 줄>"                  
 git push                                                                                 # 배포(학생이 바뀐 화면을 확인한 뒤)
 ```
 **확정 테마: `t5.v02`**(Science Magazine v02, 2026-11-06). 바뀐 화면은 이 테마로 확인한다: `node scripts/shot.mjs t5.v02 [page]`.
-**배포**: GitHub `SNU-climate/SNU-climate.github.io`의 `main`에 push하면 GitHub Actions(`.github/workflows/pages.yml`)가 t5.v02를 빌드·검증해 https://snu-climate.github.io 로 1~2분 안에 배포한다. 테마를 바꾸려면 workflow의 `THEME` 한 줄만 고친다. 다른 구성원의 수정은 이슈 양식이나 Pull Request로 받는다(`CONTRIBUTING.md`). `main` 보호 규칙은 두 개다. "main PR 규칙": 일반 구성원은 PR + 자동 검사 `build` 통과 + 승인 1명이 있어야 병합된다. 조직 Owner(이 서버의 jongsooshin5 계정 포함)는 우회해 바로 push할 수 있다. "main 이력 보호": 강제 push(force push)와 main 삭제를 Owner를 포함한 **모두**에게 막는다. 그러니 이력을 다시 쓰지 말고 되돌릴 때는 `git revert`를 쓴다. 공개 저장소이므로 비밀번호·원본 백업·개인 이메일은 커밋하지 않는다.
+**배포**: GitHub `SNU-climate/SNU-climate.github.io`의 `main`에 push하면 GitHub Actions(`.github/workflows/pages.yml`)가 t5.v02를 빌드·검증해 https://climate.snu.ac.kr 로 1~2분 안에 배포한다(커스텀 도메인·HTTPS는 저장소 Pages 설정에 있으므로 CNAME 파일을 따로 두지 않는다). 테마를 바꾸려면 workflow의 `THEME` 한 줄만 고친다. 다른 구성원의 수정은 이슈 양식이나 Pull Request로 받는다(`CONTRIBUTING.md`). `main` 보호 규칙은 두 개다. "main PR 규칙": 일반 구성원은 PR + 자동 검사 `build` 통과 + 승인 1명이 있어야 병합된다. 조직 Owner(이 서버의 jongsooshin5 계정 포함)는 우회해 바로 push할 수 있다. "main 이력 보호": 강제 push(force push)와 main 삭제를 Owner를 포함한 **모두**에게 막는다. 그러니 이력을 다시 쓰지 말고 되돌릴 때는 `git revert`를 쓴다. 공개 저장소이므로 비밀번호·원본 백업·개인 이메일은 커밋하지 않는다.
 
 ## 요청 유형별 절차
 
