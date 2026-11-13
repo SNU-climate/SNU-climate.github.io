@@ -54,7 +54,7 @@ members:
       - {year: "2015", en: "Outstanding Research Award (Poster), Korean Meteorological Society Spring Meeting", ko: "한국기상학회 춘계학술대회 우수연구상(포스터)"}
 
   - id: jaeheung-park
-    name: {en: "Jaeheung Park", ko: "박재형"}
+    name: {en: "Jaeheung Park", ko: "박재흥"}
     role: researcher
     position: {en: "Research Professor", ko: "연구교수"}
     photo: members/jaeheung-park.jpg
@@ -209,8 +209,8 @@ members:
     pub_name: "Wang, S."
     email: "shwang@snu.ac.kr"
     interests:
-      en: ["Sea level", "Polar climate"]
-      ko: ["해수면", "극지 기후"]
+      en: ["Ice sheet modelling", "Antarctic ice sheet", "Sea level"]
+      ko: ["빙상 모델링", "남극 빙상", "해수면"]
     education:
       - {year: "2024", en: "M.S., Pohang University of Science and Technology (POSTECH), South Korea", ko: "석사, 포항공과대학교(POSTECH)"}
       - {year: "2022", en: "B.S., Department of Environment & Energy Engineering, Sungshin Women's University, South Korea", ko: "학사, 성신여자대학교 환경에너지공학과"}

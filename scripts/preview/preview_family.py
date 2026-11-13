@@ -75,6 +75,9 @@ if(!window.claude||!window.claude.use)return;
 var c=null;try{c=await window.claude.use("comments");}catch(e){}
 if(!c)return;
 b.hidden=false;
+// 리뷰는 일반 댓글로만 받고 편집자가 모아서 반영한다(2026-11-13). 댓글 창의 "Claude에게 보내기" 버튼은 claude.ai 화면이라 숨길 수 없어서,
+// 눌러도 Claude로 보내지 않고 일반 댓글로 남게 한다(handled:true). 이 기능이 없는 환경에서는 그대로 둔다.
+if("onSendToClaude" in c){try{c.onSendToClaude(function(){return {handled:true,reply:"Claude에게 보내지 않고 일반 리뷰로 남겼습니다. 편집자가 모아서 반영합니다."};});}catch(e){}}
 var on=false,hi=null,SEL="p,li,h1,h2,h3,h4,h5,figure,figcaption,img,dt,dd,td,th,blockquote,a,button,article,section,header,footer";
 function pick(t){if(!t||!t.closest||t.closest("[data-uncommentable]"))return null;return t.closest(SEL)||t;}
 function mark(el){if(hi)hi.classList.remove("csl-pick-hi");hi=el;if(hi)hi.classList.add("csl-pick-hi");}
