@@ -10,9 +10,9 @@
 5. 개인정보(전화번호, 개인 이메일, 사진)는 본인이 공개에 동의한 것만 넣는다.
 
 ## 명령 (항상 이 폴더에서)
-작업 폴더는 **각자 자기 계정에 받은 복사본**이다(예: `~/CSL_homepage`). 서버 공유 폴더 `/data5/CSL_homepage/first_draft`는 2026-11-13부터 보관용이라 거기서 작업하지 않는다. 처음 받는 법과 두 사람 작업 규칙은 `HANDOVER.md` 6절.
+작업 폴더는 **각자 자기 복사본** `/data5/CSL_homepage/CSL_homepage_<계정>`이다(예: `CSL_homepage_jsshin`, `CSL_homepage_gmbaek`). 남의 폴더에서 작업하지 않는다. 서버 공유 폴더 `/data5/CSL_homepage/first_draft`는 2026-11-13부터 보관용이라 거기서 작업하지 않는다. 처음 받는 법과 두 사람 작업 규칙은 `HANDOVER.md` 6절.
 ```bash
-cd ~/CSL_homepage
+cd /data5/CSL_homepage/CSL_homepage_$(whoami)
 git pull                                                                                 # 시작 전 최신 받기(커밋 안 한 변경이 있으면 먼저 사용자에게 묻는다)
 bash -lc "module load anaconda3/2023.03 && python scripts/build.py --theme t5.v02"   # 빌드(결과: site/t5.v02)
 bash -lc "module load anaconda3/2023.03 && python scripts/validate.py --theme t5.v02"  # 검증(오류 0이어야 함)

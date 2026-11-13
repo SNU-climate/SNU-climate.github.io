@@ -26,8 +26,8 @@ HTML(`site/`)은 빌드 결과라서 직접 고치지 않고, 아래 데이터 �
 
 ## 방법 3 — 내 컴퓨터에서 (Claude Code 사용 가능)
 ```bash
-git clone https://github.com/SNU-climate/SNU-climate.github.io.git ~/CSL_homepage   # 처음 한 번
-cd ~/CSL_homepage
+git clone https://github.com/SNU-climate/SNU-climate.github.io.git CSL_homepage   # 처음 한 번(연구실 서버에서는 /data5/CSL_homepage/CSL_homepage_<계정>)
+cd CSL_homepage
 pip install -r requirements.txt
 git pull                                    # 작업할 때마다 먼저 최신 받기
 git switch -c fix/<짧은-이름>               # 새 브랜치
@@ -37,7 +37,7 @@ git add -A && git commit -m "<무엇을 바꿨는지>"
 git push -u origin fix/<짧은-이름>          # 그다음 GitHub에서 Pull Request 열기
 ```
 Claude Code에서 이 폴더를 열고 "논문 나왔어요, DOI는 …"처럼 요청하면 `CLAUDE.md` 가이드대로 데이터 수정·빌드·검증까지 합니다.
-복사본은 각자 자기 계정에 받아 씁니다. 다른 사람과 같은 폴더를 함께 쓰지 않습니다(자세한 규칙은 [HANDOVER.md](HANDOVER.md) 6절).
+복사본은 각자 자기 폴더에 받아 씁니다. 다른 사람과 같은 폴더를 함께 쓰지 않습니다(자세한 규칙은 [HANDOVER.md](HANDOVER.md) 6절).
 
 ## 지켜 주세요
 - 정보를 추측해서 넣지 않습니다. 빠진 정보(날짜·저자·학회명)는 확인 후 넣습니다.

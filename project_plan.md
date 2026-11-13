@@ -184,7 +184,7 @@ first_draft/
 - 결정: 각자 자기 계정에 clone(`~/CSL_homepage`)하고 GitHub로만 주고받는다. 공유 폴더는 보관용. 미리보기 게시는 관리자 한 명이 GitHub 최신본 기준으로.
 - 변경: HANDOVER.md 6절(처음 설정·매번 작업·두 사람 규칙·충돌 해결·PR 방식) 전면 개편, 1·4·4-1·5·7·9절 경로·절차 수정. CLAUDE.md 명령에 pull·status·pull --rebase 추가. CONTRIBUTING.md 방법 3, scripts/review/REVIEW_CHECK.md 경로(`~/CSL_homepage`, `~/CSL_review_reports`), scripts/preview/README.md 게시 규칙.
 - 리뷰 기록 폴더를 `/data5/CSL_homepage/review_reports` → `/home/jsshin/CSL_review_reports`로 옮겼다(공개 저장소 밖).
-- 신종수 복사본: `/home/jsshin/CSL_homepage`(작성자 noreply 메일, 월 1회 백업 훅 복사).
+- 위치 규칙(사용자 요청, 같은 날): 복사본은 데이터 스토리지 `/data5/CSL_homepage/CSL_homepage_<계정>`, 리뷰 기록은 `/data5/CSL_homepage/CSL_review_reports_<계정>`. 신종수 복사본 `CSL_homepage_jsshin`(작성자 noreply 메일, 월 1회 백업 훅), 리뷰 기록 `CSL_review_reports_jsshin`. 다른 계정이 자기 폴더를 못 만들면 상위 폴더에 `chmod 1773`.
 
 ## 사용자 결정 대기
 - 교수님 Owner 초대, 조직 Settings → Pages에서 `climate.snu.ac.kr` 도메인 **Verify** 클릭(TXT는 이미 반영됨, 2026-11-13 기준 미검증), 구성원 사진·소개 문구 확정.
