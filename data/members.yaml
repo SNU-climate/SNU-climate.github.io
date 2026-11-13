@@ -544,6 +544,7 @@ alumni:
       en: ["Land–atmosphere interaction", "Land use change, deforestation", "Terrestrial carbon cycle"]
       ko: ["지면-대기 상호작용", "토지이용 변화·산림 벌채", "육상 탄소순환"]
     education:
+      - {year: "2026", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
       - {year: "2019", en: "M.S., Ulsan National Institute of Science and Technology (UNIST), South Korea"}
       - {year: "2017", en: "B.S., Chemistry, Chungbuk National University, South Korea"}
     career:
