@@ -268,7 +268,7 @@ DNS 운영신청은 학외 서버(GitHub Pages)라 **직원만** 제출할 수 �
 
 ## 9. 계정과 권한 — 인수할 때 받을 것
 
-- [ ] **GitHub**: `SNU-climate` 조직 Owner 권한(이전 담당자가 초대). 2026-11-13 현재 조직 구성원은 `jongsooshin5` 한 명이라, 관리자 GitHub 계정을 초대해야 합니다(조직 Settings → People → Invite member). Owner여야 `main`에 바로 push하고 Pages·보호 규칙을 바꿀 수 있습니다. 서버나 PC에서 `gh auth login`으로 본인 계정 인증.
+- [ ] **GitHub**: `SNU-climate` 조직 Owner 권한(이전 담당자가 초대). 관리자 `gmbaek100`(백경민)은 2026-11-13에 Owner로 초대했습니다(수락하면 완료). 그 전까지는 홈페이지 저장소의 외부 협력자(admin)로만 접근합니다. 새 관리자는 조직 Settings → People → Invite member에서 Owner로 초대합니다. Owner가 되면 비공개 리뷰 저장소에도 자동으로 접근됩니다. Owner여야 `main`에 바로 push하고 Pages·보호 규칙을 바꿀 수 있습니다. 서버나 PC에서 `gh auth login`으로 본인 계정 인증.
 - [ ] **복사본**: `/data5/CSL_homepage/CSL_homepage_<계정>`에 clone, 작성자 이름·noreply 메일 설정(6-1절).
 - [ ] **claude.ai**: SNU_CSL 조직 계정, 미리보기 artifact의 편집자 이상 권한(댓글 읽기·답글, 다시 게시, 보낸 사진 관리).
 - [ ] **리뷰 기록**: 비공개 저장소 `SNU-climate/homepage-reviews`를 `/data5/CSL_homepage/CSL_review_reports_<계정>`에 clone(4-1절). 조직 구성원이어야 접근할 수 있습니다.
