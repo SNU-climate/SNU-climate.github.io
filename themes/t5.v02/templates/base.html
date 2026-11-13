@@ -103,7 +103,7 @@
       </div>
     </div>
     <div class="ftr-bottom">
-      <span>© {{ build_date[:4] }} {{ t('common.copyright') }} · {{ t('common.credit') }}</span>
+      <span>© {{ build_date[:4] }} {{ t('common.copyright') }} · {{ t('common.credit') }}{% if site.contact.maintainer_email %} (<a href="mailto:{{ site.contact.maintainer_email }}">{{ site.contact.maintainer_email }}</a>){% endif %}</span>
       <span>{{ t('common.updated') }} {{ build_date }} · {{ m.lang_switch('ftr-lang') }}</span>
     </div>
   </div>

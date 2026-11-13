@@ -38,6 +38,7 @@ contact:
   pi_office: {room: {en: "Bldg. 501, Rm. 522", ko: "501동 522호"}, phone: "+82-2-880-6725"}
   lab_room: {room: {en: "Bldg. 501, Rm. 507", ko: "501동 507호"}, phone: "+82-2-880-8177"}
   email: "jskug@snu.ac.kr"
+  maintainer_email: "rudals92430@snu.ac.kr"   # 홈페이지 관리자 메일(푸터에 링크로 표시). 관리자 이름은 i18n.yaml common.credit
   map_url: "https://map.kakao.com/?q=서울대학교%20501동"
 
 links:
