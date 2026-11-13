@@ -7,7 +7,7 @@ artifact 한 개에는 파일을 511개까지만 넣을 수 있다. 그래서 �
 | 스크립트 | 용도 | 게시한 artifact |
 |---|---|---|
 | `preview_family.py <스냅숏> <출력> <공지 수> <앨범 수> <전체 목록 URL> <계열 이름> <테마...>` | 계열 하나의 v01·v02(첫 화면 포함) | 계열별 9개(아래) |
-| `preview_family.py <스냅숏> <출력> 99 9 <전체 목록 URL> 'Science Magazine v02' t5.v02` | 확정 시안 1개(테마 1개 모드: 전환 막대·카드 없이 artifact 첫 화면이 곧 사이트 홈). 공지는 전부, 앨범은 파일 505개 이하가 되게 | 확정 시안 https://claude.ai/artifact/DY6yy4sVdjhcwagM9XHjQD |
+| `preview_family.py <스냅숏> <출력> 99 7 <전체 목록 URL> 'Science Magazine v02' t5.v02` | 확정 시안 1개(테마 1개 모드: 전환 막대·카드 없이 artifact 첫 화면이 곧 사이트 홈). 공지는 전부, 앨범은 파일 511개 한도 안에 들게(2026-11-13 구성원이 늘어 9→7개) | 확정 시안 https://claude.ai/artifact/DY6yy4sVdjhcwagM9XHjQD |
 | `linkcheck.py <출력>` | 출력 폴더 안 상대 링크 검사 | — |
 | `diff_preview.py <이전 출력> <새 출력> [--json]` | 두 미리보기를 비교해 다시 게시할 파일(changed·added·removed) 목록. 날짜 표시만 다른 HTML은 제외 | — |
 
