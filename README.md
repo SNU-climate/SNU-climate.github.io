@@ -7,3 +7,4 @@
 - 배포: `main`에 반영되면 GitHub Actions가 `t5.v02` 테마를 빌드·검증해 GitHub Pages로 배포합니다.
 
 내용을 고치거나 추가하려면 [CONTRIBUTING.md](CONTRIBUTING.md)를 보세요.
+운영 방법(관리자, 리뷰·사진 받는 법, 정기 점검)은 [HANDOVER.md](HANDOVER.md)에 있습니다.

@@ -171,6 +171,12 @@ first_draft/
   - "main PR 규칙": PR 필수(승인 1명, 새 push 시 승인 해제) + 자동 검사 `build` 통과. 조직 Owner·저장소 관리자는 우회할 수 있다(서버에서 바로 push 가능).
   - "main 이력 보호": 강제 push·삭제 금지. 우회할 수 있는 사람이 없다.
 
+### 인수인계 문서 + 미리보기 사진 업로드 (2026-11-13)
+- 계획: 운영 방법을 `HANDOVER.md`로 정리한다(관리자 백경민, 리뷰는 미리보기 "의견 남기기", 수시는 연락 후 반영, 정기는 매주 월 09:00, 사진 전달, 배포·도메인·권한·남은 일). 댓글에는 사진을 못 붙이므로 미리보기에 "사진 보내기"를 추가한다. 주간 예약 작업은 만들지 않고 설정 방법과 프롬프트만 문서에 둔다.
+- 진행: `preview_family.py`에 `UPLOAD_HTML`·`UPLOAD_JS` 추가(미리보기 `shared/shared.js` 끝에 붙임), 글꼴은 Google Fonts 링크로 대체(자체 호스팅 글꼴 때문에 파일이 656개로 늘어 한도 초과 → 508개). 확정 시안 artifact에 capabilities `comments`·`assets`·`db`·`user`로 다시 게시(버전 23, `index.html`과 `shared/shared.js`만).
+- 추가 요청: "의견 남기기"를 누르면 바로 댓글 창이 뜨던 것을 고르기 방식으로 바꿨다(빨간 커서·빨간 테두리 → 누른 부분이나 드래그한 글자에 댓글 창, Esc 취소). 이 버튼도 `shared/shared.js`로 옮겨 다시 게시(버전 24).
+- 검증: 미리보기 linkcheck 0, `shared.js` 문법 검사 통과, 게시 후 자산 0개·`uploads` 0행 확인. 가짜 `window.claude`를 넣은 Playwright 시험에서 고르기(요소·드래그 구간·Esc·링크 이동 막기)와 사진 보내기(메모 필수, 행 기록) 통과. claude.ai 화면에서의 실제 댓글·업로드는 미확인.
+
 ## 사용자 결정 대기
 - 교수님 Owner 초대, 조직 Settings → Pages에서 `climate.snu.ac.kr` 도메인 **Verify** 클릭(TXT는 이미 반영됨, 2026-11-13 기준 미검증), 구성원 사진·소개 문구 확정.
   - 운영신청은 학외 서버·IP 없음(GitHub Pages)이라 **직원만** 제출할 수 있다(shine.snu.ac.kr 안내, 2026-11-06). 학부 행정실 직원에게 대리 신청을 부탁하거나 ITSC(02-880-8282, itsc@snu.ac.kr)에 문의한다.
