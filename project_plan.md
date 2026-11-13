@@ -176,6 +176,7 @@ first_draft/
 - 진행: `preview_family.py`에 `UPLOAD_HTML`·`UPLOAD_JS` 추가(미리보기 `shared/shared.js` 끝에 붙임), 글꼴은 Google Fonts 링크로 대체(자체 호스팅 글꼴 때문에 파일이 656개로 늘어 한도 초과 → 508개). 확정 시안 artifact에 capabilities `comments`·`assets`·`db`·`user`로 다시 게시(버전 23, `index.html`과 `shared/shared.js`만).
 - 추가 요청: "의견 남기기"를 누르면 바로 댓글 창이 뜨던 것을 고르기 방식으로 바꿨다(빨간 커서·빨간 테두리 → 누른 부분이나 드래그한 글자에 댓글 창, Esc 취소). 이 버튼도 `shared/shared.js`로 옮겨 다시 게시(버전 24).
 - 추가 요청: 댓글 창에서 Esc를 누르면 claude.ai 댓글 모드가 남던 것을, 창이 닫히면 모드까지 끝내도록 바꿨다(`customAnchors`를 고르기 동안만 맡아 `exitMode` 호출, capabilities에 `customAnchors: true` 추가, 버전 25). 가짜 API 시험 통과, claude.ai 화면에서는 미확인.
+- 실제 시험: 사용자가 미리보기에서 사진 1장을 보냈고(신종수 구성원 사진), 내려받아 600px 정사각 JPEG로 바꿔 반영했다(커밋 aeee5cd, 미리보기 버전 26, `uploads` 행 done 처리). 이후 HANDOVER.md에 추가 기능(고르기 방식, Esc 동작, 사진 반영 순서, 미리보기 관리·권한 선언)을 반영했다.
 - 검증: 미리보기 linkcheck 0, `shared.js` 문법 검사 통과, 게시 후 자산 0개·`uploads` 0행 확인. 가짜 `window.claude`를 넣은 Playwright 시험에서 고르기(요소·드래그 구간·Esc·링크 이동 막기)와 사진 보내기(메모 필수, 행 기록) 통과. claude.ai 화면에서의 실제 댓글·업로드는 미확인.
 
 ## 사용자 결정 대기
