@@ -1,7 +1,7 @@
 # 리뷰 자동 점검 (AI 판단)
 
 리뷰용 미리보기(https://claude.ai/artifact/DY6yy4sVdjhcwagM9XHjQD)에 새로 달린 **댓글**과 **보낸 사진**을 매일 AI가 읽고 분류합니다.
-**반영은 하지 않습니다.** 판단 결과를 리포트로 남기고, 문제가 있거나 영향이 큰 것만 담당자에게 따로 알립니다. 반영은 담당자가 정합니다([HANDOVER.md](../../HANDOVER.md) 3·4절).
+**사이트 내용은 고치지 않습니다.** 판단 결과를 리포트로 남기고, 문제가 있거나 영향이 큰 것만 담당자에게 따로 알립니다. 반영은 담당자가 정합니다([HANDOVER.md](../../HANDOVER.md) 3·4절).
 
 ## 왜 필요한가
 미리보기는 "링크가 있는 누구나" 볼 수 있습니다. 원하지 않는 사람이 들어와 댓글을 달거나, 구성원이 실수로 잘못된 정보·개인정보를 요청할 수 있습니다.
@@ -31,6 +31,8 @@
   - `REVIEW_LOG.md`: **누적 기록**. ① 리뷰 기록(사람 / 일시 KST / 페이지 / 내용 원문, 추가만 함) ② 반영 현황(스레드별 현재 상태와 반영 커밋) ③ 반영 확인 이력(점검마다 한 단락 추가)
   - `YYYY-MM-DD.md`: 그날 판단 결과
   - `state.json`: 이미 본 댓글(스레드 id → 마지막 댓글 시각)과 사진(`uploads` 문서 id)
+  - `preview_state.json`: 미리보기에 마지막으로 게시한 GitHub 커밋(`published_commit`)과 아티팩트 버전
+- **미리보기 자동 갱신**: 같은 작업이 GitHub `main`에 새 커밋이 있으면 바뀐 페이지만 미리보기에 다시 게시합니다. 누가 push했든 하루 안에 미리보기가 사이트와 같아집니다. 사이트 데이터는 고치지 않고, 이미 GitHub에 올라간 내용만 옮깁니다.
 - 알림: 🔴가 있으면 데스크톱 알림(원격 연결 시 휴대폰)을 보내고 리포트 맨 위에 적습니다.
 - **메일 발송은 보류 중**입니다(서버 메일 서버 꺼짐, Gmail 연결 없음). 정하면 이 문서와 프롬프트의 8단계만 바꿉니다.
 
@@ -42,7 +44,8 @@ Claude 데스크톱 앱 → Code 탭 → 예약 작업 → 새 작업:
 
 ```text
 홈페이지 리뷰 점검을 한다. /data5/CSL_homepage/CSL_homepage_<점검 담당 계정> 에서 git pull 로 최신을 받은 뒤 scripts/review/REVIEW_CHECK.md 의 판단 기준을 따른다.
-반영·커밋·push·답글·해결 처리·자산 삭제는 절대 하지 않는다. 읽고 판단하고 기록만 한다.
+사이트 데이터 수정·커밋·push·답글·해결 처리·자산 삭제는 절대 하지 않는다. 리뷰는 읽고 판단하고 기록만 한다.
+미리보기 게시는 9단계(GitHub에 이미 올라간 내용을 옮기는 것)만 한다.
 
 1. /data5/CSL_homepage/CSL_review_reports_<점검 담당 계정>/state.json 을 읽는다(없으면 빈 상태).
 2. 미리보기 https://claude.ai/artifact/DY6yy4sVdjhcwagM9XHjQD 의 댓글을 ArtifactComments read 로 끝까지(cursor) 읽는다.
@@ -62,8 +65,21 @@ Claude 데스크톱 앱 → Code 탭 → 예약 작업 → 새 작업:
 7. 같은 폴더의 YYYY-MM-DD.md 에 리포트를 쓴다. 맨 위에 🔴 목록, 그 아래 단계별 표.
    새 항목이 없으면 "새 리뷰 없음" 한 줄만 쓴다.
 8. 🔴 가 하나라도 있으면 PushNotification 으로 "홈페이지 리뷰 경고 N건: <첫 항목 요약>" 을 보낸다.
-9. state.json 을 갱신한다.
-10. 마지막 답변에 단계별 개수와 리포트 경로만 짧게 쓴다.
+9. 미리보기 자동 갱신. 리뷰 기록 폴더의 preview_state.json 에서 published_commit 을 읽는다.
+   a. git fetch 후 origin/main 의 짧은 해시가 published_commit 과 같으면 이 단계를 건너뛴다.
+   b. 임시 폴더(예: /tmp/csl_preview_$(whoami))에 git archive <published_commit> 와 git archive origin/main 을 각각 풀고,
+      scripts/preview/preview_family.py <스냅숏> <출력> 99 9 <미리보기 URL> 'Science Magazine v02' t5.v02 로 미리보기를 두 벌(old, new) 만든다.
+      (anaconda 모듈 필요: bash -lc "module load anaconda3/2023.03 && ...")
+   c. scripts/preview/linkcheck.py <new> 가 broken 0 이 아니면 게시하지 않고 리포트에 적는다.
+   d. scripts/preview/diff_preview.py <old> <new> --json 으로 changed·added·removed 를 구한다. 모두 비었으면 게시하지 않고 published_commit 만 갱신한다.
+   e. Artifact publish: url=미리보기 URL, file_path=<new>/index.html, root=<new>, files=changed+added 경로(한 번에 255개까지, 넘으면 나눠서),
+      removed 는 null 로 지운다. capabilities 는 넘기지 않는다(기존 선언 유지).
+   f. "다른 계정이 더 새 버전을 게시했다"며 거부되면, 그 버전에서 바뀐 파일을 읽어 내용이 origin/main 빌드에 이미 들어 있는지 확인한다.
+      들어 있으면 같은 내용을 다시 게시하고, 아니면(GitHub에 없는 수정을 누가 미리보기에만 올린 경우) 게시하지 않고 🔴 로 보고한다.
+   g. 성공하면 preview_state.json 에 published_commit(origin/main 짧은 해시), artifact_version, published_at 을 쓰고,
+      REVIEW_LOG.md "3. 반영 확인 이력"과 그날 리포트에 "미리보기 갱신: <이전 커밋>→<새 커밋>, 파일 N개, 버전 V" 를 적는다.
+10. state.json 을 갱신한다.
+11. 마지막 답변에 단계별 개수, 미리보기 갱신 여부, 리포트 경로만 짧게 쓴다.
 ```
 
 ## 사람이 할 일
