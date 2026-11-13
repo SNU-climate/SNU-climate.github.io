@@ -112,6 +112,7 @@ document.addEventListener("keydown",function(e){if(on&&e.key==="Escape"){set(fal
 })();'''
 # 확정 시안 미리보기의 "리뷰 정리"(편집자 전용, "반영한 리뷰 정리" 바로 위): 아직 처리할 리뷰(미반영·일부 반영·보류)만 보여 주는 목록.
 # 반영·해당 없음은 db에는 남지만 화면에는 내지 않는다(전체 기록은 REVIEW_LOG.md).
+# reviews/_meta 문서의 updated("YYYY.MM.DD.HH:MM", KST)를 거르기 버튼 오른쪽에 "Updated …"로 보여 준다(reviews_to_db.py가 함께 만든다).
 # 원본 기록은 비공개 저장소 homepage-reviews의 REVIEW_LOG.md이고, scripts/review/reviews_to_db.py로 만든 행을 Claude가 db reviews 컬렉션에 넣는다(ArtifactData).
 # 미리보기에서 스레드를 지워도 이 목록에는 남는다. db 규칙 {path: "reviews", read: "admin", write: "admin"}로 편집자만 읽는다(작성자 이름·개인 메일이 있음).
 REVIEWS_HTML = r'''<style>
@@ -125,6 +126,7 @@ padding:14px;border-radius:14px;background:#fff;color:#10203a;box-shadow:0 8px 3
 #csl-rv-f{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
 #csl-rv-f button{padding:5px 11px;border:1px solid #9aa4b5;border-radius:999px;background:#fff;color:#10203a;font:inherit;font-size:12px;cursor:pointer}
 #csl-rv-f button[aria-pressed=true]{background:#10203a;color:#fff;border-color:#10203a}
+#csl-rv-u{margin-left:auto;align-self:center;font-size:12px;font-weight:500;color:#5b6678;white-space:nowrap}
 #csl-rv-l{list-style:none;margin:0;padding:0}
 #csl-rv-l li{padding:9px 0;border-top:1px solid #e3e7ee}
 .csl-rv-h{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;font-size:12px;color:#5b6678}
@@ -148,7 +150,7 @@ try{var r=await Promise.all([window.claude.use("db"),window.claude.use("user")])
 if(!db||!u)return;
 var ed=false;try{ed=await u.canEdit();}catch(e){}
 if(!ed)return;
-var KIND={"반영":"done","일부 반영":"todo","미반영":"todo","보류":"hold","해당 없음":"none"},rows=[],cur="";
+var KIND={"반영":"done","일부 반영":"todo","미반영":"todo","보류":"hold","해당 없음":"none"},rows=[],cur="",upd="";
 function kind(s){s=String(s||"");for(var k in KIND){if(s.indexOf(k)===0)return KIND[k];}return "none";}
 function render(){
 var n={all:rows.length,todo:0,hold:0};rows.forEach(function(d){n[kind(d.status)]++;});
@@ -156,6 +158,7 @@ b.hidden=!rows.length;b.textContent="리뷰 정리 ("+rows.length+")";
 F.textContent="";[["","전체",n.all],["todo","미반영",n.todo],["hold","보류",n.hold]].forEach(function(f){
 if(f[0]&&!f[2])return;var x=document.createElement("button");x.type="button";x.textContent=f[1]+" "+f[2];x.setAttribute("aria-pressed",String(cur===f[0]));
 x.addEventListener("click",function(){cur=f[0];render();});F.appendChild(x);});
+if(upd){var w=document.createElement("span");w.id="csl-rv-u";w.textContent="Updated "+upd;F.appendChild(w);}
 L.textContent="";rows.filter(function(d){return !cur||kind(d.status)===cur;}).forEach(function(d){
 var li=document.createElement("li"),h=document.createElement("div"),t=document.createElement("b"),s=document.createElement("span"),x=document.createElement("p");
 h.className="csl-rv-h";t.textContent=d.author||"";h.appendChild(t);
@@ -164,7 +167,8 @@ s.className="csl-rv-s";s.dataset.k=kind(d.status);s.textContent=(d.status||"")+(
 x.className="csl-rv-x";x.textContent=d.text||"";li.appendChild(h);li.appendChild(x);L.appendChild(li);});}
 b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));
 var q=document.getElementById("csl-cl-p");if(!p.hidden&&q&&!q.hidden){q.hidden=true;var qb=document.getElementById("csl-cl");if(qb)qb.setAttribute("aria-expanded","false");}});
-db.collection("reviews").orderBy("time","desc").onSnapshot(function(sn){rows=sn.docs.filter(function(x){return x.exists;}).map(function(x){return x.data()||{};}).filter(function(d){var k=kind(d.status);return k==="todo"||k==="hold";});render();},function(){b.hidden=true;});
+db.collection("reviews").orderBy("time","desc").onSnapshot(function(sn){upd="";sn.docs.forEach(function(x){if(x.id==="_meta"&&x.exists){upd=String((x.data()||{}).updated||"");}});
+rows=sn.docs.filter(function(x){return x.exists&&x.id!=="_meta";}).map(function(x){return x.data()||{};}).filter(function(d){var k=kind(d.status);return k==="todo"||k==="hold";});render();},function(){b.hidden=true;});
 })();'''
 # 확정 시안 미리보기의 "반영한 리뷰 정리"(편집자 전용): 반영하고 REVIEW_LOG.md에 기록한 리뷰 스레드를 미리보기에서 지운다.
 # Claude가 db의 cleanup 컬렉션에 {threadId, label, page, summary, commit, done:false}를 적어 두면(ArtifactData), 편집자 화면 왼쪽 아래에 버튼이 뜬다.

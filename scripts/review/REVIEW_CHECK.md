@@ -62,7 +62,7 @@ Claude 데스크톱 앱 → Code 탭 → 예약 작업 → 새 작업:
      git log(origin/main 포함)와 data/·content/·static/ 의 현재 값으로 반영 여부를 보고, 반영됐으면 상태를 "반영"으로, 커밋 해시와 날짜를 적는다.
      "마지막 확인" 줄을 오늘 시각과 기준 커밋으로 바꾼다.
    - "3. 반영 확인 이력" 맨 아래에 오늘 날짜 단락을 추가한다: 새 리뷰 수, 새로 반영 확인된 것(커밋), 여전히 미반영인 것, 미리보기에서 삭제할 스레드(반영·기록이 끝났는데 아직 열려 있는 것. 스레드 앞 8자·페이지·첫 줄).
-   - REVIEW_LOG.md 를 고친 뒤에는 홈페이지 복사본의 scripts/review/reviews_to_db.py <REVIEW_LOG.md> <임시 폴더> 로 행을 만들고, 미리보기 db reviews 컬렉션에 ArtifactData batch(file_path, 문서 id = 파일 이름)로 넣는다. 이미 있는 문서는 읽어서 version을 if_version으로 붙여 덮어쓴다. 편집자 전용 "리뷰 정리" 버튼이 이 목록을 보여 준다.
+   - REVIEW_LOG.md 를 고친 뒤에는 홈페이지 복사본의 scripts/review/reviews_to_db.py <REVIEW_LOG.md> <임시 폴더> 로 행을 만들고, 미리보기 db reviews 컬렉션에 ArtifactData batch(file_path, 문서 id = 파일 이름)로 넣는다. 이미 있는 문서는 읽어서 version을 if_version으로 붙여 덮어쓴다. _meta.json(갱신 시각)도 같은 batch에 넣어 "_meta" 문서로 덮어쓴다(화면의 "Updated …" 표시). 편집자 전용 "리뷰 정리" 버튼이 이 목록을 보여 준다.
    - 반영한 리뷰는 미리보기에서 삭제하고 기록은 REVIEW_LOG.md 에만 남기는 것이 규칙이다(2026-11-13). 삭제는 편집자가 미리보기의 "반영한 리뷰 정리" 버튼으로 하므로, 리포트(7단계) 맨 아래에 "삭제할 스레드" 목록을 넣고 같은 스레드를 미리보기 db `cleanup` 컬렉션에 {threadId(전체), label, page, summary, commit, done:false} 로 추가한다(ArtifactData; 이미 있는 threadId는 다시 넣지 않는다). 원문이 "1. 리뷰 기록"에 없으면 넣지 않는다.
 7. 같은 저장소의 reports/YYYY-MM-DD.md 에 리포트를 쓴다. 맨 위에 🔴 목록, 그 아래 단계별 표.
    새 항목이 없으면 "새 리뷰 없음" 한 줄만 쓴다.
