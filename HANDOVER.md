@@ -12,7 +12,7 @@
 | 주소 | https://climate.snu.ac.kr (2026-11-13 연결. `snu-climate.github.io`는 이 주소로 넘어감) |
 | 관리자 | 백경민 (박사과정, rudals92430@snu.ac.kr) |
 | 이전 담당 | 신종수 (제작, 2026-11까지) |
-| 리뷰 기록 | 점검을 돌리는 계정의 `/data5/CSL_homepage/CSL_review_reports_<계정>/` (공개 저장소 밖, 4-1절) |
+| 리뷰 기록 | 비공개 저장소 [SNU-climate/homepage-reviews](https://github.com/SNU-climate/homepage-reviews) — 각자 `/data5/CSL_homepage/CSL_review_reports_<계정>`에 clone (4-1절) |
 | 연구실 대표 메일 | jskug@snu.ac.kr |
 | 저장소 | https://github.com/SNU-climate/SNU-climate.github.io (공개, `main` 브랜치) |
 | 작업 폴더 | **각자 자기 복사본** `/data5/CSL_homepage/CSL_homepage_<계정>` (예: `CSL_homepage_jsshin`, `CSL_homepage_gmbaek`). 다른 사람 폴더는 쓰지 않음(6절) |
@@ -84,12 +84,20 @@
 | ⚪ 처리됨·무관 | 이미 반영됨, 칭찬, 중복 | 해결 처리만 |
 
 - 기준·예약 작업 프롬프트: [scripts/review/REVIEW_CHECK.md](scripts/review/REVIEW_CHECK.md)
-- 기록은 점검을 돌리는 계정의 `/data5/CSL_homepage/CSL_review_reports_<계정>/`에 쌓입니다(공개 저장소 밖, 리뷰 내용·개인정보가 있어 커밋하지 않음). 지금은 `/data5/CSL_homepage/CSL_review_reports_jsshin/`에 있습니다. 관리자가 점검을 맡으면 이 폴더를 복사해 `CSL_review_reports_<관리자 계정>`으로 둡니다.
+- 기록은 비공개 저장소 [SNU-climate/homepage-reviews](https://github.com/SNU-climate/homepage-reviews)에 쌓고 GitHub로 같이 관리합니다. 댓글 작성자 이름·개인 메일이 있어 공개 홈페이지 저장소와 분리했습니다. **이 내용을 공개 저장소로 옮기지 않습니다.**
+- 홈페이지와 같은 방식으로 각자 clone해서 씁니다:
+
+  ```bash
+  git clone https://github.com/SNU-climate/homepage-reviews.git /data5/CSL_homepage/CSL_review_reports_$(whoami)
+  cd /data5/CSL_homepage/CSL_review_reports_$(whoami)
+  git config user.name "<GitHub 아이디>" && git config user.email "<GitHub noreply 메일>"
+  ```
+  점검·기록 전 `git pull`, 끝나면 `git add -A && git commit -m "리뷰 점검 YYYY-MM-DD"` → `git pull --rebase` → `git push`. 비공개 저장소라 `SNU-climate` 조직 구성원이어야 볼 수 있습니다(9절).
 
 | 파일 | 내용 |
 |---|---|
 | `REVIEW_LOG.md` | **누적 리뷰 기록**. ① 리뷰 기록: 사람 / 일시(KST) / 페이지 / 내용 원문을 한 줄씩 쌓음(고치거나 지우지 않음). 보낸 사진도 따로 기록 ② 반영 현황: 스레드별 상태(반영·미반영·보류·해당 없음)와 반영 커밋 ③ 반영 확인 이력: 점검할 때마다 무엇이 새로 반영됐는지 한 단락씩 쌓음 |
-| `YYYY-MM-DD.md` | 그날 점검의 판단 결과(🔴🟡🟢⚪) |
+| `reports/YYYY-MM-DD.md` | 그날 점검의 판단 결과(🔴🟡🟢⚪) |
 | `state.json` | 이미 본 댓글·사진 목록(다음 점검에서 새 것만 보도록) |
 | `preview_state.json` | 미리보기에 마지막으로 게시한 GitHub 커밋과 아티팩트 버전(자동 갱신 기준) |
 
@@ -216,7 +224,7 @@ gh pr create --fill                  # 또는 GitHub 웹에서 Pull Request 열�
 - **게시 담당은 관리자 한 명**으로 정합니다. 다른 사람은 push까지만 하고 관리자에게 알립니다.
 - **항상 GitHub 최신본 기준으로 만듭니다.** `git pull` 뒤 `git archive HEAD`로 뽑은 스냅숏에서 빌드합니다. 오래된 복사본으로 게시하면 다른 사람이 반영한 페이지를 옛 내용으로 덮어씁니다.
 - 게시 도구는 다른 사람이 먼저 게시했으면 거부하고 최신 버전을 먼저 확인하게 합니다.
-- **자동 갱신(매일 09:00, 4-1절 작업)**: 리뷰 기록 폴더의 `preview_state.json`에 적힌 마지막 게시 커밋과 GitHub `main`을 비교합니다. 새 커밋이 있으면 두 커밋으로 미리보기를 각각 만들고 `scripts/preview/diff_preview.py`로 바뀐 파일만 골라 게시한 뒤 기록을 갱신합니다. 날짜 표시만 다른 페이지는 바뀐 것으로 치지 않습니다.
+- **자동 갱신(매일 09:00, 4-1절 작업)**: 리뷰 기록 저장소의 `preview_state.json`에 적힌 마지막 게시 커밋과 GitHub `main`을 비교합니다. 새 커밋이 있으면 두 커밋으로 미리보기를 각각 만들고 `scripts/preview/diff_preview.py`로 바뀐 파일만 골라 게시한 뒤 기록을 갱신합니다. 날짜 표시만 다른 페이지는 바뀐 것으로 치지 않습니다.
 - **바로 갱신하고 싶을 때**: Claude에게 "미리보기 갱신해 줘"라고 하면 같은 순서로 지금 합니다. 2026-11-13 현재 `efa1301` 기준 버전 30입니다.
 - 미리보기에만 직접 올린 수정(GitHub에 없는 것)은 자동 갱신이 덮어쓰지 않고 🔴로 알립니다. 수정은 항상 GitHub에 먼저 올립니다.
 
@@ -260,10 +268,10 @@ DNS 운영신청은 학외 서버(GitHub Pages)라 **직원만** 제출할 수 �
 
 ## 9. 계정과 권한 — 인수할 때 받을 것
 
-- [ ] **GitHub**: `SNU-climate` 조직 Owner 권한(이전 담당자가 초대). Owner여야 `main`에 바로 push하고 Pages·보호 규칙을 바꿀 수 있습니다. 서버나 PC에서 `gh auth login`으로 본인 계정 인증.
+- [ ] **GitHub**: `SNU-climate` 조직 Owner 권한(이전 담당자가 초대). 2026-11-13 현재 조직 구성원은 `jongsooshin5` 한 명이라, 관리자 GitHub 계정을 초대해야 합니다(조직 Settings → People → Invite member). Owner여야 `main`에 바로 push하고 Pages·보호 규칙을 바꿀 수 있습니다. 서버나 PC에서 `gh auth login`으로 본인 계정 인증.
 - [ ] **복사본**: `/data5/CSL_homepage/CSL_homepage_<계정>`에 clone, 작성자 이름·noreply 메일 설정(6-1절).
 - [ ] **claude.ai**: SNU_CSL 조직 계정, 미리보기 artifact의 편집자 이상 권한(댓글 읽기·답글, 다시 게시, 보낸 사진 관리).
-- [ ] **리뷰 기록**: 이전 담당자의 `CSL_review_reports_<계정>/`를 복사해 `/data5/CSL_homepage/CSL_review_reports_<계정>/`로 둠(4-1절).
+- [ ] **리뷰 기록**: 비공개 저장소 `SNU-climate/homepage-reviews`를 `/data5/CSL_homepage/CSL_review_reports_<계정>`에 clone(4-1절). 조직 구성원이어야 접근할 수 있습니다.
 - [ ] **예약 작업**: 주간 업데이트(4절)·매일 리뷰 점검(4-1절)을 관리자 계정의 Claude 앱에 등록. 작업 폴더는 본인 복사본.
 
 ## 10. 남은 일과 주의

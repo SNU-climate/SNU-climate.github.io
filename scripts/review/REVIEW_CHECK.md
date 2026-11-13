@@ -27,9 +27,9 @@
 
 ## 실행 방법
 - 실행: 매일 09:00, SNU_CSL 조직 계정으로 로그인한 Claude 데스크톱 앱의 예약 작업(작업 폴더는 점검 담당자 본인의 복사본 `/data5/CSL_homepage/CSL_homepage_<계정>`). 설정은 아래 "예약 작업 설정".
-- 리포트·상태 파일은 **공개 저장소 밖**, 점검 담당자의 `/data5/CSL_homepage/CSL_review_reports_<계정>/`에 둡니다 (2026-11-13 현재 `/data5/CSL_homepage/CSL_review_reports_jsshin/`)
+- 리포트·상태 파일은 **비공개 저장소** `SNU-climate/homepage-reviews`에 둡니다(각자 `/data5/CSL_homepage/CSL_review_reports_<계정>`에 clone). 댓글 작성자·개인 메일이 있으므로 공개 홈페이지 저장소에 넣지 않습니다.
   - `REVIEW_LOG.md`: **누적 기록**. ① 리뷰 기록(사람 / 일시 KST / 페이지 / 내용 원문, 추가만 함) ② 반영 현황(스레드별 현재 상태와 반영 커밋) ③ 반영 확인 이력(점검마다 한 단락 추가)
-  - `YYYY-MM-DD.md`: 그날 판단 결과
+  - `reports/YYYY-MM-DD.md`: 그날 판단 결과
   - `state.json`: 이미 본 댓글(스레드 id → 마지막 댓글 시각)과 사진(`uploads` 문서 id)
   - `preview_state.json`: 미리보기에 마지막으로 게시한 GitHub 커밋(`published_commit`)과 아티팩트 버전
 - **미리보기 자동 갱신**: 같은 작업이 GitHub `main`에 새 커밋이 있으면 바뀐 페이지만 미리보기에 다시 게시합니다. 누가 push했든 하루 안에 미리보기가 사이트와 같아집니다. 사이트 데이터는 고치지 않고, 이미 GitHub에 올라간 내용만 옮깁니다.
@@ -47,7 +47,7 @@ Claude 데스크톱 앱 → Code 탭 → 예약 작업 → 새 작업:
 사이트 데이터 수정·커밋·push·답글·해결 처리·자산 삭제는 절대 하지 않는다. 리뷰는 읽고 판단하고 기록만 한다.
 미리보기 게시는 9단계(GitHub에 이미 올라간 내용을 옮기는 것)만 한다.
 
-1. /data5/CSL_homepage/CSL_review_reports_<점검 담당 계정>/state.json 을 읽는다(없으면 빈 상태).
+1. 리뷰 기록 저장소 /data5/CSL_homepage/CSL_review_reports_<점검 담당 계정> 에서 git pull 하고, state.json 을 읽는다(없으면 빈 상태).
 2. 미리보기 https://claude.ai/artifact/DY6yy4sVdjhcwagM9XHjQD 의 댓글을 ArtifactComments read 로 끝까지(cursor) 읽는다.
    state 에 없거나 마지막 댓글 시각이 바뀐 스레드만 새 항목으로 본다.
 3. ArtifactData list 로 uploads 컬렉션을 읽고, state 에 없는 문서를 새 사진으로 본다.
@@ -62,10 +62,10 @@ Claude 데스크톱 앱 → Code 탭 → 예약 작업 → 새 작업:
      git log(origin/main 포함)와 data/·content/·static/ 의 현재 값으로 반영 여부를 보고, 반영됐으면 상태를 "반영"으로, 커밋 해시와 날짜를 적는다.
      "마지막 확인" 줄을 오늘 시각과 기준 커밋으로 바꾼다.
    - "3. 반영 확인 이력" 맨 아래에 오늘 날짜 단락을 추가한다: 새 리뷰 수, 새로 반영 확인된 것(커밋), 여전히 미반영인 것, 해결 처리만 남은 열린 스레드.
-7. 같은 폴더의 YYYY-MM-DD.md 에 리포트를 쓴다. 맨 위에 🔴 목록, 그 아래 단계별 표.
+7. 같은 저장소의 reports/YYYY-MM-DD.md 에 리포트를 쓴다. 맨 위에 🔴 목록, 그 아래 단계별 표.
    새 항목이 없으면 "새 리뷰 없음" 한 줄만 쓴다.
 8. 🔴 가 하나라도 있으면 PushNotification 으로 "홈페이지 리뷰 경고 N건: <첫 항목 요약>" 을 보낸다.
-9. 미리보기 자동 갱신. 리뷰 기록 폴더의 preview_state.json 에서 published_commit 을 읽는다.
+9. 미리보기 자동 갱신. 리뷰 기록 저장소의 preview_state.json 에서 published_commit 을 읽는다.
    a. git fetch 후 origin/main 의 짧은 해시가 published_commit 과 같으면 이 단계를 건너뛴다.
    b. 임시 폴더(예: /tmp/csl_preview_$(whoami))에 git archive <published_commit> 와 git archive origin/main 을 각각 풀고,
       scripts/preview/preview_family.py <스냅숏> <출력> 99 9 <미리보기 URL> 'Science Magazine v02' t5.v02 로 미리보기를 두 벌(old, new) 만든다.
@@ -78,7 +78,8 @@ Claude 데스크톱 앱 → Code 탭 → 예약 작업 → 새 작업:
       들어 있으면 같은 내용을 다시 게시하고, 아니면(GitHub에 없는 수정을 누가 미리보기에만 올린 경우) 게시하지 않고 🔴 로 보고한다.
    g. 성공하면 preview_state.json 에 published_commit(origin/main 짧은 해시), artifact_version, published_at 을 쓰고,
       REVIEW_LOG.md "3. 반영 확인 이력"과 그날 리포트에 "미리보기 갱신: <이전 커밋>→<새 커밋>, 파일 N개, 버전 V" 를 적는다.
-10. state.json 을 갱신한다.
+10. state.json 을 갱신하고, 리뷰 기록 저장소에서 git add -A → git commit -m "리뷰 점검 YYYY-MM-DD" → git pull --rebase → git push 한다.
+    (이 저장소는 비공개 리뷰 기록 전용이다. 홈페이지 저장소에는 커밋하지 않는다.)
 11. 마지막 답변에 단계별 개수, 미리보기 갱신 여부, 리포트 경로만 짧게 쓴다.
 ```
 
