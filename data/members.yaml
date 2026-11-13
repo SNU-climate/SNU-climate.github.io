@@ -537,6 +537,7 @@ alumni:
     year: 2026
     current: {en: "School of Earth and Environmental Sciences, Seoul National University", ko: "서울대학교 지구환경과학부"}
     photo: members/danbi-lee.jpg
+    email: "danbilee7@gmail.com"
     pub_name: "Lee, D."
     pub_since: 2023                       # 2015 BAMS(Weller et al.)의 "Lee, D."는 다른 사람
     homepage: "https://www.researchgate.net/profile/Danbi-Lee-7"
@@ -550,6 +551,7 @@ alumni:
     career:
       - {period: "2019–2020", en: "Korea Environment Institute, Sejong City"}
     awards:
+      - {year: "2026", en: "Outstanding Thesis Award, Korean Meteorological Society"}
       - {year: "2024", en: "Best Poster Award, Korea Geoscience Union"}
       - {year: "2023", en: "Best Poster Award, Korean Meteorological Society"}
 
