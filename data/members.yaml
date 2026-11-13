@@ -185,6 +185,17 @@ members:
       - {period: "2010–2013", en: "Climate Research Lab, National Institute of Meteorological Research, South Korea", ko: "국립기상연구소 기후연구과"}
 
   # ---------------------------------------------------------------- Student: Ph.D. Candidates
+
+  - id: so-jung-shin
+    name: {en: "So-Jung Shin", ko: "신소정"}
+    role: researcher
+    position: {en: "Researcher", ko: "연구원"}
+
+  - id: su-jung-lee
+    name: {en: "Su-Jung Lee", ko: "이수정"}
+    role: researcher
+    position: {en: "Researcher", ko: "연구원"}
+
   - id: huiji-lee
     name: {en: "Huiji Lee", ko: "이희지"}
     role: phd
@@ -428,6 +439,31 @@ alumni:
     career:
       - {period: "", en: "Postdoctoral Researcher, Bren School of Environmental Science & Management, UC Santa Barbara, USA", ko: "박사후연구원, 미국 UC샌타바버라 Bren 환경과학·경영대학원"}
       - {period: "2023", en: "Postdoctoral Researcher, Division of Environmental Science & Engineering, POSTECH (with Jong-Seong Kug)", ko: "박사후연구원, 포항공과대학교 환경공학부(국종성 교수 연구실)"}
+
+  # 아래 두 명: Kug 공저 논문·ORCID·OpenAlex 기준(2026-11-13 확인)
+  - id: jinling-piao
+    name: {en: "Jinling Piao"}
+    degree: "Researcher"
+    year: 2026
+    current: {en: "Associate Professor, Institute of Atmospheric Physics, Chinese Academy of Sciences, China", ko: "중국과학원 대기물리연구소 부교수"}
+    pub_name: "Piao, J."
+    homepage: "https://orcid.org/0000-0001-8775-1576"
+    career:
+      - {period: "2021–", en: "Associate Professor, Institute of Atmospheric Physics, Chinese Academy of Sciences, China", ko: "부교수, 중국과학원 대기물리연구소"}
+
+  - id: tomoki-iwakiri
+    name: {en: "Tomoki Iwakiri"}
+    degree: "Postdoc"
+    year: 2025
+    current: {en: "International Pacific Research Center, University of Hawaiʻi at Mānoa, USA", ko: "미국 하와이대학교 마노아 국제태평양연구센터(IPRC)"}
+    pub_name: "Iwakiri, T."
+    homepage: "https://orcid.org/0000-0003-3943-0967"
+    education:
+      - {year: "2022", en: "Ph.D., Atmosphere and Ocean Research Institute, The University of Tokyo, Japan", ko: "박사, 일본 도쿄대학교 대기해양연구소"}
+    career:
+      - {period: "2025–", en: "International Pacific Research Center, University of Hawaiʻi at Mānoa, USA", ko: "미국 하와이대학교 마노아 국제태평양연구센터"}
+      - {period: "2024–2025", en: "Postdoctoral Researcher, Seoul National University", ko: "박사후연구원, 서울대학교"}
+      - {period: "2022–2024", en: "JSPS Research Fellow (PD), The University of Tokyo AORI · Meteorological Research Institute · Ochanomizu University, Japan", ko: "일본학술진흥회 특별연구원(PD), 도쿄대 대기해양연구소·기상연구소·오차노미즈여대"}
 
   - id: seungjae-hong
     name: {en: "Seungjae Hong", ko: "홍승재"}

@@ -5,14 +5,21 @@
 
 {% block content %}
 <div class="wrap">
-  {% if albums_by_year %}
-  {{ m.year_links(albums_by_year, 'g', 'year-links') }}
-  {% for y, items in albums_by_year %}
+  {# 올해 앨범이 아직 없어도 올해 칸을 먼저 열어 둔다(학회·워크숍 사진이 들어오면 채워짐) #}
+  {% set cy = build_date[:4]|int %}
+  {% set gyears = albums_by_year if (albums_by_year and albums_by_year[0][0] == cy) else [(cy, [])] + albums_by_year %}
+  {% if gyears %}
+  {{ m.year_links(gyears, 'g', 'year-links') }}
+  {% for y, items in gyears %}
   <section class="album-year" id="g{{ y }}">
     <h2 class="news-year-title">{{ y }} <span class="pub-year-n">{{ items|length }}</span></h2>
+    {% if items %}
     <div class="albums">
       {% for p in items %}{{ x.album(p, 'album' ~ (' album--lead' if loop.first and loop.length > 2 else ''), 'h3') }}{% endfor %}
     </div>
+    {% else %}
+    <p class="empty">{{ t('gallery.upcoming') }}</p>
+    {% endif %}
   </section>
   {% endfor %}
   {% else %}

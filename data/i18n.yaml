@@ -62,6 +62,7 @@ gallery:
   intro: {en: "Photos from conferences, workshops, and lab life.", ko: "학회·워크숍·연구실 행사 사진입니다."}
   photos: {en: "photos", ko: "장"}
   back: {en: "Back to gallery", ko: "갤러리 목록"}
+  upcoming: {en: "Photos from this year's workshops and conferences will be added here.", ko: "올해 워크숍·학회 사진을 이곳에 올립니다."}
 
 about:
   title: {en: "Introduction of Laboratory", ko: "연구실 소개"}
