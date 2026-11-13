@@ -6,6 +6,31 @@
 roles: [postdoc, researcher, integrated, phd, ms, undergrad, staff]
 
 members:
+  # ---------------------------------------------------------------- 박사후연구원 (Researchers 페이지 맨 위 묶음)
+  - id: danbi-lee
+    name: {en: "Danbi Lee", ko: "이단비"}
+    role: postdoc
+    position: {en: "Postdoctoral Researcher", ko: "박사후연구원"}
+    photo: members/danbi-lee.jpg
+    email: "danbilee7@gmail.com"
+    pub_name: "Lee, D."
+    pub_since: 2023                       # 2015 BAMS(Weller et al.)의 "Lee, D."는 다른 사람
+    homepage: "https://www.researchgate.net/profile/Danbi-Lee-7"
+    interests:
+      en: ["Land–atmosphere interaction", "Land use change, deforestation", "Terrestrial carbon cycle"]
+      ko: ["지면-대기 상호작용", "토지이용 변화·산림 벌채", "육상 탄소순환"]
+    education:
+      - {year: "2026", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea", ko: "박사, 포항공과대학교(POSTECH)"}
+      - {year: "2019", en: "M.S., Ulsan National Institute of Science and Technology (UNIST), South Korea", ko: "석사, 울산과학기술원(UNIST)"}
+      - {year: "2017", en: "B.S., Chemistry, Chungbuk National University, South Korea", ko: "학사, 충북대학교 화학과"}
+    career:
+      - {period: "2026.03–", en: "Postdoctoral Researcher, School of Earth and Environmental Sciences, Seoul National University", ko: "박사후연구원, 서울대학교 지구환경과학부"}
+      - {period: "2019–2020", en: "Korea Environment Institute, Sejong City", ko: "한국환경연구원(KEI), 세종"}
+    awards:
+      - {year: "2026", en: "Outstanding Thesis Award, Korean Meteorological Society", ko: "한국기상학회 우수학위논문상"}
+      - {year: "2024", en: "Best Poster Award, Korea Geoscience Union", ko: "한국지구과학연합회 우수포스터상"}
+      - {year: "2023", en: "Best Poster Award, Korean Meteorological Society", ko: "한국기상학회 우수포스터상"}
+
   # ---------------------------------------------------------------- Researcher 페이지
   - id: hyunju-lee
     name: {en: "Hyunju Lee", ko: "이현주"}
@@ -530,30 +555,6 @@ alumni:
       - {year: "2016", en: "Training program: Earth System Models, ICTP, IITM, India"}
       - {year: "2016", en: "University of Chinese Academy of Sciences Scholarship for master's degree, China"}
       - {year: "2016", en: "Training program: NWP Models, CSSTEAP, IIRS, India"}
-
-  - id: danbi-lee
-    name: {en: "Danbi Lee", ko: "이단비"}
-    degree: "Ph.D."
-    year: 2026
-    current: {en: "School of Earth and Environmental Sciences, Seoul National University", ko: "서울대학교 지구환경과학부"}
-    photo: members/danbi-lee.jpg
-    email: "danbilee7@gmail.com"
-    pub_name: "Lee, D."
-    pub_since: 2023                       # 2015 BAMS(Weller et al.)의 "Lee, D."는 다른 사람
-    homepage: "https://www.researchgate.net/profile/Danbi-Lee-7"
-    interests:
-      en: ["Land–atmosphere interaction", "Land use change, deforestation", "Terrestrial carbon cycle"]
-      ko: ["지면-대기 상호작용", "토지이용 변화·산림 벌채", "육상 탄소순환"]
-    education:
-      - {year: "2026", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
-      - {year: "2019", en: "M.S., Ulsan National Institute of Science and Technology (UNIST), South Korea"}
-      - {year: "2017", en: "B.S., Chemistry, Chungbuk National University, South Korea"}
-    career:
-      - {period: "2019–2020", en: "Korea Environment Institute, Sejong City"}
-    awards:
-      - {year: "2026", en: "Outstanding Thesis Award, Korean Meteorological Society"}
-      - {year: "2024", en: "Best Poster Award, Korea Geoscience Union"}
-      - {year: "2023", en: "Best Poster Award, Korean Meteorological Society"}
 
   - id: daseul-kim
     name: {en: "Daseul Kim", ko: "김다슬"}
