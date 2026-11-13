@@ -6,7 +6,7 @@
 - 루트 index.html: 두 버전 카드(캡처·설명·영문/국문 링크)
 - 테마가 1개(확정 시안)면 전환 막대·카드 없이 루트 index.html이 곧바로 그 테마의 홈으로 넘어간다(실제 사이트처럼 첫 화면이 홈)
   대신 모든 페이지 오른쪽 아래에 "의견 남기기"(누른 뒤 고른 부분에 claude.ai 댓글 창을 연다)와 "사진 보내기" 버튼.
-  게시할 때 capabilities {comments: {composer_only: true}, assets: {upload: "interact"}, db: {}, user: {}}
+  게시할 때 capabilities {comments: {composer_only: true, customAnchors: true}, assets: {upload: "interact"}, db: {}, user: {}}
 사용: python preview_family.py <소스 루트> <출력 폴더> <공지 수> <앨범 수> <전체 목록 URL> <계열 이름> <테마...>"""
 import html as H
 import json
@@ -80,9 +80,22 @@ function pick(t){if(!t||!t.closest||t.closest("[data-uncommentable]"))return nul
 function mark(el){if(hi)hi.classList.remove("csl-pick-hi");hi=el;if(hi)hi.classList.add("csl-pick-hi");}
 function set(v){on=v;root.classList.toggle("csl-pick",v);hint.hidden=!v;b.textContent=v?"취소 (Esc)":"의견 남기기";
 b.setAttribute("aria-pressed",String(v));if(!v)mark(null);}
+// 댓글 창을 열면 claude.ai가 자체 댓글 모드로 들어가고, Esc는 창만 닫는다. 창이 닫히면(Esc·게시) 그 모드도 끝내 달라고 한다.
+// 그러려면 고정 위치 관리(customAnchors)를 잠깐 맡아야 한다: 고르기를 시작할 때 맡고, 모드가 끝나면 바로 돌려준다.
+// 쓰던 글이 남아 있으면 claude.ai가 모드를 끝내지 않는다. 그때도 관리는 돌려줘서 claude.ai의 원래 동작으로 이어지게 한다
+var ca=null,relT=null,seen=false;
+function release(){if(relT){clearTimeout(relT);relT=null;}var x=ca;ca=null;seen=false;if(x){try{x.release();}catch(e){}}}
+async function hook(){if(ca||!c.customAnchors)return;
+try{var x=await c.customAnchors({
+mode:function(v){if(!v&&!on)release();},
+threads:function(){try{if(ca)ca.placed({});}catch(e){}},
+reveal:function(){},
+composing:function(v){if(v){seen=true;if(relT){clearTimeout(relT);relT=null;}return;}
+if(!seen||!ca)return;try{ca.exitMode();}catch(e){}relT=setTimeout(release,400);}});
+if(on||seen)ca=x;else{try{x.release();}catch(e){}}}catch(e){}}
 async function open(target){set(false);
-try{await c.openComposer(target);}catch(e){if(e&&(e.code==="unavailable"||e.code==="not_granted"))b.hidden=true;}}
-b.addEventListener("click",function(){set(!on);if(on){var s=window.getSelection();if(s)s.removeAllRanges();}});
+try{var r=await c.openComposer(target);if(r&&r.opened===false)release();}catch(e){release();if(e&&(e.code==="unavailable"||e.code==="not_granted"))b.hidden=true;}}
+b.addEventListener("click",function(){set(!on);if(on){hook();var s=window.getSelection();if(s)s.removeAllRanges();}else release();});
 document.addEventListener("mouseover",function(e){if(on)mark(pick(e.target));},true);
 document.addEventListener("click",function(e){
 if(!on||(e.target.closest&&e.target.closest("[data-uncommentable]")))return;
@@ -90,7 +103,7 @@ e.preventDefault();e.stopPropagation();
 var s=window.getSelection();
 if(s&&!s.isCollapsed&&s.rangeCount&&String(s).trim()){open({range:s.getRangeAt(0)});return;}
 var el=pick(e.target);if(el)open({element:el});},true);
-document.addEventListener("keydown",function(e){if(on&&e.key==="Escape"){set(false);b.focus();}});
+document.addEventListener("keydown",function(e){if(on&&e.key==="Escape"){set(false);release();b.focus();}});
 })();'''
 # 확정 시안 미리보기의 "사진 보내기": 사진을 artifact 자산(assets)으로 올리고, 어디에 쓸 사진인지를 db의 uploads에 한 줄 남긴다.
 # 게시할 때 capabilities {assets: {upload: "interact"}, db: {}, user: {}}. 올릴 권한이 없는 보기에서는 버튼을 숨긴 채 둔다.
