@@ -6,9 +6,9 @@
 - 루트 index.html: 두 버전 카드(캡처·설명·영문/국문 링크)
 - 테마가 1개(확정 시안)면 전환 막대·카드 없이 루트 index.html이 곧바로 그 테마의 홈으로 넘어간다(실제 사이트처럼 첫 화면이 홈)
   대신 모든 페이지 오른쪽 아래에 "의견 남기기"(누른 뒤 고른 부분에 claude.ai 댓글 창을 연다)와 "사진 보내기" 버튼,
-  편집자에게만 왼쪽 아래 "반영한 리뷰 정리" 버튼.
+  편집자에게만 왼쪽 아래 "리뷰 정리"(쌓인 리뷰 목록)와 "반영한 리뷰 정리"(지울 스레드) 버튼.
   게시할 때 capabilities {comments: {customAnchors: true}, assets: {upload: "interact"},
-  db: {rules: [{path: "cleanup", read: "admin", write: "admin"}]}, user: {}}
+  db: {rules: [{path: "cleanup", read: "admin", write: "admin"}, {path: "reviews", read: "admin", write: "admin"}]}, user: {}}
 사용: python preview_family.py <소스 루트> <출력 폴더> <공지 수> <앨범 수> <전체 목록 URL> <계열 이름> <테마...>"""
 import html as H
 import json
@@ -110,6 +110,61 @@ if(s&&!s.isCollapsed&&s.rangeCount&&String(s).trim()){open({range:s.getRangeAt(0
 var el=pick(e.target);if(el)open({element:el});},true);
 document.addEventListener("keydown",function(e){if(on&&e.key==="Escape"){set(false);release();b.focus();}});
 })();'''
+# 확정 시안 미리보기의 "리뷰 정리"(편집자 전용, "반영한 리뷰 정리" 바로 위): 지금까지 남긴 리뷰를 쌓아 두고 보는 목록.
+# 원본 기록은 비공개 저장소 homepage-reviews의 REVIEW_LOG.md이고, scripts/review/reviews_to_db.py로 만든 행을 Claude가 db reviews 컬렉션에 넣는다(ArtifactData).
+# 미리보기에서 스레드를 지워도 이 목록에는 남는다. db 규칙 {path: "reviews", read: "admin", write: "admin"}로 편집자만 읽는다(작성자 이름·개인 메일이 있음).
+REVIEWS_HTML = r'''<style>
+#csl-rv,#csl-rv-p{position:fixed;left:max(16px,env(safe-area-inset-left,0px));z-index:2147483000;
+font:700 14px/1.2 -apple-system,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+#csl-rv{bottom:calc(68px + env(safe-area-inset-bottom,0px));padding:11px 18px;border:0;border-radius:999px;background:#10203a;color:#fff;
+box-shadow:0 6px 20px rgba(0,0,0,.25);cursor:pointer}
+#csl-rv-p{bottom:calc(120px + env(safe-area-inset-bottom,0px));width:min(440px,calc(100vw - 32px));max-height:min(65vh,600px);overflow:auto;box-sizing:border-box;
+padding:14px;border-radius:14px;background:#fff;color:#10203a;box-shadow:0 8px 30px rgba(0,0,0,.3);font-weight:500;line-height:1.45}
+#csl-rv[hidden],#csl-rv-p[hidden]{display:none}
+#csl-rv-f{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+#csl-rv-f button{padding:5px 11px;border:1px solid #9aa4b5;border-radius:999px;background:#fff;color:#10203a;font:inherit;font-size:12px;cursor:pointer}
+#csl-rv-f button[aria-pressed=true]{background:#10203a;color:#fff;border-color:#10203a}
+#csl-rv-l{list-style:none;margin:0;padding:0}
+#csl-rv-l li{padding:9px 0;border-top:1px solid #e3e7ee}
+.csl-rv-h{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;font-size:12px;color:#5b6678}
+.csl-rv-h b{color:#10203a;font-size:13px}
+.csl-rv-s{padding:1px 8px;border-radius:999px;font-size:11px;font-weight:700;background:#e3e7ee;color:#10203a}
+.csl-rv-s[data-k=done]{background:#dff3e4;color:#14532d}.csl-rv-s[data-k=todo]{background:#fdecc8;color:#7a4a00}.csl-rv-s[data-k=hold]{background:#e8e3f6;color:#3b2a74}
+.csl-rv-x{margin:4px 0 0;font-size:14px;white-space:pre-line;word-break:break-word}
+#csl-rv:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px #10203a}
+@media print{#csl-rv,#csl-rv-p{display:none}}
+</style>
+<button id="csl-rv" type="button" hidden data-uncommentable aria-expanded="false" aria-controls="csl-rv-p">리뷰 정리</button>
+<div id="csl-rv-p" hidden data-uncommentable role="group" aria-label="리뷰 정리">
+<div id="csl-rv-f" role="group" aria-label="상태로 거르기"></div>
+<ul id="csl-rv-l"></ul>
+</div>'''
+REVIEWS_JS = r'''(async function(){
+var b=document.getElementById("csl-rv"),p=document.getElementById("csl-rv-p"),F=document.getElementById("csl-rv-f"),L=document.getElementById("csl-rv-l");
+if(!window.claude||!window.claude.use)return;
+var db=null,u=null;
+try{var r=await Promise.all([window.claude.use("db"),window.claude.use("user")]);db=r[0];u=r[1];}catch(e){}
+if(!db||!u)return;
+var ed=false;try{ed=await u.canEdit();}catch(e){}
+if(!ed)return;
+var KIND={"반영":"done","일부 반영":"todo","미반영":"todo","보류":"hold","해당 없음":"none"},rows=[],cur="";
+function kind(s){s=String(s||"");for(var k in KIND){if(s.indexOf(k)===0)return KIND[k];}return "none";}
+function render(){
+var n={all:rows.length,todo:0,done:0,hold:0,none:0};rows.forEach(function(d){n[kind(d.status)]++;});
+b.hidden=!rows.length;b.textContent="리뷰 정리 ("+rows.length+(n.todo?" · 미반영 "+n.todo:"")+")";
+F.textContent="";[["","전체",n.all],["todo","미반영",n.todo],["hold","보류",n.hold],["done","반영",n.done],["none","해당 없음",n.none]].forEach(function(f){
+if(f[0]&&!f[2])return;var x=document.createElement("button");x.type="button";x.textContent=f[1]+" "+f[2];x.setAttribute("aria-pressed",String(cur===f[0]));
+x.addEventListener("click",function(){cur=f[0];render();});F.appendChild(x);});
+L.textContent="";rows.filter(function(d){return !cur||kind(d.status)===cur;}).forEach(function(d){
+var li=document.createElement("li"),h=document.createElement("div"),t=document.createElement("b"),s=document.createElement("span"),x=document.createElement("p");
+h.className="csl-rv-h";t.textContent=d.author||"";h.appendChild(t);
+[d.time,d.page].forEach(function(v){if(v){var e=document.createElement("span");e.textContent=v;h.appendChild(e);}});
+s.className="csl-rv-s";s.dataset.k=kind(d.status);s.textContent=(d.status||"")+(d.commit?" · "+d.commit:"");h.appendChild(s);
+x.className="csl-rv-x";x.textContent=d.text||"";li.appendChild(h);li.appendChild(x);L.appendChild(li);});}
+b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));
+var q=document.getElementById("csl-cl-p");if(!p.hidden&&q&&!q.hidden){q.hidden=true;var qb=document.getElementById("csl-cl");if(qb)qb.setAttribute("aria-expanded","false");}});
+db.collection("reviews").orderBy("time","desc").onSnapshot(function(sn){rows=sn.docs.filter(function(x){return x.exists;}).map(function(x){return x.data()||{};});render();},function(){b.hidden=true;});
+})();'''
 # 확정 시안 미리보기의 "반영한 리뷰 정리"(편집자 전용): 반영하고 REVIEW_LOG.md에 기록한 리뷰 스레드를 미리보기에서 지운다.
 # Claude가 db의 cleanup 컬렉션에 {threadId, label, page, summary, commit, done:false}를 적어 두면(ArtifactData), 편집자 화면 왼쪽 아래에 버튼이 뜬다.
 # 지우기는 되돌릴 수 없어서 스레드마다 따로 "삭제"를 누르고 확인을 거친다(한 번에 모두 지우지 않는다. comments API 규칙).
@@ -120,7 +175,7 @@ CLEANUP_HTML = r'''<style>
 font:700 14px/1.2 -apple-system,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
 #csl-cl{bottom:calc(16px + env(safe-area-inset-bottom,0px));padding:11px 18px;border:0;border-radius:999px;background:#3b4a63;color:#fff;
 box-shadow:0 6px 20px rgba(0,0,0,.25);cursor:pointer}
-#csl-cl-p{bottom:calc(68px + env(safe-area-inset-bottom,0px));width:min(380px,calc(100vw - 32px));max-height:min(60vh,520px);overflow:auto;box-sizing:border-box;
+#csl-cl-p{bottom:calc(120px + env(safe-area-inset-bottom,0px));width:min(380px,calc(100vw - 32px));max-height:min(60vh,520px);overflow:auto;box-sizing:border-box;
 padding:14px;border-radius:14px;background:#fff;color:#10203a;box-shadow:0 8px 30px rgba(0,0,0,.3);font-weight:500;line-height:1.45}
 #csl-cl[hidden],#csl-cl-p[hidden]{display:none}
 #csl-cl-p p{margin:0 0 10px;font-size:13px}
@@ -166,7 +221,7 @@ try{await c.delete(String(d.threadId));}
 catch(e){if(!(e&&e.code==="not_found")){m.textContent=WHY[e&&e.code]||"지우지 못했습니다. 잠시 뒤 다시 해 주세요.";x.disabled=false;return;}}
 try{await db.collection("cleanup").doc(r.id).update({done:true,deletedAt:new Date().toISOString()});m.textContent="지웠습니다.";}
 catch(e){m.textContent="스레드는 지웠지만 목록 표시를 갱신하지 못했습니다.";}}
-b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));if(!p.hidden)m.textContent="";});
+b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));if(!p.hidden){m.textContent="";var q=document.getElementById("csl-rv-p");if(q&&!q.hidden){q.hidden=true;var qb=document.getElementById("csl-rv");if(qb)qb.setAttribute("aria-expanded","false");}}});
 db.collection("cleanup").where("done","==",false).onSnapshot(function(s){rows=s.docs.filter(function(x){return x.exists;});render();},function(){b.hidden=true;});
 })();'''
 # 확정 시안 미리보기의 "사진 보내기": 사진을 artifact 자산(assets)으로 올리고, 어디에 쓸 사진인지를 db의 uploads에 한 줄 남긴다.
@@ -287,10 +342,10 @@ def report():
 if one:
     with open(out / 'shared' / 'shared.js', 'a', encoding='utf-8') as f:
         # 예전에 게시한 페이지에는 "의견 남기기"가 페이지 안에 들어 있다. 그 버튼은 지우고 새로 넣는다
-        f.write('\n/* 미리보기 전용: 의견 남기기 · 사진 보내기 · 반영한 리뷰 정리 */\ndocument.addEventListener("DOMContentLoaded",function(){'
+        f.write('\n/* 미리보기 전용: 의견 남기기 · 사진 보내기 · 리뷰 정리 · 반영한 리뷰 정리 */\ndocument.addEventListener("DOMContentLoaded",function(){'
                 'var old=document.getElementById("csl-fb");if(old)old.remove();'
-                f'document.body.insertAdjacentHTML("beforeend",{json.dumps(FEEDBACK_HTML + UPLOAD_HTML + CLEANUP_HTML, ensure_ascii=False)});\n'
-                f'{FEEDBACK_JS}\n{UPLOAD_JS}\n{CLEANUP_JS}\n}});\n')
+                f'document.body.insertAdjacentHTML("beforeend",{json.dumps(FEEDBACK_HTML + UPLOAD_HTML + REVIEWS_HTML + CLEANUP_HTML, ensure_ascii=False)});\n'
+                f'{FEEDBACK_JS}\n{UPLOAD_JS}\n{REVIEWS_JS}\n{CLEANUP_JS}\n}});\n')
     # 루트 index.html(artifact 첫 화면)은 테마 홈으로 바로 넘긴다. 색은 t5 종이색에 맞춰 넘어가는 순간의 깜박임을 줄인다
     th = themes[0]
     lab = H.escape(B.tr(D['site']['lab']['name'], 'en'))
