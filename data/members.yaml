@@ -451,6 +451,18 @@ alumni:
     career:
       - {period: "2021–", en: "Associate Professor, Institute of Atmospheric Physics, Chinese Academy of Sciences, China", ko: "부교수, 중국과학원 대기물리연구소"}
 
+  - id: feng-jiang
+    name: {en: "Feng Jiang"}
+    degree: "Researcher"
+    # 연구실 재직 기간·직위는 확인 전이라 year를 비워 둠. 현재 소속(독일 연구소, 2026.09~)은 사용자 제공, 기관명은 미확인
+    current: {en: "Research institute in Germany (since September 2026)", ko: "독일 연구소 (2026년 9월부터)"}
+    homepage: "https://orcid.org/0000-0002-1788-7037"
+    education:
+      - {year: "", en: "Ph.D., Nanjing University of Information Science & Technology, China", ko: "박사, 중국 난징정보과학기술대학교"}
+    career:
+      - {period: "2026.09–", en: "Research institute in Germany", ko: "독일 연구소"}
+      - {period: "2023.09–2026", en: "Postdoctoral Research Scientist, Lamont-Doherty Earth Observatory, Columbia University, USA", ko: "박사후연구원, 미국 컬럼비아대학교 라몬트-도허티 지구관측소"}
+
   - id: tomoki-iwakiri
     name: {en: "Tomoki Iwakiri"}
     degree: "Postdoc"
