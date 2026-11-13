@@ -10,13 +10,17 @@
 5. 개인정보(전화번호, 개인 이메일, 사진)는 본인이 공개에 동의한 것만 넣는다.
 
 ## 명령 (항상 이 폴더에서)
+작업 폴더는 **각자 자기 계정에 받은 복사본**이다(예: `~/CSL_homepage`). 서버 공유 폴더 `/data5/CSL_homepage/first_draft`는 2026-11-13부터 보관용이라 거기서 작업하지 않는다. 처음 받는 법과 두 사람 작업 규칙은 `HANDOVER.md` 6절.
 ```bash
-cd /data5/CSL_homepage/first_draft
+cd ~/CSL_homepage
+git pull                                                                                 # 시작 전 최신 받기(커밋 안 한 변경이 있으면 먼저 사용자에게 묻는다)
 bash -lc "module load anaconda3/2023.03 && python scripts/build.py --theme t5.v02"   # 빌드(결과: site/t5.v02)
 bash -lc "module load anaconda3/2023.03 && python scripts/validate.py --theme t5.v02"  # 검증(오류 0이어야 함)
+git status                                                                               # 바뀐 파일이 이번 작업 것뿐인지 확인
 git add -A && git commit -m "<무엇을 바꿨는지 한 줄>"                                   # 기록
-git push                                                                                 # 배포(학생이 바뀐 화면을 확인한 뒤)
+git pull --rebase && git push                                                            # 배포(학생이 바뀐 화면을 확인한 뒤). 충돌 나면 해결 후 빌드·검증 다시
 ```
+커밋 작성자는 그 복사본의 `git config user.name`·`user.email`(GitHub noreply 메일)이다. 설정이 없거나 개인 메일이면 커밋 전에 사용자에게 알린다. `git push --force`는 쓰지 않는다.
 **확정 테마: `t5.v02`**(Science Magazine v02, 2026-11-06). 바뀐 화면은 이 테마로 확인한다: `node scripts/shot.mjs t5.v02 [page]`.
 **배포**: GitHub `SNU-climate/SNU-climate.github.io`의 `main`에 push하면 GitHub Actions(`.github/workflows/pages.yml`)가 t5.v02를 빌드·검증해 https://climate.snu.ac.kr 로 1~2분 안에 배포한다(커스텀 도메인·HTTPS는 저장소 Pages 설정에 있으므로 CNAME 파일을 따로 두지 않는다). 테마를 바꾸려면 workflow의 `THEME` 한 줄만 고친다. 다른 구성원의 수정은 이슈 양식이나 Pull Request로 받는다(`CONTRIBUTING.md`). `main` 보호 규칙은 두 개다. "main PR 규칙": 일반 구성원은 PR + 자동 검사 `build` 통과 + 승인 1명이 있어야 병합된다. 조직 Owner(이 서버의 jongsooshin5 계정 포함)는 우회해 바로 push할 수 있다. "main 이력 보호": 강제 push(force push)와 main 삭제를 Owner를 포함한 **모두**에게 막는다. 그러니 이력을 다시 쓰지 말고 되돌릴 때는 `git revert`를 쓴다. 공개 저장소이므로 비밀번호·원본 백업·개인 이메일은 커밋하지 않는다.
 
@@ -85,5 +89,5 @@ python scripts/new_news.py --slug <영문-짧은-이름> --category paper --doi 
 ## 폴더 요약
 `data/`(YAML) · `content/news/`(뉴스 글) · `static/`(사진·그림·썸네일) · `themes/`(디자인: 확정 테마 `t5.v02`와 공용 `_shared`만 둔다. 규약은 `themes/THEME_CONTRACT.md`) ·
 `scripts/`(빌드·검증·관리) · `site/`(빌드 결과, git 제외) · `project_plan.md`(계획)
-이전 시안 테마 26종·검토 보고서(`reports/`)·원본 백업(`backup/`)은 2026-11-11에 정리했다. 필요하면 `../first_draft_20261111`(정리 전 복사본)이나 git 이력에서 찾는다.
-**월 1회 백업**: 이 서버의 `.git/hooks/pre-push`가 push 직전에 이번 달 백업(`../first_draft_YYYYMMDD`)이 없으면 폴더 전체(`.git` 포함, `site/` 제외)를 복사한다. 실패해도 push는 막지 않는다. 훅은 git에 올라가지 않으므로 다른 곳에 clone하면 다시 만들어야 한다.
+이전 시안 테마 26종·검토 보고서(`reports/`)·원본 백업(`backup/`)은 2026-11-11에 정리했다. 필요하면 서버의 `/data5/CSL_homepage/first_draft_20261111`(정리 전 복사본)이나 git 이력에서 찾는다.
+**월 1회 백업(선택)**: 복사본의 `.git/hooks/pre-push`가 있으면 push 직전에 이번 달 백업(`../<폴더이름>_YYYYMMDD`)이 없을 때 폴더 전체(`.git` 포함, `site/` 제외)를 복사한다. 실패해도 push는 막지 않는다. 훅은 git에 올라가지 않으므로 복사본마다 따로 둔다(`HANDOVER.md` 6-1절).

@@ -179,6 +179,13 @@ first_draft/
 - 실제 시험: 사용자가 미리보기에서 사진 1장을 보냈고(신종수 구성원 사진), 내려받아 600px 정사각 JPEG로 바꿔 반영했다(커밋 aeee5cd, 미리보기 버전 26, `uploads` 행 done 처리). 이후 HANDOVER.md에 추가 기능(고르기 방식, Esc 동작, 사진 반영 순서, 미리보기 관리·권한 선언)을 반영했다.
 - 검증: 미리보기 linkcheck 0, `shared.js` 문법 검사 통과, 게시 후 자산 0개·`uploads` 0행 확인. 가짜 `window.claude`를 넣은 Playwright 시험에서 고르기(요소·드래그 구간·Esc·링크 이동 막기)와 사진 보내기(메모 필수, 행 기록) 통과. claude.ai 화면에서의 실제 댓글·업로드는 미확인.
 
+### 작업 방식 전환: 각자 복사본 + git (2026-11-13)
+- 계기: 서버 공유 폴더 `/data5/CSL_homepage/first_draft`를 두 계정(jsshin, gmbaek)이 같이 쓰다가, gmbaek이 만든 파일이 gmbaek 그룹 전용 권한이라 jsshin 계정에서 git이 멈췄다(sudo 없음). 같은 폴더를 쓰면 상대의 작업 중 파일이 커밋에 섞이고, 커밋 작성자도 섞인다(gmbaek 커밋이 jsshin 이름으로 기록됨).
+- 결정: 각자 자기 계정에 clone(`~/CSL_homepage`)하고 GitHub로만 주고받는다. 공유 폴더는 보관용. 미리보기 게시는 관리자 한 명이 GitHub 최신본 기준으로.
+- 변경: HANDOVER.md 6절(처음 설정·매번 작업·두 사람 규칙·충돌 해결·PR 방식) 전면 개편, 1·4·4-1·5·7·9절 경로·절차 수정. CLAUDE.md 명령에 pull·status·pull --rebase 추가. CONTRIBUTING.md 방법 3, scripts/review/REVIEW_CHECK.md 경로(`~/CSL_homepage`, `~/CSL_review_reports`), scripts/preview/README.md 게시 규칙.
+- 리뷰 기록 폴더를 `/data5/CSL_homepage/review_reports` → `/home/jsshin/CSL_review_reports`로 옮겼다(공개 저장소 밖).
+- 신종수 복사본: `/home/jsshin/CSL_homepage`(작성자 noreply 메일, 월 1회 백업 훅 복사).
+
 ## 사용자 결정 대기
 - 교수님 Owner 초대, 조직 Settings → Pages에서 `climate.snu.ac.kr` 도메인 **Verify** 클릭(TXT는 이미 반영됨, 2026-11-13 기준 미검증), 구성원 사진·소개 문구 확정.
   - 운영신청은 학외 서버·IP 없음(GitHub Pages)이라 **직원만** 제출할 수 있다(shine.snu.ac.kr 안내, 2026-11-06). 학부 행정실 직원에게 대리 신청을 부탁하거나 ITSC(02-880-8282, itsc@snu.ac.kr)에 문의한다.
