@@ -13,11 +13,12 @@ artifact 한 개에는 파일을 511개까지만 넣을 수 있다. 그래서 �
 
 이전 시안 artifact(2026-11-04, 테마 폴더는 2026-11-11에 삭제, 공지 10편·앨범 8개): Basic 42dn4KBdXePsxkrdcWen1h · Classic B2dq9P7exJx691zUrLXbqX · Minimal RbsU8RYiPNsZwezBfxUopf · Ocean LZe2TmNi6oTgCMm2HaJYvG · Dashboard 93S7w5j1y4zuhnfTpGKAuh · Magazine N3Mt1GmAi58tNBquYJFx5S · Sidebar 2ERDxAyQX6M1pWszKojSTE · One-page 5zz8DYr4xhK6twHQAeKMRD · Globe 71xFcCrVjmSvTGZt2CqUaK (모두 `https://claude.ai/artifact/<ID>`).
 미리보기는 페이지마다 `window.CSL_NO_EMBED=true`를 넣어, artifact가 막는 유튜브 iframe 대신 재생 버튼이 YouTube 새 탭 링크가 되게 한다.
-확정 시안 미리보기에는 버튼이 두 개 있다.
+확정 시안 미리보기에는 버튼이 세 개 있다.
 둘 다 미리보기의 `shared/shared.js` 끝에 붙는 조각이라, 버튼만 고칠 때는 `index.html`과 `shared/shared.js`만 다시 게시하면 된다.
 - **의견 남기기**(`FEEDBACK_HTML`, `FEEDBACK_JS`): 누르면 고르기 상태(빨간 커서, 마우스가 올라간 부분에 빨간 테두리)가 되고, 그 상태에서 누른 부분이나 드래그한 글자에 claude.ai 댓글 창을 연다. Esc나 버튼을 다시 누르면 취소. 댓글 창이 닫히면(Esc·게시) claude.ai의 댓글 모드도 함께 끝낸다(`customAnchors`의 `exitMode`. 쓰던 글이 남아 있으면 claude.ai가 모드를 유지한다).
 - **사진 보내기**(`UPLOAD_HTML`, `UPLOAD_JS`): 사진을 artifact 자산으로 올리고 db `uploads`에 `{assetId, filename, note, page, title, uploader, time, sizeBytes, contentType, done}`을 남긴다.
-- 게시할 때 capabilities는 `{"comments": {"composer_only": true, "customAnchors": true}, "assets": {"upload": "interact"}, "db": {}, "user": {}}`. capabilities를 넘기면 전체가 바뀌므로 넷을 모두 적는다(생략하면 이전 선언 유지).
+- **반영한 리뷰 정리**(`CLEANUP_HTML`, `CLEANUP_JS`, 편집자 전용, 왼쪽 아래): db `cleanup`에서 `done:false`인 행을 보여 주고, 스레드마다 확인 뒤 `comments.delete`로 지운 다음 `done:true`로 바꾼다. 한 번에 모두 지우지 않는다.
+- 게시할 때 capabilities는 `{"comments": {"customAnchors": true}, "assets": {"upload": "interact"}, "db": {"rules": [{"path": "cleanup", "read": "admin", "write": "admin"}]}, "user": {}}`(2026-11-13부터. 삭제를 쓰려고 comments를 전체 형태로 바꿈). capabilities를 넘기면 전체가 바뀌므로 넷을 모두 적는다(생략하면 이전 선언 유지).
 - 올라온 사진은 `Artifact list`(scope `assets`)와 `ArtifactData list`(collection `uploads`)로 확인하고 `Artifact read`(path에 자산 id)로 내려받는다. 반영한 행은 `done: true`로 바꾼다.
 
 테마가 자체 호스팅하는 글꼴(`assets/fonts`, 140여 개)은 미리보기에서 빼고 Google Fonts 링크로 바꾼다(파일 수 한도).
