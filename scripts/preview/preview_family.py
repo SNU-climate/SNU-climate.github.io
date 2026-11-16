@@ -72,21 +72,22 @@ html.csl-pick #csl-fb{cursor:pointer!important}
 <button id="csl-fb" type="button" hidden data-uncommentable aria-pressed="false">의견 남기기</button>
 <div id="csl-hint" hidden data-uncommentable role="status">의견을 남길 부분을 누르세요. 글자를 드래그해 고를 수도 있습니다. (취소: Esc)</div>'''
 FEEDBACK_JS = r'''(async function(){
-var b=document.getElementById("csl-fb"),hint=document.getElementById("csl-hint"),root=document.documentElement;
+var b=document.getElementById("csl-fb"),hint=document.getElementById("csl-hint"),root=document.documentElement,H0=hint.textContent;
 if(!window.claude||!window.claude.use)return;
 var c=null;try{c=await window.claude.use("comments");}catch(e){}
 if(!c)return;
 b.hidden=false;
-// 리뷰는 일반 댓글로만 받고 편집자가 모아서 반영한다(2026-11-13). 댓글 창의 "Claude에게 보내기" 버튼은 claude.ai 화면이라 숨길 수 없어서,
-// 눌러도 Claude로 보내지 않고 일반 댓글로 남게 한다(handled:true). 이 기능이 없는 환경에서는 그대로 둔다.
-if("onSendToClaude" in c){try{c.onSendToClaude(function(){return {handled:true,reply:"Claude에게 보내지 않고 일반 리뷰로 남겼습니다. 편집자가 모아서 반영합니다."};});}catch(e){}}
+// 2026-11-16: "Claude에게 보내기" 가로채기(onSendToClaude)는 뺐다. 그 버튼은 편집자에게만 보이고, 편집자는 쓰지 않는 것이 규칙이다.
+// 댓글 창이 안 열리면 이유를 위쪽 안내 줄에 몇 초 보여 준다(다른 사람 화면에서 무엇이 막혔는지 알 수 있게).
+var tm=null;function say(t){set(false);hint.textContent=t;hint.hidden=false;if(tm)clearTimeout(tm);tm=setTimeout(function(){hint.hidden=true;hint.textContent=H0;},7000);}
 var on=false,hi=null,SEL="p,li,h1,h2,h3,h4,h5,figure,figcaption,img,dt,dd,td,th,blockquote,a,button,article,section,header,footer";
 function pick(t){if(!t||!t.closest||t.closest("[data-uncommentable]"))return null;return t.closest(SEL)||t;}
 function mark(el){if(hi)hi.classList.remove("csl-pick-hi");hi=el;if(hi)hi.classList.add("csl-pick-hi");}
-function set(v){on=v;root.classList.toggle("csl-pick",v);hint.hidden=!v;b.textContent=v?"취소 (Esc)":"의견 남기기";
+function set(v){on=v;root.classList.toggle("csl-pick",v);hint.textContent=H0;hint.hidden=!v;b.textContent=v?"취소 (Esc)":"의견 남기기";
 b.setAttribute("aria-pressed",String(v));if(!v)mark(null);}
 async function open(target){set(false);
-try{await c.openComposer(target);}catch(e){if(e&&(e.code==="unavailable"||e.code==="not_granted"))b.hidden=true;}}
+try{var r=await c.openComposer(target);if(r&&r.opened===false)say("댓글 창이 열리지 않았습니다. 페이지를 한 번 누른 뒤 다시 해 보세요. 이미 쓰던 댓글 창이 있으면 먼저 닫아 주세요.");}
+catch(e){var k=e&&e.code;say(k==="unavailable"||k==="not_granted"||k==="forbidden"?"이 화면에서는 댓글을 쓸 수 없습니다. claude.ai에 로그인했는지, 댓글 권한을 받았는지 확인해 주세요. ("+k+")":"댓글 창을 열지 못했습니다. ("+(k||"오류")+")");}}
 b.addEventListener("click",function(){set(!on);if(on){var s=window.getSelection();if(s)s.removeAllRanges();}});
 document.addEventListener("mouseover",function(e){if(on)mark(pick(e.target));},true);
 document.addEventListener("click",function(e){
