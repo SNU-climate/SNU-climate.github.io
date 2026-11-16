@@ -68,15 +68,27 @@ html.csl-pick,html.csl-pick *{cursor:url("data:image/svg+xml,%3Csvg xmlns='http:
 html.csl-pick #csl-fb{cursor:pointer!important}
 .csl-pick-hi{outline:2px solid #b5121b!important;outline-offset:2px!important}
 @media print{#csl-fb,#csl-hint{display:none}}
+#csl-fx{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(120px + env(safe-area-inset-bottom,0px));z-index:2147483000;
+width:min(340px,calc(100vw - 32px));box-sizing:border-box;padding:14px;border-radius:14px;background:#fff;color:#10203a;box-shadow:0 8px 30px rgba(0,0,0,.3);
+font:500 14px/1.55 -apple-system,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+#csl-fx[hidden]{display:none}#csl-fx p{margin:0 0 8px}#csl-fx a{color:#b5121b;font-weight:700}
+#csl-fx button{margin-top:4px;padding:7px 14px;border:0;border-radius:999px;background:#10203a;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+@media print{#csl-fx{display:none}}
 </style>
 <button id="csl-fb" type="button" hidden data-uncommentable aria-pressed="false">의견 남기기</button>
-<div id="csl-hint" hidden data-uncommentable role="status">의견을 남길 부분을 누르세요. 글자를 드래그해 고를 수도 있습니다. (취소: Esc)</div>'''
+<div id="csl-hint" hidden data-uncommentable role="status">의견을 남길 부분을 누르세요. 글자를 드래그해 고를 수도 있습니다. (취소: Esc)</div>
+<div id="csl-fx" hidden data-uncommentable role="dialog" aria-label="안내"><p id="csl-fx-t"></p>
+<p>메일: <a href="mailto:__MAIL__">__MAIL__</a><br>GitHub: <a href="https://github.com/SNU-climate/SNU-climate.github.io/issues/new/choose" target="_blank" rel="noopener">이슈 양식</a></p>
+<button id="csl-fx-x" type="button">닫기</button></div>'''
 FEEDBACK_JS = r'''(async function(){
 var b=document.getElementById("csl-fb"),hint=document.getElementById("csl-hint"),root=document.documentElement,H0=hint.textContent;
 if(!window.claude||!window.claude.use)return;
-var c=null;try{c=await window.claude.use("comments");}catch(e){}
-if(!c)return;
+var fx=document.getElementById("csl-fx"),fxt=document.getElementById("csl-fx-t");
+window.cslAlt=function(t){fxt.textContent=t;fx.hidden=false;document.getElementById("csl-fx-x").focus();};
+document.getElementById("csl-fx-x").addEventListener("click",function(){fx.hidden=true;});
 b.hidden=false;
+var c=null;try{c=await window.claude.use("comments");}catch(e){}
+if(!c){b.addEventListener("click",function(){window.cslAlt("이 화면에서는 claude.ai 댓글을 쓸 수 없습니다(로그인하지 않았거나 보기 권한만 있는 경우). 의견은 아래 메일이나 GitHub 이슈로 보내 주세요. 어느 페이지의 어떤 부분인지 함께 적어 주세요.");});return;}
 // 2026-11-16: "Claude에게 보내기" 가로채기(onSendToClaude)는 뺐다. 그 버튼은 편집자에게만 보이고, 편집자는 쓰지 않는 것이 규칙이다.
 // 댓글 창이 안 열리면 이유를 위쪽 안내 줄에 몇 초 보여 준다(다른 사람 화면에서 무엇이 막혔는지 알 수 있게).
 var tm=null;function say(t){set(false);hint.textContent=t;hint.hidden=false;if(tm)clearTimeout(tm);tm=setTimeout(function(){hint.hidden=true;hint.textContent=H0;},7000);}
@@ -87,7 +99,7 @@ function set(v){on=v;root.classList.toggle("csl-pick",v);hint.textContent=H0;hin
 b.setAttribute("aria-pressed",String(v));if(!v)mark(null);}
 async function open(target){set(false);
 try{var r=await c.openComposer(target);if(r&&r.opened===false)say("댓글 창이 열리지 않았습니다. 페이지를 한 번 누른 뒤 다시 해 보세요. 이미 쓰던 댓글 창이 있으면 먼저 닫아 주세요.");}
-catch(e){var k=e&&e.code;say(k==="unavailable"||k==="not_granted"||k==="forbidden"?"이 화면에서는 댓글을 쓸 수 없습니다. claude.ai에 로그인했는지, 댓글 권한을 받았는지 확인해 주세요. ("+k+")":"댓글 창을 열지 못했습니다. ("+(k||"오류")+")");}}
+catch(e){var k=e&&e.code;set(false);window.cslAlt((k==="unavailable"||k==="not_granted"||k==="forbidden"?"이 화면에서는 claude.ai 댓글을 쓸 수 없습니다":"댓글 창을 열지 못했습니다")+" ("+(k||"오류")+"). 의견은 아래 메일이나 GitHub 이슈로 보내 주세요.");}}
 b.addEventListener("click",function(){set(!on);if(on){var s=window.getSelection();if(s)s.removeAllRanges();}});
 document.addEventListener("mouseover",function(e){if(on)mark(pick(e.target));},true);
 document.addEventListener("click",function(e){
@@ -244,8 +256,8 @@ n=document.getElementById("csl-up-n"),s=document.getElementById("csl-up-s"),m=do
 if(!window.claude||!window.claude.use)return;
 var a=null,db=null,u=null;
 try{var r=await Promise.all([window.claude.use("assets"),window.claude.use("db"),window.claude.use("user")]);a=r[0];db=r[1];u=r[2];}catch(e){}
-if(!a||!db)return;
 b.hidden=false;
+if(!a||!db){b.addEventListener("click",function(){if(window.cslAlt)window.cslAlt("이 화면에서는 사진을 바로 올릴 수 없습니다(claude.ai 조직 구성원만 가능). 사진은 아래 메일에 첨부하거나 GitHub 이슈 양식에 끌어다 놓아 주세요. 어디에 쓸 사진인지 함께 적어 주세요.");});return;}
 b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));if(!p.hidden)f.focus();});
 var OK=["image/jpeg","image/png","image/gif","image/webp"],MAX=20*1024*1024;
 var WHY={too_large:"20MB를 넘습니다",unsupported_type:"지원하지 않는 형식입니다",quota_or_state:"저장 공간이 가득 찼습니다. 담당자에게 알려 주세요",
@@ -329,7 +341,7 @@ if one:
         # 예전에 게시한 페이지에는 "의견 남기기"가 페이지 안에 들어 있다. 그 버튼은 지우고 새로 넣는다
         f.write('\n/* 미리보기 전용: 의견 남기기 · 사진 보내기 · 리뷰 정리 · 반영한 리뷰 정리 */\ndocument.addEventListener("DOMContentLoaded",function(){'
                 'var old=document.getElementById("csl-fb");if(old)old.remove();'
-                f'document.body.insertAdjacentHTML("beforeend",{json.dumps(FEEDBACK_HTML + UPLOAD_HTML + REVIEWS_HTML + CLEANUP_HTML, ensure_ascii=False)});\n'
+                f'document.body.insertAdjacentHTML("beforeend",{json.dumps((FEEDBACK_HTML + UPLOAD_HTML + REVIEWS_HTML + CLEANUP_HTML).replace('__MAIL__', H.escape(data['site']['contact']['maintainer_email'])), ensure_ascii=False)});\n'
                 f'{FEEDBACK_JS}\n{UPLOAD_JS}\n{REVIEWS_JS}\n{CLEANUP_JS}\n}});\n')
     # 루트 index.html(artifact 첫 화면)은 테마 홈으로 바로 넘긴다. 색은 t5 종이색에 맞춰 넘어가는 순간의 깜박임을 줄인다
     th = themes[0]
