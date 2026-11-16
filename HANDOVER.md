@@ -71,7 +71,7 @@
 
 - **반영한 리뷰는 미리보기에서 지우고 기록은 `REVIEW_LOG.md`에만 남깁니다**(2026-11-13 결정). Claude는 매번 자동으로 ① 반영 ② `REVIEW_LOG.md` 기록 ③ 삭제할 스레드 목록 보고까지 합니다.
 - 스레드 삭제는 Claude가 직접 할 수 없습니다(Claude의 댓글 도구에는 삭제 기능이 없고, "Claude에게 보내기"는 쓰지 않음). 그래서 Claude는 기록을 마친 스레드를 미리보기 db의 `cleanup` 컬렉션에 `{threadId, label, page, summary, commit, done:false}`로 적어 두고(ArtifactData), 편집자 화면 왼쪽 아래에 **"반영한 리뷰 정리 (N)"** 버튼이 뜹니다. 버튼을 눌러 목록을 열고, claude.ai 댓글 목록에서 해당 스레드(앞 8자리로 확인)를 지운 뒤 **지웠음**을 누르면 그 행은 `done:true`가 됩니다. (페이지가 직접 지우려면 comments를 전체 형태로 선언해야 하는데, 그러면 링크로 들어온 사람에게 의견 남기기 버튼이 사라져서 2026-11-16에 이 방식으로 바꿨습니다.)
-- **"리뷰 정리 (N)"** 버튼(편집자 전용, "반영한 리뷰 정리" 바로 위)은 아직 처리할 리뷰, 곧 **미반영(일부 반영 포함)·보류**만 보여 줍니다(작성자·일시·페이지·원문·상태, 미반영/보류 거르기). 반영되면 목록에서 빠지고, 전체 기록은 `REVIEW_LOG.md`에 있습니다. 원본은 `REVIEW_LOG.md`이고, Claude가 기록을 갱신할 때마다 `scripts/review/reviews_to_db.py`로 행을 만들어 미리보기 db `reviews` 컬렉션에 넣습니다(같은 리뷰는 같은 id라 덮어씀). 작성자 이름·메일이 있어 편집자만 읽게 했습니다.
+- **"리뷰 정리 (N)"** 버튼(로그인한 모든 사람에게 보임, 2026-11-16부터. "반영한 리뷰 정리" 바로 위)은 아직 처리할 리뷰, 곧 **미반영(일부 반영 포함)·보류**만 보여 줍니다(작성자·일시·페이지·원문·상태, 미반영/보류 거르기). 반영되면 목록에서 빠지고, 전체 기록은 `REVIEW_LOG.md`에 있습니다. 원본은 `REVIEW_LOG.md`이고, Claude가 기록을 갱신할 때마다 `scripts/review/reviews_to_db.py`로 행을 만들어 미리보기 db `reviews` 컬렉션에 넣습니다(같은 리뷰는 같은 id라 덮어씀). 작성자 이름·메일이 있어 편집자만 읽게 했습니다.
 - 한 번에 모두 지우는 기능은 일부러 넣지 않았습니다(되돌릴 수 없어서 하나씩 확인). 목록에 없는 스레드(미반영·보류)는 그대로 둡니다. `cleanup`에 넣기 전에 원문이 `REVIEW_LOG.md` "1. 리뷰 기록"에 있는지 반드시 확인합니다.
 - 자동 push가 부담스러우면 4번을 "commit까지만 하고 push는 하지 않는다"로 바꿔, 관리자가 확인한 뒤 push합니다.
 
@@ -239,14 +239,14 @@ gh pr create --fill                  # 또는 GitHub 웹에서 Pull Request 열�
 - 게시할 때 권한 선언(capabilities)은 아래 넷입니다. 선언을 넘기면 전체가 바뀌므로 빠뜨리지 않습니다(생략하면 이전 선언 유지).
 
 ```json
-{"comments": {"composer_only": true}, "assets": {"upload": "interact"}, "db": {"rules": [{"path": "cleanup", "read": "admin", "write": "admin"}, {"path": "reviews", "read": "admin", "write": "admin"}]}, "user": {}}
+{"comments": {"composer_only": true}, "assets": {"upload": "interact"}, "db": {"rules": [{"path": "cleanup", "read": "view", "write": "admin"}, {"path": "reviews", "read": "view", "write": "admin"}]}, "user": {}}
 ```
 
 | 선언 | 쓰는 곳 |
 |---|---|
 | `comments` (`composer_only`) | 의견 남기기: 고른 부분에 claude.ai 댓글 창 열기 |
 | `assets` (`upload: interact`) | 사진 보내기: 편집자가 아닌 조직 구성원도 올릴 수 있게 |
-| `db`, `user` | 보낸 사진 목록(`uploads`), 리뷰 정리(`reviews`)·반영한 리뷰 정리(`cleanup`, 편집자만), 편집자 확인 |
+| `db`, `user` | 보낸 사진 목록(`uploads`), 리뷰 정리(`reviews`)·반영한 리뷰 정리(`cleanup`): 모두 읽기, 쓰기는 편집자만. 편집자 확인("지웠음" 버튼) |
 
 - `comments`는 반드시 `composer_only`로 둡니다. 전체 형태(`{}`)는 링크로 들어온 사람에게 댓글 기능이 꺼져 의견 남기기 버튼이 사라집니다. `customAnchors`도 넣지 않습니다(댓글 칸을 누르면 창이 닫히는 문제가 있었음, 2026-11-16).
 

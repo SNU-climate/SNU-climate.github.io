@@ -6,9 +6,9 @@
 - 루트 index.html: 두 버전 카드(캡처·설명·영문/국문 링크)
 - 테마가 1개(확정 시안)면 전환 막대·카드 없이 루트 index.html이 곧바로 그 테마의 홈으로 넘어간다(실제 사이트처럼 첫 화면이 홈)
   대신 모든 페이지 오른쪽 아래에 "의견 남기기"(누른 뒤 고른 부분에 claude.ai 댓글 창을 연다)와 "사진 보내기" 버튼,
-  편집자에게만 왼쪽 아래 "리뷰 정리"(쌓인 리뷰 목록)와 "반영한 리뷰 정리"(지울 스레드) 버튼.
+  왼쪽 아래 "리뷰 정리"(쌓인 리뷰 목록)와 "반영한 리뷰 정리"(지울 스레드) 버튼(로그인한 모든 사람에게 보이고, "지웠음"은 편집자만).
   게시할 때 capabilities {comments: {composer_only: true}, assets: {upload: "interact"},
-  db: {rules: [{path: "cleanup", read: "admin", write: "admin"}, {path: "reviews", read: "admin", write: "admin"}]}, user: {}}
+  db: {rules: [{path: "cleanup", read: "view", write: "admin"}, {path: "reviews", read: "view", write: "admin"}]}, user: {}}
 사용: python preview_family.py <소스 루트> <출력 폴더> <공지 수> <앨범 수> <전체 목록 URL> <계열 이름> <테마...>"""
 import html as H
 import json
@@ -98,11 +98,11 @@ if(s&&!s.isCollapsed&&s.rangeCount&&String(s).trim()){open({range:s.getRangeAt(0
 var el=pick(e.target);if(el)open({element:el});},true);
 document.addEventListener("keydown",function(e){if(on&&e.key==="Escape"){set(false);b.focus();}});
 })();'''
-# 확정 시안 미리보기의 "리뷰 정리"(편집자 전용, "반영한 리뷰 정리" 바로 위): 아직 처리할 리뷰(미반영·일부 반영·보류)만 보여 주는 목록.
+# 확정 시안 미리보기의 "리뷰 정리"(로그인한 모든 사람에게 보임. 2026-11-16, "반영한 리뷰 정리" 바로 위): 아직 처리할 리뷰(미반영·일부 반영·보류)만 보여 주는 목록.
 # 반영·해당 없음은 db에는 남지만 화면에는 내지 않는다(전체 기록은 REVIEW_LOG.md).
 # reviews/_meta 문서의 updated("YYYY.MM.DD.HH:MM", KST)를 거르기 버튼 오른쪽에 "Updated …"로 보여 준다(reviews_to_db.py가 함께 만든다).
 # 원본 기록은 비공개 저장소 homepage-reviews의 REVIEW_LOG.md이고, scripts/review/reviews_to_db.py로 만든 행을 Claude가 db reviews 컬렉션에 넣는다(ArtifactData).
-# 미리보기에서 스레드를 지워도 이 목록에는 남는다. db 규칙 {path: "reviews", read: "admin", write: "admin"}로 편집자만 읽는다(작성자 이름·개인 메일이 있음).
+# 미리보기에서 스레드를 지워도 이 목록에는 남는다. db 규칙 {path: "reviews", read: "view", write: "admin"}로 모두 읽고 편집자(Claude 포함)만 쓴다. 작성자 표시 이름과 원문이 보이므로 원문에 민감한 내용이 있으면 db에 넣지 않는다.
 REVIEWS_HTML = r'''<style>
 #csl-rv,#csl-rv-p{position:fixed;left:max(16px,env(safe-area-inset-left,0px));z-index:2147483000;
 font:700 14px/1.2 -apple-system,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
@@ -136,8 +136,6 @@ if(!window.claude||!window.claude.use)return;
 var db=null,u=null;
 try{var r=await Promise.all([window.claude.use("db"),window.claude.use("user")]);db=r[0];u=r[1];}catch(e){}
 if(!db||!u)return;
-var ed=false;try{ed=await u.canEdit();}catch(e){}
-if(!ed)return;
 var KIND={"반영":"done","일부 반영":"todo","미반영":"todo","보류":"hold","해당 없음":"none"},rows=[],cur="",upd="";
 function kind(s){s=String(s||"");for(var k in KIND){if(s.indexOf(k)===0)return KIND[k];}return "none";}
 function render(){
@@ -158,11 +156,11 @@ var q=document.getElementById("csl-cl-p");if(!p.hidden&&q&&!q.hidden){q.hidden=t
 db.collection("reviews").orderBy("time","desc").onSnapshot(function(sn){upd="";sn.docs.forEach(function(x){if(x.id==="_meta"&&x.exists){upd=String((x.data()||{}).updated||"");}});
 rows=sn.docs.filter(function(x){return x.exists&&x.id!=="_meta";}).map(function(x){return x.data()||{};}).filter(function(d){var k=kind(d.status);return k==="todo"||k==="hold";});render();},function(){b.hidden=true;});
 })();'''
-# 확정 시안 미리보기의 "반영한 리뷰 정리"(편집자 전용): 반영하고 REVIEW_LOG.md에 기록한 리뷰 스레드를 미리보기에서 지운다.
+# 확정 시안 미리보기의 "반영한 리뷰 정리"(목록은 모든 사람, "지웠음" 버튼은 편집자만): 반영하고 REVIEW_LOG.md에 기록한 리뷰 스레드를 미리보기에서 지운다.
 # Claude가 db의 cleanup 컬렉션에 {threadId, label, page, summary, commit, done:false}를 적어 두면(ArtifactData), 편집자 화면 왼쪽 아래에 버튼이 뜬다.
 # comments는 composer_only로 선언한다(전체 형태는 링크로 들어온 사람에게 null이 되어 '의견 남기기'가 사라진다. 2026-11-16).
 # 그래서 페이지가 스레드를 직접 지우지 못한다: 편집자가 claude.ai 댓글 목록에서 그 스레드를 지운 뒤 "지웠음"을 눌러 목록에서 뺀다.
-# db 규칙 {path: "cleanup", read: "admin", write: "admin"}로 편집자만 읽고 쓴다.
+# db 규칙 {path: "cleanup", read: "view", write: "admin"}로 모두 읽고 편집자만 쓴다.
 CLEANUP_HTML = r'''<style>
 #csl-cl,#csl-cl-p{position:fixed;left:max(16px,env(safe-area-inset-left,0px));z-index:2147483000;
 font:700 14px/1.2 -apple-system,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
@@ -183,7 +181,7 @@ padding:14px;border-radius:14px;background:#fff;color:#10203a;box-shadow:0 8px 3
 </style>
 <button id="csl-cl" type="button" hidden data-uncommentable aria-expanded="false" aria-controls="csl-cl-p">반영한 리뷰 정리</button>
 <div id="csl-cl-p" hidden data-uncommentable role="group" aria-label="반영한 리뷰 정리">
-<p>반영하고 기록(REVIEW_LOG.md)까지 끝난 리뷰입니다. claude.ai 댓글 목록에서 해당 스레드(앞 8자리로 확인)를 지운 뒤 "지웠음"을 누르세요.</p>
+<p>반영하고 기록(REVIEW_LOG.md)까지 끝난 리뷰입니다. 편집자가 claude.ai 댓글 목록에서 해당 스레드(앞 8자리로 확인)를 지운 뒤 "지웠음"을 누릅니다.</p>
 <ul id="csl-cl-l"></ul>
 <p id="csl-cl-msg" role="status"></p>
 </div>'''
@@ -194,7 +192,6 @@ var db=null,u=null;
 try{var r=await Promise.all([window.claude.use("db"),window.claude.use("user")]);db=r[0];u=r[1];}catch(e){}
 if(!db||!u)return;
 var ed=false;try{ed=await u.canEdit();}catch(e){}
-if(!ed)return;
 var rows=[];
 function render(){
 b.hidden=!rows.length;b.textContent="반영한 리뷰 정리 ("+rows.length+")";L.textContent="";
@@ -202,7 +199,7 @@ rows.forEach(function(r){var d=r.data()||{},li=document.createElement("li"),t=do
 t.className="csl-cl-t";t.textContent=(d.label?d.label+" — ":"")+(d.summary||"");
 k.className="csl-cl-m";k.textContent=[d.page,d.commit?"반영 "+d.commit:"",d.threadId?"스레드 "+String(d.threadId).slice(0,8):""].filter(Boolean).join(" · ");
 x.type="button";x.textContent="지웠음";x.addEventListener("click",function(){del(r,x);});
-li.appendChild(t);li.appendChild(k);li.appendChild(x);L.appendChild(li);});
+li.appendChild(t);li.appendChild(k);if(ed)li.appendChild(x);L.appendChild(li);});
 if(!rows.length){p.hidden=true;b.setAttribute("aria-expanded","false");}}
 async function del(r,x){var d=r.data()||{};
 if(!window.confirm("claude.ai 댓글 목록에서 이 스레드를 지웠나요?\n(스레드 "+String(d.threadId||"").slice(0,8)+")\n\n"+(d.summary||"")))return;
