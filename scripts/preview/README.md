@@ -15,11 +15,11 @@ artifact 한 개에는 파일을 511개까지만 넣을 수 있다. 그래서 �
 미리보기는 페이지마다 `window.CSL_NO_EMBED=true`를 넣어, artifact가 막는 유튜브 iframe 대신 재생 버튼이 YouTube 새 탭 링크가 되게 한다.
 확정 시안 미리보기에는 버튼이 네 개 있다.
 둘 다 미리보기의 `shared/shared.js` 끝에 붙는 조각이라, 버튼만 고칠 때는 `index.html`과 `shared/shared.js`만 다시 게시하면 된다.
-- **의견 남기기**(`FEEDBACK_HTML`, `FEEDBACK_JS`): 누르면 고르기 상태(빨간 커서, 마우스가 올라간 부분에 빨간 테두리)가 되고, 그 상태에서 누른 부분이나 드래그한 글자에 claude.ai 댓글 창을 연다. Esc나 버튼을 다시 누르면 취소. 댓글 창이 닫히면(Esc·게시) claude.ai의 댓글 모드도 함께 끝낸다(`customAnchors`의 `exitMode`. 쓰던 글이 남아 있으면 claude.ai가 모드를 유지한다).
+- **의견 남기기**(`FEEDBACK_HTML`, `FEEDBACK_JS`): 누르면 고르기 상태(빨간 커서, 마우스가 올라간 부분에 빨간 테두리)가 되고, 그 상태에서 누른 부분이나 드래그한 글자에 claude.ai 댓글 창을 연다. Esc나 버튼을 다시 누르면 취소. (댓글 창이 닫힌 뒤 댓글 모드를 끝내던 `customAnchors` 연동은 2026-11-16에 뺐다. 댓글 칸을 누르면 창이 닫히는 문제가 있었다.)
 - **사진 보내기**(`UPLOAD_HTML`, `UPLOAD_JS`): 사진을 artifact 자산으로 올리고 db `uploads`에 `{assetId, filename, note, page, title, uploader, time, sizeBytes, contentType, done}`을 남긴다.
 - **리뷰 정리**(`REVIEWS_HTML`, `REVIEWS_JS`, 편집자 전용, 왼쪽 아래 "반영한 리뷰 정리" 바로 위): db `reviews`(REVIEW_LOG.md에서 `scripts/review/reviews_to_db.py`로 만든 행)중 미반영(일부 반영 포함)·보류만 최신순으로 보여 주고 둘 중 하나로 거른다. 읽기만 한다.
-- **반영한 리뷰 정리**(`CLEANUP_HTML`, `CLEANUP_JS`, 편집자 전용, 왼쪽 아래): db `cleanup`에서 `done:false`인 행을 보여 주고, 스레드마다 확인 뒤 `comments.delete`로 지운 다음 `done:true`로 바꾼다. 한 번에 모두 지우지 않는다.
-- 게시할 때 capabilities는 `{"comments": {"customAnchors": true}, "assets": {"upload": "interact"}, "db": {"rules": [{"path": "cleanup", "read": "admin", "write": "admin"}, {"path": "reviews", "read": "admin", "write": "admin"}]}, "user": {}}`(2026-11-13부터. 삭제를 쓰려고 comments를 전체 형태로 바꿈). capabilities를 넘기면 전체가 바뀌므로 넷을 모두 적는다(생략하면 이전 선언 유지).
+- **반영한 리뷰 정리**(`CLEANUP_HTML`, `CLEANUP_JS`, 편집자 전용, 왼쪽 아래): db `cleanup`에서 `done:false`인 행을 보여 주고, 편집자가 claude.ai 댓글 목록에서 그 스레드를 지운 뒤 "지웠음"을 누르면 `done:true`로 바꾼다(페이지는 스레드를 직접 지우지 않는다).
+- 게시할 때 capabilities는 `{"comments": {"composer_only": true}, "assets": {"upload": "interact"}, "db": {"rules": [{"path": "cleanup", "read": "admin", "write": "admin"}, {"path": "reviews", "read": "admin", "write": "admin"}]}, "user": {}}`(2026-11-16부터 다시 composer_only. 전체 형태는 링크로 들어온 사람에게 comments가 null이라 의견 남기기 버튼이 사라졌다. 그래서 "반영한 리뷰 정리"는 편집자가 claude.ai 댓글 목록에서 지운 뒤 "지웠음"을 누르는 방식). capabilities를 넘기면 전체가 바뀌므로 넷을 모두 적는다(생략하면 이전 선언 유지).
 - 올라온 사진은 `Artifact list`(scope `assets`)와 `ArtifactData list`(collection `uploads`)로 확인하고 `Artifact read`(path에 자산 id)로 내려받는다. 반영한 행은 `done: true`로 바꾼다.
 
 테마가 자체 호스팅하는 글꼴(`assets/fonts`, 140여 개)은 미리보기에서 빼고 Google Fonts 링크로 바꾼다(파일 수 한도).

@@ -7,7 +7,7 @@
 - 테마가 1개(확정 시안)면 전환 막대·카드 없이 루트 index.html이 곧바로 그 테마의 홈으로 넘어간다(실제 사이트처럼 첫 화면이 홈)
   대신 모든 페이지 오른쪽 아래에 "의견 남기기"(누른 뒤 고른 부분에 claude.ai 댓글 창을 연다)와 "사진 보내기" 버튼,
   편집자에게만 왼쪽 아래 "리뷰 정리"(쌓인 리뷰 목록)와 "반영한 리뷰 정리"(지울 스레드) 버튼.
-  게시할 때 capabilities {comments: {customAnchors: true}, assets: {upload: "interact"},
+  게시할 때 capabilities {comments: {composer_only: true}, assets: {upload: "interact"},
   db: {rules: [{path: "cleanup", read: "admin", write: "admin"}, {path: "reviews", read: "admin", write: "admin"}]}, user: {}}
 사용: python preview_family.py <소스 루트> <출력 폴더> <공지 수> <앨범 수> <전체 목록 URL> <계열 이름> <테마...>"""
 import html as H
@@ -85,22 +85,9 @@ function pick(t){if(!t||!t.closest||t.closest("[data-uncommentable]"))return nul
 function mark(el){if(hi)hi.classList.remove("csl-pick-hi");hi=el;if(hi)hi.classList.add("csl-pick-hi");}
 function set(v){on=v;root.classList.toggle("csl-pick",v);hint.hidden=!v;b.textContent=v?"취소 (Esc)":"의견 남기기";
 b.setAttribute("aria-pressed",String(v));if(!v)mark(null);}
-// 댓글 창을 열면 claude.ai가 자체 댓글 모드로 들어가고, Esc는 창만 닫는다. 창이 닫히면(Esc·게시) 그 모드도 끝내 달라고 한다.
-// 그러려면 고정 위치 관리(customAnchors)를 잠깐 맡아야 한다: 고르기를 시작할 때 맡고, 모드가 끝나면 바로 돌려준다.
-// 쓰던 글이 남아 있으면 claude.ai가 모드를 끝내지 않는다. 그때도 관리는 돌려줘서 claude.ai의 원래 동작으로 이어지게 한다
-var ca=null,relT=null,seen=false;
-function release(){if(relT){clearTimeout(relT);relT=null;}var x=ca;ca=null;seen=false;if(x){try{x.release();}catch(e){}}}
-async function hook(){if(ca||!c.customAnchors)return;
-try{var x=await c.customAnchors({
-mode:function(v){if(!v&&!on)release();},
-threads:function(){try{if(ca)ca.placed({});}catch(e){}},
-reveal:function(){},
-composing:function(v){if(v){seen=true;if(relT){clearTimeout(relT);relT=null;}return;}
-if(!seen||!ca)return;try{ca.exitMode();}catch(e){}relT=setTimeout(release,400);}});
-if(on||seen)ca=x;else{try{x.release();}catch(e){}}}catch(e){}}
 async function open(target){set(false);
-try{var r=await c.openComposer(target);if(r&&r.opened===false)release();}catch(e){release();if(e&&(e.code==="unavailable"||e.code==="not_granted"))b.hidden=true;}}
-b.addEventListener("click",function(){set(!on);if(on){hook();var s=window.getSelection();if(s)s.removeAllRanges();}else release();});
+try{await c.openComposer(target);}catch(e){if(e&&(e.code==="unavailable"||e.code==="not_granted"))b.hidden=true;}}
+b.addEventListener("click",function(){set(!on);if(on){var s=window.getSelection();if(s)s.removeAllRanges();}});
 document.addEventListener("mouseover",function(e){if(on)mark(pick(e.target));},true);
 document.addEventListener("click",function(e){
 if(!on||(e.target.closest&&e.target.closest("[data-uncommentable]")))return;
@@ -108,7 +95,7 @@ e.preventDefault();e.stopPropagation();
 var s=window.getSelection();
 if(s&&!s.isCollapsed&&s.rangeCount&&String(s).trim()){open({range:s.getRangeAt(0)});return;}
 var el=pick(e.target);if(el)open({element:el});},true);
-document.addEventListener("keydown",function(e){if(on&&e.key==="Escape"){set(false);release();b.focus();}});
+document.addEventListener("keydown",function(e){if(on&&e.key==="Escape"){set(false);b.focus();}});
 })();'''
 # 확정 시안 미리보기의 "리뷰 정리"(편집자 전용, "반영한 리뷰 정리" 바로 위): 아직 처리할 리뷰(미반영·일부 반영·보류)만 보여 주는 목록.
 # 반영·해당 없음은 db에는 남지만 화면에는 내지 않는다(전체 기록은 REVIEW_LOG.md).
@@ -172,8 +159,8 @@ rows=sn.docs.filter(function(x){return x.exists&&x.id!=="_meta";}).map(function(
 })();'''
 # 확정 시안 미리보기의 "반영한 리뷰 정리"(편집자 전용): 반영하고 REVIEW_LOG.md에 기록한 리뷰 스레드를 미리보기에서 지운다.
 # Claude가 db의 cleanup 컬렉션에 {threadId, label, page, summary, commit, done:false}를 적어 두면(ArtifactData), 편집자 화면 왼쪽 아래에 버튼이 뜬다.
-# 지우기는 되돌릴 수 없어서 스레드마다 따로 "삭제"를 누르고 확인을 거친다(한 번에 모두 지우지 않는다. comments API 규칙).
-# 게시할 때 comments는 전체 형태({customAnchors: true}, composer_only 없음)여야 delete를 쓸 수 있고, 처음 지울 때 claude.ai가 동의를 한 번 묻는다.
+# comments는 composer_only로 선언한다(전체 형태는 링크로 들어온 사람에게 null이 되어 '의견 남기기'가 사라진다. 2026-11-16).
+# 그래서 페이지가 스레드를 직접 지우지 못한다: 편집자가 claude.ai 댓글 목록에서 그 스레드를 지운 뒤 "지웠음"을 눌러 목록에서 뺀다.
 # db 규칙 {path: "cleanup", read: "admin", write: "admin"}로 편집자만 읽고 쓴다.
 CLEANUP_HTML = r'''<style>
 #csl-cl,#csl-cl-p{position:fixed;left:max(16px,env(safe-area-inset-left,0px));z-index:2147483000;
@@ -195,37 +182,32 @@ padding:14px;border-radius:14px;background:#fff;color:#10203a;box-shadow:0 8px 3
 </style>
 <button id="csl-cl" type="button" hidden data-uncommentable aria-expanded="false" aria-controls="csl-cl-p">반영한 리뷰 정리</button>
 <div id="csl-cl-p" hidden data-uncommentable role="group" aria-label="반영한 리뷰 정리">
-<p>반영하고 기록(REVIEW_LOG.md)까지 끝난 리뷰입니다. 하나씩 확인하고 지웁니다. 지우면 되돌릴 수 없습니다.</p>
+<p>반영하고 기록(REVIEW_LOG.md)까지 끝난 리뷰입니다. claude.ai 댓글 목록에서 해당 스레드(앞 8자리로 확인)를 지운 뒤 "지웠음"을 누르세요.</p>
 <ul id="csl-cl-l"></ul>
 <p id="csl-cl-msg" role="status"></p>
 </div>'''
 CLEANUP_JS = r'''(async function(){
 var b=document.getElementById("csl-cl"),p=document.getElementById("csl-cl-p"),L=document.getElementById("csl-cl-l"),m=document.getElementById("csl-cl-msg");
 if(!window.claude||!window.claude.use)return;
-var c=null,db=null,u=null;
-try{var r=await Promise.all([window.claude.use("comments"),window.claude.use("db"),window.claude.use("user")]);c=r[0];db=r[1];u=r[2];}catch(e){}
-if(!c||!db||!u||typeof c.delete!=="function")return;
+var db=null,u=null;
+try{var r=await Promise.all([window.claude.use("db"),window.claude.use("user")]);db=r[0];u=r[1];}catch(e){}
+if(!db||!u)return;
 var ed=false;try{ed=await u.canEdit();}catch(e){}
 if(!ed)return;
-var WHY={consent_required:"claude.ai에서 이 페이지의 댓글 쓰기를 허용해야 지울 수 있습니다.",forbidden:"이 스레드를 지울 권한이 없습니다.",
-rate_limited:"잠시 뒤 다시 눌러 주세요.",unavailable:"지금은 지울 수 없습니다. 페이지를 새로 고친 뒤 다시 해 주세요."};
 var rows=[];
 function render(){
 b.hidden=!rows.length;b.textContent="반영한 리뷰 정리 ("+rows.length+")";L.textContent="";
 rows.forEach(function(r){var d=r.data()||{},li=document.createElement("li"),t=document.createElement("div"),k=document.createElement("div"),x=document.createElement("button");
 t.className="csl-cl-t";t.textContent=(d.label?d.label+" — ":"")+(d.summary||"");
 k.className="csl-cl-m";k.textContent=[d.page,d.commit?"반영 "+d.commit:"",d.threadId?"스레드 "+String(d.threadId).slice(0,8):""].filter(Boolean).join(" · ");
-x.type="button";x.textContent="삭제";x.addEventListener("click",function(){del(r,x);});
+x.type="button";x.textContent="지웠음";x.addEventListener("click",function(){del(r,x);});
 li.appendChild(t);li.appendChild(k);li.appendChild(x);L.appendChild(li);});
 if(!rows.length){p.hidden=true;b.setAttribute("aria-expanded","false");}}
 async function del(r,x){var d=r.data()||{};
-if(!d.threadId)return;
-if(!window.confirm("이 리뷰 스레드를 지울까요? 되돌릴 수 없습니다.\n원문과 반영 내용은 REVIEW_LOG.md에 남아 있습니다.\n\n"+(d.summary||"")))return;
-x.disabled=true;m.textContent="지우는 중…";
-try{await c.delete(String(d.threadId));}
-catch(e){if(!(e&&e.code==="not_found")){m.textContent=WHY[e&&e.code]||"지우지 못했습니다. 잠시 뒤 다시 해 주세요.";x.disabled=false;return;}}
-try{await db.collection("cleanup").doc(r.id).update({done:true,deletedAt:new Date().toISOString()});m.textContent="지웠습니다.";}
-catch(e){m.textContent="스레드는 지웠지만 목록 표시를 갱신하지 못했습니다.";}}
+if(!window.confirm("claude.ai 댓글 목록에서 이 스레드를 지웠나요?\n(스레드 "+String(d.threadId||"").slice(0,8)+")\n\n"+(d.summary||"")))return;
+x.disabled=true;
+try{await db.collection("cleanup").doc(r.id).update({done:true,deletedAt:new Date().toISOString()});m.textContent="목록에서 뺐습니다.";}
+catch(e){m.textContent="목록을 갱신하지 못했습니다. 잠시 뒤 다시 해 주세요.";x.disabled=false;}}
 b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));if(!p.hidden){m.textContent="";var q=document.getElementById("csl-rv-p");if(q&&!q.hidden){q.hidden=true;var qb=document.getElementById("csl-rv");if(qb)qb.setAttribute("aria-expanded","false");}}});
 db.collection("cleanup").where("done","==",false).onSnapshot(function(s){rows=s.docs.filter(function(x){return x.exists;});render();},function(){b.hidden=true;});
 })();'''
