@@ -280,6 +280,8 @@ m.textContent=(ok?ok+"장을 보냈습니다. 담당자가 확인 후 반영합�
 if(ok&&!bad.length){f.value="";n.value="";}
 s.disabled=false;});
 })();'''
+# 미리보기 버튼 마크업. 권한이 없는 사람에게 보이는 안내의 관리자 메일은 site.yaml contact.maintainer_email
+UI_HTML = (FEEDBACK_HTML + UPLOAD_HTML + REVIEWS_HTML + CLEANUP_HTML).replace('__MAIL__', H.escape(data['site']['contact']['maintainer_email']))
 
 # 사이트는 Google Fonts를 자체 호스팅하지만(assets/fonts), 미리보기는 파일 수 한도 때문에 Google Fonts 링크를 쓴다
 GFONTS = ('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700'
@@ -341,7 +343,7 @@ if one:
         # 예전에 게시한 페이지에는 "의견 남기기"가 페이지 안에 들어 있다. 그 버튼은 지우고 새로 넣는다
         f.write('\n/* 미리보기 전용: 의견 남기기 · 사진 보내기 · 리뷰 정리 · 반영한 리뷰 정리 */\ndocument.addEventListener("DOMContentLoaded",function(){'
                 'var old=document.getElementById("csl-fb");if(old)old.remove();'
-                f'document.body.insertAdjacentHTML("beforeend",{json.dumps((FEEDBACK_HTML + UPLOAD_HTML + REVIEWS_HTML + CLEANUP_HTML).replace('__MAIL__', H.escape(data['site']['contact']['maintainer_email'])), ensure_ascii=False)});\n'
+                f'document.body.insertAdjacentHTML("beforeend",{json.dumps(UI_HTML, ensure_ascii=False)});\n'
                 f'{FEEDBACK_JS}\n{UPLOAD_JS}\n{REVIEWS_JS}\n{CLEANUP_JS}\n}});\n')
     # 루트 index.html(artifact 첫 화면)은 테마 홈으로 바로 넘긴다. 색은 t5 종이색에 맞춰 넘어가는 순간의 깜박임을 줄인다
     th = themes[0]
