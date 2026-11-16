@@ -6,9 +6,9 @@
 - 루트 index.html: 두 버전 카드(캡처·설명·영문/국문 링크)
 - 테마가 1개(확정 시안)면 전환 막대·카드 없이 루트 index.html이 곧바로 그 테마의 홈으로 넘어간다(실제 사이트처럼 첫 화면이 홈)
   대신 모든 페이지 오른쪽 아래에 "의견 남기기"(누른 뒤 고른 부분에 claude.ai 댓글 창을 연다)와 "사진 보내기" 버튼,
-  왼쪽 아래 "리뷰 정리"(쌓인 리뷰 목록)와 "반영한 리뷰 정리"(지울 스레드) 버튼(로그인한 모든 사람에게 보이고, "지웠음"은 편집자만).
+  왼쪽 아래 "리뷰 정리"(쌓인 리뷰 목록)와 "반영한 리뷰 정리"(지울 스레드) 버튼(로그인한 모든 사람에게 보이고, "지웠음"은 기여자 이상).
   게시할 때 capabilities {comments: {composer_only: true}, assets: {upload: "interact"},
-  db: {rules: [{path: "cleanup", read: "view", write: "admin"}, {path: "reviews", read: "view", write: "admin"}]}, user: {}}
+  db: {rules: [{path: "cleanup", read: "view", write: "interact"}, {path: "reviews", read: "view", write: "admin"}]}, user: {}}
 사용: python preview_family.py <소스 루트> <출력 폴더> <공지 수> <앨범 수> <전체 목록 URL> <계열 이름> <테마...>"""
 import html as H
 import json
@@ -168,11 +168,11 @@ var q=document.getElementById("csl-cl-p");if(!p.hidden&&q&&!q.hidden){q.hidden=t
 db.collection("reviews").orderBy("time","desc").onSnapshot(function(sn){upd="";sn.docs.forEach(function(x){if(x.id==="_meta"&&x.exists){upd=String((x.data()||{}).updated||"");}});
 rows=sn.docs.filter(function(x){return x.exists&&x.id!=="_meta";}).map(function(x){return x.data()||{};}).filter(function(d){var k=kind(d.status);return k==="todo"||k==="hold";});render();},function(){b.hidden=true;});
 })();'''
-# 확정 시안 미리보기의 "반영한 리뷰 정리"(목록은 모든 사람, "지웠음" 버튼은 편집자만): 반영하고 REVIEW_LOG.md에 기록한 리뷰 스레드를 미리보기에서 지운다.
+# 확정 시안 미리보기의 "반영한 리뷰 정리"(목록은 모든 사람, "지웠음" 버튼은 기여자 이상): 반영하고 REVIEW_LOG.md에 기록한 리뷰 스레드를 미리보기에서 지운다.
 # Claude가 db의 cleanup 컬렉션에 {threadId, label, page, summary, commit, done:false}를 적어 두면(ArtifactData), 편집자 화면 왼쪽 아래에 버튼이 뜬다.
 # comments는 composer_only로 선언한다(전체 형태는 링크로 들어온 사람에게 null이 되어 '의견 남기기'가 사라진다. 2026-11-16).
 # 그래서 페이지가 스레드를 직접 지우지 못한다: 편집자가 claude.ai 댓글 목록에서 그 스레드를 지운 뒤 "지웠음"을 눌러 목록에서 뺀다.
-# db 규칙 {path: "cleanup", read: "view", write: "admin"}로 모두 읽고 편집자만 쓴다.
+# db 규칙 {path: "cleanup", read: "view", write: "interact"}로 모두 읽고 기여자 이상이 쓴다.
 CLEANUP_HTML = r'''<style>
 #csl-cl,#csl-cl-p{position:fixed;left:max(16px,env(safe-area-inset-left,0px));z-index:2147483000;
 font:700 14px/1.2 -apple-system,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
@@ -203,7 +203,8 @@ if(!window.claude||!window.claude.use)return;
 var db=null,u=null;
 try{var r=await Promise.all([window.claude.use("db"),window.claude.use("user")]);db=r[0];u=r[1];}catch(e){}
 if(!db||!u)return;
-var ed=false;try{ed=await u.canEdit();}catch(e){}
+// 기여자(interact) 이상이 "지웠음"을 누를 수 있다(2026-11-16). 알 수 없으면(null) 버튼을 두고 쓰기 거절로 판단한다.
+var ed=false;try{var w=await u.can("data.write");ed=(w!==false);}catch(e){}
 var rows=[];
 function render(){
 b.hidden=!rows.length;b.textContent="반영한 리뷰 정리 ("+rows.length+")";L.textContent="";
@@ -217,7 +218,7 @@ async function del(r,x){var d=r.data()||{};
 if(!window.confirm("claude.ai 댓글 목록에서 이 스레드를 지웠나요?\n(스레드 "+String(d.threadId||"").slice(0,8)+")\n\n"+(d.summary||"")))return;
 x.disabled=true;
 try{await db.collection("cleanup").doc(r.id).update({done:true,deletedAt:new Date().toISOString()});m.textContent="목록에서 뺐습니다.";}
-catch(e){m.textContent="목록을 갱신하지 못했습니다. 잠시 뒤 다시 해 주세요.";x.disabled=false;}}
+catch(e){m.textContent=(e&&(e.code==="forbidden"||e.code==="not_granted"||e.code==="permission_denied"))?"기여자 이상만 표시할 수 있습니다.":"목록을 갱신하지 못했습니다. 잠시 뒤 다시 해 주세요.";x.disabled=false;}}
 b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));if(!p.hidden){m.textContent="";var q=document.getElementById("csl-rv-p");if(q&&!q.hidden){q.hidden=true;var qb=document.getElementById("csl-rv");if(qb)qb.setAttribute("aria-expanded","false");}}});
 db.collection("cleanup").where("done","==",false).onSnapshot(function(s){rows=s.docs.filter(function(x){return x.exists;});render();},function(){b.hidden=true;});
 })();'''
