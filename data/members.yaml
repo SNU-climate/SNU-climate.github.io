@@ -37,7 +37,7 @@ members:
     role: researcher
     position: {en: "Researcher", ko: "연구원"}
     photo: members/hyunju-lee.jpg
-    email: "hjlee84@snu.ac.kr"
+    email: "ihyunju8884@gmail.com"
     interests:
       en: ["Climate change", "Teleconnection and Rossby wave dynamics", "Stratospheric aerosol injection (SAI)"]
       ko: ["기후변화", "원격상관과 로스비파 역학", "성층권 에어로졸 주입(SAI)"]
@@ -154,10 +154,22 @@ members:
     role: researcher
     position: {en: "Researcher", ko: "연구원"}
     photo: members/jonghwa-lee.jpg
-    email: "jhlee20@postech.ac.kr"
+    email: "jhlee94@snu.ac.kr"
+    interests:
+      en: ["Multi-model ensemble seasonal prediction", "Seasonal prediction for Pacific Island Countries (PICASO)", "Atmosphere-ocean interaction and long-term climate variability"]
+      ko: ["다중 모델 앙상블 계절 예측", "태평양 도서국 계절 예측(PICASO)", "대기-해양 상호작용과 장기 기후 변동성"]
     education:
-      - {year: "2001", en: "M.S., School of Earth and Environmental Science, Konkuk University, Seoul, South Korea", ko: "석사, 건국대학교 지구환경과학과"}
-      - {year: "1998", en: "B.S., School of Earth and Environmental Science, Konkuk University, Seoul, South Korea", ko: "학사, 건국대학교 지구환경과학과"}
+      - {year: "2005", en: "Ph.D. Coursework Completed, School of Earth and Environmental Sciences, Seoul National University, Seoul, South Korea", ko: "박사 수료, 서울대학교 지구환경과학부"}
+      - {year: "2001", en: "M.S., College of Sciences, Konkuk University, Seoul, South Korea", ko: "석사, 건국대학교 이과대학"}
+      - {year: "1998", en: "B.S., College of Sciences, Konkuk University, Seoul, South Korea", ko: "학사, 건국대학교 이과대학"}
+    career:
+      - {period: "2024–", en: "Researcher, School of Earth and Environmental Sciences, Seoul National University, Seoul", ko: "연구원, 서울대학교 지구환경과학부"}
+      - {period: "2019–2023", en: "Researcher, Institute of Environmental and Energy Technology, POSTECH, Pohang", ko: "연구원, 포항공과대학교 환경연구소"}
+      - {period: "2014–2017", en: "Researcher, School of Earth and Environmental Sciences, Seoul National University, Seoul", ko: "연구원, 서울대학교 지구환경과학부"}
+      - {period: "2011–2013", en: "Researcher, Climate Research Laboratory, National Institute of Meteorological Research, KMA, Seoul", ko: "연구원, 기상청 국립기상연구소 기후연구과"}
+      - {period: "2009–2010", en: "Researcher, Research Group on Food Safety Control against Climate Change, Korea Health Industry Development Institute, Seoul", ko: "연구원, 한국보건산업진흥원 기후변화 대응 식품안전 연구단"}
+      - {period: "2005–2009", en: "Researcher, School of Earth and Environmental Sciences, Seoul National University, Seoul", ko: "연구원, 서울대학교 지구환경과학부"}
+      - {period: "2001–2003", en: "Researcher, Climate Prediction Division, Climate Science Bureau, Korea Meteorological Administration, Seoul", ko: "연구원, 기상청 기후과학국 기후예측과"}
 
   - id: yeonjun-suh
     name: {en: "Yeonjun Suh", ko: "서연준"}
@@ -294,7 +306,11 @@ members:
     position: {en: "Ph.D. Candidate", ko: "박사과정"}
     photo: members/gyeongmin-baek.jpg
     email: "rudals92430@snu.ac.kr"
+    interests:
+      en: ["Deep learning", "Antarctic sea ice", "Multi-model ensemble"]
+      ko: ["딥러닝", "남극 해빙", "다중 모델 앙상블"]
     education:
+      - {year: "2026", en: "M.S., School of Earth and Environmental Sciences, Seoul National University, South Korea", ko: "석사, 서울대학교 지구환경과학부"}
       - {year: "2024", en: "B.S., Department of Earth and Environmental Sciences, Jeonbuk National University, South Korea", ko: "학사, 전북대학교 지구환경과학과"}
 
   - id: seongho-park
@@ -303,6 +319,10 @@ members:
     position: {en: "M.S. Candidate", ko: "석사과정"}
     photo: members/seongho-park.jpg
     email: "park03267@snu.ac.kr"
+    homepage: "https://agn0220.github.io/home/"
+    interests:
+      en: ["Climate risk assessment", "Climate econometrics"]
+      ko: ["기후 위험 평가", "기후 계량경제학"]
     education:
       - {year: "2024", en: "B.S., School of Earth and Environmental Sciences, Seoul National University, South Korea", ko: "학사, 서울대학교 지구환경과학부"}
 
