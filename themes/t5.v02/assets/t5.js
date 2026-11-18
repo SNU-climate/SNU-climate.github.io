@@ -99,8 +99,11 @@
 
 // 모바일 'TOP' 플로팅 버튼: 화면 한 쪽 이상 내려가면 보이고, 누르면 맨 위로 올라간다(좁은 화면에서만, CSS가 넓은 화면에서는 숨김)
 (function () {
-  var btn = document.querySelector('[data-to-top]');
-  if (!btn) return;
+  // 버튼은 여기서 만든다(모든 HTML을 다시 만들지 않도록). 이름은 페이지 언어를 따른다 (2026-11-18 이종화 리뷰)
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'to-top'; btn.hidden = true; btn.textContent = 'TOP';
+  btn.setAttribute('aria-label', document.documentElement.lang === 'ko' ? '맨 위로' : 'Back to top');
+  document.body.appendChild(btn);
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   var raf = 0;
   function update() { raf = 0; btn.hidden = window.scrollY < window.innerHeight * 0.8; }

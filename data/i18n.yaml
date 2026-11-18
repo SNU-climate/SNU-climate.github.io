@@ -181,7 +181,6 @@ contact:
     ko: "501동은 서울대학교 관악캠퍼스에 있습니다."
 
 common:
-  to_top: {en: "Back to top", ko: "맨 위로"}
   sample: {en: "SAMPLE", ko: "예시"}
   sample_note: {en: "Sample entry — will be replaced with real data.", ko: "예시 항목입니다. 실제 자료로 교체될 예정입니다."}
   updated: {en: "Last updated", ko: "최종 수정"}
