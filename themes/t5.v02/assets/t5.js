@@ -96,3 +96,19 @@
     update();
   });
 })();
+
+// 모바일 'TOP' 플로팅 버튼: 화면 한 쪽 이상 내려가면 보이고, 누르면 맨 위로 올라간다(좁은 화면에서만, CSS가 넓은 화면에서는 숨김)
+(function () {
+  var btn = document.querySelector('[data-to-top]');
+  if (!btn) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var raf = 0;
+  function update() { raf = 0; btn.hidden = window.scrollY < window.innerHeight * 0.8; }
+  window.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reduce.matches ? 'auto' : 'smooth' });
+    var t = document.querySelector('.mast-title');
+    if (t) t.focus({ preventScroll: true });
+  });
+  update();
+})();

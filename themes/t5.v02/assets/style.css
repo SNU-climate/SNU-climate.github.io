@@ -929,3 +929,17 @@ html[lang="ko"] .wr-num { letter-spacing: .02em; }
   .desk-num { grid-column: 2; min-height: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { .icover { transition: none; } a.icover:hover { transform: none; } }
+
+/* 모바일 'TOP' 플로팅 버튼 (base.html, t5.js) */
+.to-top { display: none; }
+@media (max-width: 860px) {
+  .to-top { display: grid; place-items: center; position: fixed; z-index: 50;
+    right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    width: 48px; height: 48px; padding: 0; border: 1px solid var(--ink); border-radius: 50%;
+    background: var(--paper); color: var(--ink); font: 800 .72rem/1 var(--sans); letter-spacing: .08em;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .18); cursor: pointer; }
+  .to-top[hidden] { display: none; }
+  .to-top:hover, .to-top:active { background: var(--ink); color: var(--paper); }
+  .to-top:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+}
+@media print { .to-top { display: none !important; } }

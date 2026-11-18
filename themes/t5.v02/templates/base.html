@@ -108,6 +108,8 @@
     </div>
   </div>
 </footer>
+{# 모바일: 아래로 내려가면 오른쪽 아래에 'TOP' 플로팅 버튼(누르면 맨 위로). 동작은 assets/t5.js (2026-11-18 이종화 리뷰) #}
+<button class="to-top" type="button" data-to-top hidden aria-label="{{ t('common.to_top') }}">TOP</button>
 {{ m.scripts_common() }}
 <script src="{{ asset('t5.js') }}" defer></script>
 {% block scripts_extra %}{% endblock %}

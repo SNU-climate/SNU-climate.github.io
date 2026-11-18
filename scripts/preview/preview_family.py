@@ -134,6 +134,7 @@ padding:14px;border-radius:14px;background:#fff;color:#10203a;box-shadow:0 8px 3
 .csl-rv-s{padding:1px 8px;border-radius:999px;font-size:11px;font-weight:700;background:#e3e7ee;color:#10203a}
 .csl-rv-s[data-k=done]{background:#dff3e4;color:#14532d}.csl-rv-s[data-k=todo]{background:#fdecc8;color:#7a4a00}.csl-rv-s[data-k=hold]{background:#e8e3f6;color:#3b2a74}
 .csl-rv-x{margin:4px 0 0;font-size:14px;white-space:pre-line;word-break:break-word}
+.csl-rv-n{margin:4px 0 0;padding:6px 9px;border-left:3px solid #c98a00;background:#fdf6e3;font-size:13px;color:#5a3d00;word-break:break-word}
 #csl-rv:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px #10203a}
 @media print{#csl-rv,#csl-rv-p{display:none}}
 </style>
@@ -148,7 +149,7 @@ if(!window.claude||!window.claude.use)return;
 var db=null,u=null;
 try{var r=await Promise.all([window.claude.use("db"),window.claude.use("user")]);db=r[0];u=r[1];}catch(e){}
 if(!db||!u)return;
-var KIND={"반영":"done","일부 반영":"todo","미반영":"todo","보류":"hold","해당 없음":"none"},rows=[],cur="",upd="";
+var KIND={"반영":"done","일부 반영":"todo","미반영":"todo","대기":"todo","보류":"hold","해당 없음":"none"},rows=[],cur="",upd="";
 function kind(s){s=String(s||"");for(var k in KIND){if(s.indexOf(k)===0)return KIND[k];}return "none";}
 function render(){
 var n={all:rows.length,todo:0,hold:0};rows.forEach(function(d){n[kind(d.status)]++;});
@@ -162,7 +163,9 @@ var li=document.createElement("li"),h=document.createElement("div"),t=document.c
 h.className="csl-rv-h";t.textContent=d.author||"";h.appendChild(t);
 [d.time,d.page].forEach(function(v){if(v){var e=document.createElement("span");e.textContent=v;h.appendChild(e);}});
 s.className="csl-rv-s";s.dataset.k=kind(d.status);s.textContent=(d.status||"")+(d.commit?" · "+d.commit:"");h.appendChild(s);
-x.className="csl-rv-x";x.textContent=d.text||"";li.appendChild(h);li.appendChild(x);L.appendChild(li);});}
+x.className="csl-rv-x";x.textContent=d.text||"";li.appendChild(h);li.appendChild(x);
+// 고치지 못한 이유·남은 일(note)을 함께 보여 준다 (2026-11-18)
+if(d.note){var n=document.createElement("p");n.className="csl-rv-n";n.textContent="남은 일: "+d.note;li.appendChild(n);}L.appendChild(li);});}
 b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));
 var q=document.getElementById("csl-cl-p");if(!p.hidden&&q&&!q.hidden){q.hidden=true;var qb=document.getElementById("csl-cl");if(qb)qb.setAttribute("aria-expanded","false");}});
 db.collection("reviews").orderBy("time","desc").onSnapshot(function(sn){upd="";sn.docs.forEach(function(x){if(x.id==="_meta"&&x.exists){upd=String((x.data()||{}).updated||"");}});
@@ -189,6 +192,8 @@ padding:14px;border-radius:14px;background:#fff;color:#10203a;box-shadow:0 8px 3
 #csl-cl-l button[disabled]{opacity:.5;cursor:default}
 #csl-cl-msg{margin:10px 0 0;font-size:13px}
 #csl-cl:focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 6px #3b4a63}
+/* 사이트의 모바일 TOP 버튼은 미리보기 버튼(오른쪽 아래 의견 남기기·사진 보내기) 위로 올린다 */
+.to-top{bottom:calc(120px + env(safe-area-inset-bottom,0px))!important}
 @media print{#csl-cl,#csl-cl-p{display:none}}
 </style>
 <button id="csl-cl" type="button" hidden data-uncommentable aria-expanded="false" aria-controls="csl-cl-p">반영한 리뷰 정리</button>
@@ -210,7 +215,7 @@ function render(){
 b.hidden=!rows.length;b.textContent="반영한 리뷰 정리 ("+rows.length+")";L.textContent="";
 rows.forEach(function(r){var d=r.data()||{},li=document.createElement("li"),t=document.createElement("div"),k=document.createElement("div"),x=document.createElement("button");
 t.className="csl-cl-t";t.textContent=(d.label?d.label+" — ":"")+(d.summary||"");
-k.className="csl-cl-m";k.textContent=[d.page,d.commit?"반영 "+d.commit:"",d.threadId?"스레드 "+String(d.threadId).slice(0,8):""].filter(Boolean).join(" · ");
+k.className="csl-cl-m";k.textContent=[d.time,d.page,d.commit?"반영 "+d.commit:"",d.threadId?"스레드 "+String(d.threadId).slice(0,8):""].filter(Boolean).join(" · ");
 x.type="button";x.textContent="지웠음";x.addEventListener("click",function(){del(r,x);});
 li.appendChild(t);li.appendChild(k);if(ed)li.appendChild(x);L.appendChild(li);});
 if(!rows.length){p.hidden=true;b.setAttribute("aria-expanded","false");}}
@@ -220,7 +225,9 @@ x.disabled=true;
 try{await db.collection("cleanup").doc(r.id).update({done:true,deletedAt:new Date().toISOString()});m.textContent="목록에서 뺐습니다.";}
 catch(e){m.textContent=(e&&(e.code==="forbidden"||e.code==="not_granted"||e.code==="permission_denied"))?"기여자 이상만 표시할 수 있습니다.":"목록을 갱신하지 못했습니다. 잠시 뒤 다시 해 주세요.";x.disabled=false;}}
 b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));if(!p.hidden){m.textContent="";var q=document.getElementById("csl-rv-p");if(q&&!q.hidden){q.hidden=true;var qb=document.getElementById("csl-rv");if(qb)qb.setAttribute("aria-expanded","false");}}});
-db.collection("cleanup").where("done","==",false).onSnapshot(function(s){rows=s.docs.filter(function(x){return x.exists;});render();},function(){b.hidden=true;});
+db.collection("cleanup").where("done","==",false).onSnapshot(function(s){rows=s.docs.filter(function(x){return x.exists;});
+// 최신 리뷰가 위로: time(리뷰 작성 시각 "YYYY-MM-DD HH:MM") 내림차순, 없으면 맨 아래 (2026-11-18)
+rows.sort(function(a,c){var x=String((a.data()||{}).time||""),y=String((c.data()||{}).time||"");return x<y?1:x>y?-1:0;});render();},function(){b.hidden=true;});
 })();'''
 # 확정 시안 미리보기의 "사진 보내기": 사진을 artifact 자산(assets)으로 올리고, 어디에 쓸 사진인지를 db의 uploads에 한 줄 남긴다.
 # 게시할 때 capabilities {assets: {upload: "interact"}, db: {}, user: {}}. 올릴 권한이 없는 보기에서는 버튼을 숨긴 채 둔다.
