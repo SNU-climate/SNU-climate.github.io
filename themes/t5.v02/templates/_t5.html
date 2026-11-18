@@ -217,21 +217,34 @@
 
 {# 졸업생 페이지 본문 #}
 {% macro alumni_page() %}
+{# 졸업생을 학위·직책별(박사 졸업 → 석사 졸업 → 박사후연구원 → 연구원)로 나눠 보여 준다. 각 묶음 안은 연도 최신순 #}
+{% set _G = [('phd', 'Ph.D.'), ('ms', 'M.S.'), ('postdoc', 'Postdoc'), ('researcher', 'Researcher')] %}
+{% set known = _G|map(attribute=1)|list %}
 <div class="wrap">
   {{ people_tabs('people-alumni') }}
   {% if alumni %}
-  <div class="alumni-grid">
-    {% for a in alumni %}{% set u = member_url(a) %}
-    <article class="alum">
-      <span class="alum-photo">{% if a.photo %}<img src="{{ static(a.photo) }}" alt="" loading="lazy">{% else %}<span class="member-initials" aria-hidden="true">{{ m.initials_of(tr(a.name)) }}</span>{% endif %}</span>
-      <span class="alum-text">
-        <span class="alum-name">{% if u %}<a href="{{ u }}">{{ tr(a.name) }}</a>{% else %}{{ tr(a.name) }}{% endif %} {{ m.sample_badge(a) }}</span>
-        {% set dy = [a.degree, a.year]|select|join(', ') %}{% if dy %}<span class="alum-degree">{{ dy }}</span>{% endif %}
-        {% if a.current %}<span class="alum-current">{{ tr(a.current) }}</span>{% endif %}
-      </span>
-    </article>
+  <section class="team">
+    {% for gk, deg in _G + [('other', None)] %}
+    {% set ms = alumni|selectattr('degree', 'equalto', deg)|list if deg else alumni|rejectattr('degree', 'in', known)|list %}
+    {% if ms %}
+    <div class="team-group" id="alumni-{{ gk }}">
+      <h2 class="team-role">{{ t('people.alumni_group.' ~ gk) }} <span>{{ ms|length }}</span></h2>
+      <div class="alumni-grid">
+        {% for a in ms %}{% set u = member_url(a) %}
+        <article class="alum">
+          <span class="alum-photo">{% if a.photo %}<img src="{{ static(a.photo) }}" alt="" loading="lazy">{% else %}<span class="member-initials" aria-hidden="true">{{ m.initials_of(tr(a.name)) }}</span>{% endif %}</span>
+          <span class="alum-text">
+            <span class="alum-name">{% if u %}<a href="{{ u }}">{{ tr(a.name) }}</a>{% else %}{{ tr(a.name) }}{% endif %} {{ m.sample_badge(a) }}</span>
+            {% set dy = [a.degree, a.year]|select|join(', ') %}{% if dy %}<span class="alum-degree">{{ dy }}</span>{% endif %}
+            {% if a.current %}<span class="alum-current">{{ tr(a.current) }}</span>{% endif %}
+          </span>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
     {% endfor %}
-  </div>
+  </section>
   {% else %}
   <p class="empty">{{ t('common.empty') }}</p>
   {% endif %}

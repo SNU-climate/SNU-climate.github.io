@@ -100,6 +100,12 @@ people:
     ms: {en: "M.S. Students", ko: "석사과정"}
     undergrad: {en: "Undergraduate Interns", ko: "학부연구생"}
     staff: {en: "Staff", ko: "행정직원"}
+  alumni_group:
+    phd: {en: "Ph.D. Graduates", ko: "박사 졸업"}
+    ms: {en: "M.S. Graduates", ko: "석사 졸업"}
+    postdoc: {en: "Former Postdoctoral Researchers", ko: "박사후연구원"}
+    researcher: {en: "Former Researchers", ko: "연구원"}
+    other: {en: "Others", ko: "기타"}
 
 pubs:
   title: {en: "Publications", ko: "논문"}

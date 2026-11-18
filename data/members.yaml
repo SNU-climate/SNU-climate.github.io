@@ -184,15 +184,16 @@ members:
     position: {en: "Researcher", ko: "연구원"}
     photo: members/kyungna-kim.jpg
     pub_name: "Kim, K."
-    email: "knakim@postech.ac.kr"
+    email: "knakim@gmail.com"
     interests:
-      en: ["Seasonal forecast", "Probabilistic forecasting", "Carbon cycle"]
-      ko: ["계절 예측", "확률 예측", "탄소순환"]
+      en: ["Seasonal forecast", "Probabilistic forecasting"]
+      ko: ["계절 예측", "확률 예측"]
     education:
       - {year: "2009", en: "M.S., Atmospheric Science Program in Earth and Environmental Sciences, Seoul National University, Seoul, South Korea", ko: "석사, 서울대학교 지구환경과학부 대기과학전공"}
       - {year: "2007", en: "B.S., Earth & Environmental Science and Physics (double major), Korea University, Seoul, South Korea", ko: "학사, 고려대학교 지구환경과학·물리학(복수전공)"}
     career:
-      - {period: "2019–", en: "Pohang University of Science and Technology (POSTECH), South Korea", ko: "포항공과대학교(POSTECH)"}
+      - {period: "2024–", en: "School of Earth and Environmental Sciences, Seoul National University, Seoul, South Korea", ko: "서울대학교 지구환경과학부"}
+      - {period: "2019–2024", en: "Institute of Environmental and Energy Technology, POSTECH, Pohang, South Korea", ko: "포항공과대학교 환경연구소"}
       - {period: "2017–2019", en: "Bomin Science Consulting, South Korea", ko: "Bomin Science Consulting"}
       - {period: "2010–2013", en: "Climate Research Lab, National Institute of Meteorological Research, South Korea", ko: "국립기상연구소 기후연구과"}
 
@@ -215,11 +216,11 @@ members:
     photo: members/huiji-lee.jpg
     pub_name: "Lee, H."
     pub_since: 2024                       # 동명이인 "Lee, H." 구분(2017·2018 논문은 다른 사람). 확인 필요
-    pub_exclude: ["10.1029/2024ef005787"]   # Steinert et al. 2025 — 다른 Lee, H.로 추정
+    pub_exclude: ["10.1029/2024ef005787", "10.1126/sciadv.adn8819", "10.1029/2026ef008209"]   # Steinert et al. 2025 — 다른 Lee, H.로 추정; 나머지 2편은 본인 요청(2026-11-17)
     email: "huiji1129@snu.ac.kr"
     interests:
-      en: ["Biogeochemical circulation"]
-      ko: ["생지화학 순환"]
+      en: ["Biogeochemical circulation", "Ocean carbon cycle", "Ocean acidification", "Climate change"]
+      ko: ["생지화학 순환", "해양 탄소순환", "해양 산성화", "기후변화"]
     education:
       - {year: "2024", en: "M.S., Pohang University of Science and Technology (POSTECH), South Korea", ko: "석사, 포항공과대학교(POSTECH)"}
       - {year: "2022", en: "B.S., Urban Administration & Geoinformatics, University of Seoul, South Korea", ko: "학사, 서울시립대학교 도시행정학·공간정보공학"}
