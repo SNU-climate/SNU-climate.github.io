@@ -230,7 +230,8 @@ db.collection("cleanup").where("done","==",false).onSnapshot(function(s){rows=s.
 rows.sort(function(a,c){var x=String((a.data()||{}).time||""),y=String((c.data()||{}).time||"");return x<y?1:x>y?-1:0;});render();},function(){b.hidden=true;});
 })();'''
 # 확정 시안 미리보기의 "사진 보내기": 사진을 artifact 자산(assets)으로 올리고, 어디에 쓸 사진인지를 db의 uploads에 한 줄 남긴다.
-# 게시할 때 capabilities {assets: {upload: "interact"}, db: {}, user: {}}. 올릴 권한이 없는 보기에서는 버튼을 숨긴 채 둔다.
+# 게시할 때 capabilities {assets: {upload: "interact"}, db: {...}, user: {}}. photos·uploads는 기본 규칙(write-only 규칙은 플랫폼이 거부한다).
+# assets가 없는 기여자는 db photos 조각으로 보낸다(scripts/preview/assemble_photos.py로 되살림). db도 없는 보기에서는 메일·GitHub 안내만 띄운다.
 # 올라온 파일은 그림으로만 다룬다(코드·스타일로 불러오지 않는다).
 # 페이지마다 넣지 않고 미리보기의 shared/shared.js 끝에 붙인다(모든 페이지가 불러온다. 고칠 때 이 파일 하나만 다시 게시하면 된다)
 UPLOAD_HTML = r'''<style>
@@ -251,7 +252,7 @@ background:#fff;color:#10203a;box-shadow:0 8px 30px rgba(0,0,0,.3);font-weight:5
 </style>
 <button id="csl-up" type="button" hidden data-uncommentable aria-expanded="false" aria-controls="csl-up-p">사진 보내기</button>
 <div id="csl-up-p" hidden data-uncommentable role="group" aria-label="사진 보내기">
-<label for="csl-up-f">사진 (JPG·PNG·GIF·WebP, 한 장에 20MB까지)</label>
+<label for="csl-up-f">사진 (JPG·PNG·GIF·WebP, 한 장에 40MB까지. 큰 사진은 줄여서 보낼 수 있습니다)</label>
 <input id="csl-up-f" type="file" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
 <label for="csl-up-n">어디에 쓸 사진인가요?</label>
 <input id="csl-up-n" type="text" maxlength="300" placeholder="예: 홍길동 구성원 사진 / 12월 AGU 갤러리">
@@ -265,12 +266,26 @@ if(!window.claude||!window.claude.use)return;
 var a=null,db=null,u=null;
 try{var r=await Promise.all([window.claude.use("assets"),window.claude.use("db"),window.claude.use("user")]);a=r[0];db=r[1];u=r[2];}catch(e){}
 b.hidden=false;
-if(!a||!db){var why=(db&&u)?"기여자의 사진 올리기는 아직 이 조직에서 열리지 않아, 지금은 편집자만 바로 올릴 수 있습니다.":"이 화면에서는 사진을 바로 올릴 수 없습니다(claude.ai 조직 구성원만 가능).";
-b.addEventListener("click",function(){if(window.cslAlt)window.cslAlt(why+" 사진은 아래 메일에 첨부하거나 GitHub 이슈 양식에 끌어다 놓아 주세요. 어디에 쓸 사진인지 함께 적어 주세요.");});return;}
+if(!db){b.addEventListener("click",function(){if(window.cslAlt)window.cslAlt("이 화면에서는 사진을 바로 올릴 수 없습니다(claude.ai 조직 구성원만 가능). 사진은 아래 메일에 첨부하거나 GitHub 이슈 양식에 끌어다 놓아 주세요. 어디에 쓸 사진인지 함께 적어 주세요.");});return;}
 b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));if(!p.hidden)f.focus();});
-var OK=["image/jpeg","image/png","image/gif","image/webp"],MAX=20*1024*1024;
-var WHY={too_large:"20MB를 넘습니다",unsupported_type:"지원하지 않는 형식입니다",quota_or_state:"저장 공간이 가득 찼습니다. 담당자에게 알려 주세요",
-rate_limited:"잠시 뒤 다시 보내 주세요",upstream_auth:"페이지를 새로 고친 뒤 다시 보내 주세요",not_granted:"올릴 권한이 없습니다"};
+var OK=["image/jpeg","image/png","image/gif","image/webp"],MAX=40*1024*1024,KEEP=1.5*1024*1024,EDGE=3000,CH=240000,MAXCH=40;
+var WHY={too_large:"파일이 너무 큽니다",unsupported_type:"지원하지 않는 형식입니다",quota_or_state:"저장 공간이 가득 찼습니다. 담당자에게 알려 주세요",
+rate_limited:"잠시 뒤 다시 보내 주세요",upstream_auth:"페이지를 새로 고친 뒤 다시 보내 주세요",not_granted:"올릴 권한이 없습니다",
+forbidden:"올릴 권한이 없습니다",permission_denied:"올릴 권한이 없습니다",decode:"사진을 열지 못했습니다(JPG로 바꿔 다시 보내 주세요)"};
+// 편집자는 assets로 원본을 올린다. 기여자는 assets가 열리지 않아(2026-11 기준) 사진을 줄여 base64 조각으로 db photos에 나눠 적는다.
+// 조각 하나는 db 문서 한도(256KB) 안쪽 240,000자. photos는 uploads와 같은 기본 규칙(조직 구성원 읽기·기여자 이상 쓰기). 사이트에 올릴 사진이라 조직 안 공개는 괜찮다고 보았다.
+function toB64(x){return new Promise(function(ok,no){var fr=new FileReader();fr.onload=function(){var t=String(fr.result);ok(t.slice(t.indexOf(",")+1));};fr.onerror=function(){no({code:"decode"});};fr.readAsDataURL(x);});}
+async function shrink(x){if(x.size<=KEEP)return x;
+var im;try{im=await createImageBitmap(x);}catch(e){throw{code:"decode"};}
+var k=Math.min(1,EDGE/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+var g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);if(im.close)im.close();
+var q=[0.9,0.82,0.72],out=null;for(var i=0;i<q.length;i++){out=await new Promise(function(ok){c.toBlob(ok,"image/jpeg",q[i]);});if(out&&out.size*1.34<CH*MAXCH)break;}
+if(!out)throw{code:"decode"};return out;}
+async function viaDb(x,i,tot){var y=await shrink(x),d=await toB64(y),cn=Math.ceil(d.length/CH);if(cn>MAXCH)throw{code:"too_large"};
+var id=Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+for(var j=0;j<cn;j++){m.textContent="보내는 중… ("+(i+1)+"/"+tot+", "+Math.round(j/cn*100)+"%)";
+await db.collection("photos").doc(id+"-"+j).set({p:id,i:j,n:cn,d:d.slice(j*CH,(j+1)*CH)});}
+return {via:"db",photoId:id,chunks:cn,sizeBytes:y.size,contentType:y.type||x.type,origBytes:x.size};}
 s.addEventListener("click",async function(){
 var files=Array.prototype.slice.call(f.files||[]),note=n.value.trim();
 if(!files.length){m.textContent="사진을 먼저 골라 주세요.";return;}
@@ -280,10 +295,12 @@ try{uid=u?await u.id():null;}catch(e){}
 for(var i=0;i<files.length;i++){var x=files[i];
 m.textContent="보내는 중… ("+(i+1)+"/"+files.length+")";
 if(OK.indexOf(x.type)<0){bad.push(x.name+": JPG·PNG·GIF·WebP만 보낼 수 있습니다(HEIC는 JPG로 바꿔 주세요)");continue;}
-if(x.size>MAX){bad.push(x.name+": 20MB를 넘습니다");continue;}
-try{var res=await a.upload(x);
-await db.collection("uploads").add({assetId:res.id,filename:x.name,note:note,page:location.pathname,title:document.title,
-uploader:uid,time:new Date().toISOString(),sizeBytes:res.sizeBytes,contentType:res.contentType,done:false});
+if(x.size>MAX){bad.push(x.name+": 40MB를 넘습니다");continue;}
+try{var info;
+if(a){var res=await a.upload(x);info={via:"assets",assetId:res.id,sizeBytes:res.sizeBytes,contentType:res.contentType};}
+else info=await viaDb(x,i,files.length);
+info.filename=x.name;info.note=note;info.page=location.pathname;info.title=document.title;info.uploader=uid;info.time=new Date().toISOString();info.done=false;
+await db.collection("uploads").add(info);
 ok++;}catch(e){bad.push(x.name+": "+(WHY[e&&e.code]||"보내지 못했습니다. 잠시 뒤 다시 해 주세요"));}}
 m.textContent=(ok?ok+"장을 보냈습니다. 담당자가 확인 후 반영합니다.":"")+(bad.length?(ok?"\n":"")+bad.join("\n"):"");
 if(ok&&!bad.length){f.value="";n.value="";}

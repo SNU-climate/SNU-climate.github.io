@@ -172,13 +172,13 @@
     </div>
     <div class="feature-grid">
       {% for r in research %}
-      <article class="feature{% if loop.first %} feature--lead{% endif %}">
+      <article class="feature">
         <a class="feature-link" href="{{ topic_url(r) }}">
           {% if r.image %}<div class="feature-img"><img src="{{ static(r.image) }}" alt="" loading="lazy"></div>{% else %}{{ x.locator(r, loop.index0, 'loc feature-img') }}{% endif %}
           <div class="feature-text">
             <p class="kicker"><span class="kicker-cat">{{ x.L('feature') }} {{ x.no(loop.index) }}</span></p>
             <h3 class="feature-title">{{ tr(r.title) }}</h3>
-            <p class="feature-dek">{{ tr(r.summary)|truncate(170 if loop.first else 110) }}</p>
+            <p class="feature-dek">{{ tr(r.summary)|truncate(110) }}</p>
           </div>
         </a>
       </article>
