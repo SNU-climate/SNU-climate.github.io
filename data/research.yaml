@@ -1,4 +1,4 @@
-# 연구 주제 — 원본 홈페이지 RESEARCH 메뉴 5개 주제(캐시 /research-*/ 페이지, 2022-01 갱신본)에서 옮김.
+# 연구 주제 — 원본 홈페이지 RESEARCH 메뉴 5개 주제 + 2026-11 추가한 Climate + AI(맨 아래)(캐시 /research-*/ 페이지, 2022-01 갱신본)에서 옮김.
 # title·summary·figures 설명은 원본 문구(영·국). themes.ko와 figures caption.ko는 번역(reports/backup_mapping_content.md 참고).
 # image: static/ 기준 대표 그림 / figures: 원본 페이지 그림(+설명, 인용 논문이 목록에 있으면 doi)
 # dois: 관련 논문(publications.yaml과 연결) / videos: 관련 유튜브 영상 ID / regions: 지도·지구본 테마용 [위도, 경도]
@@ -150,3 +150,33 @@ topics:
     videos: ["DaqKSaZQapQ"]
     regions: [[37.5, 127], [0, -110]]
     region_names: [{en: "Korean Peninsula", ko: "한반도"}, {en: "Eastern tropical Pacific", ko: "동태평양 열대"}]
+
+  # 2026-11-18 추가: 국종성 교수 리뷰("Climate + AI 주제를 하나 꼭지 포함", 11-17)와 고지호 소개 글·그림(11-18).
+  # summary.en은 고지호 원문, summary.ko·themes·캡션은 원문을 바탕으로 번역·정리.
+  - key: ai
+    title: {en: "Climate + AI", ko: "기후 + 인공지능"}
+    summary:
+      en: >-
+        Climate System Laboratory (CSL) uses artificial intelligence to understand the dynamics of major climate
+        phenomena and their interactions and impacts, with a particular focus on explainable AI (X-AI). We study key
+        phenomena such as ENSO, and extend our deep learning research to the wider climate system, including the
+        ocean, atmosphere, sea ice, land surface and biogeochemical processes. To address the uncertainty,
+        parameterization difficulties and high computational cost of numerical climate models, we build deep learning
+        emulators of these models that run long-term predictions at a low computational cost. We then evaluate the
+        predictability and reliability of these predictions against observational data.
+      ko: >-
+        기후시스템연구실(CSL)은 인공지능을 활용해 주요 기후 현상의 역학과 현상 사이의 상호작용, 그 영향을 이해하는 연구를
+        하며, 특히 설명 가능한 인공지능(X-AI)에 주목합니다. 엘니뇨-남방진동(ENSO) 같은 핵심 현상을 연구하고, 딥러닝 연구를
+        해양·대기·해빙·지면·생지화학 과정을 아우르는 기후시스템 전반으로 넓히고 있습니다. 수치 기후모델의 불확실성, 모수화의
+        어려움, 높은 계산 비용을 해결하기 위해 기후모델을 흉내 내는 딥러닝 에뮬레이터를 만들어 적은 계산 비용으로 장기 예측을
+        수행하고, 그 예측의 예측성과 신뢰도를 관측 자료와 비교해 평가합니다.
+    themes:
+      en: ["Explainable AI (X-AI) for climate dynamics", "Deep learning for ENSO and major climate phenomena", "Deep learning across the ocean, atmosphere, sea ice, land surface and biogeochemistry", "Deep learning emulators of climate models", "Predictability and reliability against observations"]
+      ko: ["기후역학을 위한 설명 가능한 인공지능(X-AI)", "ENSO와 주요 기후 현상의 딥러닝 연구", "해양·대기·해빙·지면·생지화학 과정의 딥러닝 연구", "기후모델 딥러닝 에뮬레이터", "관측 기반 예측성·신뢰도 평가"]
+    image: research/ai-recursive-dnn-enso.jpg
+    figures:
+      - {image: research/ai-recursive-dnn-enso.jpg, caption: {en: "A low-dimensional recursive deep learning model for ENSO simulation (Ko et al. 2025, npj Clim. Atmos. Sci.)", ko: "ENSO 모의를 위한 저차원 순환 딥러닝 모델 (Ko et al. 2025, npj Clim. Atmos. Sci.)"}, doi: "10.1038/s41612-025-01053-5"}
+    dois: ["10.1038/s41612-025-01053-5"]
+    videos: []
+    regions: [[0, -140]]
+    region_names: [{en: "Equatorial Pacific (ENSO)", ko: "적도 태평양(ENSO)"}]
