@@ -265,7 +265,8 @@ if(!window.claude||!window.claude.use)return;
 var a=null,db=null,u=null;
 try{var r=await Promise.all([window.claude.use("assets"),window.claude.use("db"),window.claude.use("user")]);a=r[0];db=r[1];u=r[2];}catch(e){}
 b.hidden=false;
-if(!a||!db){b.addEventListener("click",function(){if(window.cslAlt)window.cslAlt("이 화면에서는 사진을 바로 올릴 수 없습니다(claude.ai 조직 구성원만 가능). 사진은 아래 메일에 첨부하거나 GitHub 이슈 양식에 끌어다 놓아 주세요. 어디에 쓸 사진인지 함께 적어 주세요.");});return;}
+if(!a||!db){var why=(db&&u)?"기여자의 사진 올리기는 아직 이 조직에서 열리지 않아, 지금은 편집자만 바로 올릴 수 있습니다.":"이 화면에서는 사진을 바로 올릴 수 없습니다(claude.ai 조직 구성원만 가능).";
+b.addEventListener("click",function(){if(window.cslAlt)window.cslAlt(why+" 사진은 아래 메일에 첨부하거나 GitHub 이슈 양식에 끌어다 놓아 주세요. 어디에 쓸 사진인지 함께 적어 주세요.");});return;}
 b.addEventListener("click",function(){p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));if(!p.hidden)f.focus();});
 var OK=["image/jpeg","image/png","image/gif","image/webp"],MAX=20*1024*1024;
 var WHY={too_large:"20MB를 넘습니다",unsupported_type:"지원하지 않는 형식입니다",quota_or_state:"저장 공간이 가득 찼습니다. 담당자에게 알려 주세요",
