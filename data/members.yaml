@@ -671,10 +671,10 @@ alumni:
       - {year: "2024", en: "Best Poster Award, Korea Geoscience Union"}
 
   - id: geonil-kim
-    name: {en: "Geonil Kim", ko: "김건일"}
+    name: {en: "Geon-Il Kim", ko: "김건일"}
     degree: "Ph.D."
     year: 2024
-    current: {en: "Chosun University, South Korea", ko: "조선대학교"}
+    current: {en: "Assistant Professor, Department of Environmental Engineering, Chosun University", ko: "조선대학교 환경공학과 조교수"}
     photo: members/geonil-kim.jpg
     pub_name: "Kim, G.-I."
     homepage: "https://www.researchgate.net/profile/Geon-Il-Kim"
@@ -689,20 +689,23 @@ alumni:
     name: {en: "Ji-Hoon Oh", ko: "오지훈"}
     degree: "Ph.D."
     year: 2024
-    current: {en: "Postdoctoral Research Associate, Scripps Institution of Oceanography, UC San Diego, USA", ko: "미국 UC샌디에이고 스크립스해양연구소 박사후연구원"}
+    current: {en: "Postdoctoral Researcher, Atmospheric and Oceanic Sciences Department, UCLA, USA", ko: "미국 UCLA 대기해양과학과 박사후연구원"}
     photo: members/ji-hoon-oh.jpg
     pub_name: "Oh, J.-H."
-    homepage: "https://scholar.google.com/citations?user=GkoNooMAAAAJ&hl=ko"
+    homepage: "https://jhoh0926.github.io"
     interests:
-      en: ["Climate dynamics", "Climate reversibility", "Carbon dioxide removal", "Earth system modeling", "Polar climate", "Marine biogeochemical circulation"]
-      ko: ["기후역학", "기후 가역성", "이산화탄소 제거", "지구시스템 모델링", "극지 기후", "해양 생지화학 순환"]
+      en: ["Climate dynamics", "Climate change", "Climate reversibility", "Carbon dioxide removal", "Earth system modeling", "Polar climate", "Marine biogeochemical circulation"]
+      ko: ["기후역학", "기후변화", "기후 가역성", "이산화탄소 제거", "지구시스템 모델링", "극지 기후", "해양 생지화학 순환"]
     education:
       - {year: "2024", en: "Ph.D., Pohang University of Science and Technology (POSTECH), South Korea"}
       - {year: "2021", en: "M.S., Division of Environmental Science and Technology, POSTECH, South Korea"}
       - {year: "2019", en: "B.S., Atmospheric Science, Pusan National University, South Korea"}
     awards:
-      - {year: "2022", en: "BK21 POSTECHIAN Fellowship"}
-      - {year: "2019", en: "Best Poster, Ocean and Atmosphere Science Interdisciplinary Studies (OASIS), Korea Hydrographic and Oceanographic Agency"}
+      - {year: "2024", en: "Best Doctoral Dissertation Award, Korean Meteorological Society (KMS)", ko: "한국기상학회 우수박사학위논문상"}
+      - {year: "2024", en: "Sung-Kee Chung Award, Pohang University of Science and Technology (POSTECH)", ko: "포항공과대학교(POSTECH) 정성기상(Sung-Kee Chung Award)"}
+      - {year: "2023", en: "Best Poster Award, Korean Meteorological Society (KMS)", ko: "한국기상학회 우수포스터상"}
+      - {year: "2022", en: "BK21 POSTECHIAN Fellowship", ko: "BK21 POSTECHIAN 펠로우십"}
+      - {year: "2019", en: "Best Poster Award, Ocean and Atmosphere Science Interdisciplinary Studies (OASIS), Korea Hydrographic and Oceanographic Agency (KHOA)", ko: "국립해양조사원(KHOA) 해양·대기과학 학제간 연구(OASIS) 우수포스터상"}
 
   - id: yi-kai-wu
     name: {en: "Yi Kai Wu"}
@@ -794,6 +797,7 @@ alumni:
 
   - id: mihyun-jo
     name: {en: "Mihyun Jo", ko: "조미현"}
+    degree: "Researcher"
     photo: members/mihyun-jo.jpg
     education:
       - {year: "2015", en: "Ph.D., School of Earth and Environmental Science, Seoul National University"}
