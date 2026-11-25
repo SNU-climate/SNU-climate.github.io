@@ -327,5 +327,5 @@ DNS 운영신청은 학외 서버(GitHub Pages)라 **직원만** 제출할 수 �
 - [x] **서버 폴더 `/data5/CSL_homepage`**: 주인 `jsshin` 그대로 유지(권한 `1773`, 2026-11-25 결정). 각자 폴더 만들기·작업에는 문제없습니다. 권한을 바꿀 일이 생기면 신종수에게 요청합니다.
 - [x] **신종수 소유 폴더**: 모두 유지(2026-11-25 결정). `CSL_homepage_jsshin`·`CSL_review_reports_jsshin`은 GitHub와 같은 내용이지만, `first_draft_20261111`(7.8G)·`first_draft_copy_20261108`(9.3G)에는 GitHub에 올리지 않은 원본 자료(백업, 저작권 보류 PDF 등)가 있어 지우지 않습니다. 다른 계정은 열 수 없으니 필요하면 신종수에게 요청합니다.
 - [ ] **예약 작업**: 리뷰 점검 매일 07:00(4-1절)·주간 업데이트(4절)를 백경민 계정의 Claude 데스크톱 앱에 등록합니다(SSH 서버 작업은 앱에서 직접 만들어야 함). 앱이 꺼져 있으면 실행되지 않습니다.
-- [ ] **푸터 표기**: "Designed by Jongsoo Shin … · Maintained by Gyeongmin Baek"는 그대로 둡니다(제작자·관리자 표시).
+- [x] **푸터 표기**: "Designed by Jongsoo Shin … · Maintained by Gyeongmin Baek"는 그대로 둡니다(제작자·관리자 표시). 관리자 메일 `maintainer_email`도 백경민으로 되어 있음을 확인(2026-11-25).
 
