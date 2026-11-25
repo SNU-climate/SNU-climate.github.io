@@ -12,6 +12,7 @@
 사용: python preview_family.py <소스 루트> <출력 폴더> <공지 수> <앨범 수> <전체 목록 URL> <계열 이름> <테마...>"""
 import html as H
 import json
+import os
 import re
 import shutil
 import sys
@@ -364,8 +365,21 @@ def report():
     print(f'files {len(files)}, MB {sum(f.stat().st_size for f in files) / 1e6:.1f}')
 
 
+# 날짜 표시: 바뀐 페이지만 다시 게시하면 안 바뀐 페이지는 예전 "Last updated"가 남는다.
+# 그래서 모든 페이지가 불러오는 shared.js가 날짜(상단 time, 푸터 YYYY-MM-DD)를 덮어쓴다. 날짜가 바뀌면 shared.js만 다시 게시하면 된다.
+# 값: 환경변수 CSL_PREVIEW_DATE(자동 갱신은 origin/main 마지막 커밋 날짜 `git log -1 --format=%cs`), 없으면 빌드한 날
+PREVIEW_DATE = os.environ.get('CSL_PREVIEW_DATE') or D['build_date']
+DATE_JS = r'''(function(){var d=window.CSL_PREVIEW_DATE;if(!/^\d{4}-\d{2}-\d{2}$/.test(d||""))return;
+var p=d.split("-").map(Number),ko=(document.documentElement.lang||"").indexOf("ko")===0,
+M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+txt=ko?p[0]+". "+p[1]+". "+p[2]+".":M[p[1]-1]+" "+p[2]+", "+p[0];
+document.querySelectorAll(".topbar-date time").forEach(function(t){t.setAttribute("datetime",d);t.textContent=txt;});
+document.querySelectorAll(".ftr-bottom span").forEach(function(s){var n=s.firstChild;if(n&&n.nodeType===3&&/\d{4}-\d{2}-\d{2}/.test(n.nodeValue))n.nodeValue=n.nodeValue.replace(/\d{4}-\d{2}-\d{2}/,d);});})();'''
+
 if one:
     with open(out / 'shared' / 'shared.js', 'a', encoding='utf-8') as f:
+        f.write(f'\n/* 미리보기 전용: 게시 날짜 */\nwindow.CSL_PREVIEW_DATE={json.dumps(PREVIEW_DATE)};\n'
+                f'document.addEventListener("DOMContentLoaded",function(){{{DATE_JS}}});\n')
         # 예전에 게시한 페이지에는 "의견 남기기"가 페이지 안에 들어 있다. 그 버튼은 지우고 새로 넣는다
         f.write('\n/* 미리보기 전용: 의견 남기기 · 사진 보내기 · 리뷰 정리 · 반영한 리뷰 정리 */\ndocument.addEventListener("DOMContentLoaded",function(){'
                 'var old=document.getElementById("csl-fb");if(old)old.remove();'
