@@ -1,6 +1,6 @@
 # 홈페이지 인수인계
 
-기후시스템연구실 홈페이지의 운영 방법을 정리한 문서입니다. (작성 2026-11-13)
+기후시스템연구실 홈페이지의 운영 방법을 정리한 문서입니다. (작성 2026-11-13, 담당 이관 2026-11-25)
 > 이 문서는 GitHub에서도 볼 수 있습니다: https://github.com/SNU-climate/SNU-climate.github.io/blob/main/HANDOVER.md
 
 데이터 형식과 명령의 세부는 [CLAUDE.md](CLAUDE.md), 구성원용 수정 안내는 [CONTRIBUTING.md](CONTRIBUTING.md)에 있고, 이 문서는 누가·언제·어떻게 운영하는지를 다룹니다.
@@ -13,7 +13,7 @@
 |---|---|
 | 주소 | https://climate.snu.ac.kr (2026-11-13 연결. `snu-climate.github.io`는 이 주소로 넘어감) |
 | 관리자 | 백경민 (박사과정, rudals92430@snu.ac.kr) |
-| 이전 담당 | 신종수 (제작, 2026-11까지) |
+| 이전 담당 | 신종수 (제작·운영, 2026-11-25까지. 이후 관리하지 않음, 11절) |
 | 리뷰 기록 | 비공개 저장소 [SNU-climate/homepage-reviews](https://github.com/SNU-climate/homepage-reviews) — 각자 `/data5/CSL_homepage/CSL_review_reports_<계정>`에 clone (4-1절) |
 | 연구실 대표 메일 | jskug@snu.ac.kr |
 | 저장소 | https://github.com/SNU-climate/SNU-climate.github.io (공개, `main` 브랜치) |
@@ -38,7 +38,7 @@
 | 고르기 상태에서 링크·메뉴를 누름 | 이동하지 않고 그 부분에 댓글 창이 열림 |
 
 - 이 버튼은 미리보기에만 있습니다. 실제 사이트(climate.snu.ac.kr)에는 없습니다.
-- **"Claude에게 보내기(Send to Claude)"는 쓰지 않습니다**(2026-11-13 결정). 리뷰는 일반 댓글로만 남기고, 편집자(신종수·백경민)가 모아서 저장소에 반영한 뒤 build → validate → commit → push → 미리보기 재게시 순서로 처리합니다. 댓글 창의 보내기 버튼은 claude.ai 화면 기능이라 숨길 수 없지만 편집자에게만 보이므로, 편집자는 누르지 않습니다(예전에 넣었던 가로채기는 다른 사람 화면 문제를 좁히려고 2026-11-16에 뺐습니다).
+- **"Claude에게 보내기(Send to Claude)"는 쓰지 않습니다**(2026-11-13 결정). 리뷰는 일반 댓글로만 남기고, 관리자(백경민)가 모아서 저장소에 반영한 뒤 build → validate → commit → push → 미리보기 재게시 순서로 처리합니다. 댓글 창의 보내기 버튼은 claude.ai 화면 기능이라 숨길 수 없지만 편집자에게만 보이므로, 편집자는 누르지 않습니다(예전에 넣었던 가로채기는 다른 사람 화면 문제를 좁히려고 2026-11-16에 뺐습니다).
 - 의견 남기기로 댓글 창이 안 열리면 화면 위쪽 빨간 안내 줄에 이유가 몇 초 뜹니다. 다른 사람이 "창이 안 뜬다"고 하면 그 문구를 받아 확인합니다.
 - 버튼이 안 보이면 claude.ai 로그인 여부와 SNU_CSL 조직 계정인지 확인합니다. 예전 화면이 보이면 새로 고칩니다.
 - claude.ai를 쓰지 않는 사람은 GitHub **Issues → New issue**의 양식(논문 / 뉴스·행사·수상 / 구성원 / 학회 발표)으로 요청할 수 있습니다.
@@ -108,7 +108,7 @@
 | `state.json` | 이미 본 댓글·사진 목록(다음 점검에서 새 것만 보도록) |
 | `preview_state.json` | 미리보기에 마지막으로 게시한 GitHub 커밋과 아티팩트 버전(자동 갱신 기준) |
 
-- 반영한 뒤에는 "리뷰 점검해 줘"라고 하면 반영 현황이 커밋과 함께 갱신됩니다. 2026-11-13 현재 23건 중 11건 반영, 11건 미반영·보류, 1건 해당 없음입니다.
+- 반영한 뒤에는 "리뷰 점검해 줘"라고 하면 반영 현황이 커밋과 함께 갱신됩니다. 현재 건수는 `REVIEW_LOG.md` "2. 반영 현황"에서 봅니다.
 - 알림: 🔴가 있으면 데스크톱 알림(원격 연결 시 휴대폰)을 보냅니다. **메일 알림은 보류 중**입니다. 이 서버는 메일 서버가 꺼져 있고 Gmail 연결이 없습니다. 정해지면 REVIEW_CHECK.md의 7단계만 바꿉니다.
 - **예약 작업은 아직 등록되지 않았습니다.** Claude 앱에서 SSH 서버 작업을 직접 등록해야 합니다(방법은 REVIEW_CHECK.md "예약 작업 설정"). 첫 점검은 2026-11-13에 수동으로 했습니다(🔴 0, 🟡 6, 🟢 3).
 
@@ -170,7 +170,7 @@ gh auth login        # push 인증(브라우저 로그인). gh가 없으면 GitH
 - `git clone`에서 `Permission denied`가 나면 상위 폴더 `/data5/CSL_homepage`에 새 폴더를 만들 권한이 없는 것입니다. 상위 폴더 주인(jsshin)이 한 번 `chmod 1773 /data5/CSL_homepage`를 실행하면 됩니다. 이렇게 하면 각자 자기 폴더를 만들 수 있고, 목록은 보이지 않으며, 남의 폴더는 지우거나 이름을 바꿀 수 없습니다(sticky). 그래도 안 되면 서버 관리자에게 요청합니다.
 - 작성자 메일은 **반드시 noreply 주소**를 씁니다. 공개 저장소라 커밋 메일이 그대로 공개됩니다. `git config user.name/email`을 빠뜨리면 다른 사람 이름으로 커밋되거나 개인 메일이 남습니다.
 - `main`에 바로 push하려면 GitHub 조직 `SNU-climate`의 Owner여야 합니다(9절). 아니면 6-4절 PR 방식으로 합니다.
-- (선택) 월 1회 백업 훅: 신종수 복사본의 `.git/hooks/pre-push`를 자기 복사본의 같은 위치에 복사하고 실행 권한을 줍니다. push할 때 이번 달 백업이 없으면 `/data5/CSL_homepage/CSL_homepage_<계정>_YYYYMMDD`로 폴더를 복사합니다(약 260MB). GitHub 자체가 전체 이력을 보관하므로 없어도 됩니다.
+- (선택) 월 1회 백업 훅: `cp scripts/hooks/pre-push .git/hooks/ && chmod +x .git/hooks/pre-push`. push할 때 이번 달 백업이 없으면 `/data5/CSL_homepage/CSL_homepage_<계정>_YYYYMMDD`로 폴더를 복사합니다(약 260MB). GitHub 자체가 전체 이력을 보관하므로 없어도 됩니다.
 
 ### 6-2. 매번 작업할 때
 
@@ -232,7 +232,7 @@ gh pr create --fill                  # 또는 GitHub 웹에서 Pull Request 열�
 - **항상 GitHub 최신본 기준으로 만듭니다.** `git pull` 뒤 `git archive HEAD`로 뽑은 스냅숏에서 빌드합니다. 오래된 복사본으로 게시하면 다른 사람이 반영한 페이지를 옛 내용으로 덮어씁니다.
 - 게시 도구는 다른 사람이 먼저 게시했으면 거부하고 최신 버전을 먼저 확인하게 합니다.
 - **자동 갱신(12시간마다, 4-1절 작업)**: 리뷰 기록 저장소의 `preview_state.json`에 적힌 마지막 게시 커밋과 GitHub `main`을 비교합니다. 새 커밋이 있으면 두 커밋으로 미리보기를 각각 만들고 `scripts/preview/diff_preview.py`로 바뀐 파일만 골라 게시한 뒤 기록을 갱신합니다. 날짜 표시만 다른 페이지는 바뀐 것으로 치지 않습니다.
-- **바로 갱신하고 싶을 때**: Claude에게 "미리보기 갱신해 줘"라고 하면 같은 순서로 지금 합니다. 2026-11-13 현재 `efa1301` 기준 버전 30입니다.
+- **바로 갱신하고 싶을 때**: Claude에게 "미리보기 갱신해 줘"라고 하면 같은 순서로 지금 합니다. 마지막 게시 커밋·버전은 리뷰 기록 저장소의 `preview_state.json`에 있습니다(2026-11-24 `33a190f`, 버전 54).
 - 미리보기에만 직접 올린 수정(GitHub에 없는 것)은 자동 갱신이 덮어쓰지 않고 🔴로 알립니다. 수정은 항상 GitHub에 먼저 올립니다.
 
 - 게시는 SNU_CSL 조직 계정 세션에서 **같은 주소로** 합니다. 주소가 바뀌면 댓글·보낸 사진이 따라오지 않습니다.
@@ -252,7 +252,7 @@ gh pr create --fill                  # 또는 GitHub 웹에서 Pull Request 열�
 
 - `comments`는 반드시 `composer_only`로 둡니다. 전체 형태(`{}`)는 링크로 들어온 사람에게 댓글 기능이 꺼져 의견 남기기 버튼이 사라집니다. `customAnchors`도 넣지 않습니다(댓글 칸을 누르면 창이 닫히는 문제가 있었음, 2026-11-16).
 
-- 버튼은 가짜 댓글·업로드 API를 넣은 브라우저 시험으로 확인했습니다. 사진 보내기는 실제 화면에서도 확인했고, 
+- 버튼은 가짜 댓글·업로드 API를 넣은 브라우저 시험으로 확인했고, 실제 화면에서도 구성원들이 댓글과 사진을 보내며 쓰고 있습니다.
 
 ## 7. 배포와 도메인
 
@@ -278,7 +278,7 @@ DNS 운영신청은 학외 서버(GitHub Pages)라 **직원만** 제출할 수 �
 
 - [x] **GitHub**: `SNU-climate` 조직 Owner 권한(이전 담당자가 초대). 관리자 `gmbaek100`(백경민)은 2026-11-13에 Owner 초대를 수락했습니다(조직 Owner: `jongsooshin5`, `gmbaek100`). 새 관리자는 조직 Settings → People → Invite member에서 Owner로 초대합니다. Owner가 되면 비공개 리뷰 저장소에도 자동으로 접근됩니다. Owner여야 `main`에 바로 push하고 Pages·보호 규칙을 바꿀 수 있습니다. 서버나 PC에서 `gh auth login`으로 본인 계정 인증.
 - [x] **복사본**: `/data5/CSL_homepage/CSL_homepage_<계정>`에 clone, 작성자 이름·noreply 메일 설정(6-1절). `gmbaek100`은 2026-11-13 완료(gh 인증, 빌드·검증 오류 0 확인).
-- [ ] **claude.ai**: SNU_CSL 조직 계정, 미리보기 artifact의 편집자 이상 권한(댓글 읽기·답글, 다시 게시, 보낸 사진 관리).
+- [x] **claude.ai**: SNU_CSL 조직 계정, 미리보기 artifact의 편집자 이상 권한(댓글 읽기·답글, 다시 게시, 보낸 사진 관리). 미리보기 v47~v54는 백경민이 게시함. **artifact 소유자는 처음 만든 신종수 조직 계정**이므로 11절 확인.
 - [x] **리뷰 기록**: 비공개 저장소 `SNU-climate/homepage-reviews`를 `/data5/CSL_homepage/CSL_review_reports_<계정>`에 clone(4-1절). 조직 구성원이어야 접근할 수 있습니다. `gmbaek100`은 2026-11-13 완료.
 - [ ] **예약 작업**: 주간 업데이트(4절)·12시간마다 리뷰 점검(4-1절)을 관리자 계정의 Claude 앱에 등록. 작업 폴더는 본인 복사본.
 
@@ -299,4 +299,22 @@ DNS 운영신청은 학외 서버(GitHub Pages)라 **직원만** 제출할 수 �
 - 외부인 댓글·사진이 들어오면 AI 점검이 🔴로 표시합니다(4-1절).
 - 미리보기는 파일 수 한도(511개) 때문에 글꼴을 Google Fonts에서 불러옵니다. 실제 사이트는 글꼴을 자체 호스팅합니다.
 - 관리자가 바뀌면 푸터 표기를 고칩니다: 이름은 `data/i18n.yaml`의 `common.credit`, 메일은 `data/site.yaml`의 `contact.maintainer_email`. 1절 표의 관리자도 함께 고칩니다.
-- 디자인(테마)을 바꾸려면 `themes/THEME_CONTRACT.md`를 먼저 읽습니다. 과거 시안은 서버 `/data5/CSL_homepage/first_draft_20261111`과 git 이력에 있습니다.
+- 디자인(테마)을 바꾸려면 `themes/THEME_CONTRACT.md`를 먼저 읽습니다. 과거 시안은 git 이력에 있습니다(서버의 `first_draft*` 폴더는 신종수 계정 소유라 다른 계정은 열 수 없음).
+
+## 11. 담당 이관 (2026-11-25, 신종수 → 백경민)
+
+2026-11-25부터 신종수는 홈페이지를 관리하지 않습니다. 관리·게시·리뷰 점검·예약 작업은 모두 백경민이 맡습니다.
+
+**완료**
+- [x] GitHub 조직 Owner(`gmbaek100`), 홈페이지·리뷰 기록 저장소 복사본(`CSL_homepage_gmbaek`, `CSL_review_reports_gmbaek`)
+- [x] 미리보기 게시·리뷰 반영을 백경민 계정으로 수행(2026-11-24 v54까지)
+- [x] 백업 훅을 저장소에 포함(`scripts/hooks/pre-push`) — 신종수 폴더 없이 설치 가능
+
+**이관 때 확인할 것** (신종수 계정에 묶인 것)
+- [ ] **미리보기 artifact 소유권**: 신종수의 SNU_CSL 조직 계정이 만든 것입니다. 이 계정이 조직에서 빠지면 artifact와 댓글·사진·db가 사라질 수 있으므로, 계정을 유지하거나 조직 관리자에게 소유권 이전을 문의합니다.
+- [ ] **GitHub `jongsooshin5`의 조직 Owner**: 유지(비상용) 또는 Member로 낮춤. Owner가 최소 2명이 되도록 교수님 초대(10절)와 함께 정합니다.
+- [ ] **서버 폴더 `/data5/CSL_homepage`**: 주인이 `jsshin`입니다(권한 `1773`). 각자 폴더 만들기·작업에는 문제없지만 권한을 바꿀 수 있는 사람은 jsshin뿐입니다. 신종수 계정이 없어지면 서버 관리자에게 주인 변경을 요청합니다.
+- [ ] **신종수 소유 폴더**: `CSL_homepage_jsshin`, `CSL_homepage_jsshin_20261113`, `CSL_review_reports_jsshin`, `first_draft*`. 내용은 모두 GitHub에 있으므로 정리(삭제) 여부만 정합니다.
+- [ ] **예약 작업**: 주간 업데이트(4절)·리뷰 점검(4-1절)은 아직 어느 계정에도 등록되지 않았습니다. 백경민 계정의 Claude 앱에 등록합니다.
+- [ ] **푸터 표기**: "Designed by Jongsoo Shin … · Maintained by Gyeongmin Baek"는 그대로 둡니다(제작자·관리자 표시).
+

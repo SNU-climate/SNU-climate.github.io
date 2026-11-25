@@ -1,0 +1,18 @@
+#!/bin/bash
+# 푸시 직전 월 1회 백업: 이번 달 백업(../<폴더이름>_YYYYMMDD)이 없으면 이 폴더 전체(.git 포함, site/ 제외)를 복사한다.
+# 백업이 실패해도 푸시는 막지 않는다.
+SRC="$(git rev-parse --show-toplevel)"
+PARENT="$(dirname "$SRC")"
+NAME="$(basename "$SRC")"
+MONTH="$(date +%Y%m)"
+if ls -d "$PARENT/${NAME}_${MONTH}"[0-9][0-9] >/dev/null 2>&1; then
+  exit 0
+fi
+DEST="$PARENT/${NAME}_$(date +%Y%m%d)"
+echo "[pre-push] 이번 달 백업이 없어 만듭니다: $DEST" >&2
+if rsync -a --exclude '/site/' "$SRC/" "$DEST/"; then
+  echo "[pre-push] 백업 완료" >&2
+else
+  echo "[pre-push] 백업 실패(푸시는 계속 진행)" >&2
+fi
+exit 0
