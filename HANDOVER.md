@@ -257,7 +257,7 @@ gh pr create --fill                  # 또는 GitHub 웹에서 Pull Request 열�
 ## 7. 배포와 도메인
 
 - **배포**: `main`에 push → GitHub Actions(`.github/workflows/pages.yml`)가 빌드·검증 → GitHub Pages. 실패하면 저장소 Actions 탭에서 오류를 봅니다. 사이트는 이전 상태로 남습니다.
-- **도메인**: 학교 DNS에 CNAME `climate.snu.ac.kr` → `snu-climate.github.io`, TXT `_github-pages-challenge-snu-climate`. 커스텀 도메인은 저장소 Settings → Pages에 설정돼 있습니다(CNAME 파일 없음).
+- **도메인**: 조직 소유 도메인으로 검증 완료(2026-11-25, 조직 Settings → Pages → Verified domains. DNS의 TXT 레코드를 지우지 않음). 학교 DNS에 CNAME `climate.snu.ac.kr` → `snu-climate.github.io`, TXT `_github-pages-challenge-snu-climate`. 커스텀 도메인은 저장소 Settings → Pages에 설정돼 있습니다(CNAME 파일 없음).
 - **HTTPS**: Let's Encrypt 인증서를 GitHub이 자동 발급·갱신합니다. 할 일이 없습니다.
 - **main 보호**: 일반 구성원은 PR + 자동 검사 `build` 통과 + 승인 1명이 필요합니다. 조직 Owner는 바로 push할 수 있습니다. 강제 push와 `main` 삭제는 모두에게 막혀 있으니, 되돌릴 때는 `git revert`를 씁니다.
 - **백업**: GitHub 저장소가 전체 이력을 보관합니다. 추가로 각자 복사본에 월 1회 백업 훅을 둘 수 있습니다(6-1절, 선택).
@@ -285,7 +285,6 @@ DNS 운영신청은 학외 서버(GitHub Pages)라 **직원만** 제출할 수 �
 ## 10. 남은 일과 주의
 
 **남은 일**
-- 조직 Settings → Pages에서 `climate.snu.ac.kr` 도메인 **Verify** 클릭(TXT는 반영됨, 2026-11-13 기준 미검증)
 - 구성원 사진·소개 문구 확정
 - `data/members.yaml`에 개인 메일(gmail)이 들어간 구성원의 공개 동의 확인
 - `data/presentations.yaml`의 `placeholder: true` 예시는 실제 발표가 들어오면 삭제
