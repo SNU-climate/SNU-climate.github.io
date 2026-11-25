@@ -9,6 +9,7 @@
 3. 국문과 영문을 모두 채운다. 학생이 한쪽 언어만 주면 다른 언어로 번역해 채우고, 번역했다는 사실을 학생에게 알린다.
 4. 수정이 끝나면 반드시 **빌드 → 검증 → git commit** 순서로 마무리한다. 검증 오류가 0이 아니면 커밋하지 않는다.
 5. 개인정보(전화번호, 개인 이메일, 사진)는 본인이 공개에 동의한 것만 넣는다.
+6. **운영 업무**(리뷰 점검·반영, 보낸 사진 반영, 미리보기 갱신·게시, 주간 업데이트, 담당자·권한 관련 질문)는 먼저 `HANDOVER.md`의 해당 절(3·4·4-1·5·6절의 미리보기 관리)과 `scripts/review/REVIEW_CHECK.md`를 읽고 그대로 따른다. 관리자는 백경민(2026-11-25부터)이다.
 
 ## 명령 (항상 이 폴더에서)
 작업 폴더는 **각자 자기 복사본** `/data5/CSL_homepage/CSL_homepage_<계정>`이다(예: `CSL_homepage_jsshin`, `CSL_homepage_gmbaek`). 남의 폴더에서 작업하지 않는다. 서버 공유 폴더 `/data5/CSL_homepage/first_draft`는 2026-11-13부터 보관용이라 거기서 작업하지 않는다. 처음 받는 법과 두 사람 작업 규칙은 `HANDOVER.md` 6절.
@@ -91,4 +92,4 @@ python scripts/new_news.py --slug <영문-짧은-이름> --category paper --doi 
 `data/`(YAML) · `content/news/`(뉴스 글) · `static/`(사진·그림·썸네일) · `themes/`(디자인: 확정 테마 `t5.v02`와 공용 `_shared`만 둔다. 규약은 `themes/THEME_CONTRACT.md`) ·
 `scripts/`(빌드·검증·관리) · `site/`(빌드 결과, git 제외) · `project_plan.md`(계획)
 이전 시안 테마 26종·검토 보고서(`reports/`)·원본 백업(`backup/`)은 2026-11-11에 정리했다. 필요하면 서버의 `/data5/CSL_homepage/first_draft_20261111`(정리 전 복사본)이나 git 이력에서 찾는다.
-**월 1회 백업(선택)**: 복사본의 `.git/hooks/pre-push`가 있으면 push 직전에 이번 달 백업(`../<폴더이름>_YYYYMMDD`)이 없을 때 폴더 전체(`.git` 포함, `site/` 제외)를 복사한다. 실패해도 push는 막지 않는다. 훅은 git에 올라가지 않으므로 복사본마다 따로 둔다(`HANDOVER.md` 6-1절).
+**월 1회 백업(선택)**: 복사본의 `.git/hooks/pre-push`가 있으면 push 직전에 이번 달 백업(`../<폴더이름>_YYYYMMDD`)이 없을 때 폴더 전체(`.git` 포함, `site/` 제외)를 복사한다. 실패해도 push는 막지 않는다. 원본은 `scripts/hooks/pre-push`이고, 복사본마다 `.git/hooks/`에 복사해 둔다(`HANDOVER.md` 6-1절).
