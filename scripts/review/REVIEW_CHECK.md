@@ -71,6 +71,7 @@ Claude 데스크톱 앱 → Code 탭 → 예약 작업 → 새 작업:
    a. git fetch 후 origin/main 의 짧은 해시가 published_commit 과 같으면 이 단계를 건너뛴다.
    b. 임시 폴더(예: /tmp/csl_preview_$(whoami))에 git archive <published_commit> 와 git archive origin/main 을 각각 풀고,
       scripts/preview/preview_family.py <스냅숏> <출력> 99 7 <미리보기 URL> 'Science Magazine v02' t5.v02 로 미리보기를 두 벌(old, new) 만든다.
+      이때 환경변수 CSL_PREVIEW_DATE 를 각 커밋의 날짜(`git log -1 --format=%cs <커밋>`)로 준다. 그래야 "Last updated" 날짜가 사이트와 같게 바뀌고 shared/shared.js 가 게시 목록에 들어간다.
       (anaconda 모듈 필요: bash -lc "module load anaconda3/2023.03 && ...")
    c. scripts/preview/linkcheck.py <new> 가 broken 0 이 아니면 게시하지 않고 리포트에 적는다.
    d. scripts/preview/diff_preview.py <old> <new> --json 으로 changed·added·removed 를 구한다. 모두 비었으면 게시하지 않고 published_commit 만 갱신한다.

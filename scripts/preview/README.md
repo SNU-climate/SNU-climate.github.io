@@ -26,7 +26,8 @@ artifact 한 개에는 파일을 511개까지만 넣을 수 있다. 그래서 �
 게시는 한 번에 255개 항목까지라 두 번에 나눠 올린다. 내용이 안 바뀐 파일은 다시 올리지 않아도 된다(보낸 파일만 바뀌고 나머지는 유지). 같은 URL을 다시 올릴 때는 이전에만 있던 경로를 `null`로 지워야 한다.
 
 **바뀐 페이지만 다시 게시하기**(매일 07:00 자동 갱신과 "미리보기 갱신해 줘"가 쓰는 순서)
-1. 마지막 게시 커밋(비공개 리뷰 기록 저장소 `SNU-climate/homepage-reviews`의 `preview_state.json`)과 `origin/main`을 각각 `git archive`로 풀어 `preview_family.py`로 두 벌을 만든다.
+1. 마지막 게시 커밋(비공개 리뷰 기록 저장소 `SNU-climate/homepage-reviews`의 `preview_state.json`)과 `origin/main`을 각각 `git archive`로 풀어 `preview_family.py`로 두 벌을 만든다. 각각 `CSL_PREVIEW_DATE=$(git log -1 --format=%cs <커밋>)`을 앞에 붙인다.
+   - **날짜**: 바뀐 페이지만 올리면 나머지 페이지의 "Last updated"가 옛 날짜로 남는다. 그래서 `shared/shared.js`가 모든 페이지의 상단·푸터 날짜를 `CSL_PREVIEW_DATE`(최신 커밋 날짜, 실제 사이트 날짜와 같음)로 덮어쓴다. 날짜가 바뀌면 `shared.js`가 바뀐 파일에 들어가 함께 게시된다(2026-11-25).
 2. `linkcheck.py <새 출력>`이 0인지 확인한다.
 3. `diff_preview.py <이전> <새>`로 고른 파일만 같은 주소에 게시한다(없어진 파일은 `null`). capabilities는 넘기지 않는다.
 4. `preview_state.json`의 `published_commit`과 `artifact_version`을 갱신한다.
