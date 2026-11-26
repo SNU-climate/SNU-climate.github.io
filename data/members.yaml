@@ -559,7 +559,7 @@ alumni:
     name: {en: "So-Won Park", ko: "박소원"}
     degree: "Ph.D."
     year: 2023
-    current: {en: "Samsung", ko: "삼성"}
+    current: {en: "Samsung Electronics, Device Solutions (DS) Division, Staff Engineer", ko: "삼성전자 DS부문 책임"}
     photo: members/so-won-park.jpg
     pub_name: "Park, S.-W."
     interests:
@@ -570,6 +570,7 @@ alumni:
       - {year: "2020", en: "M.S., Environmental Science and Engineering, Pohang University of Science and Technology, South Korea"}
       - {year: "2018", en: "B.S., Department of Oceanography, Pusan National University, South Korea"}
     awards:
+      - {year: "2023", en: "Outstanding Dissertation Award, Korean Meteorological Society (KMS)", ko: "한국기상학회 우수학위논문상"}
       - {year: "2021", en: "The 1st POSTECH Research Performance Contest, Participation Prize"}
       - {year: "2020", en: "Best Poster Award in Climate Session, Korean Meteorological Society Fall Conference"}
       - {year: "2020–", en: "SBS Foundation Scholarship"}
